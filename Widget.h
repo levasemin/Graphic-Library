@@ -1,26 +1,31 @@
 #pragma once
+
 #include "Event.h"
 #include "Color.h"
-#include <SFML/Graphics.hpp>
+#include "Window.h"
 
 class Widget
 {
-
 public:
-    sf::RenderWindow window_;
-    int wind_w_, wind_h_;
 
-    Widget(int wind_w, int wind_h, int style = sf::Style::Default);    
-        
-    void draw(const sf::Vertex *vertices, std::size_t VertexCount, sf::PrimitiveType type, const sf::RenderStates &states = sf::RenderStates::Default);
-    void draw(const sf::Drawable &drawable,                                                const sf::RenderStates &states = sf::RenderStates::Default);
-    void draw(const sf::VertexBuffer &vertexBuffer,                                        const sf::RenderStates &states = sf::RenderStates::Default);	
+    point center_;
+    int width_;
+    int height_;
+
+    Widget(point center, int width, int height):
+        center_(center),
+        width_(width),
+        height_(height)
+    {};
+
+    Event<Widget *, point> ClickLeftEvent_;
+    Event<Widget *, point> MissClickLeftEvent_;
+    Event<Widget *, point> ClickRightEvent_;
+    Event<Widget *, point> MissClickRightEvent_;
+    Event<Widget *, int>   PressKeyEvent_;
+    Event<Widget *, int>   ScrollEvent_;
     
-    Widget &operator =(const Widget &that) = default;    
-
-    bool isOpen();
-    bool pollEvent(sf::Event event);
-    void close();
-    void display();
-    void clear(Color color);
+    virtual bool point_belonging(point point) = 0;
+    virtual void draw(class Window *window) = 0;
+    virtual void draw(class Window *window, point center) = 0;
 };

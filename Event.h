@@ -4,6 +4,14 @@
 #include <vector>
 #include <iostream>
 
+
+struct point
+{
+    int x;
+    int y;
+};
+
+
 template <class ...TParams>
 class Event
 {
