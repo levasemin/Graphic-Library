@@ -13,12 +13,12 @@ public:
 class ClickWindowHandler
 {
 public:
-    void operator ()(long long text)
+    void print_int(char *text)
     {
         std::cout << text << std::endl;
     }
 
-    void operator ()(int text)
+    void print_long_long (char * text)
     {
         std::cout << text << "123";
     }

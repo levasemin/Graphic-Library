@@ -17,14 +17,14 @@ int main()
 
     std::vector<Widget *> Widgets = {&first_window, &second_window, &third_window};
 
-    char *s1 = "Hello";
-    const char *s2 = "Hello12";
+    const char *s1 = "Hello";
+    char *s2 = "Hello12";
 
-    Window<int> main_window(WIDTH, HEIGHT, 7);
+    Window<char *> main_window(WIDTH, HEIGHT, 7);
     ClickWindowHandler handler_main_window;
     
-    main_window.onButtonClick += CreateMethodEventHandler<ClickWindowHandler, int>(handler_main_window);
-    main_window.onButtonClick += CreateMethodEventHandler<ClickWindowHandler, int>(handler_main_window);
+    main_window.onButtonClick += CreateMethodEventHandler(handler_main_window, &ClickWindowHandler::print_int);
+    main_window.onButtonClick += CreateMethodEventHandler(handler_main_window, &ClickWindowHandler::print_long_long);
 
-    main_window.onButtonClick((long long)5);
+    main_window.onButtonClick(s2);
 }
