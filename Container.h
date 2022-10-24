@@ -8,15 +8,17 @@ public:
 
     Color color_;
 
-    Container(point center, int width, int height, Widget *parent_widget, const std::vector<Widget *> &widgets, const Color &color = Colors::Red): 
+    Container(point center, int width, int height, Widget *parent_widget, const Color &color = Colors::Red, const std::vector<Widget *> &widgets = {}): 
         Widget(center, width, height, parent_widget),
-        widgets_(widgets),
         color_(color)
         {};
 
-    std::vector<Widget *> widgets_;
     void draw(Color *array, int app_width) override;
     bool point_belonging(point point) override;
+    void add(Widget *widget) override
+    {
+        child_widgets_.push_back(widget);
+    }
 };
 
 void Container::draw(Color *array, int app_width)
@@ -34,14 +36,14 @@ void Container::draw(Color *array, int app_width)
         }
     }       
 
-    if (widgets_.size() == 0)
+    if (child_widgets_.size() == 0)
     {
         return;
     }
 
-    for (int i = 0; i < widgets_.size(); i++)
+    for (int i = 0; i < child_widgets_.size(); i++)
     {
-        widgets_[i]->draw(array, app_width);
+        child_widgets_[i]->draw(array, app_width);
     }
 }
 

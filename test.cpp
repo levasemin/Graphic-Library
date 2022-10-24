@@ -1,16 +1,5 @@
 #include <iostream>
-
-template <class ...TParams>
-class b1
-{
-    b1();
-};
-
-template <class ...TParams>
-class b2
-{
-    b2;
-};
+#include <SFML/Graphics.hpp>
 
 class A
 {
@@ -20,7 +9,6 @@ public:
     virtual void printfda() = 0;
 };
 
-template<class ...TParams>
 class B : public A
 {
 public:
@@ -41,7 +29,9 @@ void func()
 
 int main()
 {
+    
     B object;
+    B object1(object);
 
     A *pointer = (A *)&object;
 

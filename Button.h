@@ -23,7 +23,12 @@ public:
     
     bool point_belonging(point point) override;
     void draw(Color *array, int app_width) override;
+    void add(Widget *widget) override
+    {
+        child_widgets_.push_back(widget);
+    }
 };
+
 
 void Button::draw(Color *array, int app_width)
 {    

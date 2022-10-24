@@ -55,18 +55,17 @@ class Container_handler
 public:
     void left_click(Widget *self, point place)
     {
-        printf("keft");
         Container *container = (Container *)self;
-        for (int i = 0; i < container->widgets_.size(); i++)
+        for (int i = 0; i < container->child_widgets_.size(); i++)
         {
-            if (container->widgets_[i]->point_belonging(place))
+            if (container->child_widgets_[i]->point_belonging(place))
             {
-                container->widgets_[i]->ClickLeftEvent_(container->widgets_[i], place);
+                container->child_widgets_[i]->ClickLeftEvent_(container->child_widgets_[i], place);
             }
             
             else
             {
-                container->widgets_[i]->MissClickLeftEvent_(container->widgets_[i], place);
+                container->child_widgets_[i]->MissClickLeftEvent_(container->child_widgets_[i], place);
             }
         }
     };
@@ -74,16 +73,16 @@ public:
     void right_click(Widget *self, point place)
     {
         Container *container = (Container *)self;
-        for (int i = 0; i < container->widgets_.size(); i++)
+        for (int i = 0; i < container->child_widgets_.size(); i++)
         {
-            if (container->widgets_[i]->point_belonging(place))
+            if (container->child_widgets_[i]->point_belonging(place))
             {
-                container->widgets_[i]->ClickRightEvent_(container->widgets_[i], place);
+                container->child_widgets_[i]->ClickRightEvent_(container->child_widgets_[i], place);
             }
             
             else
             {
-                container->widgets_[i]->MissClickLeftEvent_(container->widgets_[i], place);
+                container->child_widgets_[i]->MissClickLeftEvent_(container->child_widgets_[i], place);
             }
         }
     };
@@ -92,23 +91,25 @@ public:
 
 int main()
 {  
+    Application app(WIDTH, HEIGHT);
+    
     std::vector<Widget *> buttons();
 
     Window_handler handler_main_window;
     MainWindow main_window(WIDTH, HEIGHT, 7);
+    
     main_window.ClickLeftEvent_  += CreateMethodEventHandler(handler_main_window, &Window_handler::left_click);
     main_window.ClickRightEvent_ += CreateMethodEventHandler(handler_main_window, &Window_handler::right_click);
     main_window.PressKeyEvent_   += CreateMethodEventHandler(handler_main_window, &Window_handler::press_key);
 
     Container_handler container_handler;
-    
-    Container container({300, 250}, 100, 400, (Widget *)&main_window, buttons, Colors::White);
-    container.show();
-    
+
+    Container container({300, 250}, 100, 400, (Widget *)&main_window, Colors::White);
+
     container.ClickLeftEvent_  += CreateMethodEventHandler(container_handler, &Container_handler::left_click);
     container.ClickRightEvent_ += CreateMethodEventHandler(container_handler, &Container_handler::right_click);
 
-    Button first_button ({50, 35},  100, 50,   &container, Colors::Yellow, "First");
+    Button first_button ({50, 35},  100, 50,  &container, Colors::Yellow, "First");
     Widget_handler click_handler;
     first_button.ClickLeftEvent_  += CreateMethodEventHandler(click_handler, &Widget_handler::left_click);
     first_button.ClickRightEvent_ += CreateMethodEventHandler(click_handler, &Widget_handler::right_click);
@@ -121,9 +122,10 @@ int main()
     third_button.ClickLeftEvent_  += CreateMethodEventHandler(click_handler, &Widget_handler::left_click);
     third_button.ClickRightEvent_ += CreateMethodEventHandler(click_handler, &Widget_handler::right_click);
     
-    const char *s1 = "Hello";
-    char *s2 = "Hello12";
-
-    std::vector<Widget *> widgets = {(Widget *)&main_window, (Widget *)&container};
+    container.add(&first_button);
+    container.add(&second_button);
+    container.add(&third_button);
+    main_window.add(&container);
+    app.add(main_window);
     app.exec();
 }

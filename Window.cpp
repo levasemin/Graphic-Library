@@ -1,14 +1,5 @@
 #include "Window.h"
 
-void Window::draw(const std::vector<Widget *> &widgets)
-{
-    for (int i = 0; i < widgets.size(); i++)
-    {
-        widgets[i]->draw(field_, wind_w_);
-    }
-}
-
-
 void Window::draw(const sf::Drawable &drawable, const sf::RenderStates &states)
 {
     window_.draw(drawable, states);
@@ -47,20 +38,17 @@ void Window::close()
 }
 
 
-
 void Window::display()
 {
-    for (int i = 0; i < wind_h_; i++)
+    for (int i = 0; i < main_window_->height_; i++)
     {
-        for (int j = 0; j < wind_w_; j++)
+        for (int j = 0; j < main_window_->width_; j++)
         {
-            texture_[i * wind_w_ + j].color = field_[i * wind_w_ + j].get_sf_color();
+            texture_[i * main_window_->width_ + j].color = main_window_->field_[i * main_window_->width_ + j].get_sf_color();
         }
     }
 
-    //field_[30 * wind_w_ + 30].print_color();
-    //std::cout << wind_h_ << " " << wind_w_ << std::endl;
-    window_.draw(texture_, wind_w_ * wind_h_, sf::Points);
+    window_.draw(texture_, main_window_->width_ * main_window_->height_, sf::Points);
     window_.display();
 }
 

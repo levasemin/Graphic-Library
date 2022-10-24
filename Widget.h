@@ -3,16 +3,18 @@
 #include "Event.h"
 #include "Color.h"
 #include "Window.h"
-#include "Application.h"
+#include <iostream>
+#include <vector>
 
 class Widget
 {
 public:
 
-    point center_;
-    int width_;
-    int height_;
+    point center_ = {};
+    int width_ = 0;
+    int height_ = 0;
     Widget *parent_widget_ = nullptr;
+    std::vector<Widget *> child_widgets_ = {};
 
     Widget(point center, int width, int height, Widget *parent_widget):
         center_(center),
@@ -31,11 +33,5 @@ public:
     
     virtual bool point_belonging(point point) = 0;
     virtual void draw(Color *array, int app_width) = 0;
-
-    void show();
+    virtual void add(Widget *widget) = 0;
 };
-
-void Widget::show()
-{
-    app.Event_ += CreateMethodEventHandler(*this, &Widget::draw);
-}

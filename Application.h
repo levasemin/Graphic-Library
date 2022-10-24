@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Widget.h"
 #include "constants.h"
-#include "Window.h"
+#include "MainWindow.h"
 #include "Event.h"
 #include <SFML/Graphics.hpp>
 
@@ -10,34 +10,50 @@
 class Application
 {
     public: 
-        Application(Window *main_window, const std::vector<Widget *> &widgets) :
-            main_window_(main_window),
-            widgets_(widgets) 
+        Application(int width, int height, int style = sf::Style::Default):
+            main_window_(width, height, style),
+            window_(&main_window_)
+            {};
+        Application(const MainWindow &window):
+            main_window_(window),
+            window_(&main_window_)
             {};
 
         void exec();
+        void add(Widget *widget);
+        void add(const MainWindow &main_window);
+        
+    
+        MainWindow main_window_;
 
     private:
-        Window *main_window_;
-        std::vector<Widget *> widgets_;
+        Window window_;
 };
 
+void Application::add(const MainWindow &main_window)
+{
+    main_window_ = main_window;
+}
+
+void Application::add(Widget *widget)
+{
+    main_window_.child_widgets_.push_back(widget);
+}
 
 void Application::exec()
 {
     sf::Event event;
         
-    while(main_window_->isOpen())
+    while(window_.isOpen())
     {
-        main_window_->draw(widgets_);
-
-        while(main_window_->window_.pollEvent(event))
+        main_window_.draw(nullptr, 0);
+        while(window_.window_.pollEvent(event))
         {
             switch (event.type)
             {
                 case sf::Event::Closed:
                 {
-                    main_window_->close();
+                    window_.close();
                     break;
                 }
                 
@@ -47,36 +63,36 @@ void Application::exec()
 
                     if (event.mouseButton.button == sf::Mouse::Left)
                     {
-                        main_window_->ClickLeftEvent_(main_window_, place);
+                        main_window_.ClickLeftEvent_(&main_window_, place);
 
-                        for (int i = 0; i < widgets_.size(); i++)
+                        for (int i = 0; i < main_window_.child_widgets_.size(); i++)
                         {
-                            if (widgets_[i]->point_belonging(place))
+                            if (main_window_.child_widgets_[i]->point_belonging(place))
                             {
-                                widgets_[i]->ClickLeftEvent_(widgets_[i], place);
+                                main_window_.child_widgets_[i]->ClickLeftEvent_(main_window_.child_widgets_[i], place);
                             }
 
                             else
                             {
-                                widgets_[i]->MissClickLeftEvent_(widgets_[i], place);
+                                main_window_.child_widgets_[i]->MissClickLeftEvent_(main_window_.child_widgets_[i], place);
                             }
                         }
                     }
 
                     if (event.mouseButton.button == sf::Mouse::Right)
                     {                        
-                        main_window_->ClickRightEvent_(main_window_, place);
+                        main_window_.ClickRightEvent_(&main_window_, place);
 
-                        for (int i = 0; i < widgets_.size(); i++)
+                        for (int i = 0; i < main_window_.child_widgets_.size(); i++)
                         {
-                            if (widgets_[i]->point_belonging(place))
+                            if (main_window_.child_widgets_[i]->point_belonging(place))
                             {
-                                widgets_[i]->ClickRightEvent_(widgets_[i], place);
+                                main_window_.child_widgets_[i]->ClickRightEvent_(main_window_.child_widgets_[i], place);
                             }
 
                             else
                             {
-                                widgets_[i]->MissClickRightEvent_(widgets_[i], place);
+                                main_window_.child_widgets_[i]->MissClickRightEvent_(main_window_.child_widgets_[i], place);
                             }
                         }    
                     }
@@ -88,11 +104,11 @@ void Application::exec()
                 {
                     int key = event.key.code;
 
-                    main_window_->PressKeyEvent_(main_window_, key);
+                    main_window_.PressKeyEvent_(&main_window_, key);
 
-                    for (int i = 0; i < widgets_.size(); i++)
+                    for (int i = 0; i < main_window_.child_widgets_.size(); i++)
                     {
-                        widgets_[i]->PressKeyEvent_(widgets_[i], key);
+                        main_window_.child_widgets_[i]->PressKeyEvent_(main_window_.child_widgets_[i], key);
                     }
 
                     break;
@@ -104,5 +120,7 @@ void Application::exec()
                 }
             }
         }
+
+        window_.display();
     }
 }
