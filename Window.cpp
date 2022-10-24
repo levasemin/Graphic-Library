@@ -4,7 +4,7 @@ void Window::draw(const std::vector<Widget *> &widgets)
 {
     for (int i = 0; i < widgets.size(); i++)
     {
-        widgets[i]->draw(this);
+        widgets[i]->draw(field_, wind_w_);
     }
 }
 
@@ -50,6 +50,17 @@ void Window::close()
 
 void Window::display()
 {
+    for (int i = 0; i < wind_h_; i++)
+    {
+        for (int j = 0; j < wind_w_; j++)
+        {
+            texture_[i * wind_w_ + j].color = field_[i * wind_w_ + j].get_sf_color();
+        }
+    }
+
+    //field_[30 * wind_w_ + 30].print_color();
+    //std::cout << wind_h_ << " " << wind_w_ << std::endl;
+    window_.draw(texture_, wind_w_ * wind_h_, sf::Points);
     window_.display();
 }
 

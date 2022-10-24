@@ -26,7 +26,7 @@ class Application
 void Application::exec()
 {
     sf::Event event;
-
+        
     while(main_window_->isOpen())
     {
         main_window_->draw(widgets_);
@@ -104,7 +104,5 @@ void Application::exec()
                 }
             }
         }
-
-        main_window_->display();
     }
 }

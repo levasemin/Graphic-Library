@@ -11,8 +11,8 @@ public:
     char text_[120];
     Color color_;
 
-    Button(point center, int width, int height, const Color &color = Colors::White, const char *text = "") : 
-        Widget(center, width, height),
+    Button(point center, int width, int height, Widget *parent_widget, const Color &color = Colors::White, const char *text = "") : 
+        Widget(center, width, height, parent_widget),
         color_(color)
         {
             for(int i = 0; text[i] != '\0' && i < 120; i++)
@@ -22,24 +22,24 @@ public:
         };
     
     bool point_belonging(point point) override;
-    void draw(Window *window) override;
-    void draw(Window *window, point center) override;
+    void draw(Color *array, int app_width) override;
 };
 
-void Button::draw(Window *window, point center)
+void Button::draw(Color *array, int app_width)
 {    
-    sf::RectangleShape field_(sf::Vector2f(width_, height_)); 
-    field_.setPosition(center.x - width_ / 2, center.y - height_ / 2);
-    field_.setFillColor(color_.get_sf_color());        
+    point parent_start = {parent_widget_->center_.x - parent_widget_->width_ / 2, parent_widget_->center_.y - parent_widget_->height_ / 2};
+    
+    point start = {parent_start.x + center_.x - width_ / 2, parent_start.y + center_.y - height_ / 2};
+    point end   = {parent_start.x + center_.x + width_ / 2, parent_start.y + center_.y + height_ / 2};
 
-    window->window_.draw(field_);
+    for (int i = start.y; i < end.y; i++)
+    {
+        for (int j = start.x; j < end.x; j++)
+        {
+            array[i * app_width + j] = color_;
+        }
+    }
 }
-
-void Button::draw(Window *window)
-{
-    draw(window, center_);
-}
-
 
 bool Button::point_belonging(point point)
 {

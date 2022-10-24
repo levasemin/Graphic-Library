@@ -7,50 +7,44 @@ class Container : public Widget
 public:
 
     Color color_;
-    int border_;
 
-    Container(point center, int width, int height, const std::vector<Widget *> &widgets, const Color &color = Colors::Red, int border = 0): 
-        Widget(center, width, height),
+    Container(point center, int width, int height, Widget *parent_widget, const std::vector<Widget *> &widgets, const Color &color = Colors::Red): 
+        Widget(center, width, height, parent_widget),
         widgets_(widgets),
-        color_(color),
-        border_(border)
+        color_(color)
         {};
 
     std::vector<Widget *> widgets_;
-    void draw(Window *) override;
-    void draw(Window *, point center);
+    void draw(Color *array, int app_width) override;
     bool point_belonging(point point) override;
 };
 
-void Container::draw(Window *window, point center)
+void Container::draw(Color *array, int app_width)
 {
-    sf::RectangleShape field_(sf::Vector2f(width_, height_)); 
-    field_.setPosition(center.x - width_ / 2, center.y - height_ / 2);
-    field_.setFillColor(color_.get_sf_color());        
+    point parent_start = {parent_widget_->center_.x - parent_widget_->width_ / 2, parent_widget_->center_.y - parent_widget_->height_ / 2};
+    
+    point start = {parent_start.x + center_.x - width_ / 2, parent_start.y + center_.y - height_ / 2};
+    point end   = {parent_start.x + center_.x + width_ / 2, parent_start.y + center_.y + height_ / 2};
 
-    window->window_.draw(field_);
+    for (int i = start.y; i < end.y; i++)
+    {
+        for (int j = start.x; j < end.x; j++)
+        {
+            array[i * app_width + j] = color_;
+        }
+    }       
 
     if (widgets_.size() == 0)
     {
         return;
     }
 
-    point new_center = {center.x, center.y - height_ / 2 + border_};
-
     for (int i = 0; i < widgets_.size(); i++)
     {
-        new_center = {new_center.x, new_center.y + widgets_[i]->height_ / 2};
-
-        widgets_[i]->draw(window, new_center);
-
-        new_center = {new_center.x, new_center.y + widgets_[i]->height_ / 2 + border_};
+        widgets_[i]->draw(array, app_width);
     }
 }
 
-void Container::draw(Window *window)
-{
-    draw(window, center_);
-}
 
 bool Container::point_belonging(point point)
 {
