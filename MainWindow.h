@@ -6,43 +6,83 @@
 class MainWindow : public Widget
 {
 public:
+    point center_;
+    int width_;
+    int height_;
     Color color_;
 
-    MainWindow(int width, int height, int style = sf::Style::Default, Color color = Colors::White) :  
-        Widget({width / 2, height / 2}, width, height, nullptr),
-        color_(color)
+    Color *field_;
+    MainWindow *parent_;
+    std::vector<MainWindow *> children_ = {};
+
+    MainWindow(int width, int height, point center = {-1, -1}, Color color = Colors::White, int style = sf::Style::Default, MainWindow *parent = nullptr):
+        Widget{},
+        width_(width),
+        height_(height),
+        color_(color),
+        center_(center),
+        parent_(parent)
         {
-            field_ = (Color *)calloc(width * height, sizeof(Color));
+            if (center.x == -1 && center.y == -1)
+            {
+                center_ = {width / 2, height / 2};
+            }
+
+            if (parent == nullptr)
+            {
+                field_ = (Color *)calloc(width * height, sizeof(Color));
+            }
+            
+            else
+            {
+                field_ = parent->field_;
+            }
         };
 
-    Color *field_;
-
-    bool point_belonging(point point) override
+    virtual bool point_belonging(point point) const
     {
-        return abs(point.x - center_.x) < width_ / 2 && abs(point.y - center_.y) < height_ / 2;
+        return point.x < width_ && point.y < height_;
     }
 
-    void draw(Color *field, int app_width) override
+    virtual void draw(int app_width)
     {    
-        point start = {center_.x - width_ / 2, center_.y - height_ / 2};
-        point end   = {center_.x + width_ / 2, center_.y + height_ / 2};
-
-        for (int i = start.y; i < end.y; i++)
+        for (int i = 0; i < height_; i++)
         {
-            for (int j = start.x; j < end.x; j++)
+            for (int j = 0; j < width_; j++)
             {
                 field_[i * width_ + j] = color_;
             }
         }
 
-        for (int i = 0; i < child_widgets_.size(); i++)
+        for (int i = 0; i < children_.size(); i++)
         {
-            child_widgets_[i]->draw(field_, width_);
+            children_[i]->draw(width_);
         }
     }
 
-    void add(Widget *widget) override
+    virtual void add(MainWindow *window)
     {
-        child_widgets_.push_back(widget);
+        window->parent_ = this;
+        children_.push_back(window);
+
+        free(window->field_);
+        window->field_ = field_;
+
+        set_field(window);
+    }
+
+    void set_field(MainWindow *window)
+    {
+        for (int i = 0; i < window->children_.size(); i++)
+        {
+            if (window->children_[i]->field_ == nullptr)
+            {
+                printf("EHE\n");
+            }
+            
+            window->children_[i]->field_ = window->field_;
+
+            set_field(window->children_[i]);
+        }
     }
 };

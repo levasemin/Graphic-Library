@@ -1,39 +1,36 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-class A
+class Widget
 {
 public:
-    int a = 10;
 
-    virtual void printfda() = 0;
+    virtual void function(int x) = 0;
 };
 
-class B : public A
+class MainWindow : public Widget
 {
 public:
-    int b = 20;
-    
-    void printfda() override
+    void function(int x) override
     {
-        std::cout << b;
+        std::cout << "MainWindow" << std::endl;
     }
-    
-};
+}; 
 
-
-void func()
+class Button : public MainWindow
 {
-    std::cout << "Hello" << std::endl;
-}
+    public:
+    void (*function_)(int x); 
+
+    void function(int x)
+    {
+        function_(x);
+    }
+};
 
 int main()
 {
-    
-    B object;
-    B object1(object);
-
-    A *pointer = (A *)&object;
-
-    pointer->printfda();
+    Button butt{};
+    butt.(*func)(5);
+    butt.function(5);
 }

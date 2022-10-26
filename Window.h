@@ -24,6 +24,7 @@ public:
             } 
         };
     
+    sf::Event event_;
     sf::Vertex *texture_ = nullptr;
     MainWindow *main_window_;
 

@@ -2,17 +2,18 @@
 
 #include "Color.h"
 #include "Widget.h"
+#include "MainWindow.h"
 #include "Handlers.h"
 #include "math.h"
 
-class Button : public Widget
+class Button : public MainWindow
 {
 public:
     char text_[120];
     Color color_;
 
-    Button(point center, int width, int height, Widget *parent_widget, const Color &color = Colors::White, const char *text = "") : 
-        Widget(center, width, height, parent_widget),
+    Button(point center, int width, int height, const Color &color = Colors::White, const char *text = "", MainWindow *parent = nullptr) : 
+        MainWindow(width, height, center, color, sf::Style::Default, parent),
         color_(color)
         {
             for(int i = 0; text[i] != '\0' && i < 120; i++)
@@ -21,18 +22,14 @@ public:
             }
         };
     
-    bool point_belonging(point point) override;
-    void draw(Color *array, int app_width) override;
-    void add(Widget *widget) override
-    {
-        child_widgets_.push_back(widget);
-    }
+    bool point_belonging(point point) const override;
+    void draw(int app_width) override;
 };
 
 
-void Button::draw(Color *array, int app_width)
+void Button::draw(int app_width)
 {    
-    point parent_start = {parent_widget_->center_.x - parent_widget_->width_ / 2, parent_widget_->center_.y - parent_widget_->height_ / 2};
+    point parent_start = {parent_->center_.x - parent_->width_ / 2, parent_->center_.y - parent_->height_ / 2};
     
     point start = {parent_start.x + center_.x - width_ / 2, parent_start.y + center_.y - height_ / 2};
     point end   = {parent_start.x + center_.x + width_ / 2, parent_start.y + center_.y + height_ / 2};
@@ -41,12 +38,12 @@ void Button::draw(Color *array, int app_width)
     {
         for (int j = start.x; j < end.x; j++)
         {
-            array[i * app_width + j] = color_;
+            field_[i * app_width + j] = color_;
         }
     }
 }
 
-bool Button::point_belonging(point point)
+bool Button::point_belonging(point point) const 
 {
-    return abs(point.x - center_.x) < width_ / 2 && abs(point.y - center_.y) < height_ / 2;
+    return abs(point.x - center_.x - parent_->center_.x + parent_->width_ / 2) < width_ / 2 && abs(point.y - center_.y - parent_->center_.y + parent_->height_ / 2) < height_ / 2;
 }
