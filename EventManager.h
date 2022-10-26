@@ -2,20 +2,19 @@
 
 #include <SFML/Graphics.hpp>
 #include "Window.h"
-#include "Event.h"
 
 
 template<class ...TParams>
-void give_event(MainWindow *window, Event<TParams ...> Widget::*event, TParams ...params)
+void give_event(MainWindow *window, void (MainWindow::*method)(TParams ...), TParams ...params)
 {
     for (int i = 0; i < window->children_.size(); i++)
     {
-        give_event<TParams ...>(window->children_[i], event, params ...);
-        ((window->children_[i])->*event)(params ...);
+        give_event<TParams ...>(window->children_[i], method, params ...);
+        ((window->children_[i])->*method)(params ...);
     }
 }
 
-MainWindow *get_clicked_window(MainWindow *window, point point);
+MainWindow *get_clicked_window(MainWindow *window, Vector2d point);
 
 class EventManager
 {
@@ -31,19 +30,18 @@ void EventManager::distribute_event(MainWindow *window, sf::Event event)
     {   
         case sf::Event::MouseButtonPressed:
         {
-            point place = {event.mouseButton.x, event.mouseButton.y};
+            Vector2d point(event.mouseButton.x, event.mouseButton.y);
 
             if (event.mouseButton.button == sf::Mouse::Left)
             {   
-                get_clicked_window(window, place)->ClickLeftEvent_(window, place);
-                give_event(window, &Widget::MissClickLeftEvent_, (Widget *)window, place);
+                get_clicked_window(window, point)->ClickLeftEvent(point);
+                give_event(window, &MainWindow::MissClickLeftEvent, point);
             }
 
             if (event.mouseButton.button == sf::Mouse::Right)
             {                     
-                get_clicked_window(window, place)->ClickRightEvent_(window, place);
-   
-                give_event(window, &Widget::MissClickRightEvent_, (Widget *)window, place);
+                get_clicked_window(window, point)->ClickRightEvent(point);
+                give_event(window, &MainWindow::MissClickRightEvent, point);
             }
 
             break;
@@ -53,7 +51,7 @@ void EventManager::distribute_event(MainWindow *window, sf::Event event)
         {
             int key = event.key.code;
             
-            give_event(window, &Widget::PressKeyEvent_, (Widget *)window, key);
+            give_event(window, &MainWindow::PressKeyEvent, key);
 
             break;
         }
@@ -79,7 +77,7 @@ void EventManager::distribute_event(Window *window)
     }
 }
 
-MainWindow *get_clicked_window(MainWindow *window, point point)
+MainWindow *get_clicked_window(MainWindow *window, Vector2d point)
 {
     MainWindow *clicked_window = nullptr;
     

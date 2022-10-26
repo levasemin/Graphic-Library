@@ -11,15 +11,15 @@ public:
     sf::RenderWindow window_;
 
     Window(MainWindow *main_window):
-        window_(sf::VideoMode(main_window->width_, main_window->height_), "Vectors"),
+        window_(sf::VideoMode(main_window->shape_.x_, main_window->shape_.y_), "Vectors"),
         main_window_(main_window)
         {
-            texture_ = (sf::Vertex *)calloc((main_window_->width_ * main_window_->height_), sizeof(sf::Vertex));
-            for(int y = 0; y < main_window_->height_; y++)
+            texture_ = (sf::Vertex *)calloc((main_window->shape_.x_ * main_window->shape_.y_), sizeof(sf::Vertex));
+            for(int y = 0; y < main_window->shape_.y_; y++)
             {
-                for(int x = 0; x < main_window_->width_; x++)
+                for(int x = 0; x < main_window->shape_.x_; x++)
                 {
-                    texture_[y * main_window_->width_ + x] = sf::Vertex(sf::Vector2f(x, y), sf::Color::Black);
+                    texture_[y * (int)main_window->shape_.x_ + x] = sf::Vertex(sf::Vector2f(x, y), sf::Color::Black);
                 }
             } 
         };

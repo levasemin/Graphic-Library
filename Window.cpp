@@ -40,15 +40,15 @@ void Window::close()
 
 void Window::display()
 {
-    for (int i = 0; i < main_window_->height_; i++)
+    for (int i = 0; i < main_window_->shape_.y_; i++)
     {
-        for (int j = 0; j < main_window_->width_; j++)
+        for (int j = 0; j < main_window_->shape_.x_; j++)
         {
-            texture_[i * main_window_->width_ + j].color = main_window_->field_[i * main_window_->width_ + j].get_sf_color();
+            texture_[i * (int)main_window_->shape_.x_ + j].color = main_window_->field_[i * (int)main_window_->shape_.x_ + j].get_sf_color();
         }
     }
 
-    window_.draw(texture_, main_window_->width_ * main_window_->height_, sf::Points);
+    window_.draw(texture_, main_window_->shape_.x_ * main_window_->shape_.y_, sf::Points);
     window_.display();
 }
 

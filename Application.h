@@ -5,7 +5,6 @@
 #include "Widget.h"
 #include "constants.h"
 #include "MainWindow.h"
-#include "Event.h"
 #include "EventManager.h"
 #include <SFML/Graphics.hpp>
 
@@ -13,8 +12,8 @@
 class Application
 {
     public: 
-        Application(int width, int height):
-            main_window_(width, height, {width / 2, height / 2}),
+        Application(Vector2d shape):
+            main_window_(shape, shape / 2),
             window_(&main_window_)
             {};
         Application(const MainWindow &window):
@@ -48,7 +47,7 @@ void Application::exec()
 {        
     while(window_.isOpen())
     {
-        main_window_.draw(main_window_.width_);
+        main_window_.draw(main_window_.shape_.x_);
         
         event_manager_.distribute_event(&window_);
 

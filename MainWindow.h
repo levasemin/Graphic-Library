@@ -2,35 +2,34 @@
 
 #include "Widget.h"
 #include "Color.h"
+#include "Vector2d.h"
 
 class MainWindow : public Widget
 {
 public:
-    point center_;
-    int width_;
-    int height_;
+    Vector2d center_;
+    Vector2d shape_;
     Color color_;
 
     Color *field_;
     MainWindow *parent_;
     std::vector<MainWindow *> children_ = {};
 
-    MainWindow(int width, int height, point center = {-1, -1}, Color color = Colors::White, int style = sf::Style::Default, MainWindow *parent = nullptr):
+    MainWindow(Vector2d shape, Vector2d center = {-1, -1}, Color color = Colors::White, int style = sf::Style::Default, MainWindow *parent = nullptr):
         Widget{},
-        width_(width),
-        height_(height),
+        shape_(shape),
         color_(color),
         center_(center),
         parent_(parent)
         {
-            if (center.x == -1 && center.y == -1)
+            if (center.x_ == -1 && center.y_ == -1)
             {
-                center_ = {width / 2, height / 2};
+                center_ = shape_ / 2;
             }
 
             if (parent == nullptr)
             {
-                field_ = (Color *)calloc(width * height, sizeof(Color));
+                field_ = (Color *)calloc(shape.x_ * shape.y_, sizeof(Color));
             }
             
             else
@@ -39,24 +38,43 @@ public:
             }
         };
 
-    virtual bool point_belonging(point point) const
+    void set_field(MainWindow *window, Vector2d offset)
     {
-        return point.x < width_ && point.y < height_;
+        for (int i = 0; i < window->children_.size(); i++)
+        {
+            window->children_[i]->center_ += offset;
+            window->children_[i]->field_ = window->field_;
+
+            set_field(window->children_[i], offset);
+        }
+    }
+
+    void ClickLeftEvent     (Vector2d point)   override {};
+    void MissClickLeftEvent (Vector2d point)   override {};
+    void ClickRightEvent    (Vector2d point)   override {};
+    void MissClickRightEvent(Vector2d point)   override {};
+    void PressKeyEvent      (int key)       override {};
+    void ScrollEvent        (double offset) override {};
+    void Close              ()              override {};
+
+    virtual bool point_belonging(Vector2d point) const
+    {
+        return point.x_ < shape_.x_ && point.y_ < shape_.y_;
     }
 
     virtual void draw(int app_width)
     {    
-        for (int i = 0; i < height_; i++)
+        for (int i = 0; i < shape_.y_; i++)
         {
-            for (int j = 0; j < width_; j++)
+            for (int j = 0; j < shape_.x_; j++)
             {
-                field_[i * width_ + j] = color_;
+                field_[i * (int)shape_.x_ + j] = color_;
             }
         }
 
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->draw(width_);
+            children_[i]->draw(shape_.x_);
         }
     }
 
@@ -67,22 +85,9 @@ public:
 
         free(window->field_);
         window->field_ = field_;
-
-        set_field(window);
-    }
-
-    void set_field(MainWindow *window)
-    {
-        for (int i = 0; i < window->children_.size(); i++)
-        {
-            if (window->children_[i]->field_ == nullptr)
-            {
-                printf("EHE\n");
-            }
-            
-            window->children_[i]->field_ = window->field_;
-
-            set_field(window->children_[i]);
-        }
+        
+        Vector2d offset = center_ - shape_ / 2;
+        window->center_ +=  offset;
+        set_field(window, offset);
     }
 };

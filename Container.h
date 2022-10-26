@@ -3,6 +3,7 @@
 #include "Color.h"
 #include "Window.h"
 #include "Widget.h"
+#include "Vector2d.h"
 
 class Container : public MainWindow
 {
@@ -10,27 +11,23 @@ public:
 
     Color color_;
 
-    Container(point center, int width, int height, const Color &color = Colors::Red, MainWindow *parent = nullptr, const std::vector<Widget *> &widgets = {}): 
-        MainWindow(width, height, center, color, sf::Style::Default, parent),
-        color_(color),
-        center_(center)
+    Container(Vector2d shape, Vector2d center, const Color &color = Colors::Red, MainWindow *parent = nullptr, const std::vector<Widget *> &widgets = {}): 
+        MainWindow(shape, center, color, sf::Style::Default, parent),
+        color_(color)
         {};
 
-    point center_;
     void draw(int app_width) override;
-    bool point_belonging(point point) const override;
+    bool point_belonging(Vector2d point) const override;
 };
 
 void Container::draw(int app_width)
 {
-    point parent_start = {parent_->center_.x - parent_->width_ / 2, parent_->center_.y - parent_->height_ / 2};
-    
-    point start = {parent_start.x + center_.x - width_ / 2, parent_start.y + center_.y - height_ / 2};
-    point end   = {parent_start.x + center_.x + width_ / 2, parent_start.y + center_.y + height_ / 2};
+    Vector2d start = center_ - shape_ / 2;
+    Vector2d end   = center_ + shape_ / 2;
 
-    for (int i = start.y; i < end.y; i++)
+    for (int i = start.y_; i < end.y_; i++)
     {
-        for (int j = start.x; j < end.x; j++)
+        for (int j = start.x_; j < end.x_; j++)
         {
             field_[i * app_width + j] = color_;
         }
@@ -48,9 +45,9 @@ void Container::draw(int app_width)
 }
 
 
-bool Container::point_belonging(point point) const
+bool Container::point_belonging(Vector2d point) const
 {
-    return abs(point.x - center_.x) < width_ / 2 && abs(point.y - center_.y) < height_ / 2;
+    return abs(point.x_ - center_.x_) < shape_.x_ / 2 && abs(point.y_ - center_.y_) < shape_.y_ / 2;
 }
 
 
