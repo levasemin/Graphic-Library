@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MainWindow.h"
+#include "VirtualWindow.h"
 #include "Color.h"
 #include <SFML/Graphics.hpp>
 
@@ -10,7 +10,7 @@ class Window
 public:
     sf::RenderWindow window_;
 
-    Window(MainWindow *main_window):
+    Window(VirtualWindow *main_window):
         window_(sf::VideoMode(main_window->shape_.x_, main_window->shape_.y_), "Vectors"),
         main_window_(main_window)
         {
@@ -26,7 +26,7 @@ public:
     
     sf::Event event_;
     sf::Vertex *texture_ = nullptr;
-    MainWindow *main_window_;
+    VirtualWindow *main_window_;
 
     void draw(const sf::Vertex *vertices, std::size_t VertexCount, sf::PrimitiveType type, const sf::RenderStates &states = sf::RenderStates::Default);
     void draw(const sf::Drawable &drawable,                                                const sf::RenderStates &states = sf::RenderStates::Default);

@@ -7,7 +7,7 @@ class Vector2d
 public:
     double x_, y_;
 
-    Vector2d(double x, double y): 
+    Vector2d(double x = 0, double y = 0): 
         x_(x),
         y_(y)
         {};

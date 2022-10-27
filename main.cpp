@@ -1,8 +1,10 @@
-#include "Window.h"
+#include "VirtualWindow.h"
 #include "MainWindow.h"
 #include "Widget.h"
 #include "Button.h"
 #include "Container.h"
+#include "ScrollContainer.h"
+#include "ScrollBar.h"
 #include "constants.h"
 #include "Application.h"
 #include <iostream>
@@ -21,17 +23,17 @@ void right_click(Button *self, Vector2d point)
 
 
 
-void left_click(MainWindow *self, Vector2d point)
+void left_click(VirtualWindow *self, Vector2d point)
 {
     std::cout << "Window" << " " << point.x_ << " " << point.y_ << std::endl;
 }
 
-void right_click(MainWindow *self, Vector2d point)
+void right_click(VirtualWindow *self, Vector2d point)
 {
     std::cout << point.x_ << " " << point.y_ << "Window" << std::endl; 
 }
 
-void press_key(MainWindow *self, int key)
+void press_key(VirtualWindow *self, int key)
 {
     std::cout << "Window key " << key << std::endl;
 }
@@ -59,9 +61,11 @@ int main()
     
     std::vector<Widget *> buttons();
 
-    MainWindow main_window(Vector2d(WIDTH, HEIGHT));
-        
-    Container container(Vector2d(100, 400), Vector2d(300, 250), Colors::Black);
+    MainWindow main_window(Vector2d(WIDTH, HEIGHT), Colors::Green);
+
+    ScrollBar scrollbar(Vector2d(20, 400), Vector2d(10, 200), Colors::Blue);
+            
+    ScrollContainer container(Vector2d(100, 400), Vector2d(300, 250), Colors::Black);
 
     Button first_button (Vector2d(100, 50), Vector2d(50, 35), Colors::Yellow, "First");
 
@@ -79,8 +83,10 @@ int main()
     container.add(&first_button);
     container.add(&second_button);
     container.add(&third_button);
+    container.set_scroll_bar(&scrollbar);
+    std::cout <<std::endl << container.children_.size();
+ 
     main_window.add(&container);
-    container.center_.print_value();
     
     app.add(main_window);
     app.exec();

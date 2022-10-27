@@ -2,18 +2,18 @@
 
 #include "Color.h"
 #include "Widget.h"
-#include "MainWindow.h"
+#include "VirtualWindow.h"
 #include "math.h"
 #include "Vector2d.h"
 
-class Button : public MainWindow
+class Button : public VirtualWindow
 {
 public:
     char text_[120];
     Color color_;
     
-    Button(Vector2d shape, Vector2d center, const Color &color = Colors::White, const char *text = "", MainWindow *parent = nullptr) : 
-        MainWindow(shape, center, color, sf::Style::Default, parent),
+    Button(Vector2d shape, Vector2d center, const Color &color = Colors::White, const char *text = "", VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}) : 
+        VirtualWindow(shape, center, color, parent, children),
         color_(color)
         {
             for(int i = 0; text[i] != '\0' && i < 120; i++)
@@ -32,6 +32,11 @@ public:
         miss_left_click_func_ = miss_left_click_func_;
     }
 
+    void set_left_released  (void (*new_left_released_func_)(Button *self, Vector2d point))
+    {
+        left_released_func_ = new_left_released_func_;
+    }
+
     void set_right_click      (void (*new_right_click_func_)(Button *self, Vector2d point))
     {
         right_click_func_ = new_right_click_func_;
@@ -42,22 +47,28 @@ public:
         miss_right_click_func_ = new_miss_right_click_func_;
     }
 
+    void set_right_released  (void (*new_right_released_func_)(Button *self, Vector2d point))
+    {
+        right_released_func_ = new_right_released_func_;
+    }
+
     void ClickLeftEvent     (Vector2d point)   override;
     void MissClickLeftEvent (Vector2d point)   override;
+    void ReleasedLeftEvent  (Vector2d point)   override;
     void ClickRightEvent    (Vector2d point)   override;
     void MissClickRightEvent(Vector2d point)   override;
+    void ReleasedRightEvent (Vector2d point)   override;
     void PressKeyEvent      (int key)       override;
-    void ScrollEvent        (double offset) override;
+    void ScrollEvent        (Vector2d point, double offset) override;
     void Close              ()              override;
-
-    bool point_belonging(Vector2d point) const override;
-    void draw(int app_width) override;
 
 private:
     void (*left_click_func_)      (Button *self, Vector2d point) = nullptr;
     void (*miss_left_click_func_) (Button *self, Vector2d point) = nullptr;
+    void (*left_released_func_)   (Button *self, Vector2d point) = nullptr;
     void (*right_click_func_)     (Button *self, Vector2d point) = nullptr;
     void (*miss_right_click_func_)(Button *self, Vector2d point) = nullptr;
+    void (*right_released_func_)  (Button *self, Vector2d point) = nullptr;
 };
 
 
@@ -74,6 +85,22 @@ void Button::MissClickLeftEvent  (Vector2d point)
     if (miss_left_click_func_ != nullptr)
     {
         (*miss_left_click_func_)(this, point);
+    }
+}
+
+void Button::ReleasedLeftEvent (Vector2d point)
+{
+    if (left_released_func_ != nullptr)
+    {
+        (*left_released_func_)(this, point);
+    }
+}
+
+void Button::ReleasedRightEvent (Vector2d point)
+{
+    if (right_released_func_ != nullptr)
+    {
+        (*right_released_func_)(this, point);
     }
 }
 
@@ -98,7 +125,7 @@ void Button::PressKeyEvent (int key)
 
 }
 
-void Button::ScrollEvent         (double offset)
+void Button::ScrollEvent (Vector2d point, double offset)
 {
 
 }
@@ -106,23 +133,4 @@ void Button::ScrollEvent         (double offset)
 void Button::Close()
 {
 
-}
-
-void Button::draw(int app_width)
-{        
-    Vector2d start = center_ - shape_ / 2;
-    Vector2d end   = center_ + shape_ / 2;
-
-    for (int i = start.y_; i < end.y_; i++)
-    {
-        for (int j = start.x_; j < end.x_; j++)
-        {
-            field_[i * app_width + j] = color_;
-        }
-    }
-}
-
-bool Button::point_belonging(Vector2d point) const 
-{
-    return abs(point.x_ - center_.x_) < shape_.x_ / 2 && abs(point.y_ - center_.y_) < shape_.y_ / 2;
 }

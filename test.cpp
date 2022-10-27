@@ -1,36 +1,29 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
-
-class Widget
-{
-public:
-
-    virtual void function(int x) = 0;
-};
-
-class MainWindow : public Widget
-{
-public:
-    void function(int x) override
-    {
-        std::cout << "MainWindow" << std::endl;
-    }
-}; 
-
-class Button : public MainWindow
+class A
 {
     public:
-    void (*function_)(int x); 
-
-    void function(int x)
-    {
-        function_(x);
-    }
+        virtual void a() {};
 };
+
+class B : public A
+{
+    public:
+        A el;
+        void a() override {};
+};
+
+template <class type>
+void my_function(A* my_a)
+{
+	B* my_b = dynamic_cast<type*>(my_a);
+
+	if (my_b == nullptr)
+	    std::cout << "Этот объект не является объектом типа B" << std::endl;    
+}
 
 int main()
 {
-    Button butt{};
-    butt.(*func)(5);
-    butt.function(5);
+    B object_b;
+
+    my_function<B>((A *)&object_b);
 }
