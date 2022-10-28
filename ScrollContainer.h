@@ -37,4 +37,17 @@ public:
             children_[i]->set_offset(offset);
         }
     }
+
+    void ScrollEvent (Vector2d point, double offset) override
+    {
+        if (scroll_bar_)
+        {
+            scroll_bar_->ScrollEvent(point, offset);
+        }
+
+        else
+        {
+            ScrollVirtualWindow::ScrollEvent(point, offset);
+        }
+    }
 };

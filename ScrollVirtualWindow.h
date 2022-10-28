@@ -8,6 +8,7 @@
 class ScrollVirtualWindow : public VirtualWindow
 {
 public:
+
     ScrollVirtualWindow(Vector2d shape, Vector2d center = {-1, -1}, Color color = Colors::White, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
         VirtualWindow(shape, center, color, parent, children)
         {

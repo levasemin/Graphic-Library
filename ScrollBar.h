@@ -69,6 +69,14 @@ public:
                 click_place_ = point;
             }
         };
+
+        void ScrollEvent(Vector2d point, double offset) override
+        {
+            if (parent_)
+            {
+                scroll(offset);
+            }
+        }
 };
 
 void clicked_button_up(Button *self, Vector2d point)

@@ -55,7 +55,6 @@ public:
     virtual void set_offset(Vector2d offset)
     {
         center_ += offset;
-
         resize_field();
 
         for (int i = 0; i < children_.size(); i++)
