@@ -10,11 +10,9 @@ class Button : public VirtualWindow
 {
 public:
     char text_[120];
-    Color color_;
     
     Button(Vector2d shape, Vector2d center, const Color &color = Colors::White, const char *text = "", VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}) : 
-        VirtualWindow(shape, center, color, parent, children),
-        color_(color)
+        VirtualWindow(shape, center, color, parent, children)
         {
             for(int i = 0; text[i] != '\0' && i < 120; i++)
             {

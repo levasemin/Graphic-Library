@@ -24,9 +24,9 @@ public:
     
     ScrollBar(Vector2d shape, Vector2d center = {-1, -1}, Color color = Colors::White, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
         ScrollVirtualWindow  (shape, center, color, parent, children),
-        button_up_    (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, center.y_ - shape.y_ / 2 + shape.x_ / 2)),
-        button_down_  (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, center.y_ + shape.y_ / 2 - shape.x_ / 2)),
-        button_scroll_(Vector2d(shape.x_, shape.x_), Vector2d(center.x_, center.y_ - shape.y_ / 2 + shape.x_ + 5))
+        button_up_    (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, start_field_.y_ + shape.x_ / 2)),
+        button_down_  (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, end_field_.y_   - shape.x_ / 2)),
+        button_scroll_(Vector2d(shape.x_, shape.x_), Vector2d(center.x_, start_field_.y_ + shape.x_ * 1.5), Colors::Red)
         {
             add(&button_up_);
             button_up_.set_left_click(&clicked_button_up);
@@ -39,11 +39,25 @@ public:
 
         void scroll(double offset)
         {
-            button_scroll_.center_.y_ += offset;
-                
+            if ((button_up_.end_field_.y_     >= button_scroll_.start_field_.y_ + offset && offset < 0)|| 
+                (button_down_.start_field_.y_ <= button_scroll_.end_field_.y_   + offset && offset > 0))
+            {
+                return;
+            }
+
+            button_scroll_.set_offset(Vector2d(0, offset));
+            
             if (parent_ != nullptr)
             {
-                parent_->set_offset(Vector2d(0, offset));
+                for (int i = 0; i < parent_->children_.size(); i++)
+                {
+                    if (parent_->children_[i] == this)
+                    {
+                        continue;
+                    }
+                    
+                    parent_->children_[i]->set_offset(Vector2d(0, offset));
+                }
             }
         }
 

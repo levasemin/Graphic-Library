@@ -12,17 +12,17 @@ VirtualWindow *get_chosen_window(VirtualWindow *window, Vector2d point)
     {
         chosen_window = window;
     }
-
-    for (int i = 0; i < window->children_.size(); i++)
+    
+    for (int i = 0; i < window->displayed_children_.size(); i++)
     {
-        VirtualWindow *chosen_child = get_chosen_window<InheritanceClass>(window->children_[i], point);
+        VirtualWindow *chosen_child = get_chosen_window<InheritanceClass>(window->displayed_children_[i], point);
 
         if (chosen_child != nullptr)
         {
             chosen_window = chosen_child;
         }
     }
-
+    
     return chosen_window;
 }
 
@@ -56,13 +56,23 @@ void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
 
             if (event.mouseButton.button == sf::Mouse::Left)
             {   
-                get_chosen_window<VirtualWindow>(window, point)->ClickLeftEvent(point);
+                VirtualWindow *chosen_window = get_chosen_window<VirtualWindow>(window, point);
+                if (chosen_window)
+                {
+                    chosen_window->ClickLeftEvent(point);
+                }
+
                 give_event(window, &VirtualWindow::MissClickLeftEvent, point);
             }
 
             if (event.mouseButton.button == sf::Mouse::Right)
             {                     
-                get_chosen_window<VirtualWindow>(window, point)->ClickRightEvent(point);
+                VirtualWindow *chosen_window = get_chosen_window<VirtualWindow>(window, point);
+                if (chosen_window)
+                {
+                    chosen_window->ClickRightEvent(point);
+                }
+
                 give_event(window, &VirtualWindow::MissClickRightEvent, point);
             }
 
@@ -82,7 +92,12 @@ void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
         {
             double offset  = event.mouseWheelScroll.delta;
             Vector2d point = Vector2d(event.mouseWheelScroll.x, event.mouseWheelScroll.y);
-            get_chosen_window<ScrollVirtualWindow>(window, point)->ScrollEvent(point, offset);
+            VirtualWindow *chosen_window = get_chosen_window<ScrollVirtualWindow>(window, point);
+            
+            if (chosen_window)
+            {
+                chosen_window->ScrollEvent(point, offset);
+            }
 
             break;
         }
@@ -90,8 +105,11 @@ void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
         case sf::Event::MouseMoved:
         {
             Vector2d point(event.mouseMove.x, event.mouseMove.y);
-            get_chosen_window<VirtualWindow>(window, point)->MoveMouse(point);
-
+            VirtualWindow *chosen_window = get_chosen_window<VirtualWindow>(window, point);
+            if (chosen_window)
+            {
+                chosen_window->MoveMouse(point);
+            }
             break;
         }
 
@@ -109,6 +127,8 @@ void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
             {
                 give_event(window, &VirtualWindow::ReleasedRightEvent, point);            
             }
+
+            break;
         }
 
         default:

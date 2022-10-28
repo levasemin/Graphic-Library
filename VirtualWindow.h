@@ -9,6 +9,9 @@ class VirtualWindow : public Widget
 public:
     Vector2d center_;
     Vector2d shape_;
+    Vector2d start_field_;
+    Vector2d end_field_;
+
     Color color_;
 
     Color *field_;
@@ -44,15 +47,19 @@ public:
             {
                 add(children_[i]);
             }
+
+            resize_field();
         };
 
     
     virtual void set_offset(Vector2d offset)
     {
+        center_ += offset;
+
+        resize_field();
+
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->center_ += offset;
-
             children_[i]->set_offset(offset);
         }
     }
@@ -81,26 +88,30 @@ public:
 
     virtual bool point_belonging(Vector2d point) const
     {
-        return abs(point.x_ - center_.x_) < shape_.x_ / 2 && abs(point.y_ - center_.y_) < shape_.y_ / 2;
+        return start_field_.x_ < point.x_ && point.x_ < end_field_.x_ &&
+               start_field_.y_ < point.y_ && point.y_ < end_field_.y_;
     }
 
-    virtual void draw(int app_width)
-    {  
-        Vector2d start = center_ - shape_ / 2;
-        Vector2d end   = center_ + shape_ / 2;
+    void resize_field()
+    {
+        start_field_ = center_ - shape_ / 2;
+        end_field_   = center_ + shape_ / 2;
         
         Vector2d down_limit  = parent_ != nullptr ? parent_->center_ - parent_->shape_ / 2 : Vector2d(0, 0);
         Vector2d hight_limit = parent_ != nullptr ? parent_->center_ + parent_->shape_ / 2 : Vector2d(shape_.x_, shape_.y_);
 
-        start.x_ = start.x_ < down_limit.x_ ? down_limit.x_ : start.x_;
-        start.y_ = start.y_ < down_limit.y_ ? down_limit.y_ : start.y_;
+        start_field_.x_ = start_field_.x_ < down_limit.x_ ? down_limit.x_ : start_field_.x_;
+        start_field_.y_ = start_field_.y_ < down_limit.y_ ? down_limit.y_ : start_field_.y_;
 
-        end.x_ = end.x_ > hight_limit.x_ ? hight_limit.x_ : end.x_;
-        end.y_ = end.y_ > hight_limit.y_ ? hight_limit.y_ : end.y_;
-        
-        for (int i = start.y_; i < end.y_; i++)
+        end_field_.x_ = end_field_.x_ > hight_limit.x_ ? hight_limit.x_ : end_field_.x_;
+        end_field_.y_ = end_field_.y_ > hight_limit.y_ ? hight_limit.y_ : end_field_.y_;
+    }
+
+    virtual void draw(int app_width)
+    {   
+        for (int i = start_field_.y_; i < end_field_.y_; i++)
         {
-            for (int j = start.x_; j < end.x_; j++)
+            for (int j = start_field_.x_; j < end_field_.x_; j++)
             {
                 field_[i * app_width + j] = color_;
             }
@@ -121,8 +132,6 @@ public:
         window->field_ = field_;
         
         Vector2d offset = center_ - shape_ / 2;
-        window->center_ +=  offset;
-
         window->set_offset(offset);
         window->set_field();
 

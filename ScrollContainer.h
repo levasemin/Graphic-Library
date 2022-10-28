@@ -29,15 +29,11 @@ public:
     
     void set_offset(Vector2d offset) override
     {
-        for (int i = 0; i < children_.size(); i++)
-        {
-            if (children_[i] == scroll_bar_)
-            {
-                continue;
-            }
-            
-            children_[i]->center_ += offset;
+        center_ += offset;
+        resize_field();
 
+        for (int i = 0; i < children_.size(); i++)
+        {   
             children_[i]->set_offset(offset);
         }
     }

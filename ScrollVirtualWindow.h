@@ -36,13 +36,13 @@ public:
     void ScrollEvent (Vector2d point, double offset) override
     {
         displayed_children_.clear();
-        
-        this->set_offset(Vector2d(0, offset));
-        
+                
         for (int i = 0; i < children_.size(); i++)
-        {            
-            if (children_[i]->center_.x_ + children_[i]->shape_.x_ / 2 > center_.x_ - shape_.x_ / 2 &&
-                children_[i]->center_.x_ - children_[i]->shape_.x_ / 2 < center_.x_ + shape_.x_ / 2)
+        {
+            children_[i]->set_offset(Vector2d(0, offset));
+            
+            if (children_[i]->center_.y_ + children_[i]->shape_.y_ / 2 > center_.y_ - shape_.y_ / 2 &&
+                children_[i]->center_.y_ - children_[i]->shape_.y_ / 2 < center_.y_ + shape_.y_ / 2)
             {
                 displayed_children_.push_back(children_[i]);
             }
