@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Widget.h"
-#include "Color.h"
+#include "Texture.h"
 #include "Vector2d.h"
 #include "functions.h"
 
@@ -13,17 +13,17 @@ public:
     Vector2d start_field_;
     Vector2d end_field_;
 
-    Color color_;
+    Texture texture_;
 
     Color *field_;
     VirtualWindow *parent_;
     std::vector<VirtualWindow *> children_ = {};
     bool is_visible_ = false;
 
-    VirtualWindow(Vector2d shape, Vector2d center = {-1, -1}, Color color = Colors::White, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
+    VirtualWindow(Vector2d shape, Vector2d center, Texture texture, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
         Widget{},
         shape_(shape),
-        color_(color),
+        texture_(texture),
         center_(center),
         parent_(parent),
         children_(children)
@@ -35,7 +35,7 @@ public:
 
             if (parent == nullptr)
             {
-                field_ = (Color *)calloc(shape.x_ * shape.y_, sizeof(Color));
+                field_ = new Color[(int)(shape_.x_ * shape_.y_)]();
             }
             
             else
@@ -110,7 +110,9 @@ public:
         {
             for (int j = start_field_.x_; j < end_field_.x_; j++)
             {
-                field_[i * app_width + j] = color_;
+                int texture_index = (int)(i - (center_.y_ - shape_.y_ / 2)) * shape_.x_ + (int)(j - (center_.x_ - shape_.x_ / 2));
+
+                field_[i * app_width + j] = texture_[texture_index];
             }
         }
 

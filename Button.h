@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Color.h"
+#include "Texture.h"
 #include "Widget.h"
 #include "VirtualWindow.h"
 #include "math.h"
@@ -13,8 +13,8 @@ public:
     bool is_left_clicked_  = false;
     bool is_right_clicked_ = false;
     
-    Button(Vector2d shape, Vector2d center, const Color &color = Colors::White, const char *text = "", VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}) : 
-        VirtualWindow(shape, center, color, parent, children)
+    Button(Vector2d shape, Vector2d center, const Texture &texture, const char *text = "", VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}) : 
+        VirtualWindow(shape, center, texture, parent, children)
         {
             for(int i = 0; text[i] != '\0' && i < 120; i++)
             {

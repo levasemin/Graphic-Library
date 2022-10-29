@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VirtualWindow.h"
+#include "MainWindow.h"
 #include "Color.h"
 #include <SFML/Graphics.hpp>
 

@@ -2,18 +2,15 @@
 
 #include <vector>
 #include <iostream>
-#include "Widget.h"
-#include "constants.h"
 #include "VirtualWindow.h"
 #include "EventManager.h"
-#include <SFML/Graphics.hpp>
 
 
 class Application
 {
     public: 
         Application(Vector2d shape):
-            main_window_(shape, shape / 2),
+            main_window_(shape, shape / 2, Texture(shape, Colors::Black)),
             window_(&main_window_)
             {};
         Application(const VirtualWindow &window):

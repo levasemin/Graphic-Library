@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Texture.h"
 #include "VirtualWindow.h"
 #include "Button.h"
 
@@ -20,13 +21,16 @@ public:
     double scroll_button_coeff_size_;
     Vector2d click_place_;
     
-    ScrollBar(Vector2d shape, Vector2d center = {-1, -1}, Color color = Colors::White, double scroll_button_coeff_size = 15, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
-        VirtualWindow  (shape, center, color, parent, children),
+    ScrollBar(Vector2d shape, Vector2d center, Texture texture, double scroll_button_coeff_size = 10, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
+        VirtualWindow  (shape, center, texture, parent, children),
         scroll_button_coeff_size_(scroll_button_coeff_size),
-        up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, start_field_.y_ + shape.x_ / 2)),
-        down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, end_field_.y_   - shape.x_ / 2)),
+        up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, start_field_.y_ + shape.x_ / 2),
+                      Texture(Vector2d(shape.x_, shape.x_), Colors::White)),
+        down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, end_field_.y_   - shape.x_ / 2),
+                       Texture(Vector2d(shape.x_, shape.y_), Colors::White)),
         scroll_button_(Vector2d(shape.x_, (shape.y_ - shape.x_ * 2) / scroll_button_coeff_size),
-                       Vector2d(center.x_, start_field_.y_ + shape.x_ + shape_.y_ / scroll_button_coeff_size  / 2), Colors::Red)
+                       Vector2d(center.x_, start_field_.y_ + shape.x_ + shape_.y_ / scroll_button_coeff_size  / 2), 
+                       Texture(Vector2d(shape.x_, (shape.y_ - shape.x_ * 2) / scroll_button_coeff_size), Colors::Red))
         {
             add(&up_button_);
             up_button_.set_left_click(&clicked_up_button);
@@ -61,8 +65,8 @@ public:
 void clicked_up_button(Button *self, Vector2d point)
 {
     ScrollBar *parent = (ScrollBar *)self->parent_;
+    Vector2d offset = Vector2d(0, (parent->shape_.y_ - parent->shape_.x_ * 2) / parent->scroll_button_coeff_size_);
 
-    Vector2d offset = Vector2d(0, ((parent)->shape_.y_ - (parent->shape_.x_ * 2) / parent->scroll_button_coeff_size_));
     parent->ScrollEvent(point, offset);
 }
 
@@ -70,6 +74,7 @@ void clicked_down_button(Button *self, Vector2d point)
 {
     ScrollBar *parent = (ScrollBar *)self->parent_;
     Vector2d offset = Vector2d(0, -((parent->shape_.y_ - parent->shape_.x_ * 2) / parent->scroll_button_coeff_size_));
+
     parent->ScrollEvent(point, offset);
 }
 

@@ -3,7 +3,7 @@
 #include "Widget.h"
 #include "ScrollBar.h"
 #include "VirtualWindow.h"
-#include "Color.h"
+#include "Texture.h"
 #include "Vector2d.h"
 
 class ScrollVirtualWindow : public VirtualWindow
@@ -15,28 +15,9 @@ public:
     Vector2d global_end_field_    = 0;
     ScrollBar *scroll_bar_        = nullptr; 
 
-    ScrollVirtualWindow(Vector2d shape, Vector2d center = {-1, -1}, Color color = Colors::White, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
+    ScrollVirtualWindow(Vector2d shape, Vector2d center, Texture color, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
         VirtualWindow(shape, center, color, parent, children)
         {
-            if (center.x_ == -1 && center.y_ == -1)
-            {
-                center_ = shape_ / 2;
-            }
-
-            if (parent == nullptr)
-            {
-                field_ = (Color *)calloc(shape.x_ * shape.y_, sizeof(Color));
-            }
-            
-            else
-            {
-                field_ = parent->field_;
-            }
-
-            for (int i = 0; i < children_.size(); i++)
-            {
-                add(children_[i]);
-            }
         };
 
     void set_scroll_bar(ScrollBar *new_scroll_bar)
