@@ -326,6 +326,9 @@ Color::Color (int r, int g, int b): r_(r), g_(g), b_(b)
     this->claim();
 };
 
+Color::Color (sf::Color color) : Color(color.r, color.g, color.b)
+{}
+
 Color::Color (double r_rel, double g_rel, double b_rel): r_rel_(r_rel), g_rel_(g_rel), b_rel_(b_rel)
 {
     this->claim();

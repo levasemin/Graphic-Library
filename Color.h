@@ -13,6 +13,7 @@ private:
 public:
     Color(double r_rel, double g_rel, double b_rel);
     Color(int r, int g, int b); 
+    Color(sf::Color color);
     Color(){};
 
     sf::Color get_sf_color() const;

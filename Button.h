@@ -10,6 +10,8 @@ class Button : public VirtualWindow
 {
 public:
     char text_[120];
+    bool is_left_clicked_  = false;
+    bool is_right_clicked_ = false;
     
     Button(Vector2d shape, Vector2d center, const Color &color = Colors::White, const char *text = "", VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}) : 
         VirtualWindow(shape, center, color, parent, children)
@@ -56,9 +58,6 @@ public:
     void ClickRightEvent    (Vector2d point)   override;
     void MissClickRightEvent(Vector2d point)   override;
     void ReleasedRightEvent (Vector2d point)   override;
-    void PressKeyEvent      (int key)       override;
-    void ScrollEvent        (Vector2d point, double offset) override;
-    void Close              ()              override;
 
 private:
     void (*left_click_func_)      (Button *self, Vector2d point) = nullptr;
@@ -72,6 +71,8 @@ private:
 
 void Button::ClickLeftEvent (Vector2d point)
 {
+    is_left_clicked_ = true;
+    
     if (left_click_func_ != nullptr)
     {
         (*left_click_func_)(this, point);
@@ -88,6 +89,8 @@ void Button::MissClickLeftEvent  (Vector2d point)
 
 void Button::ReleasedLeftEvent (Vector2d point)
 {
+    is_left_clicked_ = false;
+
     if (left_released_func_ != nullptr)
     {
         (*left_released_func_)(this, point);
@@ -96,6 +99,8 @@ void Button::ReleasedLeftEvent (Vector2d point)
 
 void Button::ReleasedRightEvent (Vector2d point)
 {
+    is_right_clicked_ = false;
+
     if (right_released_func_ != nullptr)
     {
         (*right_released_func_)(this, point);
@@ -104,6 +109,8 @@ void Button::ReleasedRightEvent (Vector2d point)
 
 void Button::ClickRightEvent     (Vector2d point)
 {
+    is_left_clicked_ = true;
+
     if (right_click_func_ != nullptr)
     {
         (*right_click_func_)(this, point);
@@ -116,19 +123,4 @@ void Button::MissClickRightEvent (Vector2d point)
     {
         (*miss_right_click_func_)(this, point);
     }
-}
-
-void Button::PressKeyEvent (int key)
-{
-
-}
-
-void Button::ScrollEvent (Vector2d point, double offset)
-{
-
-}
-
-void Button::Close()
-{
-
 }

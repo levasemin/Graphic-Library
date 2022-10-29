@@ -67,24 +67,24 @@ int main()
             
     ScrollContainer container(Vector2d(100, 400), Vector2d(300, 250), Colors::Black);
 
-    Button first_button (Vector2d(100, 50), Vector2d(50, 35), Colors::Yellow, "First");
+    Button first_button (Vector2d(100, 300), Vector2d(50, 160), Colors::Yellow, "First");
 
     first_button.set_left_click(&left_click);
     first_button.set_right_click(&right_click);
 
-    Button second_button(Vector2d(100, 100),  Vector2d(50, 120), Colors::Yellow, "Second");
+    Button second_button(Vector2d(100, 400),  Vector2d(50, 520), Colors::Blue, "Second");
     second_button.set_left_click (&left_click);
     second_button.set_right_click(&right_click);
 
-    Button third_button (Vector2d(100, 200), Vector2d(50, 280), Colors::Yellow, "Third");
+    Button third_button (Vector2d(100, 200), Vector2d(50, 830), Colors::Yellow, "Third");
     third_button.set_left_click (&left_click);
     third_button.set_right_click(&right_click);
     
     container.add(&first_button);
     container.add(&second_button);
     container.add(&third_button);
+    
     container.set_scroll_bar(&scrollbar);
-    std::cout <<std::endl << container.children_.size();
  
     main_window.add(&container);
     

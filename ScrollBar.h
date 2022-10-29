@@ -1,101 +1,81 @@
 #pragma once
 
 #include "VirtualWindow.h"
-#include "ScrollVirtualWindow.h"
 #include "Button.h"
 
-void clicked_button_up(Button *self, Vector2d point);
+void clicked_up_button(Button *self, Vector2d point);
 
-void clicked_button_down(Button *self, Vector2d point);
+void clicked_down_button(Button *self, Vector2d point);
 
-void clicked_button_scroll(Button *self, Vector2d point);
+void clicked_scroll_button(Button *self, Vector2d point);
 
-void released_button_scroll(Button *self, Vector2d point);
+void released_scroll_button(Button *self, Vector2d point);
 
-class ScrollBar : public ScrollVirtualWindow
+class ScrollBar : public VirtualWindow
 {
 public:
-    Button button_up_;
-    Button button_down_;    
-    Button button_scroll_;
-    
+    Button up_button_;
+    Button down_button_;    
+    Button scroll_button_;
+    double scroll_button_coeff_size_;
     Vector2d click_place_;
-    bool scroll_button_clicked_ = 0;
     
-    ScrollBar(Vector2d shape, Vector2d center = {-1, -1}, Color color = Colors::White, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
-        ScrollVirtualWindow  (shape, center, color, parent, children),
-        button_up_    (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, start_field_.y_ + shape.x_ / 2)),
-        button_down_  (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, end_field_.y_   - shape.x_ / 2)),
-        button_scroll_(Vector2d(shape.x_, shape.x_), Vector2d(center.x_, start_field_.y_ + shape.x_ * 1.5), Colors::Red)
+    ScrollBar(Vector2d shape, Vector2d center = {-1, -1}, Color color = Colors::White, double scroll_button_coeff_size = 15, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
+        VirtualWindow  (shape, center, color, parent, children),
+        scroll_button_coeff_size_(scroll_button_coeff_size),
+        up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, start_field_.y_ + shape.x_ / 2)),
+        down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, end_field_.y_   - shape.x_ / 2)),
+        scroll_button_(Vector2d(shape.x_, (shape.y_ - shape.x_ * 2) / scroll_button_coeff_size),
+                       Vector2d(center.x_, start_field_.y_ + shape.x_ + shape_.y_ / scroll_button_coeff_size  / 2), Colors::Red)
         {
-            add(&button_up_);
-            button_up_.set_left_click(&clicked_button_up);
-            add(&button_down_);
-            button_down_.set_left_click(&clicked_button_down);
-            add(&button_scroll_);
-            button_scroll_.set_left_click(&clicked_button_scroll);
-            button_scroll_.set_left_released(&released_button_scroll);
+            add(&up_button_);
+            up_button_.set_left_click(&clicked_up_button);
+            add(&down_button_);
+            down_button_.set_left_click(&clicked_down_button);
+            add(&scroll_button_);
+            scroll_button_.set_left_click(&clicked_scroll_button);
         };
-
-        void scroll(double offset)
-        {
-            if ((button_up_.end_field_.y_     >= button_scroll_.start_field_.y_ + offset && offset < 0)|| 
-                (button_down_.start_field_.y_ <= button_scroll_.end_field_.y_   + offset && offset > 0))
-            {
-                return;
-            }
-
-            button_scroll_.set_offset(Vector2d(0, offset));
-            
-            if (parent_ != nullptr)
-            {
-                for (int i = 0; i < parent_->children_.size(); i++)
-                {
-                    if (parent_->children_[i] == this)
-                    {
-                        continue;
-                    }
-                    
-                    parent_->children_[i]->set_offset(Vector2d(0, offset));
-                }
-            }
-        }
 
         void MoveMouse (Vector2d point) override 
         {
-            if (scroll_button_clicked_)
+            if (scroll_button_.is_left_clicked_)
             {   
-                scroll(point.y_ - click_place_.y_);
+                if (parent_)
+                {
+                    parent_->ScrollEvent(point, Vector2d(0, click_place_.y_ - point.y_));
+                }
+                
                 click_place_ = point;
             }
         };
 
-        void ScrollEvent(Vector2d point, double offset) override
+        void ScrollEvent(Vector2d point, Vector2d offset) override
         {
             if (parent_)
             {
-                scroll(offset);
+                parent_->ScrollEvent(point, offset);
             }
         }
 };
 
-void clicked_button_up(Button *self, Vector2d point)
+void clicked_up_button(Button *self, Vector2d point)
 {
-    ((ScrollBar *)(self->parent_))->scroll(-5);
+    ScrollBar *parent = (ScrollBar *)self->parent_;
+
+    Vector2d offset = Vector2d(0, ((parent)->shape_.y_ - (parent->shape_.x_ * 2) / parent->scroll_button_coeff_size_));
+    parent->ScrollEvent(point, offset);
 }
 
-void clicked_button_down(Button *self, Vector2d point)
+void clicked_down_button(Button *self, Vector2d point)
 {
-    ((ScrollBar *)(self->parent_))->scroll(5);
+    ScrollBar *parent = (ScrollBar *)self->parent_;
+    Vector2d offset = Vector2d(0, -((parent->shape_.y_ - parent->shape_.x_ * 2) / parent->scroll_button_coeff_size_));
+    parent->ScrollEvent(point, offset);
 }
 
-void clicked_button_scroll(Button *self, Vector2d point)
+void clicked_scroll_button(Button *self, Vector2d point)
 {
-    ((ScrollBar *)(self->parent_))->click_place_ = point;
-    ((ScrollBar *)(self->parent_))->scroll_button_clicked_ = true;
-}
+    ScrollBar *parent = (ScrollBar *)self->parent_;
 
-void released_button_scroll(Button *self, Vector2d point)
-{
-    ((ScrollBar *)(self->parent_))->scroll_button_clicked_ = false;
+    parent->click_place_ = point;
 }

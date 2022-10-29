@@ -3,6 +3,7 @@
 #include "Widget.h"
 #include "Color.h"
 #include "Vector2d.h"
+#include "functions.h"
 
 class VirtualWindow : public Widget
 {
@@ -17,7 +18,7 @@ public:
     Color *field_;
     VirtualWindow *parent_;
     std::vector<VirtualWindow *> children_ = {};
-    std::vector<VirtualWindow *> displayed_children_ = {};
+    bool is_visible_ = false;
 
     VirtualWindow(Vector2d shape, Vector2d center = {-1, -1}, Color color = Colors::White, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
         Widget{},
@@ -25,8 +26,7 @@ public:
         color_(color),
         center_(center),
         parent_(parent),
-        children_(children),
-        displayed_children_()
+        children_(children)
         {
             if (center.x_ == -1 && center.y_ == -1)
             {
@@ -73,18 +73,6 @@ public:
         }
     }
 
-    void ClickLeftEvent     (Vector2d point)   override {};
-    void MissClickLeftEvent (Vector2d point)   override {};
-    void ReleasedLeftEvent  (Vector2d point)   override {};
-    void ClickRightEvent    (Vector2d point)   override {};
-    void MissClickRightEvent(Vector2d point)   override {};
-    void ReleasedRightEvent (Vector2d point)   override {};
-    void PressKeyEvent      (int key)       override {};
-    void ScrollEvent        (Vector2d point, double offset) override{}
-    void MoveMouse          (Vector2d point)   override {};
-
-    void Close() override {};
-
     virtual bool point_belonging(Vector2d point) const
     {
         return start_field_.x_ < point.x_ && point.x_ < end_field_.x_ &&
@@ -104,6 +92,16 @@ public:
 
         end_field_.x_ = end_field_.x_ > hight_limit.x_ ? hight_limit.x_ : end_field_.x_;
         end_field_.y_ = end_field_.y_ > hight_limit.y_ ? hight_limit.y_ : end_field_.y_;
+
+        if (doublecmp(start_field_.x_, end_field_.x_) && (start_field_.y_, end_field_.y_))
+        {
+            is_visible_ =  true;
+        }
+
+        else
+        {
+            is_visible_ = false;
+        }
     }
 
     virtual void draw(int app_width)
@@ -116,9 +114,12 @@ public:
             }
         }
 
-        for (int i = 0; i < displayed_children_.size(); i++)
+        for (int i = 0; i < children_.size(); i++)
         {
-            displayed_children_[i]->draw(app_width);
+            if (children_[i]->is_visible_)
+            {
+                children_[i]->draw(app_width);
+            }
         }
     }
 
@@ -127,17 +128,13 @@ public:
         window->parent_ = this;
         children_.push_back(window);
 
-        free(window->field_);
-        window->field_ = field_;
-        
-        Vector2d offset = center_ - shape_ / 2;
-        window->set_offset(offset);
-        window->set_field();
-
-        if (window->center_.x_ + window->shape_.x_ / 2 > center_.x_ - shape_.x_ / 2 &&
-        window->center_.x_ - window->shape_.x_ / 2 < center_.x_ + shape_.x_ / 2)
+        if (window->field_ != field_)
         {
-            displayed_children_.push_back(window);
+            free(window->field_);
+            window->field_ = field_;
+            Vector2d offset = center_ - shape_ / 2;
+            window->set_offset(offset);
+            window->set_field();
         }
     }
 };

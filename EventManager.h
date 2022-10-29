@@ -8,14 +8,14 @@ VirtualWindow *get_chosen_window(VirtualWindow *window, Vector2d point)
 {
     VirtualWindow *chosen_window = nullptr;
     
-    if (window->point_belonging(point) && dynamic_cast<InheritanceClass *> (window))
+    if (window->point_belonging(point) && dynamic_cast<InheritanceClass *> (window) && window->is_visible_)
     {
         chosen_window = window;
     }
     
-    for (int i = 0; i < window->displayed_children_.size(); i++)
+    for (int i = 0; i < window->children_.size(); i++)
     {
-        VirtualWindow *chosen_child = get_chosen_window<InheritanceClass>(window->displayed_children_[i], point);
+        VirtualWindow *chosen_child = get_chosen_window<InheritanceClass>(window->children_[i], point);
 
         if (chosen_child != nullptr)
         {
@@ -27,7 +27,7 @@ VirtualWindow *get_chosen_window(VirtualWindow *window, Vector2d point)
 }
 
 template<class ...TParams>
-void give_event(VirtualWindow *window, void (VirtualWindow::*method)(TParams ...), TParams ...params)
+void give_event(VirtualWindow *window, void (Widget::*method)(TParams ...), TParams ...params)
 {
     for (int i = 0; i < window->children_.size(); i++)
     {
@@ -96,7 +96,7 @@ void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
             
             if (chosen_window)
             {
-                chosen_window->ScrollEvent(point, offset);
+                chosen_window->ScrollEvent(point, Vector2d(0, offset));
             }
 
             break;
