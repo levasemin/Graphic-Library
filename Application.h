@@ -53,6 +53,6 @@ void Application::exec()
 
 void Application::show(VirtualWindow *window)
 {
-    main_window_.draw(main_window_.shape_.x_);   
+    main_window_.draw();   
     window_.display();
 }

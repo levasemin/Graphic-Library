@@ -12,7 +12,8 @@ public:
     Vector2d shape_;
     Vector2d start_field_;
     Vector2d end_field_;
-
+    Vector2d offset_;
+    Vector2d parent_shape_;
     Texture texture_;
 
     Color *field_;
@@ -35,11 +36,13 @@ public:
 
             if (parent == nullptr)
             {
+                parent_shape_ = shape;
                 field_ = new Color[(int)(shape_.x_ * shape_.y_)]();
             }
             
             else
             {
+                parent_shape_ = parent->parent_shape_;
                 field_ = parent->field_;
             }
 
@@ -68,7 +71,7 @@ public:
         for (int i = 0; i < children_.size(); i++)
         {
             children_[i]->field_ = field_;
-
+            children_[i]->parent_shape_ = parent_shape_;
             children_[i]->set_field();
         }
     }
@@ -104,7 +107,7 @@ public:
         }
     }
 
-    virtual void draw(int app_width)
+    virtual void draw()
     {   
         for (int i = start_field_.y_; i < end_field_.y_; i++)
         {
@@ -112,7 +115,7 @@ public:
             {
                 int texture_index = (int)(i - (center_.y_ - shape_.y_ / 2)) * shape_.x_ + (int)(j - (center_.x_ - shape_.x_ / 2));
 
-                field_[i * app_width + j] = texture_[texture_index];
+                field_[i * (int)parent_shape_.x_ + j] = texture_[texture_index];
             }
         }
 
@@ -120,9 +123,28 @@ public:
         {
             if (children_[i]->is_visible_)
             {
-                children_[i]->draw(app_width);
+                children_[i]->draw();
             }
         }
+    }
+
+    virtual void remove(VirtualWindow *window)
+    {
+        for (int i = 0; i < children_.size(); i++)
+        {
+            if (window == children_[i])
+            {
+                children_.erase(children_.begin() + i);
+            }
+        }
+
+        window->parent_ = nullptr;
+        window->parent_shape_ = window->shape_;
+        window->field_  = new Color[(int)(shape_.x_ * shape_.y_)]();
+        
+        Vector2d offset = shape_/2 - center_;
+        window->set_offset(offset);
+        window->set_field();
     }
 
     virtual void add(VirtualWindow *window)
@@ -132,8 +154,11 @@ public:
 
         if (window->field_ != field_)
         {
-            free(window->field_);
+            delete window->field_;
+            
             window->field_ = field_;
+            window->parent_shape_ = parent_shape_;
+
             Vector2d offset = center_ - shape_ / 2;
             window->set_offset(offset);
             window->set_field();

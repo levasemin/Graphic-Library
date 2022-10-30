@@ -55,6 +55,8 @@ public:
 };
 
 
+const char *path_britsih = "/home/levce/projectsDED/event_handler2/Event_handler/british.jpg";
+
 int main()
 {  
     Application app(Vector2d(WIDTH, HEIGHT));
@@ -67,7 +69,7 @@ int main()
             
     ScrollContainer container(Vector2d(100, 400), Vector2d(300, 250), Texture(Vector2d(100, 400), Colors::Black));
 
-    Button first_button (Vector2d(100, 300), Vector2d(50, 160), Texture(Vector2d(1000, 1000), Colors::Yellow), "First");
+    Button first_button (Vector2d(100, 300), Vector2d(50, 160), Texture(Vector2d(100, 300), path_britsih), "First");
 
     first_button.set_left_click(&left_click);
     first_button.set_right_click(&right_click);
@@ -87,7 +89,6 @@ int main()
     container.set_scroll_bar(&scrollbar);
  
     main_window.add(&container);
-    
     app.add(main_window);
     app.exec();
 }
