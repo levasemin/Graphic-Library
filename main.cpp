@@ -55,7 +55,7 @@ public:
 };
 
 
-const char *path_britsih = "/home/levce/projectsDED/event_handler2/Event_handler/british.jpg";
+const char *path_britsih = "/home/levce/projectsDED/event_handler2/Event_handler/source/british.jpg";
 
 int main()
 {  
@@ -63,22 +63,22 @@ int main()
     
     std::vector<Widget *> buttons();
 
-    MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Vector2d(WIDTH, HEIGHT), Colors::Green));
+    MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Colors::Yellow));
 
-    ScrollBar scrollbar(Vector2d(20, 400), Vector2d(10, 200), Texture(Vector2d(20, 400), Colors::Blue));
+    ScrollBar scrollbar(Vector2d(20, 400), Vector2d(10, 200), Texture(Colors::Blue));
             
-    ScrollContainer container(Vector2d(100, 400), Vector2d(300, 250), Texture(Vector2d(100, 400), Colors::Black));
+    ScrollContainer container(Vector2d(100, 400), Vector2d(300, 250), Texture(Colors::Black));
 
-    Button first_button (Vector2d(100, 300), Vector2d(50, 160), Texture(Vector2d(100, 300), path_britsih), "First");
+    Button first_button (Vector2d(100, 300), Vector2d(50, 160), Texture(Colors::Red), "First");
 
     first_button.set_left_click(&left_click);
     first_button.set_right_click(&right_click);
 
-    Button second_button(Vector2d(100, 400),  Vector2d(50, 520), Texture(Vector2d(100, 400), Colors::Blue), "Second");
+    Button second_button(Vector2d(100, 400),  Vector2d(50, 520), Texture(path_britsih), "Second");
     second_button.set_left_click (&left_click);
     second_button.set_right_click(&right_click);
 
-    Button third_button (Vector2d(100, 200), Vector2d(50, 830), Texture(Vector2d(100, 200), Colors::Yellow), "Third");
+    Button third_button (Vector2d(100, 200), Vector2d(50, 830), Texture(path_britsih), "Third");
     third_button.set_left_click (&left_click);
     third_button.set_right_click(&right_click);
     

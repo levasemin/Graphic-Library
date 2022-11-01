@@ -22,14 +22,7 @@ public:
 
     void set_scroll_bar(ScrollBar *new_scroll_bar)
     {
-        if (scroll_bar_ != nullptr)
-        {
-            std::remove(children_.begin(), children_.end(), scroll_bar_);
-        }
-
         scroll_bar_ = new_scroll_bar;
-    
-        add(scroll_bar_);
     }
 
     void ScrollEvent (Vector2d point, Vector2d offset) override
@@ -59,10 +52,7 @@ public:
 
         for (int i = 0; i < children_.size(); i++)
         {
-            if (children_[i] != scroll_bar_)
-            {
-                children_[i]->set_offset(offset);
-            }
+            children_[i]->set_offset(offset);
         }
     }
 

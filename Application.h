@@ -10,7 +10,7 @@ class Application
 {
     public: 
         Application(Vector2d shape):
-            main_window_(shape, shape / 2, Texture(shape, Colors::Black)),
+            main_window_(shape, shape / 2, Texture(Colors::Black)),
             window_(&main_window_)
             {};
         Application(const VirtualWindow &window):
@@ -53,6 +53,9 @@ void Application::exec()
 
 void Application::show(VirtualWindow *window)
 {
+    window_.clear();
     main_window_.draw();   
     window_.display();
+    RenderTexture rend(Vector2d(720, 720));
+    main_window_.render_texture_->render_texture_.clear();
 }

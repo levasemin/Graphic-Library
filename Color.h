@@ -7,10 +7,10 @@
 class Color
 {
 private:
-    int r_, g_, b_;
     double r_rel_, g_rel_, b_rel_;
     
 public:
+    int r_, g_, b_;
     Color(double r_rel, double g_rel, double b_rel);
     Color(int r, int g, int b); 
     Color(sf::Color color);

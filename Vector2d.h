@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 class Vector2d
 {
@@ -12,6 +13,17 @@ public:
         y_(y)
         {};
 
+    Vector2d(sf::Vector2u sf_vector):
+        x_(sf_vector.x),
+        y_(sf_vector.y)
+    {}
+
+    Vector2d(sf::Vector2f sf_vector):
+        x_(sf_vector.x),
+        y_(sf_vector.y)
+    {}
+
+    sf::Vector2u to_sf_vector();
     void set_value(double x, double y);
     void print_value();
 

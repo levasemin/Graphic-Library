@@ -31,6 +31,10 @@ bool Window::pollEvent(sf::Event event)
 }
 
 
+void Window::draw(Sprite sprite)
+{
+    window_.draw(sprite.sprite_);
+}
 
 void Window::close()
 {
@@ -40,19 +44,17 @@ void Window::close()
 
 void Window::display()
 {
-    for (int i = 0; i < main_window_->shape_.y_; i++)
-    {
-        for (int j = 0; j < main_window_->shape_.x_; j++)
-        {
-            texture_[i * (int)main_window_->shape_.x_ + j].color = main_window_->field_[i * (int)main_window_->shape_.x_ + j].get_sf_color();
-        }
-    }
-
-    window_.draw(texture_, main_window_->shape_.x_ * main_window_->shape_.y_, sf::Points);
+    main_window_->render_texture_->display();
+    Sprite sprite(main_window_->shape_, main_window_->render_texture_->getTexture());    
+    
+    draw(sprite);
     window_.display();
 }
 
-
+void Window::clear()
+{
+    window_.clear();
+}
 
 void Window::clear(Color color)
 {

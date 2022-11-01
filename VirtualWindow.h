@@ -2,21 +2,26 @@
 
 #include "Widget.h"
 #include "Texture.h"
+#include "RenderTexture.h"
+#include "Sprite.h"
 #include "Vector2d.h"
 #include "functions.h"
 
 class VirtualWindow : public Widget
 {
 public:
+    Vector2d global_offset_;
     Vector2d center_;
     Vector2d shape_;
     Vector2d start_field_;
     Vector2d end_field_;
     Vector2d offset_;
     Vector2d parent_shape_;
+    
+    RenderTexture *render_texture_;
     Texture texture_;
+    Sprite sprite_;
 
-    Color *field_;
     VirtualWindow *parent_;
     std::vector<VirtualWindow *> children_ = {};
     bool is_visible_ = false;
@@ -25,6 +30,7 @@ public:
         Widget{},
         shape_(shape),
         texture_(texture),
+        sprite_(shape, texture, 0),
         center_(center),
         parent_(parent),
         children_(children)
@@ -37,13 +43,13 @@ public:
             if (parent == nullptr)
             {
                 parent_shape_ = shape;
-                field_ = new Color[(int)(shape_.x_ * shape_.y_)]();
+                render_texture_ = new RenderTexture(shape);
             }
             
             else
             {
                 parent_shape_ = parent->parent_shape_;
-                field_ = parent->field_;
+                render_texture_ = parent->render_texture_;
             }
 
             for (int i = 0; i < children_.size(); i++)
@@ -70,7 +76,7 @@ public:
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->field_ = field_;
+            children_[i]->render_texture_ = render_texture_;
             children_[i]->parent_shape_ = parent_shape_;
             children_[i]->set_field();
         }
@@ -95,8 +101,8 @@ public:
 
         end_field_.x_ = end_field_.x_ > hight_limit.x_ ? hight_limit.x_ : end_field_.x_;
         end_field_.y_ = end_field_.y_ > hight_limit.y_ ? hight_limit.y_ : end_field_.y_;
-
-        if (doublecmp(start_field_.x_, end_field_.x_) && (start_field_.y_, end_field_.y_))
+        
+        if (doublecmp(start_field_.x_, end_field_.x_) < 0 && doublecmp(start_field_.y_, end_field_.y_) < 0)
         {
             is_visible_ =  true;
         }
@@ -109,15 +115,20 @@ public:
 
     virtual void draw()
     {   
-        for (int i = start_field_.y_; i < end_field_.y_; i++)
-        {
-            for (int j = start_field_.x_; j < end_field_.x_; j++)
-            {
-                int texture_index = (int)(i - (center_.y_ - shape_.y_ / 2)) * shape_.x_ + (int)(j - (center_.x_ - shape_.x_ / 2));
+        sprite_.setPosition(start_field_);
+        sprite_.set_shape(end_field_ - start_field_, false);
 
-                field_[i * (int)parent_shape_.x_ + j] = texture_[texture_index];
-            }
-        }
+        Vector2d start(start_field_.x_ - (center_.x_ - shape_.x_ / 2), start_field_.y_ - (center_.y_ - shape_.y_ / 2));
+        Vector2d texture_shape = end_field_ - start_field_;
+
+        start.x_         *= 1 / sprite_.getScale().x_;
+        start.y_         *= 1 / sprite_.getScale().y_;
+        texture_shape.x_ *= 1 / sprite_.getScale().x_;
+        texture_shape.y_ *= 1 / sprite_.getScale().y_;
+        
+        sprite_.setTextureRect(start, texture_shape);
+    
+        render_texture_->draw(sprite_);
 
         for (int i = 0; i < children_.size(); i++)
         {
@@ -127,6 +138,7 @@ public:
             }
         }
     }
+    
 
     virtual void remove(VirtualWindow *window)
     {
@@ -140,7 +152,7 @@ public:
 
         window->parent_ = nullptr;
         window->parent_shape_ = window->shape_;
-        window->field_  = new Color[(int)(shape_.x_ * shape_.y_)]();
+        window->render_texture_  = new RenderTexture(window->shape_);
         
         Vector2d offset = shape_/2 - center_;
         window->set_offset(offset);
@@ -152,11 +164,11 @@ public:
         window->parent_ = this;
         children_.push_back(window);
 
-        if (window->field_ != field_)
+        if (window->render_texture_ != render_texture_)
         {
-            delete window->field_;
+            delete window->render_texture_;
             
-            window->field_ = field_;
+            window->render_texture_ = render_texture_;
             window->parent_shape_ = parent_shape_;
 
             Vector2d offset = center_ - shape_ / 2;

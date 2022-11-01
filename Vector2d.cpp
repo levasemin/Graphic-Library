@@ -1,5 +1,10 @@
 #include "Vector2d.h"
 
+sf::Vector2u Vector2d::to_sf_vector()
+{
+    return sf::Vector2u(x_, y_);
+}
+
 void Vector2d::print_value()
 {
     std::cout << x_ << std::endl;
