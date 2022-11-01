@@ -20,7 +20,8 @@ public:
     Button scroll_button_;
     double scroll_button_coeff_size_;
     Vector2d click_place_;
-    
+    std::vector <VirtualWindow *> scroll_objects;
+
     ScrollBar(Vector2d shape, Vector2d center, Texture texture, double scroll_button_coeff_size = 10, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
         VirtualWindow  (shape, center, texture, parent, children),
         scroll_button_coeff_size_(scroll_button_coeff_size),

@@ -8,7 +8,7 @@ VirtualWindow *get_chosen_window(VirtualWindow *window, Vector2d point)
 {
     VirtualWindow *chosen_window = nullptr;
     
-    if (window->point_belonging(point) && dynamic_cast<InheritanceClass *> (window) && window->is_visible_)
+    if (window->point_belonging(point) && dynamic_cast<InheritanceClass *> (window))
     {
         chosen_window = window;
     }

@@ -15,7 +15,7 @@ public:
     Vector2d shape_;
     Vector2d start_field_;
     Vector2d end_field_;
-    Vector2d offset_;
+
     Vector2d parent_shape_;
     
     RenderTexture *render_texture_;
@@ -24,7 +24,6 @@ public:
 
     VirtualWindow *parent_;
     std::vector<VirtualWindow *> children_ = {};
-    bool is_visible_ = false;
 
     VirtualWindow(Vector2d shape, Vector2d center, Texture texture, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
         Widget{},
@@ -32,6 +31,7 @@ public:
         texture_(texture),
         sprite_(shape, texture, 0),
         center_(center),
+        global_offset_(Vector2d(0, 0)), 
         parent_(parent),
         children_(children)
         {
@@ -63,7 +63,7 @@ public:
     
     virtual void set_offset(Vector2d offset)
     {
-        center_ += offset;
+        global_offset_ += offset;
         resize_field();
 
         for (int i = 0; i < children_.size(); i++)
@@ -84,17 +84,17 @@ public:
 
     virtual bool point_belonging(Vector2d point) const
     {
-        return start_field_.x_ < point.x_ && point.x_ < end_field_.x_ &&
-               start_field_.y_ < point.y_ && point.y_ < end_field_.y_;
+        return global_offset_.x_ + start_field_.x_ < point.x_ && point.x_ < end_field_.x_ + global_offset_.x_ &&
+               global_offset_.y_ + start_field_.y_ < point.y_ && point.y_ < end_field_.y_ + global_offset_.y_;
     }
 
     void resize_field()
     {
-        start_field_ = center_ - shape_ / 2;
-        end_field_   = center_ + shape_ / 2;
+        start_field_ = global_offset_ + center_ - shape_ / 2;
+        end_field_   = global_offset_ + center_ + shape_ / 2;
         
-        Vector2d down_limit  = parent_ != nullptr ? parent_->center_ - parent_->shape_ / 2 : Vector2d(0, 0);
-        Vector2d hight_limit = parent_ != nullptr ? parent_->center_ + parent_->shape_ / 2 : Vector2d(shape_.x_, shape_.y_);
+        Vector2d down_limit  = parent_ != nullptr ? parent_->global_offset_ + parent_->center_ - parent_->shape_ / 2 : Vector2d(0, 0);
+        Vector2d hight_limit = parent_ != nullptr ? parent_->global_offset_ + parent_->center_ + parent_->shape_ / 2 : shape_;
 
         start_field_.x_ = start_field_.x_ < down_limit.x_ ? down_limit.x_ : start_field_.x_;
         start_field_.y_ = start_field_.y_ < down_limit.y_ ? down_limit.y_ : start_field_.y_;
@@ -102,23 +102,19 @@ public:
         end_field_.x_ = end_field_.x_ > hight_limit.x_ ? hight_limit.x_ : end_field_.x_;
         end_field_.y_ = end_field_.y_ > hight_limit.y_ ? hight_limit.y_ : end_field_.y_;
         
-        if (doublecmp(start_field_.x_, end_field_.x_) < 0 && doublecmp(start_field_.y_, end_field_.y_) < 0)
-        {
-            is_visible_ =  true;
-        }
+        start_field_ -= global_offset_;
+        end_field_   -= global_offset_;
 
-        else
-        {
-            is_visible_ = false;
-        }
+        start_field_ = start_field_.x_ > end_field_.x_ || start_field_.y_ > end_field_.y_ ? end_field_ : start_field_;
     }
 
     virtual void draw()
     {   
-        sprite_.setPosition(start_field_);
-        sprite_.set_shape(end_field_ - start_field_, false);
+        texture_ = get_texture();
 
-        Vector2d start(start_field_.x_ - (center_.x_ - shape_.x_ / 2), start_field_.y_ - (center_.y_ - shape_.y_ / 2));
+        sprite_.setPosition(global_offset_ + start_field_);
+
+        Vector2d start = start_field_ - center_ + shape_ / 2;
         Vector2d texture_shape = end_field_ - start_field_;
 
         start.x_         *= 1 / sprite_.getScale().x_;
@@ -132,10 +128,7 @@ public:
 
         for (int i = 0; i < children_.size(); i++)
         {
-            if (children_[i]->is_visible_)
-            {
-                children_[i]->draw();
-            }
+            children_[i]->draw();
         }
     }
     
@@ -154,26 +147,38 @@ public:
         window->parent_shape_ = window->shape_;
         window->render_texture_  = new RenderTexture(window->shape_);
         
-        Vector2d offset = shape_/2 - center_;
+        Vector2d offset = shape_ / 2 - center_ - global_offset_;
         window->set_offset(offset);
         window->set_field();
     }
 
     virtual void add(VirtualWindow *window)
     {
+        if (window->parent_ == this)
+        {
+            return;
+        }
+
         window->parent_ = this;
         children_.push_back(window);
 
-        if (window->render_texture_ != render_texture_)
-        {
-            delete window->render_texture_;
-            
-            window->render_texture_ = render_texture_;
-            window->parent_shape_ = parent_shape_;
+        delete window->render_texture_;
+        
+        window->render_texture_ = render_texture_;
+        window->parent_shape_ = parent_shape_;
+        
+        Vector2d offset = global_offset_ + center_ - shape_ / 2;
+        window->set_offset(offset);
+        window->set_field();
+    }
 
-            Vector2d offset = center_ - shape_ / 2;
-            window->set_offset(offset);
-            window->set_field();
-        }
+    void set_textrue(Texture texture)
+    {
+        texture_ = texture;
+    }
+
+    Texture get_texture()
+    {
+        return texture_;
     }
 };

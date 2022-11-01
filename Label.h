@@ -1,3 +1,6 @@
+#include "Texture.h"
+#include "Text.h"
+#include "Sprite.h"
 #include "Vector2d.h"
 #include "VirtualWindow.h"
 #include <string>
@@ -6,18 +9,35 @@ class Label: VirtualWindow
 {
 
 public:
+    RenderTexture label_texture_;
+    Text text_;
 
-    std::string text_;
-
-    Label(Vector2d shape, Vector2d center, Texture texture, const char *text): VirtualWindow(shape, center, texture),
+    Label(Vector2d shape, Vector2d center, Texture texture = Texture(Colors::White), Text text = Text()): VirtualWindow(shape, center, texture),
+        label_texture_(shape),
         text_(text)
-    {
+    {};
 
+    void set_text(Text text)
+    {
+        text_ = text;
+        create();        
     }
 
-    void draw() override
+    void set_texture(Texture texture)
     {
-        VirtualWindow::draw();
-        
+        sprite_.setTexture(texture);
+        create();
+    }
+
+    void create()
+    {
+        label_texture_.draw(sprite_);
+        label_texture_.draw(text_);
+        label_texture_.display();
+    }
+
+    Texture get_texture()
+    {
+        return label_texture_.getTexture();
     }
 };

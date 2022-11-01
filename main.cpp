@@ -87,7 +87,12 @@ int main()
     container.add(&third_button);
     
     container.set_scroll_bar(&scrollbar);
- 
+    
+    first_button.global_offset_.print_value();
+    first_button.shape_.print_value();
+    first_button.center_.print_value();
+    first_button.start_field_.print_value();
+    first_button.end_field_.print_value();
     main_window.add(&container);
     app.add(main_window);
     app.exec();
