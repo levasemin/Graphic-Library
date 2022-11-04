@@ -21,10 +21,10 @@ Total : 22 files,  1217 codes, 0 comments, 325 blanks, all 1542 lines
 | [Makefile](/Makefile) | Makefile | 16 | 0 | 8 | 24 |
 | [ScrollBar.h](/ScrollBar.h) | C++ | 64 | 0 | 15 | 79 |
 | [ScrollContainer.h](/ScrollContainer.h) | C++ | 36 | 0 | 8 | 44 |
-| [ScrollVirtualWindow.h](/ScrollVirtualWindow.h) | C++ | 42 | 0 | 9 | 51 |
+| [ScrollWidget.h](/ScrollWidget.h) | C++ | 42 | 0 | 9 | 51 |
 | [Vector2d.cpp](/Vector2d.cpp) | C++ | 63 | 0 | 17 | 80 |
 | [Vector2d.h](/Vector2d.h) | C++ | 22 | 0 | 5 | 27 |
-| [VirtualWindow.h](/VirtualWindow.h) | C++ | 109 | 0 | 26 | 135 |
+| [Widget.h](/Widget.h) | C++ | 109 | 0 | 26 | 135 |
 | [Widget.h](/Widget.h) | C++ | 17 | 0 | 6 | 23 |
 | [Window.cpp](/Window.cpp) | C++ | 41 | 0 | 19 | 60 |
 | [Window.h](/Window.h) | C++ | 35 | 0 | 8 | 43 |

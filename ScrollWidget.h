@@ -2,11 +2,35 @@
 
 #include "Widget.h"
 #include "ScrollBar.h"
-#include "VirtualWindow.h"
+#include "Widget.h"
 #include "Texture.h"
 #include "Vector2d.h"
 
-class ScrollVirtualWindow : public VirtualWindow
+
+template<class InheritanceClass>
+Widget *get_chosen_window(Widget *window, Vector2d point)
+{
+    Widget *chosen_window = nullptr;
+    
+    if (window->point_belonging(point) && dynamic_cast<InheritanceClass *> (window))
+    {
+        chosen_window = window;
+    }
+    
+    for (int i = 0; i < window->children_.size(); i++)
+    {
+        Widget *chosen_child = get_chosen_window<InheritanceClass>(window->children_[i], point);
+
+        if (chosen_child != nullptr)
+        {
+            chosen_window = chosen_child;
+        }
+    }
+    
+    return chosen_window;
+}
+
+class ScrollWidget : public CompositeWidget
 {
 public:
 
@@ -15,8 +39,8 @@ public:
     Vector2d global_end_field_    = 0;
     ScrollBar *scroll_bar_        = nullptr;
 
-    ScrollVirtualWindow(Vector2d shape, Vector2d center, Texture color, VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}):
-        VirtualWindow(shape, center, color, parent, children)
+    ScrollWidget(Vector2d shape, Vector2d center, Texture color, Widget *parent = nullptr, std::vector<Widget *> children = {}):
+        CompositeWidget(shape, center, color, parent, children)
         {
         };
 
@@ -59,7 +83,7 @@ public:
         }
     }
 
-    void add(VirtualWindow *window) override
+    void add(Widget *window) override
     {    
         global_start_field_.x_ = window->center_.x_ - window->shape_.x_ / 2 < global_start_field_.x_ ? 
                                  window->center_.x_ - window->shape_.x_ / 2 : global_start_field_.x_;
@@ -72,6 +96,6 @@ public:
         global_end_field_.y_   = window->center_.y_ + window->shape_.y_ / 2 > global_end_field_.y_ ? 
                                  window->center_.y_ + window->shape_.y_ / 2 : global_end_field_.y_;
 
-        VirtualWindow::add(window);
+        CompositeWidget::add(window);
     }
 };

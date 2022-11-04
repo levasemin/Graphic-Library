@@ -20,12 +20,12 @@ Total : 20 files,  266 codes, 0 comments, 75 blanks, all 341 lines
 | [RenderTexture.h](/RenderTexture.h) | C++ | 26 | 0 | 5 | 31 |
 | [ScrollBar.h](/ScrollBar.h) | C++ | 7 | 0 | 1 | 8 |
 | [ScrollContainer.h](/ScrollContainer.h) | C++ | -23 | 0 | -6 | -29 |
-| [ScrollVirtualWindow.h](/ScrollVirtualWindow.h) | C++ | 19 | 0 | 7 | 26 |
+| [ScrollWidget.h](/ScrollWidget.h) | C++ | 19 | 0 | 7 | 26 |
 | [Sprite.h](/Sprite.h) | C++ | 73 | 0 | 18 | 91 |
 | [Texture.h](/Texture.h) | C++ | 33 | 0 | 10 | 43 |
 | [Vector2d.cpp](/Vector2d.cpp) | C++ | 4 | 0 | 1 | 5 |
 | [Vector2d.h](/Vector2d.h) | C++ | 10 | 0 | 2 | 12 |
-| [VirtualWindow.h](/VirtualWindow.h) | C++ | 38 | 0 | 11 | 49 |
+| [Widget.h](/Widget.h) | C++ | 38 | 0 | 11 | 49 |
 | [Window.cpp](/Window.cpp) | C++ | 3 | 0 | -1 | 2 |
 | [Window.h](/Window.h) | C++ | -7 | 0 | 0 | -7 |
 | [main.cpp](/main.cpp) | C++ | 5 | 0 | 1 | 6 |

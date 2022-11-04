@@ -8,12 +8,12 @@
 "/home/levce/projectsDED/event_handler2/Event_handler/RenderTexture.h", "C++", 26, 0, 5, 31
 "/home/levce/projectsDED/event_handler2/Event_handler/ScrollBar.h", "C++", 7, 0, 1, 8
 "/home/levce/projectsDED/event_handler2/Event_handler/ScrollContainer.h", "C++", -23, 0, -6, -29
-"/home/levce/projectsDED/event_handler2/Event_handler/ScrollVirtualWindow.h", "C++", 19, 0, 7, 26
+"/home/levce/projectsDED/event_handler2/Event_handler/ScrollWidget.h", "C++", 19, 0, 7, 26
 "/home/levce/projectsDED/event_handler2/Event_handler/Sprite.h", "C++", 73, 0, 18, 91
 "/home/levce/projectsDED/event_handler2/Event_handler/Texture.h", "C++", 33, 0, 10, 43
 "/home/levce/projectsDED/event_handler2/Event_handler/Vector2d.cpp", "C++", 4, 0, 1, 5
 "/home/levce/projectsDED/event_handler2/Event_handler/Vector2d.h", "C++", 10, 0, 2, 12
-"/home/levce/projectsDED/event_handler2/Event_handler/VirtualWindow.h", "C++", 38, 0, 11, 49
+"/home/levce/projectsDED/event_handler2/Event_handler/Widget.h", "C++", 38, 0, 11, 49
 "/home/levce/projectsDED/event_handler2/Event_handler/Window.cpp", "C++", 3, 0, -1, 2
 "/home/levce/projectsDED/event_handler2/Event_handler/Window.h", "C++", -7, 0, 0, -7
 "/home/levce/projectsDED/event_handler2/Event_handler/main.cpp", "C++", 5, 0, 1, 6

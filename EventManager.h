@@ -2,51 +2,28 @@
 
 #include <SFML/Graphics.hpp>
 #include "Window.h"
-
-template<class InheritanceClass>
-VirtualWindow *get_chosen_window(VirtualWindow *window, Vector2d point)
-{
-    VirtualWindow *chosen_window = nullptr;
-    
-    if (window->point_belonging(point) && dynamic_cast<InheritanceClass *> (window))
-    {
-        chosen_window = window;
-    }
-    
-    for (int i = 0; i < window->children_.size(); i++)
-    {
-        VirtualWindow *chosen_child = get_chosen_window<InheritanceClass>(window->children_[i], point);
-
-        if (chosen_child != nullptr)
-        {
-            chosen_window = chosen_child;
-        }
-    }
-    
-    return chosen_window;
-}
+#include "Widget.h"
 
 template<class ...TParams>
-void give_event(VirtualWindow *window, void (Widget::*method)(TParams ...), TParams ...params)
+void give_event(Widget *window, void (Widget::*method)(TParams ...), TParams ...params)
 {
     for (int i = 0; i < window->children_.size(); i++)
     {
-        give_event<TParams ...>(window->children_[i], method, params ...);
         ((window->children_[i])->*method)(params ...);
     }
 }
 
-VirtualWindow *get_chosen_window(VirtualWindow *window, Vector2d point);
+Widget *get_chosen_window(Widget *window, Vector2d point);
 
 class EventManager
 {
 
 public: 
     void distribute_event(Window *window);
-    void distribute_event(VirtualWindow *window, sf::Event event_);
+    void distribute_event(Widget *window, sf::Event event_);
 };
 
-void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
+void EventManager::distribute_event(Widget *window, sf::Event event)
 {
     switch (event.type)
     {   
@@ -56,24 +33,13 @@ void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
 
             if (event.mouseButton.button == sf::Mouse::Left)
             {   
-                VirtualWindow *chosen_window = get_chosen_window<VirtualWindow>(window, point);
-                if (chosen_window)
-                {
-                    chosen_window->ClickLeftEvent(point);
-                }
-
-                give_event(window, &VirtualWindow::MissClickLeftEvent, point);
+                give_event(window, &Widget::ClickLeftEvent, point);
             }
 
+            else
             if (event.mouseButton.button == sf::Mouse::Right)
-            {                     
-                VirtualWindow *chosen_window = get_chosen_window<VirtualWindow>(window, point);
-                if (chosen_window)
-                {
-                    chosen_window->ClickRightEvent(point);
-                }
-
-                give_event(window, &VirtualWindow::MissClickRightEvent, point);
+            {         
+                give_event(window, &Widget::ClickRightEvent, point);
             }
 
             break;
@@ -83,7 +49,7 @@ void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
         {
             int key = event.key.code;
             
-            give_event(window, &VirtualWindow::PressKeyEvent, key);
+            give_event(window, &Widget::PressKeyEvent, key);
 
             break;
         }
@@ -92,12 +58,8 @@ void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
         {
             double offset  = event.mouseWheelScroll.delta;
             Vector2d point = Vector2d(event.mouseWheelScroll.x, event.mouseWheelScroll.y);
-            VirtualWindow *chosen_window = get_chosen_window<ScrollVirtualWindow>(window, point);
-            
-            if (chosen_window)
-            {
-                chosen_window->ScrollEvent(point, Vector2d(0, offset));
-            }
+
+            give_event(window, &Widget::ScrollEvent, point, Vector2d(0, offset));
 
             break;
         }
@@ -105,11 +67,9 @@ void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
         case sf::Event::MouseMoved:
         {
             Vector2d point(event.mouseMove.x, event.mouseMove.y);
-            VirtualWindow *chosen_window = get_chosen_window<VirtualWindow>(window, point);
-            if (chosen_window)
-            {
-                chosen_window->MoveMouse(point);
-            }
+            
+            give_event(window, &Widget::MoveMouse, point);
+
             break;
         }
 
@@ -119,13 +79,13 @@ void EventManager::distribute_event(VirtualWindow *window, sf::Event event)
 
             if (event.mouseButton.button == sf::Mouse::Left)
             {
-                give_event(window, &VirtualWindow::ReleasedLeftEvent, point);
+                give_event(window, &Widget::ReleasedLeftEvent, point);
             }
 
             else
             if (event.mouseButton.button == sf::Mouse::Right)
             {
-                give_event(window, &VirtualWindow::ReleasedRightEvent, point);            
+                give_event(window, &Widget::ReleasedRightEvent, point);            
             }
 
             break;

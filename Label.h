@@ -2,17 +2,17 @@
 #include "Text.h"
 #include "Sprite.h"
 #include "Vector2d.h"
-#include "VirtualWindow.h"
+#include "Widget.h"
 #include <string>
 
-class Label: VirtualWindow
+class Label: public Widget
 {
 
 public:
     RenderTexture label_texture_;
     Text text_;
 
-    Label(Vector2d shape, Vector2d center, Texture texture = Texture(Colors::White), Text text = Text()): VirtualWindow(shape, center, texture),
+    Label(Vector2d shape, Vector2d center, Texture texture = Texture(Colors::White), Text text = Text()): Widget(shape, center, texture),
         label_texture_(shape),
         text_(text)
     {};

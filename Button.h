@@ -1,126 +1,122 @@
 #pragma once
 
-#include "Texture.h"
+#include "Label.h"
 #include "Widget.h"
-#include "VirtualWindow.h"
+#include "Command/Command.h"
 #include "math.h"
 #include "Vector2d.h"
 
-class Button : public VirtualWindow
+class Button : public Widget
 {
 public:
-    char text_[120];
+
     bool is_left_clicked_  = false;
     bool is_right_clicked_ = false;
     
-    Button(Vector2d shape, Vector2d center, const Texture &texture, const char *text = "", VirtualWindow *parent = nullptr, std::vector<VirtualWindow *> children = {}) : 
-        VirtualWindow(shape, center, texture, parent, children)
+    Button(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr) : 
+        Widget(shape, center, texture, parent)
         {
-            for(int i = 0; text[i] != '\0' && i < 120; i++)
-            {
-                text_[i] = text[i];
-            }
         };
     
-    void set_left_click       (void (*new_left_click_func_)(Button *self, Vector2d point))
+    void set_left_click       (Command<Vector2d> *command)
     {
-        left_click_func_ = new_left_click_func_;
+        left_click_command_ = command;
     }
 
-    void set_miss_left_click  (void (*new_miss_left_click_func_)(Button *self, Vector2d point))
+    void set_miss_left_click  (Command<Vector2d> *command)
     {
-        miss_left_click_func_ = miss_left_click_func_;
+        miss_left_click_command_ = command;
     }
 
-    void set_left_released  (void (*new_left_released_func_)(Button *self, Vector2d point))
+    void set_release_left_click  (Command<Vector2d> *command)
     {
-        left_released_func_ = new_left_released_func_;
+        release_left_click_command_ = command;
     }
 
-    void set_right_click      (void (*new_right_click_func_)(Button *self, Vector2d point))
+    void set_right_click      (Command<Vector2d> *command)
     {
-        right_click_func_ = new_right_click_func_;
+        right_click_command_ = command;
     }
 
-    void set_miss_right_click (void (*new_miss_right_click_func_)(Button *self, Vector2d point))
+    void set_miss_right_click  (Command<Vector2d> *command)
     {
-        miss_right_click_func_ = new_miss_right_click_func_;
+        miss_right_click_command_ = command;
     }
 
-    void set_right_released  (void (*new_right_released_func_)(Button *self, Vector2d point))
+    void set_release_right_click  (Command<Vector2d> *command)
     {
-        right_released_func_ = new_right_released_func_;
+        release_right_click_command_ = command;
     }
 
     void ClickLeftEvent     (Vector2d point)   override;
-    void MissClickLeftEvent (Vector2d point)   override;
     void ReleasedLeftEvent  (Vector2d point)   override;
     void ClickRightEvent    (Vector2d point)   override;
-    void MissClickRightEvent(Vector2d point)   override;
     void ReleasedRightEvent (Vector2d point)   override;
 
+    void print(Vector2d point)
+    {
+        printf("CLICKED!!\n");
+    }
+
 private:
-    void (*left_click_func_)      (Button *self, Vector2d point) = nullptr;
-    void (*miss_left_click_func_) (Button *self, Vector2d point) = nullptr;
-    void (*left_released_func_)   (Button *self, Vector2d point) = nullptr;
-    void (*right_click_func_)     (Button *self, Vector2d point) = nullptr;
-    void (*miss_right_click_func_)(Button *self, Vector2d point) = nullptr;
-    void (*right_released_func_)  (Button *self, Vector2d point) = nullptr;
+    Command<Vector2d> *left_click_command_          = nullptr;
+    Command<Vector2d> *miss_left_click_command_     = nullptr;
+    Command<Vector2d> *release_left_click_command_  = nullptr;
+
+    Command<Vector2d> *right_click_command_         = nullptr;
+    Command<Vector2d> *miss_right_click_command_    = nullptr;
+    Command<Vector2d> *release_right_click_command_ = nullptr;
 };
 
 
 void Button::ClickLeftEvent (Vector2d point)
 {
-    is_left_clicked_ = true;
-    
-    if (left_click_func_ != nullptr)
+    if (point_belonging(point))
     {
-        (*left_click_func_)(this, point);
-    }
-}
-
-void Button::MissClickLeftEvent  (Vector2d point)
-{
-    if (miss_left_click_func_ != nullptr)
-    {
-        (*miss_left_click_func_)(this, point);
+        is_left_clicked_ = true;
+        
+        if (left_click_command_ != nullptr)
+        {
+            left_click_command_->Execute(point);
+        }
     }
 }
 
 void Button::ReleasedLeftEvent (Vector2d point)
 {
-    is_left_clicked_ = false;
-
-    if (left_released_func_ != nullptr)
+    if (point_belonging(point))
     {
-        (*left_released_func_)(this, point);
-    }
-}
+        is_left_clicked_ = false;
 
-void Button::ReleasedRightEvent (Vector2d point)
-{
-    is_right_clicked_ = false;
-
-    if (right_released_func_ != nullptr)
-    {
-        (*right_released_func_)(this, point);
+        if (release_left_click_command_ != nullptr)
+        {
+            release_left_click_command_->Execute(point);
+        }
     }
 }
 
 void Button::ClickRightEvent     (Vector2d point)
 {
-    is_left_clicked_ = true;
-
-    if (right_click_func_ != nullptr)
+    if (point_belonging(point))
     {
-        (*right_click_func_)(this, point);
+        is_left_clicked_ = true;
+
+        if (right_click_command_ != nullptr)
+        {
+            right_click_command_->Execute(point);
+        }
     }
 }
 
-void Button::MissClickRightEvent (Vector2d point)
+void Button::ReleasedRightEvent (Vector2d point)
 {
-    if (miss_right_click_func_ != nullptr)
+    if (point_belonging(point))
     {
-        (*miss_right_click_func_)(this, point);
+        is_right_clicked_ = false;
+
+        if (release_right_click_command_ != nullptr)
+        {
+            release_right_click_command_->Execute(point);
+        }
     }
 }
