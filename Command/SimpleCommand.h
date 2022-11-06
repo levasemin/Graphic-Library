@@ -20,6 +20,11 @@ public:
     {
         (receiver_->*action_)(params...);
     }
+    
+    void unExecute(TParams... params)
+    {
+
+    }
 
 private:
     Receiver *receiver_;

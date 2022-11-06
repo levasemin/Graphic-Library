@@ -21,6 +21,10 @@ class EventManager
 public: 
     void distribute_event(Window *window);
     void distribute_event(Widget *window, sf::Event event_);
+
+private:
+    bool is_left_button_clicked_ = false;
+    bool is_right_button_clicked_ = false;
 };
 
 void EventManager::distribute_event(Widget *window, sf::Event event)
@@ -32,13 +36,15 @@ void EventManager::distribute_event(Widget *window, sf::Event event)
             Vector2d point(event.mouseButton.x, event.mouseButton.y);
 
             if (event.mouseButton.button == sf::Mouse::Left)
-            {   
+            {
+                is_left_button_clicked_ = true;   
                 give_event(window, &Widget::ClickLeftEvent, point);
             }
 
             else
             if (event.mouseButton.button == sf::Mouse::Right)
             {         
+                is_right_button_clicked_ = true;
                 give_event(window, &Widget::ClickRightEvent, point);
             }
 
@@ -68,23 +74,25 @@ void EventManager::distribute_event(Widget *window, sf::Event event)
         {
             Vector2d point(event.mouseMove.x, event.mouseMove.y);
             
-            give_event(window, &Widget::MoveMouse, point);
+            give_event(window, &Widget::MoveMouseEvent, point);
 
             break;
         }
-
+        
         case sf::Event::MouseButtonReleased:
         {
             Vector2d point(event.mouseButton.x, event.mouseButton.y);
 
             if (event.mouseButton.button == sf::Mouse::Left)
             {
+                is_left_button_clicked_ = false;
                 give_event(window, &Widget::ReleasedLeftEvent, point);
             }
 
             else
             if (event.mouseButton.button == sf::Mouse::Right)
             {
+                is_right_button_clicked_ = false;
                 give_event(window, &Widget::ReleasedRightEvent, point);            
             }
 
@@ -109,5 +117,17 @@ void EventManager::distribute_event(Window *window)
         }
         
         distribute_event(window->main_window_, window->event_);        
+    }
+
+    Vector2d point(window->event_.mouseButton.x, window->event_.mouseButton.y);
+
+    if (is_left_button_clicked_)
+    {
+        give_event(window->main_window_, &Widget::PressLeftEvent, point);
+    }
+
+    if (is_right_button_clicked_)
+    {
+        give_event(window->main_window_, &Widget::PressRightEvent, point);
     }
 }

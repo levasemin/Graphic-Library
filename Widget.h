@@ -52,16 +52,18 @@ public:
             resize_field();
         };
 
-    virtual void ClickLeftEvent      (Vector2d point) {};
-    virtual void ReleasedLeftEvent   (Vector2d point) {};              
+    virtual void ClickLeftEvent      (Vector2d point) = 0;
+    virtual void PressLeftEvent      (Vector2d point) = 0;
+    virtual void ReleasedLeftEvent   (Vector2d point) = 0;              
 
-    virtual void ClickRightEvent     (Vector2d point) {};               
-    virtual void ReleasedRightEvent  (Vector2d point) {};              
+    virtual void ClickRightEvent     (Vector2d point) = 0;
+    virtual void PressRightEvent     (Vector2d point) = 0;               
+    virtual void ReleasedRightEvent  (Vector2d point) = 0;              
     
-    virtual void MoveMouse           (Vector2d point) {};
+    virtual void MoveMouseEvent      (Vector2d point) = 0;
 
-    virtual void PressKeyEvent       (int key) {};
-    virtual void ScrollEvent         (Vector2d point, Vector2d offset) {};
+    virtual void PressKeyEvent       (int key) = 0;
+    virtual void ScrollEvent         (Vector2d point, Vector2d offset) = 0;
     
     virtual void set_offset(Vector2d offset)
     {

@@ -18,6 +18,22 @@ public:
             }
         }
 
+    void PressLeftEvent      (Vector2d point) override
+    {   
+        for (int i = 0; i < children_.size(); i++)
+        {
+            children_[i]->PressLeftEvent(point);
+        }
+    }
+
+    void PressRightEvent      (Vector2d point) override
+    {   
+        for (int i = 0; i < children_.size(); i++)
+        {
+            children_[i]->PressRightEvent(point);
+        }
+    }
+
     void ClickLeftEvent      (Vector2d point) override
     {   
         for (int i = 0; i < children_.size(); i++)
@@ -26,7 +42,7 @@ public:
         }
     }
 
-    virtual void ReleasedLeftEvent   (Vector2d point)
+    void ReleasedLeftEvent   (Vector2d point) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
@@ -34,7 +50,7 @@ public:
         }
     }             
 
-    virtual void ClickRightEvent     (Vector2d point)
+    void ClickRightEvent     (Vector2d point) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
@@ -42,7 +58,7 @@ public:
         }
     }
                
-    virtual void ReleasedRightEvent  (Vector2d point)
+    void ReleasedRightEvent  (Vector2d point) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
@@ -50,15 +66,15 @@ public:
         }
     }            
     
-    virtual void MoveMouse           (Vector2d point)
+    void MoveMouseEvent      (Vector2d point) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->MoveMouse(point);
+            children_[i]->MoveMouseEvent(point);
         }
     }
 
-    virtual void PressKeyEvent       (int key)
+    void PressKeyEvent       (int key) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
@@ -66,7 +82,7 @@ public:
         }
     }
 
-    virtual void ScrollEvent         (Vector2d point, Vector2d offset)
+    void ScrollEvent         (Vector2d point, Vector2d offset) override
     {
         for (int i = 0; i < children_.size(); i++)
         {

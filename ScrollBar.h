@@ -30,14 +30,22 @@ public:
                        Texture(Colors::Red))
         {
             add(&up_button_);
-            up_button_.set_left_click((Command<Vector2d> *)new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::scroll_up));
+            up_button_.set_left_press((Command<Vector2d> *)new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::scroll_up));
             add(&down_button_);
-            down_button_.set_left_click((Command<Vector2d> *)new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::scroll_down));
+            down_button_.set_left_press((Command<Vector2d> *)new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::scroll_down));
             add(&scroll_button_);
             scroll_button_.set_left_click((Command<Vector2d> *)new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::clicked_scroll_button));
         };
 
-        void MoveMouse (Vector2d point) override 
+        void ScrollEvent(Vector2d point, Vector2d offset) override
+        {
+            if (parent_)
+            {
+                parent_->ScrollEvent(point, offset);
+            }
+        }
+
+        void MoveMouseEvent (Vector2d point)  
         {
             if (scroll_button_.is_left_clicked_)
             {   
@@ -50,24 +58,21 @@ public:
             }
         };
 
-        void ScrollEvent(Vector2d point, Vector2d offset) override
+        void move_scroll(Vector2d point)
         {
-            if (parent_)
-            {
-                parent_->ScrollEvent(point, offset);
-            }
+            
         }
-
+        
         void scroll_up(Vector2d point)
         {
-            Vector2d offset = Vector2d(0, (parent_->shape_.y_ - parent_->shape_.x_ * 2) / scroll_button_coeff_size_);
+            Vector2d offset = Vector2d(0, 1);
 
             parent_->ScrollEvent(point, offset);
         }    
 
         void scroll_down(Vector2d point)
         {
-            Vector2d offset = Vector2d(0, -((parent_->shape_.y_ - parent_->shape_.x_ * 2) / scroll_button_coeff_size_));
+            Vector2d offset = Vector2d(0, -1);
 
             parent_->ScrollEvent(point, offset);
         }

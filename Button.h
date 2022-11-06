@@ -23,9 +23,9 @@ public:
         left_click_command_ = command;
     }
 
-    void set_miss_left_click  (Command<Vector2d> *command)
+    void set_left_press  (Command<Vector2d> *command)
     {
-        miss_left_click_command_ = command;
+        left_press_command_ = command;
     }
 
     void set_release_left_click  (Command<Vector2d> *command)
@@ -38,20 +38,28 @@ public:
         right_click_command_ = command;
     }
 
-    void set_miss_right_click  (Command<Vector2d> *command)
+    void set_right_press  (Command<Vector2d> *command)
     {
-        miss_right_click_command_ = command;
+        right_press_command_ = command;
     }
 
     void set_release_right_click  (Command<Vector2d> *command)
     {
         release_right_click_command_ = command;
     }
+    
 
     void ClickLeftEvent     (Vector2d point)   override;
+    void PressLeftEvent     (Vector2d point)   override;
     void ReleasedLeftEvent  (Vector2d point)   override;
+
     void ClickRightEvent    (Vector2d point)   override;
+    void PressRightEvent    (Vector2d point)   override;
     void ReleasedRightEvent (Vector2d point)   override;
+    
+    void MoveMouseEvent     (Vector2d point)   override {};
+    void PressKeyEvent      (int key)          override {};
+    void ScrollEvent        (Vector2d point, Vector2d offset) override {};
 
     void print(Vector2d point)
     {
@@ -60,11 +68,11 @@ public:
 
 private:
     Command<Vector2d> *left_click_command_          = nullptr;
-    Command<Vector2d> *miss_left_click_command_     = nullptr;
+    Command<Vector2d> *left_press_command_          = nullptr;
     Command<Vector2d> *release_left_click_command_  = nullptr;
 
     Command<Vector2d> *right_click_command_         = nullptr;
-    Command<Vector2d> *miss_right_click_command_    = nullptr;
+    Command<Vector2d> *right_press_command_         = nullptr;
     Command<Vector2d> *release_right_click_command_ = nullptr;
 };
 
@@ -78,6 +86,28 @@ void Button::ClickLeftEvent (Vector2d point)
         if (left_click_command_ != nullptr)
         {
             left_click_command_->Execute(point);
+        }
+    }
+}
+
+void Button::PressLeftEvent (Vector2d point)
+{
+    if (point_belonging(point))
+    {        
+        if (left_press_command_ != nullptr)
+        {
+            left_press_command_->Execute(point);
+        }
+    }
+}
+
+void Button::PressRightEvent (Vector2d point)
+{
+    if (point_belonging(point))
+    {        
+        if (right_press_command_ != nullptr)
+        {
+            right_press_command_->Execute(point);
         }
     }
 }
@@ -99,7 +129,7 @@ void Button::ClickRightEvent     (Vector2d point)
 {
     if (point_belonging(point))
     {
-        is_left_clicked_ = true;
+        is_right_clicked_ = true;
 
         if (right_click_command_ != nullptr)
         {
