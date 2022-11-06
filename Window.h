@@ -1,9 +1,7 @@
 #pragma once
 
-#include "MainWindow.h"
 #include "Color.h"
 #include <SFML/Graphics.hpp>
-#include "Sprite.h"
 
 class Window
 {
