@@ -19,7 +19,7 @@ class EventManager
 {
 
 public: 
-    void distribute_event(Window *window);
+    void distribute_event(Window *window, Widget *main_window);
     void distribute_event(Widget *window, sf::Event event_);
 
 private:
@@ -106,7 +106,7 @@ void EventManager::distribute_event(Widget *window, sf::Event event)
     }
 }
 
-void EventManager::distribute_event(Window *window)
+void EventManager::distribute_event(Window *window, Widget *main_window)
 {
     while (window->window_.pollEvent(window->event_))
     {
@@ -116,18 +116,18 @@ void EventManager::distribute_event(Window *window)
             break;
         }
         
-        distribute_event(window->main_window_, window->event_);        
+        distribute_event(main_window, window->event_);        
     }
 
     Vector2d point(window->event_.mouseButton.x, window->event_.mouseButton.y);
 
     if (is_left_button_clicked_)
     {
-        give_event(window->main_window_, &Widget::PressLeftEvent, point);
+        give_event(main_window, &Widget::PressLeftEvent, point);
     }
 
     if (is_right_button_clicked_)
     {
-        give_event(window->main_window_, &Widget::PressRightEvent, point);
+        give_event(main_window, &Widget::PressRightEvent, point);
     }
 }

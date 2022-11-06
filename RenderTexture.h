@@ -36,4 +36,9 @@ public:
     {
         return Texture(render_texture_.getTexture());
     }
+
+    void clear()
+    {
+        render_texture_.clear();
+    }
 };

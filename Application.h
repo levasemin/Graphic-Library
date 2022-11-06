@@ -11,7 +11,7 @@ class Application
     public: 
         Application(Widget *window):
             main_window_(window),
-            window_(main_window_),
+            window_(window->get_shape()),
             event_manager_()
             {};
 
@@ -37,7 +37,7 @@ void Application::exec()
     {
         show(main_window_);
         
-        event_manager_.distribute_event(&window_);
+        event_manager_.distribute_event(&window_, main_window_);
     }
 }
 
@@ -45,7 +45,5 @@ void Application::show(Widget *window)
 {
     window_.clear();
     main_window_->draw();   
-    window_.display();
-    RenderTexture rend(Vector2d(720, 720));
-    main_window_->render_texture_->render_texture_.clear();
+    main_window_->display(&window_);
 }

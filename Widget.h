@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Window.h"
 #include "Texture.h"
 #include "RenderTexture.h"
 #include "Sprite.h"
@@ -9,20 +10,6 @@
 class Widget
 {
 public:
-    Vector2d global_offset_;
-    Vector2d center_;
-    Vector2d shape_;
-    Vector2d start_field_;
-    Vector2d end_field_;
-
-    Vector2d parent_shape_;
-    
-    RenderTexture *render_texture_;
-    Texture texture_;
-    Sprite sprite_;
-
-    Widget *parent_;
-    std::vector<Widget *> children_ = {};
 
     Widget(Vector2d shape, Vector2d center, Texture texture, Widget *parent = nullptr):
         shape_(shape),
@@ -140,4 +127,38 @@ public:
     {
         return texture_;
     }
+
+    void display(Window *window)
+    {
+        render_texture_->display();
+        Sprite sprite(shape_, render_texture_->getTexture());    
+    
+        window->draw(sprite);
+        window->display();
+        render_texture_->clear();
+    }
+
+    Vector2d get_shape()
+    {
+        return shape_;
+    }
+
+    friend class CompositeWidget;
+    friend class EventManager;
+
+public:
+    Vector2d global_offset_;
+    Vector2d center_;
+    Vector2d shape_;
+    Vector2d start_field_;
+    Vector2d end_field_;
+
+    Vector2d parent_shape_;
+    
+    RenderTexture *render_texture_;
+    Texture texture_;
+    Sprite sprite_;
+
+    Widget *parent_;
+    std::vector<Widget *> children_ = {};
 };
