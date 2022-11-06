@@ -6,6 +6,7 @@
 #include "Command/SimpleCommand.h"
 #include "Command/Command.h"
 
+const double scroll_button_coeff_size = 10;
 
 class ScrollBar : public CompositeWidget
 {
@@ -18,7 +19,7 @@ public:
     
     Vector2d click_place_;
     
-    ScrollBar(Vector2d shape, Vector2d center, Texture texture, double scroll_button_coeff_size = 10, Widget *parent = nullptr, std::vector<Widget *> children = {}):
+    ScrollBar(Vector2d shape, Vector2d center, Texture texture, Widget *parent = nullptr, std::vector<Widget *> children = {}):
         CompositeWidget  (shape, center, texture, parent, children),
         scroll_button_coeff_size_(scroll_button_coeff_size),
         up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, start_field_.y_ + shape.x_ / 2),
