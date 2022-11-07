@@ -15,7 +15,7 @@ public:
         shape_(shape),
         texture_(texture),
         sprite_(shape, texture, 0),
-        center_(center), 
+        center_(center),
         global_offset_(Vector2d(0, 0)), 
         parent_(parent)
         {
