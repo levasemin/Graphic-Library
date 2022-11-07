@@ -77,7 +77,5 @@ int main()
     Application app(&main_window);
 
     main_window.add(&container);
-    Widget *kek = (Widget *)&main_window;
-    kek->draw();
     app.exec();
 }

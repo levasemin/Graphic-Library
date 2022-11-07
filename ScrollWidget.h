@@ -70,7 +70,7 @@ public:
 
         if (scroll_bar_ != nullptr)
         {
-            double coeff = (scroll_bar_->shape_.y_ - scroll_bar_->up_button_.shape_.y_ * 2 - scroll_bar_->scroll_button_.shape_.y_) /
+            double coeff = (scroll_bar_->get_shape().y_ - scroll_bar_->up_button_.get_shape().y_ * 2 - scroll_bar_->scroll_button_.get_shape().y_) /
                            (global_end_field_.y_ - global_start_field_.y_ - shape_.y_);
 
             scroll_bar_->scroll_button_.set_offset(offset * -1 * coeff);
@@ -85,16 +85,16 @@ public:
 
     void add(Widget *window) override
     {    
-        global_start_field_.x_ = window->center_.x_ - window->shape_.x_ / 2 < global_start_field_.x_ ? 
-                                 window->center_.x_ - window->shape_.x_ / 2 : global_start_field_.x_;
-        global_start_field_.y_ = window->center_.y_ - window->shape_.y_ / 2 < global_start_field_.y_ ? 
-                                 window->center_.y_ - window->shape_.y_ / 2 : global_start_field_.y_;
+        global_start_field_.x_ = window->get_center().x_ -  window->get_shape().x_ / 2 < global_start_field_.x_ ? 
+                                 window->get_center().x_ -  window->get_shape().x_ / 2 : global_start_field_.x_;
+        global_start_field_.y_ = window->get_center().y_ -  window->get_shape().y_ / 2 < global_start_field_.y_ ? 
+                                 window->get_center().y_ -  window->get_shape().y_ / 2 : global_start_field_.y_;
 
-        global_end_field_.x_   = window->center_.x_ + window->shape_.x_ / 2 > global_end_field_.x_ ? 
-                                 window->center_.x_ + window->shape_.x_ / 2 : global_end_field_.x_;
+        global_end_field_.x_   = window->get_center().x_ +  window->get_shape().x_ / 2 > global_end_field_.x_ ? 
+                                 window->get_center().x_ +  window->get_shape().x_ / 2 : global_end_field_.x_;
         
-        global_end_field_.y_   = window->center_.y_ + window->shape_.y_ / 2 > global_end_field_.y_ ? 
-                                 window->center_.y_ + window->shape_.y_ / 2 : global_end_field_.y_;
+        global_end_field_.y_   = window->get_center().y_ +  window->get_shape().y_ / 2 > global_end_field_.y_ ? 
+                                 window->get_center().y_ +  window->get_shape().y_ / 2 : global_end_field_.y_;
 
         CompositeWidget::add(window);
     }

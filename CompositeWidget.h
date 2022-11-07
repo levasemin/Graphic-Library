@@ -105,8 +105,7 @@ public:
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->render_texture_ = render_texture_;
-            children_[i]->parent_shape_ = parent_shape_;
+            children_[i]->set_render_texture(render_texture_);
             children_[i]->set_field();
         }
     }
@@ -131,9 +130,8 @@ public:
             }
         }
 
-        widget->parent_ = nullptr;
-        widget->parent_shape_ = widget->shape_;
-        widget->render_texture_  = new RenderTexture(widget->shape_);
+        widget->set_parent(nullptr);
+        widget->set_render_texture(new RenderTexture(widget->get_shape()));
         
         Vector2d offset = shape_ / 2 - center_ - global_offset_;
         widget->set_offset(offset);
@@ -142,18 +140,17 @@ public:
 
     void add(Widget *widget)
     {
-        if (widget->parent_ == this)
+        if (widget->get_parent() == this)
         {
             return;
         }
 
-        widget->parent_ = this;
+        widget->set_parent(this);
         children_.push_back(widget);
 
-        delete widget->render_texture_;
+        delete widget->get_render_texture();
         
-        widget->render_texture_ = render_texture_;
-        widget->parent_shape_ = parent_shape_;
+        widget->set_render_texture(render_texture_);
         
         Vector2d offset = global_offset_ + center_ - shape_ / 2;
         widget->set_offset(offset);

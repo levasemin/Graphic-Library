@@ -7,9 +7,11 @@
 template<class ...TParams>
 void give_event(Widget *window, void (Widget::*method)(TParams ...), TParams ...params)
 {
-    for (int i = 0; i < window->children_.size(); i++)
+    std::vector <Widget *> children = window->get_children();
+
+    for (int i = 0; i < children.size(); i++)
     {
-        ((window->children_[i])->*method)(params ...);
+        ((children[i])->*method)(params ...);
     }
 }
 
