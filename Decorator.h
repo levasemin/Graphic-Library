@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Widget.h"
 
 class Decorator : public Widget
@@ -7,7 +9,8 @@ protected:
     Widget *widget_ = nullptr;
 
 public:
-    Decorator (Widget *widget): Widget()
+    Decorator (Widget *widget): Widget(),
+        widget_(widget)
     {
     }
 

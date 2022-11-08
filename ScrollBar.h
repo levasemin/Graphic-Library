@@ -22,8 +22,8 @@ public:
     
     Vector2d click_place_;
     
-    ScrollBar(Vector2d shape, Vector2d center, Texture texture, Widget *parent = nullptr, std::vector<Widget *> children = {}):
-        CompositeObject  (shape, center, texture, parent, children),
+    ScrollBar(Vector2d shape, Vector2d center, Texture texture):
+        CompositeObject  (shape, center, texture),
         scroll_button_coeff_size_(scroll_button_coeff_size),
         up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(center.x_, start_field_.y_ + shape.x_ / 2),
                       Texture(Colors::White)),

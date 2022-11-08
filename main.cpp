@@ -5,6 +5,7 @@
 #include "Container.h"
 #include "ScrollContainer.h"
 #include "ScrollBar.h"
+#include "ScrollBarDecorator.h"
 #include "constants.h"
 #include "Application.h"
 #include "SimpleCommand.h"
@@ -71,11 +72,12 @@ int main()
     container.add(&first_button);
     container.add(&second_button);
     container.add(&third_button);
-    
-    container = container.set_scroll_bar();
-    
-    Application app(&main_window);
+        
+    DecoratorScrollBar decorator(&container);
 
-    main_window.add(&container);
-    app.exec();
+
+    //Application app(&main_window);
+
+    //main_window.add(&decorator);
+    //app.exec();
 }

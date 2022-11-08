@@ -42,8 +42,9 @@ public:
         }
     }
 
-    ScrollContainer &set_scroll_bar()
-    {
-        return *((ScrollContainer *) new DecoratorScrollBar(this));
-    }
+    // ScrollContainer &set_scroll_bar()
+    // {
+    //     DecoratorScrollBar *decorator = new DecoratorScrollBar(this);
+    //     return *((ScrollContainer *) decorator);
+    // }
 };
