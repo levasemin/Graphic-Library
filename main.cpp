@@ -7,8 +7,8 @@
 #include "ScrollBar.h"
 #include "constants.h"
 #include "Application.h"
-#include "Command/SimpleCommand.h"
-#include "Command/Command.h"
+#include "SimpleCommand.h"
+#include "Command.h"
 #include <iostream>
 #include <vector>
 #include "Vector2d.h"
@@ -46,7 +46,7 @@ const char *path_britsih = "/home/levce/projectsDED/event_handler2/Event_handler
 int main()
 {      
     std::vector<Widget *> buttons();
-
+    
     MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Colors::Yellow));
 
     ScrollBar scrollbar(Vector2d(20, 400), Vector2d(10, 200), Texture(Colors::Blue));
@@ -72,7 +72,7 @@ int main()
     container.add(&second_button);
     container.add(&third_button);
     
-    container.set_scroll_bar(&scrollbar);
+    container = container.set_scroll_bar();
     
     Application app(&main_window);
 

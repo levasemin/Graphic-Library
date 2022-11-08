@@ -15,7 +15,6 @@ void give_event(Widget *window, void (Widget::*method)(TParams ...), TParams ...
     }
 }
 
-Widget *get_chosen_window(Widget *window, Vector2d point);
 
 class EventManager
 {

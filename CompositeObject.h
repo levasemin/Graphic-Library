@@ -1,14 +1,22 @@
 #pragma once
 
+#include "Object.h"
 #include "Widget.h"
 
-
-class CompositeWidget : public Widget
+class CompositeObject : public Object
 {
 
+protected:
+    std::vector<Widget *> children_;
+
+    Vector2d global_start_field_ = (0, 0);
+    Vector2d global_end_field_   = (0, 0);
+    Vector2d global_shape_       = (0, 0);
+
 public:
-    CompositeWidget(Vector2d shape, Vector2d center, Texture texture, Widget *parent = nullptr, std::vector<Widget *> children = {}):
-        Widget(shape, center, texture, parent)
+    CompositeObject(Vector2d shape, Vector2d center, Texture texture, Widget *parent = nullptr, std::vector<Widget *> children = {}):
+        Object(shape, center, texture, parent),
+        children_(children)
         {
             children_ = children;
 
@@ -112,8 +120,8 @@ public:
 
     void draw() override
     {
-        Widget::draw();
-        
+        Object::draw(); 
+
         for (int i = 0; i < children_.size(); i++)
         {
             children_[i]->draw();
@@ -140,6 +148,14 @@ public:
 
     void add(Widget *widget)
     {
+        global_end_field_.x_   = widget->get_center().x_ +  widget->get_shape().x_ / 2 > global_end_field_.x_ ? 
+                                 widget->get_center().x_ +  widget->get_shape().x_ / 2 : global_end_field_.x_;
+        
+        global_end_field_.y_   = widget->get_center().y_ +  widget->get_shape().y_ / 2 > global_end_field_.y_ ? 
+                                 widget->get_center().y_ +  widget->get_shape().y_ / 2 : global_end_field_.y_;
+
+        global_shape_ = global_end_field_;
+
         if (widget->get_parent() == this)
         {
             return;
@@ -156,4 +172,10 @@ public:
         widget->set_offset(offset);
         widget->set_field();
     }
+    
+    std::vector<Widget *> get_children() { return children_;}
+    Vector2d get_global_shape()          { return global_shape_; }
+
+    void set_children(std::vector<Widget *> children) { children_ = children; }
+    void set_global_shape(Vector2d global_shape)  { global_shape_ = global_shape; }
 };

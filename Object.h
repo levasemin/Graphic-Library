@@ -7,11 +7,25 @@
 #include "Vector2d.h"
 #include "functions.h"
 
-class Widget
+class Object : public Widget
 {
+protected:
+    Vector2d global_offset_;
+    Vector2d center_;
+    Vector2d shape_;
+    Vector2d start_field_;
+    Vector2d end_field_;
+    
+    RenderTexture *render_texture_;
+    Texture texture_;
+    Sprite sprite_;
+
+    Widget *parent_;
+
+
 public:
 
-    Widget(Vector2d shape, Vector2d center, Texture texture, Widget *parent = nullptr):
+    Object(Vector2d shape, Vector2d center, Texture texture, Widget *parent = nullptr): Widget(),
         shape_(shape),
         texture_(texture),
         sprite_(shape, texture, 0),
@@ -31,7 +45,7 @@ public:
             
             else
             {
-                render_texture_ = parent->render_texture_;
+                render_texture_ = parent->get_render_texture();
             }
 
             resize_field();
@@ -69,8 +83,8 @@ public:
         start_field_ = global_offset_ + center_ - shape_ / 2;
         end_field_   = global_offset_ + center_ + shape_ / 2;
         
-        Vector2d down_limit  = parent_ != nullptr ? parent_->global_offset_ + parent_->center_ - parent_->shape_ / 2 : Vector2d(0, 0);
-        Vector2d hight_limit = parent_ != nullptr ? parent_->global_offset_ + parent_->center_ + parent_->shape_ / 2 : shape_;
+        Vector2d down_limit  = parent_ != nullptr ? parent_->get_global_offset() + parent_->get_center() - parent_->get_shape() / 2 : Vector2d(0, 0);
+        Vector2d hight_limit = parent_ != nullptr ? parent_->get_global_offset() + parent_->get_center() + parent_->get_shape() / 2 : shape_;
 
         start_field_.x_ = start_field_.x_ < down_limit.x_ ? down_limit.x_ : start_field_.x_;
         start_field_.y_ = start_field_.y_ < down_limit.y_ ? down_limit.y_ : start_field_.y_;
@@ -136,29 +150,28 @@ public:
         render_texture_->clear();
     }
 
-    Vector2d get_center()                { return center_; }
-    Vector2d get_shape()                 { return shape_; }
-    Widget  *get_parent()                { return parent_; }
-    RenderTexture *get_render_texture()  { return render_texture_; }
-    std::vector<Widget *> get_children() { return children_;}
+    Vector2d get_center() override               { return center_; }
+    Vector2d get_shape() override               { return shape_; }
+    Widget  *get_parent() override                { return parent_; }
+    Vector2d get_global_offset() override        { return global_offset_; }
+    RenderTexture *get_render_texture() override { return render_texture_; }
+    Vector2d get_global_shape() override         { return shape_; }
+    std::vector<Widget *> get_children() override
+    {
+        // std::logic_error exception("try getting children from object\n");
+        // throw exception;
+        return {};
+    }
 
-    void set_center(Vector2d center) { center_ = center; }
-    void set_shape (Vector2d shape)  { shape_  = shape; }
-    void set_parent(Widget *parent)  { parent_ = parent; }
-    void set_render_texture(RenderTexture *render_texture) {render_texture_ = render_texture;}
-    void set_children(std::vector<Widget *> children) { children_ = children; }
-
-protected:
-    Vector2d global_offset_;
-    Vector2d center_;
-    Vector2d shape_;
-    Vector2d start_field_;
-    Vector2d end_field_;
-    
-    RenderTexture *render_texture_;
-    Texture texture_;
-    Sprite sprite_;
-
-    Widget *parent_;
-    std::vector<Widget *> children_ = {};
+    void set_center(Vector2d center) override { center_ = center; }
+    void set_shape (Vector2d shape) override { shape_  = shape; }
+    void set_parent(Widget *parent) override { parent_ = parent; }
+    void set_global_offset(Vector2d global_offset) override { global_offset_ = global_offset; }
+    void set_render_texture(RenderTexture *render_texture) override {render_texture_ = render_texture;}
+    void set_global_shape(Vector2d global_shape) override     { shape_ = global_shape; }
+    void set_children(std::vector<Widget *> children) override
+    {
+        // std::logic_error exception("try setting children to object\n");
+        // throw exception;
+    }
 };

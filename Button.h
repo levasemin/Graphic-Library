@@ -1,20 +1,21 @@
 #pragma once
 
 #include "Label.h"
+#include "Object.h"
 #include "Widget.h"
-#include "Command/Command.h"
+#include "Command.h"
 #include "math.h"
 #include "Vector2d.h"
 
-class Button : public Widget
+class Button : public Object
 {
 public:
 
     bool is_left_clicked_  = false;
     bool is_right_clicked_ = false;
-    
+        
     Button(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr) : 
-        Widget(shape, center, texture, parent)
+        Object(shape, center, texture, parent)
         {
         };
     
@@ -92,6 +93,8 @@ void Button::ClickLeftEvent (Vector2d point)
 
 void Button::PressLeftEvent (Vector2d point)
 {
+    is_left_clicked_ = true;
+
     if (point_belonging(point))
     {        
         if (left_press_command_ != nullptr)
@@ -103,6 +106,8 @@ void Button::PressLeftEvent (Vector2d point)
 
 void Button::PressRightEvent (Vector2d point)
 {
+    is_right_clicked_ = true;
+
     if (point_belonging(point))
     {        
         if (right_press_command_ != nullptr)
@@ -114,10 +119,10 @@ void Button::PressRightEvent (Vector2d point)
 
 void Button::ReleasedLeftEvent (Vector2d point)
 {
+    is_left_clicked_ = false;
+
     if (point_belonging(point))
     {
-        is_left_clicked_ = false;
-
         if (release_left_click_command_ != nullptr)
         {
             release_left_click_command_->Execute(point);
@@ -140,10 +145,10 @@ void Button::ClickRightEvent     (Vector2d point)
 
 void Button::ReleasedRightEvent (Vector2d point)
 {
+    is_right_clicked_ = false;
+
     if (point_belonging(point))
     {
-        is_right_clicked_ = false;
-
         if (release_right_click_command_ != nullptr)
         {
             release_right_click_command_->Execute(point);

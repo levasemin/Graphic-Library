@@ -7,14 +7,14 @@
 #include "Widget.h"
 #include <string>
 
-class Label: public Widget
+class Label: public Object
 {
 
 public:
     RenderTexture label_texture_;
     Text text_;
 
-    Label(Vector2d shape, Vector2d center, Texture texture = Texture(Colors::White), Text text = Text()): Widget(shape, center, texture),
+    Label(Vector2d shape, Vector2d center, Texture texture = Texture(Colors::White), Text text = Text()): Object(shape, center, texture),
         label_texture_(shape),
         text_(text)
     {};
