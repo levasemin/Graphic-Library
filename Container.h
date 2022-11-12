@@ -11,7 +11,5 @@ public:
 
     Container(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr, const std::vector<Widget *> &children = {}): 
         CompositeObject(shape, center, texture, parent, children)
-        {
-            
-        };
+        {};
 };

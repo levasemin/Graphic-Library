@@ -5,7 +5,7 @@
 #include "Container.h"
 #include "ScrollContainer.h"
 #include "ScrollBar.h"
-#include "ScrollBarDecorator.h"
+#include "DecoratorScrollBar.h"
 #include "constants.h"
 #include "Application.h"
 #include "SimpleCommand.h"
@@ -49,8 +49,6 @@ int main()
     std::vector<Widget *> buttons();
     
     MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Colors::Yellow));
-
-    ScrollBar scrollbar(Vector2d(20, 400), Vector2d(10, 200), Texture(Colors::Blue));
             
     ScrollContainer container(Vector2d(100, 400), Vector2d(300, 250), Texture(Colors::Black));
 
@@ -75,9 +73,10 @@ int main()
         
     DecoratorScrollBar decorator(&container);
 
+    Application app(&main_window);
 
-    //Application app(&main_window);
+    main_window.add(&decorator);
 
-    //main_window.add(&decorator);
-    //app.exec();
+    std::cout << (decorator.scroll_bar_.get_render_texture() == decorator.get_render_texture());
+    app.exec();
 }

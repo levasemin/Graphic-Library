@@ -4,7 +4,6 @@
 #include "Texture.h"
 #include "Vector2d.h"
 #include "Container.h"
-#include "DecoratorScrollBar.h"
 
 class ScrollContainer : public Container
 {
@@ -18,7 +17,8 @@ public:
         {
         };
 
-
+//TODO:
+//из декоратора поступает сигнал о прокрутке, но scroll container обрубает его, тк он делает проверку на принадлежность точки
     void ScrollEvent (Vector2d point, Vector2d offset) override
     {
         if (offset.y_ > 0)
@@ -35,7 +35,7 @@ public:
         }
 
         global_offset0_ += offset;
- 
+
         for (int i = 0; i < children_.size(); i++)
         {
             children_[i]->set_offset(offset);

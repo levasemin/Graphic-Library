@@ -169,7 +169,7 @@ public:
     void set_global_offset(Vector2d global_offset) override { global_offset_ = global_offset; }
     void set_render_texture(RenderTexture *render_texture) override {render_texture_ = render_texture;}
     void set_global_shape(Vector2d global_shape) override     { shape_ = global_shape; }
-    void set_children(std::vector<Widget *> children) override
+    void set_children(std::vector<Widget *> children) 
     {
         // std::logic_error exception("try setting children to object\n");
         // throw exception;

@@ -81,14 +81,12 @@ public:
 
     void remove(Widget *window) override
     {
-        std::logic_error exception("removing child to widget\n");
-        throw exception;
+        widget_->remove(window);
     }
 
     void add(Widget *window) override
     {
-        std::logic_error exception("adding child to widget\n");
-        throw exception;
+        widget_->add(window);
     }
     
     void draw() override
