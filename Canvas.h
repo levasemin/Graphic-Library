@@ -4,9 +4,9 @@
 class Canvas : public CompositeObject
 {
     RenderTexture field_;
-    
+
     Canvas (Vector2d shape, Vector2d center, Texture texture, Widget *parent = nullptr, std::vector<Widget *> children = {}) : 
-        CompositeObject(shape, texture, parent, children),
+        CompositeObject(shape, texture, parent, children), 
         field_(texture.getSize())
     {
         texture_ = get_texture();
