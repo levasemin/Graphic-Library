@@ -47,7 +47,6 @@ public:
 
     void set_field() override
     {
-        scroll_bar_.set_render_texture(widget_->get_render_texture());
         scroll_bar_.set_field();
         widget_->set_field();
     }

@@ -44,10 +44,6 @@ void Window::close()
 
 void Window::display()
 {
-    // main_window_->render_texture_->display();
-    // Sprite sprite(main_window_->shape_, main_window_->render_texture_->getTexture());    
-    
-    // draw(sprite);
     window_.display();
 }
 

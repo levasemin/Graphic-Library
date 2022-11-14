@@ -46,13 +46,18 @@ public:
             rescale();
         }
     }
+    
+    Texture getTexture()
+    {
+        return texture_;
+    }
 
-    void setTexture(const Texture &texture, bool with_rescale = true)
+    void setTexture(const Texture &texture, bool resetRect = true)
     {
         texture_ = texture;
-        sprite_.setTexture(texture_.texture_);
+        sprite_.setTexture(texture_.texture_, resetRect);
         
-        if (with_rescale) 
+        if (resetRect) 
         {
             rescale();
         }

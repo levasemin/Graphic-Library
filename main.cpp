@@ -45,14 +45,12 @@ void press_key(Widget *self, int key)
 const char *path_britsih = "/home/levce/projectsDED/event_handler2/Event_handler/source/british.jpg";
 
 int main()
-{      
-    std::vector<Widget *> buttons();
-    
+{          
     MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Colors::Yellow));
             
-    ScrollContainer container(Vector2d(100, 400), Vector2d(300, 250), Texture(Colors::Black));
+    Container container(Vector2d(100, 400), Vector2d(300, 250), Texture(Colors::Black));
 
-    Button first_button (Vector2d(100, 300), Vector2d(50, 160), Texture(Colors::Red));
+    Button first_button (Vector2d(100, 301), Vector2d(50, 160), Texture(Colors::Red));
 
     Command<Vector2d> *command = (Command<Vector2d> *)new SimpleCommand<Button, Vector2d>(&first_button, &Button::print);
 
@@ -76,7 +74,5 @@ int main()
     Application app(&main_window);
 
     main_window.add(&decorator);
-
-    std::cout << (decorator.scroll_bar_.get_render_texture() == decorator.get_render_texture());
     app.exec();
 }

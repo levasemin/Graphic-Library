@@ -52,14 +52,16 @@ public:
     virtual Widget  *get_parent()                = 0;
     virtual RenderTexture *get_render_texture()  = 0;
     virtual std::vector<Widget *> get_children() = 0;
-    virtual Vector2d get_global_offset()         = 0; 
+    virtual Vector2d get_global_offset()         = 0;
+    virtual Vector2d get_start_field()           = 0; 
+    virtual Vector2d get_end_field()             = 0;
     virtual Vector2d get_global_shape()          = 0;
 
     virtual void set_center(Vector2d center)                        = 0;
     virtual void set_shape(Vector2d shape)                          = 0;
     virtual void set_global_offset(Vector2d global_offset)          = 0;
     virtual void set_parent(Widget *parent)                         = 0;
-    virtual void set_render_texture(RenderTexture *render_texture)  = 0;
+    //virtual void set_render_texture(RenderTexture *render_texture)  = 0;
     virtual void set_children(std::vector<Widget *> children)       = 0;
     virtual void set_global_shape(Vector2d global_shape)            = 0;
 };

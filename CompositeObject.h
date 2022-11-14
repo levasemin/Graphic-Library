@@ -113,19 +113,19 @@ public:
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->set_render_texture(render_texture_);
             children_[i]->set_field();
         }
     }
 
     void draw() override
     {
-        Object::draw(); 
-
         for (int i = 0; i < children_.size(); i++)
         {
             children_[i]->draw();
         }
+
+        Object::draw(); 
+
     }
 
     void remove(Widget *widget) override
@@ -139,7 +139,6 @@ public:
         }
 
         widget->set_parent(nullptr);
-        widget->set_render_texture(new RenderTexture(widget->get_shape()));
         
         Vector2d offset = shape_ / 2 - center_ - global_offset_;
         widget->set_offset(offset);
@@ -163,11 +162,7 @@ public:
 
         widget->set_parent(this);
         children_.push_back(widget);
-
-        delete widget->get_render_texture();
-        
-        widget->set_render_texture(render_texture_);
-        
+                
         Vector2d offset = global_offset_ + center_ - shape_ / 2;
         widget->set_offset(offset);
         widget->set_field();

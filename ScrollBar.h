@@ -47,6 +47,7 @@ public:
             
             Vector2d next_pos = scroll_button_.get_global_offset()  - (global_offset_ + center_ - shape_ / 2) - offset;
             next_pos.print_value();
+            
             if (next_pos.y_ >= 0 &&
                 next_pos.y_ < shape_.y_ - shape_.x_ * 2 - scroll_button_.get_shape().y_)
             {

@@ -14,7 +14,7 @@ public:
         shape_(shape),
         render_texture_()
     {
-        render_texture_.create(720, 720);
+        render_texture_.create(shape.x_, shape_.y_);
     };
 
     void draw(Sprite sprite)
@@ -35,6 +35,11 @@ public:
     Texture getTexture()
     {
         return Texture(render_texture_.getTexture());
+    }
+
+    Vector2d getSize()
+    {
+        return Vector2d(render_texture_.getSize());
     }
 
     void clear()

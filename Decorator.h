@@ -153,9 +153,19 @@ public:
         widget_->set_parent(parent);
     }
 
-    void set_render_texture(RenderTexture *render_texture) override
+    // void set_render_texture(RenderTexture *render_texture) override
+    // {
+    //     widget_->set_render_texture(render_texture);
+    // }
+
+    Vector2d get_start_field() override          
     {
-        widget_->set_render_texture(render_texture);
+        return widget_->get_start_field(); 
+    }
+
+    Vector2d get_end_field()   override          
+    {
+        return widget_->get_end_field(); 
     }
 
     void set_children(std::vector<Widget *> children) override
