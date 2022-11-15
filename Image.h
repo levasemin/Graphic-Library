@@ -27,6 +27,11 @@ public:
         return getSize().x_;
     }
 
+    Vector2d getSize()
+    {
+        return Vector2d(image_.getSize());
+    }
+
     uint32_t getPixel(int32_t x, int32_t y) override
     {
         return (uint32_t(image_.getPixel(x, y).r) << 24) + (uint32_t(image_.getPixel(x, y).g) << 16) + (uint32_t(image_.getPixel(x, y).b) << 8);
@@ -37,13 +42,28 @@ public:
         return Color(image_.getPixel(pos.x_, pos.y_));
     }
     
-    virtual void putPixel(uint32_t x, uint32_t y, uint32_t color)
+    void putPixel(uint32_t x, uint32_t y, uint32_t color)
     {
-        realImage_.setPixel(width, height, {color.red_, color.green_, color.blue_});
+        Color color_((uint8_t)(color >> 24), (color >> 16) & ((1 << 8) - 1), color >> 8 & ((1 << 8) - 1));
+        setPixel(Vector2d(x, y), color_);
     }   
 
-    virtual uint32_t& operator()(uint32_t x, uint32_t y) = 0;
-    virtual const uint32_t& operator()(uint32_t x, uint32_t y) const = 0;
+    void setPixel(Vector2d pos, const Color &color)
+    {
+        image_.setPixel(pos.x_, pos.y_, color.get_sf_color());
+    }
+
+    virtual uint32_t& operator()(uint32_t, uint32_t) override 
+    {
+        uint32_t smth;
+        return smth;
+    }
+
+    virtual const uint32_t& operator()(uint32_t, uint32_t) const override 
+    {
+        uint32_t smth;
+        return smth;
+    }
 
     Image(const char *path)
     {
@@ -53,11 +73,6 @@ public:
     Image(const Texture &texture)
     {
         image_ = texture.texture_.copyToImage();
-    }
-
-    Vector2d getSize()
-    {
-        return Vector2d(image_.getSize());
     }
 
     Texture getTexture()

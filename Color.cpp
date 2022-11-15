@@ -122,7 +122,7 @@ Color operator + (const Color &color1, const Color &color2)
     return new_color;
 }
 
-Color operator + (const Color &color, const int &number)
+Color operator + (const Color &color, const uint8_t &number)
 {
     Color new_color = color;
     new_color += number;
@@ -130,7 +130,7 @@ Color operator + (const Color &color, const int &number)
     return new_color;
 }
 
-Color operator + (const int &number, const Color &color)
+Color operator + (const uint8_t &number, const Color &color)
 {
     Color new_color = color;
     new_color += number;
@@ -162,7 +162,7 @@ Color operator - (const Color &color1, const Color &color2)
     return new_color;
 }
 
-Color operator - (const Color &color, const int &number)
+Color operator - (const Color &color, const uint8_t &number)
 {
     Color new_color = color;
     new_color -= number;
@@ -186,7 +186,7 @@ Color operator * (const Color &color1, const Color &color2)
     return new_color;
 }
 
-Color operator * (const Color &color, const int &number)
+Color operator * (const Color &color, const uint8_t &number)
 {
     Color new_color = color;
     new_color *= number;
@@ -194,7 +194,7 @@ Color operator * (const Color &color, const int &number)
     return new_color;
 }
 
-Color operator * (const int &number, const Color &color)
+Color operator * (const uint8_t &number, const Color &color)
 {
     Color new_color = color;
     new_color *= number;
@@ -226,7 +226,7 @@ Color operator / (const Color &color1, const Color &color2)
     return new_color;
 }
 
-Color operator / (const Color &color, const int &number)
+Color operator / (const Color &color, const uint8_t &number)
 {
     Color new_color = color;
     new_color /= number;
@@ -249,19 +249,19 @@ void Color::pow(double degree)
     b_rel_ = powf64(b_rel_, degree);
 }
 
-void Color::set_color_r(const int &r)
+void Color::set_color_r(const uint8_t &r)
 {
     r_rel_ = r / 255.0;
     this->claim();
 }
 
-void Color::set_color_g(const int &g)
+void Color::set_color_g(const uint8_t &g)
 {
     g_rel_ = g / 255.0;
     this->claim();
 }
 
-void Color::set_color_b(const int &b)
+void Color::set_color_b(const uint8_t &b)
 {
     b_rel_ = b / 255.0;
     this->claim();
@@ -285,7 +285,7 @@ void Color::set_relation_b(const double &b_rel)
     this->claim();
 }
 
-void Color::set_color(const int &r, const int &g, const int &b)
+void Color::set_color(const uint8_t &r, const uint8_t &g, const uint8_t &b)
 {
     r_rel_ = r / 255.0;
     g_rel_ = g / 255.0;
@@ -313,12 +313,12 @@ void Color::claim()
     g_rel_ = g_rel_ >= 0 ? g_rel_ : 0;
     b_rel_ = b_rel_ >= 0 ? b_rel_ : 0;
 
-    r_ = int(r_rel_ * 255.0);
-    g_ = int(g_rel_ * 255.0);
-    b_ = int(b_rel_ * 255.0);
+    r_ = uint8_t(r_rel_ * 255.0);
+    g_ = uint8_t(g_rel_ * 255.0);
+    b_ = uint8_t(b_rel_ * 255.0);
 }
 
-Color::Color (int r, int g, int b): r_(r), g_(g), b_(b)
+Color::Color (uint8_t r, uint8_t g, uint8_t b): r_(r), g_(g), b_(b)
 {
     r_rel_ = r / 255.0;
     g_rel_ = g / 255.0;

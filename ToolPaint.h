@@ -1,16 +1,25 @@
+#include "Image.h"
+#include "Event.h"
 class ToolPaint
 {
-private:
-    /* data */
+
 public:
-    ToolPaint(/* args */);
+    ToolPaint();
+    
+    void apply(Image* image, const Event* event) override
+    {
+        printf("WHOOO\n");
+    }
+
+    const char* getTexture() override
+    {
+
+    } 
+
+    void buildSetupWidget() override
+    {
+
+    }
+
     ~ToolPaint();
 };
-
-ToolPaint::ToolPaint(/* args */)
-{
-}
-
-ToolPaint::~ToolPaint()
-{
-}

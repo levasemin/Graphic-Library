@@ -77,6 +77,9 @@ public:
 
     void resize_field()
     {        
+        //start_field_ = center_ - shape_ / 2 + (parent_ ? parent_->get_local_offset() * has_local_offset_ : Vector2d(0, 0)); 
+        //end_field_   = center_ + shape_ / 2 + (parent_ ? parent_->get_local_offset() * has_local_offset_ : Vector2d(0, 0));
+
         Vector2d down_limit  = parent_ != nullptr ? parent_->get_start_field() : center_ - shape_ / 2;
         Vector2d hight_limit = parent_ != nullptr ? parent_->get_end_field()   : center_ + shape_ / 2;
 
@@ -101,6 +104,16 @@ public:
         }
     }
     
+    Vector2d get_physical_start() const
+    {
+        return start_field_ + (parent_ ? parent_->get_local_offset() * has_local_offset_ : Vector2d(0, 0));
+    }
+
+    Vector2d get_physical_end() const
+    {
+        return end_field_ + (parent_ ? parent_->get_local_offset() * has_local_offset_ : Vector2d(0, 0));
+    }
+
     void has_local_offset(bool has)
     {
         has_local_offset_ = has;
