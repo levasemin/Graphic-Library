@@ -19,7 +19,7 @@ int main()
 
     std::cout << render_texture.getTexture().getSize().x << " " << render_texture.getTexture().getSize().y << std::endl;
     
-    sprite.setTexture(render_texture.getTexture(), true);
+    sprite.setTexture(render_texture.getTexture(), false);
 
     std::cout << render_texture.getSize().x << " " << render_texture.getSize().y;
     

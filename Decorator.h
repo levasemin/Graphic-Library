@@ -59,14 +59,9 @@ public:
         widget_->ScrollEvent(point, offset);
     }
     
-    void set_offset(Vector2d offset) override
+    void connect(Vector2d offset) override
     {
-        widget_->set_offset(offset);
-    }
-
-    void set_field() override
-    {
-        widget_->set_field();
+        widget_->connect(offset);
     }
 
     bool point_belonging(Vector2d point) const override
@@ -123,11 +118,6 @@ public:
         return widget_->get_children();
     }
     
-    Vector2d get_global_offset() override
-    {
-        return widget_->get_global_offset();
-    }
-
     Vector2d get_global_shape() override
     {
         return widget_->get_global_shape();
@@ -143,21 +133,26 @@ public:
         widget_->set_shape(shape);
     }
 
-    void set_global_offset(Vector2d global_offset) override
-    {
-        widget_->set_global_offset(global_offset);
-    }
-
     void set_parent(Widget *parent) override
     {
         widget_->set_parent(parent);
     }
 
-    // void set_render_texture(RenderTexture *render_texture) override
-    // {
-    //     widget_->set_render_texture(render_texture);
-    // }
+    Vector2d get_local_offset()
+    {
+        return widget_->get_local_offset();
+    }
 
+    void set_local_offset(Vector2d diff_offset)
+    {
+        widget_->set_local_offset(diff_offset);
+    }
+
+    void has_local_offset(bool has)
+    {
+        widget_->has_local_offset(has);
+    }
+    
     Vector2d get_start_field() override          
     {
         return widget_->get_start_field(); 

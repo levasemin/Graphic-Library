@@ -36,15 +36,6 @@ public:
 
         global_offset0_ += offset;
 
-        for (int i = 0; i < children_.size(); i++)
-        {
-            children_[i]->set_offset(offset);
-        }
+        set_local_offset(offset);
     }
-
-    // ScrollContainer &set_scroll_bar()
-    // {
-    //     DecoratorScrollBar *decorator = new DecoratorScrollBar(this);
-    //     return *((ScrollContainer *) decorator);
-    // }
 };

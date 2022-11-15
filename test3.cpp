@@ -8,15 +8,17 @@ int main()
 {
     Window window(Vector2d(720, 720));
     
-    RenderTexture render_texture(Vector2d(100, 400));
+    sf::RenderTexture render_texture;
+    render_texture.create(100, 400);
     Texture texture(Colors::Blue);
-    Sprite sprite(Vector2d(100, 400), texture);
-
-    sprite.setPosition(Vector2d(650, 200));
+    sf::Sprite sprite;
+    sprite.setTexture(texture.texture_, true);
+    sprite.setPosition(50, 50);
     render_texture.draw(sprite);
-    sprite.setTexture(render_texture.getTexture());
+    sprite.setPosition(0, 0);
+    sprite.setTexture(render_texture.getTexture(), true);
     render_texture.display();
-
+    std::cout << sprite.getPosition().x << " " << sprite.getPosition().y;
 
     while (window.isOpen())
     {

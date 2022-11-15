@@ -37,6 +37,9 @@ public:
             add(&down_button_);
             add(&scroll_button_);
             
+            down_button_.has_local_offset(false);
+            up_button_.has_local_offset(false);
+            
             up_button_.set_left_press((Command<Vector2d> *)     new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::scroll_up));
             down_button_.set_left_press((Command<Vector2d> *)   new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::scroll_down));
             scroll_button_.set_left_click((Command<Vector2d> *) new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::clicked_scroll_button));
@@ -45,19 +48,19 @@ public:
         void ScrollEvent(Vector2d point, Vector2d offset) override
         {
             
-            Vector2d next_pos = scroll_button_.get_global_offset()  - (global_offset_ + center_ - shape_ / 2) - offset;
-            next_pos.print_value();
+            // Vector2d next_pos = scroll_button_.get_global_offset()  - (global_offset_ + center_ - shape_ / 2) - offset;
+            // next_pos.print_value();
             
-            if (next_pos.y_ >= 0 &&
-                next_pos.y_ < shape_.y_ - shape_.x_ * 2 - scroll_button_.get_shape().y_)
-            {
-                scroll_button_.set_offset(-1 * offset);
+            // if (next_pos.y_ >= 0 &&
+            //     next_pos.y_ < shape_.y_ - shape_.x_ * 2 - scroll_button_.get_shape().y_)
+            // {
+                set_local_offset(-1 * offset);
 
                 if (scroll_command_ != nullptr)
                 {
                     scroll_command_->Execute(point, offset);
                 }
-            }
+            //}
         }
 
         void MoveMouseEvent (Vector2d point)  

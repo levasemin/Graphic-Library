@@ -98,27 +98,24 @@ public:
         }
     }
        
-    void set_offset(Vector2d offset) override
+    void connect(Vector2d offset) override
     {
-        global_offset_ += offset;
-        resize_field();
+        Object::connect(offset);
 
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->set_offset(offset);
-        }
-    }
-
-    void set_field() override
-    {
-        for (int i = 0; i < children_.size(); i++)
-        {
-            children_[i]->set_field();
+            children_[i]->connect(offset);
         }
     }
 
     void draw() override
     {
+        render_texture_->clear();
+        
+        sprite_.setTexture(texture_);
+        sprite_.setPosition(Vector2d(0, 0));
+        render_texture_->draw(sprite_);
+        
         for (int i = 0; i < children_.size(); i++)
         {
             children_[i]->draw();
@@ -130,19 +127,19 @@ public:
 
     void remove(Widget *widget) override
     {
-        for (int i = 0; i < children_.size(); i++)
-        {
-            if (widget == children_[i])
-            {
-                children_.erase(children_.begin() + i);
-            }
-        }
+        // for (int i = 0; i < children_.size(); i++)
+        // {
+        //     if (widget == children_[i])
+        //     {
+        //         children_.erase(children_.begin() + i);
+        //     }
+        // }
 
-        widget->set_parent(nullptr);
+        // widget->set_parent(nullptr);
         
-        Vector2d offset = shape_ / 2 - center_ - global_offset_;
-        widget->set_offset(offset);
-        widget->set_field();
+        // Vector2d offset = shape_ / 2 - center_ - global_offset_;
+        // widget->connect(offset);
+        // widget->set_field();
     }
 
     void add(Widget *widget)
@@ -163,9 +160,7 @@ public:
         widget->set_parent(this);
         children_.push_back(widget);
                 
-        Vector2d offset = global_offset_ + center_ - shape_ / 2;
-        widget->set_offset(offset);
-        widget->set_field();
+        widget->connect(start_field_);
     }
     
     std::vector<Widget *> get_children() { return children_;}

@@ -24,8 +24,6 @@ void right_click(Button *self, Vector2d point)
     std::cout << point.x_ << " !!!! " << point.y_ << " " << std::endl;
 }
 
-
-
 void left_click(Widget *self, Vector2d point)
 {
     std::cout << "Window" << " " << point.x_ << " " << point.y_ << std::endl;
@@ -48,7 +46,7 @@ int main()
 {          
     MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Colors::Yellow));
             
-    Container container(Vector2d(100, 400), Vector2d(300, 250), Texture(Colors::Black));
+    ScrollContainer container(Vector2d(100, 400), Vector2d(300, 250), Texture(Colors::Green));
 
     Button first_button (Vector2d(100, 301), Vector2d(50, 160), Texture(Colors::Red));
 
@@ -70,9 +68,10 @@ int main()
     container.add(&third_button);
         
     DecoratorScrollBar decorator(&container);
-
+    
     Application app(&main_window);
 
     main_window.add(&decorator);
+    
     app.exec();
 }

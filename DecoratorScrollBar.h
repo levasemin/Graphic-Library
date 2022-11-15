@@ -11,8 +11,6 @@ public:
     DecoratorScrollBar(Widget *widget) : Decorator(widget),
         scroll_bar_(Vector2d(20, 500), Vector2d(widget->get_center().x_ - widget->get_shape().x_ / 2 - 10, widget_->get_center().y_), Texture(Colors::Blue))
     {   
-        scroll_bar_.set_field();
-
         scroll_bar_.set_scroll_command ((Command<Vector2d, Vector2d> *) new SimpleCommand<DecoratorScrollBar, Vector2d, Vector2d> (this, &DecoratorScrollBar::ScrollWidget));
     }
 
@@ -43,12 +41,6 @@ public:
         scroll_bar_.draw();
 
         widget_->draw();
-    }
-
-    void set_field() override
-    {
-        scroll_bar_.set_field();
-        widget_->set_field();
     }
 
     void ClickLeftEvent      (Vector2d point) override
@@ -99,10 +91,10 @@ public:
         widget_->PressKeyEvent(key);
     }
 
-    void set_offset(Vector2d offset) override
+    void connect(Vector2d offset) override
     {
-        scroll_bar_.set_offset(offset);
-        widget_->set_offset(offset);
+        scroll_bar_.connect(offset);
+        widget_->connect(offset);
     }
 
     bool point_belonging(Vector2d point) const override
