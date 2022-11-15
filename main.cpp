@@ -3,9 +3,9 @@
 #include "Widget.h"
 #include "Button.h"
 #include "Container.h"
-#include "ScrollContainer.h"
 #include "ScrollBar.h"
 #include "DecoratorScrollBar.h"
+#include "DecoratorScroll.h"
 #include "constants.h"
 #include "Application.h"
 #include "SimpleCommand.h"
@@ -46,7 +46,9 @@ int main()
 {          
     MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Colors::Yellow));
             
-    ScrollContainer container(Vector2d(100, 400), Vector2d(300, 250), Texture(Colors::Green));
+    Container container(Vector2d(100, 400), Vector2d(300, 250), Texture(Colors::Green));
+    
+    DecoratorScroll scroll_container = DecoratorScroll(&container);
 
     Button first_button (Vector2d(100, 301), Vector2d(50, 160), Texture(Colors::Red));
 
@@ -63,11 +65,11 @@ int main()
     third_button.set_left_click (command);
     third_button.set_right_click(command);
     
-    container.add(&first_button);
-    container.add(&second_button);
-    container.add(&third_button);
+    scroll_container.add(&first_button);
+    scroll_container.add(&second_button);
+    scroll_container.add(&third_button);
         
-    DecoratorScrollBar decorator(&container);
+    DecoratorScrollBar decorator(&scroll_container);
     
     Application app(&main_window);
 

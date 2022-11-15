@@ -5,10 +5,7 @@
 #include "functions.h"
 
 class Color
-{
-private:
-    double r_rel_, g_rel_, b_rel_;
-    
+{ 
 public:
     int r_, g_, b_;
     Color(double r_rel, double g_rel, double b_rel);
@@ -67,6 +64,9 @@ public:
     friend Color operator / (const Color &color1, const Color &color2);
     friend Color operator / (const Color &color,  const int &number);
     friend Color operator / (const Color &color,  const double &number);
+
+private:
+    double r_rel_, g_rel_, b_rel_;   
 };
 
 

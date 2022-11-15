@@ -1,23 +1,12 @@
-#include "Decorator.h"
 #include "Widget.h"
 
-class DecoratorPaint : public Decorator
+class Tool
 {
+private:
+    
 public:
-    Color color_;
+    Tool();
+    ~Tool();
 
-    DecoratorPaint (Widget *widget, Color color) : 
-        color_(color),
-        Decorator(widget)
-    {
-    }
-
-    void ClickLeftEvent(Vector2d point)
-    {
-        if (point_belonging(point))
-        {
-            sf:: sp;
-            sp.        
-        }
-    }
+    virtual void apply(Widget *widget) = 0;
 };

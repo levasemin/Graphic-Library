@@ -10,17 +10,21 @@ class Texture
 public:
     sf::Texture texture_;    
     
+    Texture ()
+    {}
+
     Texture(const char *path) 
     {
         texture_.loadFromFile(path);
     };
-
+    
     Texture (const Color &color)
     {
         sf::Image image;
         image.create(100, 100, color.get_sf_color());
         texture_.loadFromImage(image);
     }
+    
 
     Texture (const Texture &texture)
     {
