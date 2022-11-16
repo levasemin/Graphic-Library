@@ -27,5 +27,17 @@ public :
         global_offset0_ += offset;
 
         set_local_offset(offset);
+        
+        std::vector <Widget *> children = get_children();
+
+        for (int i = 0; i < children.size(); i++)
+        {
+            children[i]->set_global_offset(offset);
+        }
+    }
+
+    void add(Widget *widget) override
+    {
+        widget_->add(widget);
     }
 };

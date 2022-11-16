@@ -25,10 +25,7 @@ public:
     virtual void PressKeyEvent       (int key) = 0;
     virtual void ScrollEvent         (Vector2d point, Vector2d offset) = 0;
     
-    virtual void connect(Vector2d offset) = 0;
     virtual bool point_belonging(Vector2d point) const = 0;
-
-    virtual void resize_field() = 0;
 
     virtual void draw() = 0; 
 
@@ -46,15 +43,16 @@ public:
 
     virtual void display(Window *window) = 0;
 
-    virtual Vector2d get_center()                = 0;
-    virtual Vector2d get_shape()                 = 0;
-    virtual Widget  *get_parent()                = 0;
-    virtual RenderTexture *get_render_texture()  = 0;
-    virtual std::vector<Widget *> get_children() = 0;
-    virtual Vector2d get_start_field()           = 0; 
-    virtual Vector2d get_end_field()             = 0;
-    virtual Vector2d get_local_offset()          = 0;
-    virtual Vector2d get_global_shape()          = 0;
+    virtual Vector2d get_center() const                = 0;
+    virtual Vector2d get_shape() const                 = 0;
+    virtual Widget  *get_parent() const                = 0;
+    virtual RenderTexture *get_render_texture() const  = 0;
+    virtual std::vector<Widget *> get_children() const = 0;
+    virtual Vector2d get_start_field() const           = 0; 
+    virtual Vector2d get_end_field() const             = 0;
+    virtual Vector2d get_local_offset() const          = 0;
+    virtual Vector2d get_global_offset() const         = 0;
+    virtual Vector2d get_global_shape() const          = 0;
 
     virtual void set_center(Vector2d center)                        = 0;
     virtual void set_shape(Vector2d shape)                          = 0;
@@ -64,4 +62,5 @@ public:
     virtual void set_local_offset(Vector2d diff_offset)             = 0;
     virtual void has_local_offset(bool has)                         = 0;
     virtual void set_global_shape(Vector2d global_shape)            = 0;
+    virtual void set_global_offset(Vector2d diff_offset)            = 0;
 };

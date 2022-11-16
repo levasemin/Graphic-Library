@@ -6,9 +6,10 @@ class Decorator : public Widget
 {
 
 protected:
-    Widget *widget_ = nullptr;
 
 public:
+    Widget *widget_ = nullptr;
+
     Decorator (Widget *widget): Widget(),
         widget_(widget)
     {
@@ -29,49 +30,49 @@ public:
         widget_->ReleasedLeftEvent(point);
     }              
 
-    virtual void ClickRightEvent     (Vector2d point) override
+    virtual void ClickRightEvent (Vector2d point) override
     {
         widget_->ClickRightEvent(point);
     }
 
-    void PressRightEvent     (Vector2d point) override
+    void PressRightEvent (Vector2d point) override
     {
         widget_->PressRightEvent(point);
     }               
     
-    void ReleasedRightEvent  (Vector2d point) override
+    void ReleasedRightEvent (Vector2d point) override
     {
         widget_->ReleasedRightEvent(point);
     }              
     
-    void MoveMouseEvent      (Vector2d point) override
+    void MoveMouseEvent (Vector2d point) override
     {
         widget_->MoveMouseEvent(point);
     }
 
-    void PressKeyEvent       (int key) override
+    void PressKeyEvent (int key) override
     {
         widget_->PressKeyEvent(key);
     }
 
-    void ScrollEvent         (Vector2d point, Vector2d offset) override
+    void ScrollEvent (Vector2d point, Vector2d offset) override
     {
         widget_->ScrollEvent(point, offset);
     }
     
-    void connect(Vector2d offset) override
+    void set_global_offset(Vector2d offset) override
     {
-        widget_->connect(offset);
+        widget_->set_global_offset(offset);
+    }
+
+    Vector2d get_global_offset() const override
+    {
+        return widget_->get_global_offset();
     }
 
     bool point_belonging(Vector2d point) const override
     {
         return widget_->point_belonging(point);
-    }
-
-    void resize_field() override
-    {
-        widget_->resize_field();
     }
 
     void remove(Widget *window) override
@@ -94,31 +95,31 @@ public:
         widget_->display(window);
     }
 
-    Vector2d get_center() override
+    Vector2d get_center() const override
     {
         return widget_->get_center();
     }
 
-    Vector2d get_shape() override
+    Vector2d get_shape() const override
     {
         return widget_->get_shape();
     }
-    Widget  *get_parent() override
+    Widget  *get_parent() const override
     {
         return widget_->get_parent();
     }
 
-    RenderTexture *get_render_texture() override
+    RenderTexture *get_render_texture() const override
     {
         return widget_->get_render_texture();
     }
 
-    std::vector<Widget *> get_children() override
+    std::vector<Widget *> get_children() const override
     {
         return widget_->get_children();
     }
     
-    Vector2d get_global_shape() override
+    Vector2d get_global_shape() const override
     {
         return widget_->get_global_shape();
     }
@@ -138,27 +139,27 @@ public:
         widget_->set_parent(parent);
     }
 
-    Vector2d get_local_offset()
+    Vector2d get_local_offset() const override
     {
         return widget_->get_local_offset();
     }
 
-    void set_local_offset(Vector2d diff_offset)
+    void set_local_offset(Vector2d diff_offset) override
     {
         widget_->set_local_offset(diff_offset);
     }
 
-    void has_local_offset(bool has)
+    void has_local_offset(bool has) override
     {
         widget_->has_local_offset(has);
     }
     
-    Vector2d get_start_field() override          
+    Vector2d get_start_field() const override          
     {
         return widget_->get_start_field(); 
     }
 
-    Vector2d get_end_field()   override          
+    Vector2d get_end_field() const override          
     {
         return widget_->get_end_field(); 
     }

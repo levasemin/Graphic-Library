@@ -43,69 +43,63 @@ public:
         widget_->draw();
     }
 
-    void ClickLeftEvent      (Vector2d point) override
+    void ClickLeftEvent (Vector2d point) override
     {
         scroll_bar_.ClickLeftEvent(point);
         widget_->ClickLeftEvent(point);
     }
     
-    void PressLeftEvent      (Vector2d point) override
+    void PressLeftEvent (Vector2d point) override
     {
         scroll_bar_.PressLeftEvent(point);
         widget_->PressLeftEvent(point);
     }
     
-    void ReleasedLeftEvent   (Vector2d point) override
+    void ReleasedLeftEvent (Vector2d point) override
     {
         scroll_bar_.ReleasedLeftEvent(point);
         widget_->ReleasedLeftEvent(point);
     }              
 
-    virtual void ClickRightEvent     (Vector2d point) override
+    virtual void ClickRightEvent (Vector2d point) override
     {
         scroll_bar_.ClickRightEvent(point);
         widget_->ClickRightEvent(point);
     }
 
-    void PressRightEvent     (Vector2d point) override
+    void PressRightEvent (Vector2d point) override
     {
         scroll_bar_.PressRightEvent(point);
         widget_->PressRightEvent(point);
     }               
     
-    void ReleasedRightEvent  (Vector2d point) override
+    void ReleasedRightEvent (Vector2d point) override
     {
         scroll_bar_.ReleasedRightEvent(point);
         widget_->ReleasedRightEvent(point);
     }              
     
-    void MoveMouseEvent      (Vector2d point) override
+    void MoveMouseEvent (Vector2d point) override
     {
         scroll_bar_.MoveMouseEvent(point);
         widget_->MoveMouseEvent(point);
     }
 
-    void PressKeyEvent       (int key) override
+    void PressKeyEvent (int key) override
     {
         scroll_bar_.MoveMouseEvent(key);
         widget_->PressKeyEvent(key);
     }
 
-    void connect(Vector2d offset) override
+    void set_global_offset(Vector2d diff_offset) override
     {
-        scroll_bar_.connect(offset);
-        widget_->connect(offset);
+        scroll_bar_.set_global_offset(diff_offset);
+        widget_->set_global_offset(diff_offset);
     }
 
     bool point_belonging(Vector2d point) const override
     {
         return widget_->point_belonging(point) || scroll_bar_.point_belonging(point);
-    }
-
-    void resize_field() override
-    {
-        scroll_bar_.resize_field();
-        widget_->resize_field();
     }
 
     void display(Window *window) override

@@ -55,6 +55,7 @@ public:
             //     next_pos.y_ < shape_.y_ - shape_.x_ * 2 - scroll_button_.get_shape().y_)
             // {
                 set_local_offset(-1 * offset);
+                scroll_button_.set_global_offset(-1 * offset);
 
                 if (scroll_command_ != nullptr)
                 {
@@ -63,7 +64,7 @@ public:
             //}
         }
 
-        void MoveMouseEvent (Vector2d point)  
+        void MoveMouseEvent (Vector2d point) override
         {
             if (scroll_button_.is_left_clicked_)
             {   

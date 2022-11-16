@@ -98,13 +98,13 @@ public:
         }
     }
        
-    void connect(Vector2d offset) override
+    void set_global_offset(Vector2d diff_offset) override
     {
-        Object::connect(offset);
+        Object::set_global_offset(diff_offset);
 
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->connect(offset);
+            children_[i]->set_global_offset(diff_offset);
         }
     }
 
@@ -142,7 +142,7 @@ public:
         // widget->set_field();
     }
 
-    void add(Widget *widget)
+    void add(Widget *widget) override
     {
         global_end_field_.x_   = widget->get_center().x_ +  widget->get_shape().x_ / 2 > global_end_field_.x_ ? 
                                  widget->get_center().x_ +  widget->get_shape().x_ / 2 : global_end_field_.x_;
@@ -160,12 +160,12 @@ public:
         widget->set_parent(this);
         children_.push_back(widget);
                 
-        widget->connect(start_field_);
+        widget->set_global_offset(get_start_field());
     }
     
-    std::vector<Widget *> get_children() { return children_;}
-    Vector2d get_global_shape()          { return global_shape_; }
+    std::vector<Widget *> get_children() const override { return children_;}
+    Vector2d get_global_shape() const override         { return global_shape_; }
 
-    void set_children(std::vector<Widget *> children) { children_ = children; }
-    void set_global_shape(Vector2d global_shape)  { global_shape_ = global_shape; }
+    void set_children(std::vector<Widget *> children) override { children_ = children; }
+    void set_global_shape(Vector2d global_shape) override { global_shape_ = global_shape; }
 };

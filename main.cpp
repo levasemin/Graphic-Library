@@ -75,5 +75,7 @@ int main()
 
     main_window.add(&decorator);
     
+    decorator.get_start_field().print_value();
+    decorator.get_end_field().print_value();
     app.exec();
 }
