@@ -37,8 +37,8 @@ public:
             add(&down_button_);
             add(&scroll_button_);
             
-            down_button_.has_local_offset(false);
-            up_button_.has_local_offset(false);
+            down_button_.set_has_local_offset(false);
+            up_button_.set_has_local_offset(false);
             
             up_button_.set_left_press((Command<Vector2d> *)     new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::scroll_up));
             down_button_.set_left_press((Command<Vector2d> *)   new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::scroll_down));
@@ -47,21 +47,20 @@ public:
 
         void ScrollEvent(Vector2d point, Vector2d offset) override
         {
-            
-            // Vector2d next_pos = scroll_button_.get_global_offset()  - (global_offset_ + center_ - shape_ / 2) - offset;
-            // next_pos.print_value();
-            
-            // if (next_pos.y_ >= 0 &&
-            //     next_pos.y_ < shape_.y_ - shape_.x_ * 2 - scroll_button_.get_shape().y_)
-            // {
-                set_local_offset(-1 * offset);
-                scroll_button_.set_global_offset(-1 * offset);
+                        
+            Vector2d res_offset = offset * -1;
+            local_offset_.print_value();
+            res_offset.x_ = local_offset_.x_ + res_offset.x_ > 0 ? res_offset.x_ : 0;
+            res_offset.y_ = local_offset_.y_ + res_offset.y_ > 0 ? res_offset.y_ : 0;
+            res_offset.x_ = local_offset_.x_ + res_offset.x_ < shape_.x_ - scroll_button_.get_shape().x_? res_offset.x_ : 0;
+            res_offset.y_ = local_offset_.y_ + res_offset.y_ < shape_.y_ - scroll_button_.get_shape().y_ - up_button_.get_shape().y_ * 2 ? res_offset.y_ : 0;
 
-                if (scroll_command_ != nullptr)
-                {
-                    scroll_command_->Execute(point, offset);
-                }
-            //}
+            set_local_offset(res_offset);
+
+            if (scroll_command_ != nullptr)
+            {
+                scroll_command_->Execute(point, res_offset * -1);
+            }
         }
 
         void MoveMouseEvent (Vector2d point) override

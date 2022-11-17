@@ -111,9 +111,14 @@ public:
     }
 
 
-    void has_local_offset(bool has)
+    void set_has_local_offset(bool has) override
     {
         has_local_offset_ = has;
+    }
+
+    bool get_has_local_offset () const override
+    {
+        return has_local_offset_;
     }
 
     void remove(Widget *window) override
@@ -166,7 +171,19 @@ public:
     void set_parent(Widget *parent) override { parent_ = parent; }
     // void set_render_texture(RenderTexture *render_texture) override {render_texture_ = render_texture;}
     void set_global_shape(Vector2d global_shape) override     { shape_ = global_shape; }
-    void set_local_offset(Vector2d diff_offset) override      { local_offset_ += diff_offset; }
+    
+    void set_local_offset(Vector2d diff_offset) override      
+    { 
+        local_offset_ += diff_offset; 
+
+        std::vector <Widget *> children = get_children();
+
+        for (int i = 0; i < children.size(); i++)
+        {
+            children[i]->set_global_offset(diff_offset * children[i]->get_has_local_offset());
+        }
+    }
+
     void set_global_offset(Vector2d diff_offset) override      { global_offset_ += diff_offset; }
     void set_children(std::vector<Widget *> children) override
     {

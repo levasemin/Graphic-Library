@@ -149,11 +149,15 @@ public:
         widget_->set_local_offset(diff_offset);
     }
 
-    void has_local_offset(bool has) override
+    bool get_has_local_offset() const override
     {
-        widget_->has_local_offset(has);
+        return widget_->get_has_local_offset();
     }
     
+    void set_has_local_offset(bool has) override
+    {
+        widget_->set_has_local_offset(has);
+    }
     Vector2d get_start_field() const override          
     {
         return widget_->get_start_field(); 
