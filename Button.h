@@ -51,14 +51,14 @@ public:
     
 
     void ClickLeftEvent     (Vector2d point)   override;
-    void PressLeftEvent     (Vector2d point)   override;
+    void PressLeftEvent   (Vector2d point)     override;
     void ReleasedLeftEvent  (Vector2d point)   override;
 
     void ClickRightEvent    (Vector2d point)   override;
-    void PressRightEvent    (Vector2d point)   override;
+    void PressRightEvent  (Vector2d point)     override;
     void ReleasedRightEvent (Vector2d point)   override;
     
-    void MoveMouseEvent     (Vector2d point)   override {};
+    void MoveMouseEvent     (Vector2d point)   override;
     void PressKeyEvent      (int key)          override {};
     void ScrollEvent        (Vector2d point, Vector2d offset) override {};
 
@@ -77,6 +77,46 @@ private:
     Command<Vector2d> *release_right_click_command_ = nullptr;
 };
 
+void Button::MoveMouseEvent(Vector2d point)
+{
+    if (is_left_clicked_)
+    {        
+        if (left_press_command_ != nullptr)
+        {
+            left_press_command_->Execute(point);
+        }
+    }
+
+    else if (is_right_clicked_)
+    {
+        if (right_press_command_ != nullptr)
+        {
+            right_press_command_->Execute(point);
+        }
+    }
+}
+
+void Button::PressLeftEvent (Vector2d point)
+{
+    if (point_belonging(point))
+    {
+        if (left_press_command_ != nullptr)
+        {
+            left_press_command_->Execute(point);
+        }
+    }
+}
+
+void Button::PressRightEvent (Vector2d point)
+{
+    if (point_belonging(point))
+    {
+        if (right_press_command_ != nullptr)
+        {
+            right_press_command_->Execute(point);
+        }
+    }
+}
 
 void Button::ClickLeftEvent (Vector2d point)
 {
@@ -87,32 +127,6 @@ void Button::ClickLeftEvent (Vector2d point)
         if (left_click_command_ != nullptr)
         {
             left_click_command_->Execute(point);
-        }
-    }
-}
-
-void Button::PressLeftEvent (Vector2d point)
-{
-    is_left_clicked_ = true;
-
-    if (point_belonging(point))
-    {        
-        if (left_press_command_ != nullptr)
-        {
-            left_press_command_->Execute(point);
-        }
-    }
-}
-
-void Button::PressRightEvent (Vector2d point)
-{
-    is_right_clicked_ = true;
-
-    if (point_belonging(point))
-    {        
-        if (right_press_command_ != nullptr)
-        {
-            right_press_command_->Execute(point);
         }
     }
 }

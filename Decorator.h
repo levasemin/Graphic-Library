@@ -104,6 +104,7 @@ public:
     {
         return widget_->get_shape();
     }
+    
     Widget  *get_parent() const override
     {
         return widget_->get_parent();
@@ -111,9 +112,14 @@ public:
 
     RenderTexture *get_render_texture() const override
     {
-        return widget_->get_render_texture();
+        return widget_->get_render_texture();   
     }
 
+    void set_render_texture(RenderTexture *render_texture) override
+    {
+        widget_->set_render_texture(render_texture);
+    }
+    
     std::vector<Widget *> get_children() const override
     {
         return widget_->get_children();
@@ -158,6 +164,7 @@ public:
     {
         widget_->set_has_local_offset(has);
     }
+    
     Vector2d get_start_field() const override          
     {
         return widget_->get_start_field(); 

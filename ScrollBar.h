@@ -49,7 +49,6 @@ public:
         {
                         
             Vector2d res_offset = offset * -1;
-            local_offset_.print_value();
             res_offset.x_ = local_offset_.x_ + res_offset.x_ > 0 ? res_offset.x_ : 0;
             res_offset.y_ = local_offset_.y_ + res_offset.y_ > 0 ? res_offset.y_ : 0;
             res_offset.x_ = local_offset_.x_ + res_offset.x_ < shape_.x_ - scroll_button_.get_shape().x_? res_offset.x_ : 0;

@@ -58,7 +58,7 @@ public:
     virtual void set_center(Vector2d center)                        = 0;
     virtual void set_shape(Vector2d shape)                          = 0;
     virtual void set_parent(Widget *parent)                         = 0;
-    //virtual void set_render_texture(RenderTexture *render_texture)  = 0;
+    virtual void set_render_texture(RenderTexture *render_texture)  = 0;
     virtual void set_children(std::vector<Widget *> children)       = 0;
     virtual void set_local_offset(Vector2d diff_offset)             = 0;
     virtual void set_has_local_offset(bool has)                         = 0;

@@ -45,32 +45,12 @@ public:
             render_texture_->draw(sprite_);
         };
 
-    void ClickLeftEvent      (Vector2d point) override = 0;
-    void PressLeftEvent      (Vector2d point) override = 0;
-    void ReleasedLeftEvent   (Vector2d point) override = 0;              
-
-    void ClickRightEvent     (Vector2d point) override = 0;
-    void PressRightEvent     (Vector2d point) override = 0;               
-    void ReleasedRightEvent  (Vector2d point) override = 0;              
-    
-    void MoveMouseEvent      (Vector2d point) override = 0;
-
-    void PressKeyEvent       (int key) override = 0;
-    void ScrollEvent         (Vector2d point, Vector2d offset) override = 0;
-
 
     bool point_belonging(Vector2d point) const override
     {
         Vector2d start_field = get_start_field();
         Vector2d end_field   = get_end_field();
 
-        // if (shape_.y_ == 301)
-        // {
-        //     start_field.print_value();
-        //     end_field.print_value();
-        //     point.print_value();
-        //     printf("\n\n\n");
-        // }
         return start_field.x_ < point.x_ && point.x_ < end_field.x_ &&
                start_field.y_ < point.y_ && point.y_ < end_field.y_;
     }
@@ -150,7 +130,7 @@ public:
         window->display();
         window->clear();
     }
-
+    
     Vector2d get_center() const override               { return center_; }
     Vector2d get_shape() const override               { return shape_; }
     Widget  *get_parent() const override                { return parent_; }
@@ -169,7 +149,7 @@ public:
     void set_center(Vector2d center) override { center_ = center; }
     void set_shape (Vector2d shape) override { shape_  = shape; }
     void set_parent(Widget *parent) override { parent_ = parent; }
-    // void set_render_texture(RenderTexture *render_texture) override {render_texture_ = render_texture;}
+    void set_render_texture(RenderTexture *render_texture) override {render_texture_ = render_texture;}
     void set_global_shape(Vector2d global_shape) override     { shape_ = global_shape; }
     
     void set_local_offset(Vector2d diff_offset) override      

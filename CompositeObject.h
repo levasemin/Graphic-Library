@@ -9,8 +9,6 @@ class CompositeObject : public Object
 protected:
     std::vector<Widget *> children_;
 
-    Vector2d global_start_field_ = (0, 0);
-    Vector2d global_end_field_   = (0, 0);
     Vector2d global_shape_       = (0, 0);
 
 public:
@@ -125,44 +123,63 @@ public:
 
     }
 
+    void reset_global_shape()
+    {
+        Vector2d global_end_field(INT64_MIN, INT64_MIN);
+        Vector2d global_start_field(INT64_MAX, INT64_MAX);
+
+        for (int i = 0; i < children_.size(); i++)
+        {
+            global_start_field.x_   = children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 < global_start_field.x_ ? 
+                                      children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 : global_start_field.x_;
+        
+            global_start_field.y_   = children_[i]->get_center().y_ - children_[i]->get_shape().y_ / 2 < global_start_field.y_ ? 
+                                      children_[i]->get_center().y_ - children_[i]->get_shape().y_ / 2 : global_start_field.y_;
+
+            global_end_field.x_   = children_[i]->get_center().x_ +  children_[i]->get_shape().x_ / 2 > global_end_field.x_ ? 
+                                    children_[i]->get_center().x_ +  children_[i]->get_shape().x_ / 2 : global_end_field.x_;
+        
+            global_end_field.y_   = children_[i]->get_center().y_ + children_[i]->get_shape().y_ / 2 > global_end_field.y_ ? 
+                                    children_[i]->get_center().y_ + children_[i]->get_shape().y_ / 2 : global_end_field.y_;
+
+            global_shape_ = global_end_field - global_start_field;
+        }
+    }
+
     void remove(Widget *widget) override
     {
-        // for (int i = 0; i < children_.size(); i++)
-        // {
-        //     if (widget == children_[i])
-        //     {
-        //         children_.erase(children_.begin() + i);
-        //     }
-        // }
+        widget->set_parent(nullptr);
 
-        // widget->set_parent(nullptr);
-        
-        // Vector2d offset = shape_ / 2 - center_ - global_offset_;
-        // widget->connect(offset);
-        // widget->set_field();
+        for (int i = 0; i < children_.size(); i++)
+        {
+            if (widget == children_[i])
+            {
+                children_.erase(children_.begin() + i);
+            }
+        }
+
+        widget->set_global_offset(get_start_field() * -1);
+
+        reset_global_shape();
     }
 
     void add(Widget *widget) override
     {
-        global_end_field_.x_   = widget->get_center().x_ +  widget->get_shape().x_ / 2 > global_end_field_.x_ ? 
-                                 widget->get_center().x_ +  widget->get_shape().x_ / 2 : global_end_field_.x_;
-        
-        global_end_field_.y_   = widget->get_center().y_ +  widget->get_shape().y_ / 2 > global_end_field_.y_ ? 
-                                 widget->get_center().y_ +  widget->get_shape().y_ / 2 : global_end_field_.y_;
-
-        global_shape_ = global_end_field_;
-
         if (widget->get_parent() == this)
         {
             return;
         }
 
         widget->set_parent(this);
-        children_.push_back(widget);
-                
         widget->set_global_offset(get_start_field());
+
+        children_.push_back(widget);
+        
+        reset_global_shape();
     }
     
+
+
     std::vector<Widget *> get_children() const override { return children_;}
     Vector2d get_global_shape() const override         { return global_shape_; }
 
