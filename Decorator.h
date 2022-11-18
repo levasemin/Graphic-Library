@@ -15,45 +15,45 @@ public:
     {
     }
 
-    void ClickLeftEvent      (Vector2d point) override
+    void ClickLeftEvent      (const Event &event) override
     {
-        widget_->ClickLeftEvent(point);
+        widget_->ClickLeftEvent(event);
     }
-    void PressLeftEvent      (Vector2d point) override
+    void PressLeftEvent      (const Event &event) override
     {
-        widget_->PressLeftEvent(point);
+        widget_->PressLeftEvent(event);
     }
-    void ReleasedLeftEvent   (Vector2d point) override
+    void ReleasedLeftEvent   (const Event &event) override
     {
-        widget_->ReleasedLeftEvent(point);
+        widget_->ReleasedLeftEvent(event);
     }              
 
-    virtual void ClickRightEvent (Vector2d point) override
+    virtual void ClickRightEvent (const Event &event) override
     {
-        widget_->ClickRightEvent(point);
+        widget_->ClickRightEvent(event);
     }
-    void PressRightEvent (Vector2d point) override
+    void PressRightEvent (const Event &event) override
     {
-        widget_->PressRightEvent(point);
+        widget_->PressRightEvent(event);
     }               
-    void ReleasedRightEvent (Vector2d point) override
+    void ReleasedRightEvent (const Event &event) override
     {
-        widget_->ReleasedRightEvent(point);
+        widget_->ReleasedRightEvent(event);
     }              
     
-    void MoveMouseEvent (Vector2d point) override
+    void MoveMouseEvent (const Event &event) override
     {
-        widget_->MoveMouseEvent(point);
+        widget_->MoveMouseEvent(event);
     }
 
-    void PressKeyEvent (int key) override
+    void PressKeyEvent (const Event &event) override
     {
-        widget_->PressKeyEvent(key);
+        widget_->PressKeyEvent(event);
     }
 
-    void ScrollEvent (Vector2d point, Vector2d offset) override
+    void ScrollEvent (const Event &event) override
     {
-        widget_->ScrollEvent(point, offset);
+        widget_->ScrollEvent(event);
     }
     
 

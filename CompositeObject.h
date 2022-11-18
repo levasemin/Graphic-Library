@@ -26,71 +26,71 @@ public:
 
 
 
-    void ClickLeftEvent      (Vector2d point) override
+    void ClickLeftEvent      (const Event &event) override
     {   
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->ClickLeftEvent(point);
+            children_[i]->ClickLeftEvent(event);
         }
     }
-    void PressLeftEvent      (Vector2d point) override
+    void PressLeftEvent      (const Event &event) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->PressLeftEvent(point);
+            children_[i]->PressLeftEvent(event);
         }
     }
-    void ReleasedLeftEvent   (Vector2d point) override
+    void ReleasedLeftEvent   (const Event &event) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->ReleasedLeftEvent(point);
+            children_[i]->ReleasedLeftEvent(event);
         }
     }             
     
-    void ClickRightEvent     (Vector2d point) override
+    void ClickRightEvent     (const Event &event) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->ClickRightEvent(point);
+            children_[i]->ClickRightEvent(event);
         }
     }
-    void PressRightEvent      (Vector2d point) override
+    void PressRightEvent     (const Event &event) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->PressRightEvent(point);
+            children_[i]->PressRightEvent(event);
         }
     }
-    void ReleasedRightEvent  (Vector2d point) override
+    void ReleasedRightEvent  (const Event &event) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->ReleasedLeftEvent(point);
+            children_[i]->ReleasedLeftEvent(event);
         }
     }            
     
-    void MoveMouseEvent      (Vector2d point) override
+    void MoveMouseEvent      (const Event &event) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->MoveMouseEvent(point);
+            children_[i]->MoveMouseEvent(event);
         }
     }
     
-    void PressKeyEvent       (int key) override
+    void PressKeyEvent       (const Event &event) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->PressKeyEvent(key);
+            children_[i]->PressKeyEvent(event);
         }
     }
     
-    void ScrollEvent         (Vector2d point, Vector2d offset) override
+    void ScrollEvent         (const Event &event) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->ScrollEvent(point, offset);
+            children_[i]->ScrollEvent(event);
         }
     }  
 

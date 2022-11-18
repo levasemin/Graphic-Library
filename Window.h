@@ -3,6 +3,7 @@
 #include "Color.h"
 #include <SFML/Graphics.hpp>
 #include "Sprite.h"
+#include "Event.h"
 
 class Window
 {
@@ -14,9 +15,7 @@ public:
         window_(sf::VideoMode(shape.x_, shape.y_), "Vectors")
         {
         };
-    
-    sf::Event event_;
-    
+        
     void draw(const sf::Vertex *vertices, std::size_t VertexCount, sf::PrimitiveType type, const sf::RenderStates &states = sf::RenderStates::Default);
     void draw(const sf::Drawable &drawable,                                                const sf::RenderStates &states = sf::RenderStates::Default);
     void draw(const sf::VertexBuffer &vertexBuffer,                                        const sf::RenderStates &states = sf::RenderStates::Default);	
@@ -26,7 +25,7 @@ public:
     Window &operator =(const Window &that) = default;    
     
     bool isOpen();
-    bool pollEvent(sf::Event event);
+    bool pollEvent(Event &event);
     void close();
     void display();
     void clear(Color color);

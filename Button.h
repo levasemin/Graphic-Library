@@ -6,6 +6,7 @@
 #include "Command.h"
 #include "math.h"
 #include "Vector2d.h"
+#include "Event.h"
 
 class Button : public Object
 {
@@ -19,71 +20,71 @@ public:
         {
         };
     
-    void set_left_click       (Command<Vector2d> *command)
+    void set_left_click       (Command<const Event &> *command)
     {
         left_click_command_ = command;
     }
 
-    void set_left_press  (Command<Vector2d> *command)
+    void set_left_press  (Command<const Event &> *command)
     {
         left_press_command_ = command;
     }
 
-    void set_release_left_click  (Command<Vector2d> *command)
+    void set_release_left_click  (Command<const Event &> *command)
     {
         release_left_click_command_ = command;
     }
 
-    void set_right_click      (Command<Vector2d> *command)
+    void set_right_click      (Command<const Event &> *command)
     {
         right_click_command_ = command;
     }
 
-    void set_right_press  (Command<Vector2d> *command)
+    void set_right_press  (Command<const Event &> *command)
     {
         right_press_command_ = command;
     }
 
-    void set_release_right_click  (Command<Vector2d> *command)
+    void set_release_right_click  (Command<const Event &> *command)
     {
         release_right_click_command_ = command;
     }
     
 
-    void ClickLeftEvent     (Vector2d point)   override;
-    void PressLeftEvent   (Vector2d point)     override;
-    void ReleasedLeftEvent  (Vector2d point)   override;
+    void ClickLeftEvent     (const Event &event) override;
+    void PressLeftEvent     (const Event &event) override;
+    void ReleasedLeftEvent  (const Event &event) override;
 
-    void ClickRightEvent    (Vector2d point)   override;
-    void PressRightEvent  (Vector2d point)     override;
-    void ReleasedRightEvent (Vector2d point)   override;
+    void ClickRightEvent    (const Event &event) override;
+    void PressRightEvent    (const Event &event) override;
+    void ReleasedRightEvent (const Event &event) override;
     
-    void MoveMouseEvent     (Vector2d point)   override;
-    void PressKeyEvent      (int key)          override {};
-    void ScrollEvent        (Vector2d point, Vector2d offset) override {};
+    void MoveMouseEvent     (const Event &event) override;
+    void PressKeyEvent      (const Event &event) override {};
+    void ScrollEvent        (const Event &event) override {};
 
-    void print(Vector2d point)
+    void print(const Event &event)
     {
         printf("CLICKED!!\n");
     }
 
 private:
-    Command<Vector2d> *left_click_command_          = nullptr;
-    Command<Vector2d> *left_press_command_          = nullptr;
-    Command<Vector2d> *release_left_click_command_  = nullptr;
+    Command<const Event &> *left_click_command_          = nullptr;
+    Command<const Event &> *left_press_command_          = nullptr;
+    Command<const Event &> *release_left_click_command_  = nullptr;
 
-    Command<Vector2d> *right_click_command_         = nullptr;
-    Command<Vector2d> *right_press_command_         = nullptr;
-    Command<Vector2d> *release_right_click_command_ = nullptr;
+    Command<const Event &> *right_click_command_         = nullptr;
+    Command<const Event &> *right_press_command_         = nullptr;
+    Command<const Event &> *release_right_click_command_ = nullptr;
 };
 
-void Button::MoveMouseEvent(Vector2d point)
+void Button::MoveMouseEvent(const Event &event)
 {
     if (is_left_clicked_)
     {        
         if (left_press_command_ != nullptr)
         {
-            left_press_command_->Execute(point);
+            left_press_command_->Execute(event);
         }
     }
 
@@ -91,81 +92,75 @@ void Button::MoveMouseEvent(Vector2d point)
     {
         if (right_press_command_ != nullptr)
         {
-            right_press_command_->Execute(point);
+            right_press_command_->Execute(event);
         }
     }
 }
 
-void Button::PressLeftEvent (Vector2d point)
+void Button::PressLeftEvent (const Event &event)
 {
-    if (point_belonging(point))
+    if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
     {
         if (left_press_command_ != nullptr)
         {
-            left_press_command_->Execute(point);
+            left_press_command_->Execute(event);
         }
     }
 }
 
-void Button::PressRightEvent (Vector2d point)
+void Button::PressRightEvent (const Event &event)
 {
-    if (point_belonging(point))
+    if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
     {
         if (right_press_command_ != nullptr)
         {
-            right_press_command_->Execute(point);
+            right_press_command_->Execute(event);
         }
     }
 }
 
-void Button::ClickLeftEvent (Vector2d point)
+void Button::ClickLeftEvent (const Event &event)
 {
-    if (point_belonging(point))
+    if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
     {
         is_left_clicked_ = true;
         
         if (left_click_command_ != nullptr)
         {
-            left_click_command_->Execute(point);
+            left_click_command_->Execute(event);
         }
     }
 }
 
-void Button::ReleasedLeftEvent (Vector2d point)
+void Button::ReleasedLeftEvent (const Event &event)
 {
     is_left_clicked_ = false;
 
-    if (point_belonging(point))
+    if (release_left_click_command_ != nullptr)
     {
-        if (release_left_click_command_ != nullptr)
-        {
-            release_left_click_command_->Execute(point);
-        }
+        release_left_click_command_->Execute(event);
     }
 }
 
-void Button::ClickRightEvent     (Vector2d point)
+void Button::ClickRightEvent (const Event &event)
 {
-    if (point_belonging(point))
+    if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
     {
         is_right_clicked_ = true;
 
         if (right_click_command_ != nullptr)
         {
-            right_click_command_->Execute(point);
+            right_click_command_->Execute(event);
         }
     }
 }
 
-void Button::ReleasedRightEvent (Vector2d point)
+void Button::ReleasedRightEvent (const Event &event)
 {
     is_right_clicked_ = false;
 
-    if (point_belonging(point))
+    if (release_right_click_command_ != nullptr)
     {
-        if (release_right_click_command_ != nullptr)
-        {
-            release_right_click_command_->Execute(point);
-        }
+        release_right_click_command_->Execute(event);
     }
 }

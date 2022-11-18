@@ -13,19 +13,19 @@ public:
     Widget() 
     {}
 
-    virtual void ClickLeftEvent      (Vector2d point) = 0;
-    virtual void PressLeftEvent      (Vector2d point) = 0;
-    virtual void ReleasedLeftEvent   (Vector2d point) = 0;              
+    virtual void ClickLeftEvent      (const Event &event) = 0;
+    virtual void PressLeftEvent      (const Event &event) = 0;
+    virtual void ReleasedLeftEvent   (const Event &event) = 0;              
 
-    virtual void ClickRightEvent     (Vector2d point) = 0;
-    virtual void PressRightEvent     (Vector2d point) = 0;               
-    virtual void ReleasedRightEvent  (Vector2d point) = 0;              
+    virtual void ClickRightEvent     (const Event &event) = 0;
+    virtual void PressRightEvent     (const Event &event) = 0;               
+    virtual void ReleasedRightEvent  (const Event &event) = 0;              
     
-    virtual void MoveMouseEvent      (Vector2d point) = 0;
+    virtual void MoveMouseEvent      (const Event &event) = 0;
 
-    virtual void PressKeyEvent       (int key) = 0;
+    virtual void PressKeyEvent       (const Event &event) = 0;
 
-    virtual void ScrollEvent         (Vector2d point, Vector2d offset) = 0;
+    virtual void ScrollEvent         (const Event &event) = 0;
     
 
     virtual bool point_belonging(Vector2d point) const = 0;

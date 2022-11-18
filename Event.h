@@ -39,6 +39,12 @@ struct MouseButtonEventData
     bool shift, alt, ctrl;
 };
 
+struct MouseReleasedEventData
+{
+    int x, y;
+    MouseButton button;
+};
+
 enum Key
 {
     Unknown = -1, ///< Unhandled key
@@ -153,10 +159,7 @@ struct KeyPressedEventData
     bool shift, alt, ctrl;
 };
 
-struct ButtonClickedEventData
-{
-    uint64_t id; 
-};
+
 
 struct ScrollMovedEventData
 {
@@ -167,7 +170,7 @@ struct ScrollMovedEventData
 struct ScrollEventData
 {
     uint64_t id;
-    int32_t value;
+    float value;
     int16_t x, y;
 };
 
@@ -186,11 +189,13 @@ public:
     {
         MotionEventData motion;
         MouseButtonEventData mbedata;
-        ButtonClickedEventData bcedata;
-        ScrollMovedEventData smedata;
+        MouseReleasedEventData mredata;
+        ScrollEventData smedata;
         CanvasEventData cedata;
         KeyPressedEventData kpedata;
     } Oleg_;
+    
+    Event () {};
     
     Event(const sf::Event& sfEvent) :
         type_(EventType::NoEvent),
@@ -198,14 +203,14 @@ public:
     {   
         switch (sfEvent.type)
         {
-            case sf::Event::Closed :
+            case sf::Event::Closed:
             {
                 type_ = EventType::Closed;
                 
                 break;
             }
 
-            case sf::Event::MouseMoved :
+            case sf::Event::MouseMoved:
             {
                 type_ = EventType::MouseMoved;
                 Oleg_.motion.x = sfEvent.mouseMove.x;
@@ -214,7 +219,7 @@ public:
                 break;
             }
 
-            case sf::Event::MouseButtonPressed :
+            case sf::Event::MouseButtonPressed:
             {
                 type_ = EventType::MousePressed;
 
@@ -238,10 +243,23 @@ public:
             {
                 type_ = EventType::MouseReleased;
 
+                if (sfEvent.mouseButton.button == sf::Mouse::Button::Left)
+                {
+                    Oleg_.mredata.button = MouseButton::Left;
+                }
+
+                else if (sfEvent.mouseButton.button == sf::Mouse::Button::Right)
+                {
+                    Oleg_.mredata.button = MouseButton::Left;
+                }
+
+                Oleg_.mredata.x = sfEvent.mouseButton.x;
+                Oleg_.mredata.y = sfEvent.mouseButton.y;
+                
                 break;
             }
 
-            case sf::Event::KeyPressed :
+            case sf::Event::KeyPressed:
             {
                 type_ = EventType::KeyPressed;
 
@@ -262,6 +280,15 @@ public:
                     Oleg_.kpedata.shift = true;
                 }
 
+                break;
+            }
+
+            case sf::Event::MouseWheelScrolled:
+            {
+                type_ = EventType::ScrollbarMoved;
+                Oleg_.smedata.value = sfEvent.mouseWheelScroll.delta;
+                Oleg_.smedata.x = sfEvent.mouseWheelScroll.x;
+                Oleg_.smedata.y = sfEvent.mouseWheelScroll.y;
                 break;
             }
 

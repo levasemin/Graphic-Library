@@ -11,29 +11,33 @@ public:
     DecoratorScrollBar(Widget *widget) : Decorator(widget),
         scroll_bar_(Vector2d(20, 500), Vector2d(widget->get_center().x_ - widget->get_shape().x_ / 2 - 10, widget_->get_center().y_), Texture(Colors::Blue))
     {   
-        scroll_bar_.set_scroll_command ((Command<Vector2d, Vector2d> *) new SimpleCommand<DecoratorScrollBar, Vector2d, Vector2d> (this, &DecoratorScrollBar::ScrollWidget));
+        scroll_bar_.set_scroll_command ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollWidget));
     }
 
     ScrollBar scroll_bar_;
 
-    void ScrollEvent(Vector2d point, Vector2d offset) override
+    void ScrollEvent(const Event &event) override
     {
-        if (point_belonging(point))
+        if (point_belonging(Vector2d(event.Oleg_.smedata.x, event.Oleg_.smedata.y)))
         {   
             double coeff = (scroll_bar_.get_shape().y_ - scroll_bar_.up_button_.get_shape().y_ * 2 - scroll_bar_.scroll_button_.get_shape().y_) /
                            (widget_->get_global_shape().y_ - widget_->get_shape().y_);
 
-            scroll_bar_.ScrollEvent(point, offset * coeff);
+            Event new_event = event;
+            new_event.Oleg_.smedata.value *= coeff;
+            scroll_bar_.ScrollEvent(new_event);
         }
     }
 
 
-    void ScrollWidget(Vector2d point, Vector2d offset)
+    void ScrollWidget(const Event &event)
     {
         double coeff = (scroll_bar_.get_shape().y_ - scroll_bar_.up_button_.get_shape().y_ * 2 - scroll_bar_.scroll_button_.get_shape().y_) /
-                           (widget_->get_global_shape().y_ - widget_->get_shape().y_);
+                       (widget_->get_global_shape().y_ - widget_->get_shape().y_);
         
-        widget_->ScrollEvent(point, offset * (1 / coeff));
+        Event new_event = event;
+        new_event.Oleg_.smedata.value *= 1 / coeff;
+        widget_->ScrollEvent(new_event);
     }
 
     void draw() override
@@ -43,52 +47,52 @@ public:
         widget_->draw();
     }
 
-    void ClickLeftEvent (Vector2d point) override
+    void ClickLeftEvent (const Event &event) override
     {
-        scroll_bar_.ClickLeftEvent(point);
-        widget_->ClickLeftEvent(point);
+        scroll_bar_.ClickLeftEvent(event);
+        widget_->ClickLeftEvent(event);
     }
     
-    void PressLeftEvent (Vector2d point) override
+    void PressLeftEvent (const Event &event) override
     {
-        scroll_bar_.PressLeftEvent(point);
-        widget_->PressLeftEvent(point);
+        scroll_bar_.PressLeftEvent(event);
+        widget_->PressLeftEvent(event);
     }
     
-    void ReleasedLeftEvent (Vector2d point) override
+    void ReleasedLeftEvent (const Event &event) override
     {
-        scroll_bar_.ReleasedLeftEvent(point);
-        widget_->ReleasedLeftEvent(point);
+        scroll_bar_.ReleasedLeftEvent(event);
+        widget_->ReleasedLeftEvent(event);
     }              
 
-    virtual void ClickRightEvent (Vector2d point) override
+    virtual void ClickRightEvent (const Event &event) override
     {
-        scroll_bar_.ClickRightEvent(point);
-        widget_->ClickRightEvent(point);
+        scroll_bar_.ClickRightEvent(event);
+        widget_->ClickRightEvent(event);
     }
 
-    void PressRightEvent (Vector2d point) override
+    void PressRightEvent (const Event &event) override
     {
-        scroll_bar_.PressRightEvent(point);
-        widget_->PressRightEvent(point);
+        scroll_bar_.PressRightEvent(event);
+        widget_->PressRightEvent(event);
     }               
     
-    void ReleasedRightEvent (Vector2d point) override
+    void ReleasedRightEvent (const Event &event) override
     {
-        scroll_bar_.ReleasedRightEvent(point);
-        widget_->ReleasedRightEvent(point);
+        scroll_bar_.ReleasedRightEvent(event);
+        widget_->ReleasedRightEvent(event);
     }              
     
-    void MoveMouseEvent (Vector2d point) override
+    void MoveMouseEvent (const Event &event) override
     {
-        scroll_bar_.MoveMouseEvent(point);
-        widget_->MoveMouseEvent(point);
+        scroll_bar_.MoveMouseEvent(event);
+        widget_->MoveMouseEvent(event);
     }
 
-    void PressKeyEvent (int key) override
+    void PressKeyEvent (const Event &event) override
     {
-        scroll_bar_.MoveMouseEvent(key);
-        widget_->PressKeyEvent(key);
+        scroll_bar_.MoveMouseEvent(event);
+        widget_->PressKeyEvent(event);
     }
 
     void set_global_offset(Vector2d diff_offset) override

@@ -52,7 +52,7 @@ int main()
 
     Button first_button (Vector2d(100, 301), Vector2d(50, 160), Texture(Colors::Red));
 
-    Command<Vector2d> *command = (Command<Vector2d> *)new SimpleCommand<Button, Vector2d>(&first_button, &Button::print);
+    Command<const Event&> *command = (Command<const Event &> *)new SimpleCommand<Button, const Event&>(&first_button, &Button::print);
 
     first_button.set_left_click(command);
     first_button.set_right_click(command);

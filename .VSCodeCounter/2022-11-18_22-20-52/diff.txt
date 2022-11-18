@@ -1,0 +1,54 @@
+Date : 2022-11-18 22:20:52
+Directory : /home/levce/projectsDED/event_handler2/Event_handler
+Total : 30 files,  544 codes, 18 comments, 111 blanks, all 673 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |         30 |        544 |         18 |        111 |        673 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                      | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                         |         30 |        544 |         18 |        111 |        673 |
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                  | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /home/levce/projectsDED/event_handler2/Event_handler/Button.h             | C++      |         10 |          0 |         -1 |          9 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Canvas.h             | C++      |         16 |          0 |          4 |         20 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Color.h              | C++      |          1 |          0 |          1 |          2 |
+| /home/levce/projectsDED/event_handler2/Event_handler/CompositeObject.h    | C++      |          0 |          0 |          5 |          5 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Decorator.h          | C++      |         12 |          0 |         -7 |          5 |
+| /home/levce/projectsDED/event_handler2/Event_handler/DecoratorScroll.h    | C++      |         13 |         17 |          7 |         37 |
+| /home/levce/projectsDED/event_handler2/Event_handler/DecoratorScrollBar.h | C++      |         -8 |          0 |         -3 |        -11 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Event.h              | C++      |        261 |          0 |         40 |        301 |
+| /home/levce/projectsDED/event_handler2/Event_handler/EventManager.h       | C++      |        -20 |          0 |        -11 |        -31 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Image.h              | C++      |         66 |          0 |         18 |         84 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Object.h             | C++      |         38 |          0 |          1 |         39 |
+| /home/levce/projectsDED/event_handler2/Event_handler/RenderTexture.h      | C++      |          4 |          0 |          1 |          5 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ScrollBar.h          | C++      |         16 |          0 |          3 |         19 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ScrollContainer.h    | C++      |        -34 |         -7 |         -9 |        -50 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ScrollObject.h       | C++      |         -5 |          0 |         -1 |         -6 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Sprite.h             | C++      |          4 |          0 |          1 |          5 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Surface.h            | C++      |          9 |          0 |          4 |         13 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Texture.h            | C++      |          2 |          0 |          2 |          4 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Tool.h               | C++      |         12 |          0 |          4 |         16 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ToolManager.h        | C++      |         27 |          0 |          8 |         35 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ToolPaint.h          | C++      |         18 |          0 |          8 |         26 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Widget.h             | C++      |         -4 |          0 |         10 |          6 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Window.cpp           | C++      |          6 |         -3 |          2 |          5 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Window.h             | C++      |          0 |          0 |         -1 |         -1 |
+| /home/levce/projectsDED/event_handler2/Event_handler/main.cpp             | C++      |         -1 |          0 |         -2 |         -3 |
+| /home/levce/projectsDED/event_handler2/Event_handler/t.cpp                | C++      |        -70 |          0 |        -18 |        -88 |
+| /home/levce/projectsDED/event_handler2/Event_handler/test.cpp             | C++      |         33 |          0 |         11 |         44 |
+| /home/levce/projectsDED/event_handler2/Event_handler/test2.cpp            | C++      |         22 |          0 |          7 |         29 |
+| /home/levce/projectsDED/event_handler2/Event_handler/test3.cpp            | C++      |         21 |          0 |          3 |         24 |
+| /home/levce/projectsDED/event_handler2/Event_handler/tools.h              | C++      |         95 |         11 |         24 |        130 |
+| Total                                                                     |          |        544 |         18 |        111 |        673 |
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+

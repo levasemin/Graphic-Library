@@ -5,86 +5,76 @@
 #include "Widget.h"
 #include "Event.h"
 
-
 class EventManager
 {
 
 public: 
     void distribute_event(Window *window, Widget *main_window);
-    void distribute_event(Widget *window, sf::Event event_);
+    void distribute_event(Widget *window, const Event &event_);
 
 private:
     bool is_left_button_clicked_ = false;
     bool is_right_button_clicked_ = false;
 };
 
-void EventManager::distribute_event(Widget *window, sf::Event event)
+void EventManager::distribute_event(Widget *window, const Event &event)
 {
-    switch (event.type)
+    switch (event.type_)
     {   
-        case sf::Event::MouseButtonPressed:
+        case EventType::MousePressed:
         {
-            Vector2d point(event.mouseButton.x, event.mouseButton.y);
-
-            if (event.mouseButton.button == sf::Mouse::Left)
+            if (event.Oleg_.mbedata.button == MouseButton::Left)
             {
-                is_left_button_clicked_ = true;   
-                window->ClickLeftEvent(point);
+                is_left_button_clicked_ = true; 
+                window->PressLeftEvent(event);  
+                window->ClickLeftEvent(event);
             }
 
             else
-            if (event.mouseButton.button == sf::Mouse::Right)
+            if (event.Oleg_.mbedata.button == MouseButton::Right)
             {         
                 is_right_button_clicked_ = true;
-                window->ClickRightEvent(point);
+                window->PressRightEvent(event);
+                window->ClickRightEvent(event);
             }
 
             break;
         }
 
-        case sf::Event::KeyPressed:
+        case EventType::KeyPressed:
         {
-            int key = event.key.code;
-            
-            window->PressKeyEvent(key);
+            window->PressKeyEvent(event);
 
             break;
         }
 
-        case sf::Event::MouseWheelScrolled:
-        {
-            double offset  = event.mouseWheelScroll.delta;
-            Vector2d point = Vector2d(event.mouseWheelScroll.x, event.mouseWheelScroll.y);
-
-            window->ScrollEvent(point, Vector2d(0, offset));
+        case EventType::ScrollbarMoved:
+        {            
+            window->ScrollEvent(event);
+            
+            break;
+        }
+        
+        case EventType::MouseMoved:
+        {            
+            window->MoveMouseEvent(event);
 
             break;
         }
         
-        case sf::Event::MouseMoved:
+        case EventType::MouseReleased:
         {
-            Vector2d point(event.mouseMove.x, event.mouseMove.y);
-            
-            window->MoveMouseEvent(point);
-
-            break;
-        }
-        
-        case sf::Event::MouseButtonReleased:
-        {
-            Vector2d point(event.mouseButton.x, event.mouseButton.y);
-
-            if (event.mouseButton.button == sf::Mouse::Left)
+            if (event.Oleg_.mredata.button == MouseButton::Left)
             {
                 is_left_button_clicked_ = false;
-                window->ReleasedLeftEvent(point);
+                window->ReleasedLeftEvent(event);
             }
 
             else
-            if (event.mouseButton.button == sf::Mouse::Right)
+            if (event.Oleg_.mredata.button == MouseButton::Right)
             {
                 is_right_button_clicked_ = false;
-                window->ReleasedRightEvent(point);            
+                window->ReleasedRightEvent(event);            
             }
 
             break;
@@ -99,26 +89,15 @@ void EventManager::distribute_event(Widget *window, sf::Event event)
 
 void EventManager::distribute_event(Window *window, Widget *main_window)
 {
-    while (window->window_.pollEvent(window->event_))
+    Event event;
+    while (window->pollEvent(event))
     {
-        if (sf::Event::Closed == window->event_.type)
+        if (event.type_ == EventType::Closed)
         {
             window->close();
             break;
         }
-        
-        distribute_event(main_window, window->event_);        
-    }
 
-    Vector2d point(window->event_.mouseButton.x, window->event_.mouseButton.y);
-
-    if (is_left_button_clicked_)
-    {
-        main_window->PressLeftEvent(point);
+        distribute_event(main_window, event);        
     }
-
-    if (is_right_button_clicked_)
-    {
-        main_window->PressRightEvent(point);
-    }
-}
+};

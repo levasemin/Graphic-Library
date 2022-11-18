@@ -16,7 +16,7 @@ public:
     Button down_button_;    
     Button scroll_button_;
 
-    Command<Vector2d, Vector2d> *scroll_command_ = nullptr;
+    Command<const Event&> *scroll_command_ = nullptr;
 
     double scroll_button_coeff_size_;
     
@@ -40,15 +40,14 @@ public:
             down_button_.set_has_local_offset(false);
             up_button_.set_has_local_offset(false);
             
-            up_button_.set_left_press((Command<Vector2d> *)     new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::scroll_up));
-            down_button_.set_left_press((Command<Vector2d> *)   new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::scroll_down));
-            scroll_button_.set_left_click((Command<Vector2d> *) new SimpleCommand<ScrollBar, Vector2d>(this, &ScrollBar::clicked_scroll_button));
+            up_button_.set_left_press    ((Command<const Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::scroll_up));
+            down_button_.set_left_press  ((Command<const Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::scroll_down));
+            scroll_button_.set_left_click((Command<const Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::clicked_scroll_button));
         };
 
-        void ScrollEvent(Vector2d point, Vector2d offset) override
-        {
-                        
-            Vector2d res_offset = offset * -1;
+        void ScrollEvent(const Event &event) override
+        {            
+            Vector2d res_offset(0, event.Oleg_.smedata.value * -1);
             res_offset.x_ = local_offset_.x_ + res_offset.x_ > 0 ? res_offset.x_ : 0;
             res_offset.y_ = local_offset_.y_ + res_offset.y_ > 0 ? res_offset.y_ : 0;
             res_offset.x_ = local_offset_.x_ + res_offset.x_ < shape_.x_ - scroll_button_.get_shape().x_? res_offset.x_ : 0;
@@ -58,36 +57,53 @@ public:
 
             if (scroll_command_ != nullptr)
             {
-                scroll_command_->Execute(point, res_offset * -1);
+                scroll_command_->Execute(event);
             }
         }
 
-        void MoveMouseEvent (Vector2d point) override
+        void MoveMouseEvent (const Event &event) override
         {
             if (scroll_button_.is_left_clicked_)
             {   
-                ScrollEvent(point, Vector2d(0, click_place_.y_ - point.y_));
-                click_place_ = point;
+                Event new_event;
+
+                new_event.type_ = EventType::ScrollbarMoved;
+                new_event.Oleg_.smedata.value = click_place_.y_ - event.Oleg_.motion.y;
+                new_event.Oleg_.smedata.x = event.Oleg_.motion.x;
+                new_event.Oleg_.smedata.y = event.Oleg_.motion.y;
+
+                ScrollEvent(new_event);
+                click_place_ = Vector2d(event.Oleg_.motion.x, event.Oleg_.motion.y);
             }
         };
 
-        void scroll_up(Vector2d point)
+        void scroll_up(const Event &event)
         {
-            ScrollEvent(point, Vector2d(0, 1));
+            Event new_event;
+            new_event.type_ = EventType::ScrollbarMoved;
+            new_event.Oleg_.smedata.value = 1;
+            new_event.Oleg_.smedata.x = event.Oleg_.mbedata.x;
+            new_event.Oleg_.smedata.y = event.Oleg_.mbedata.y;
+            ScrollEvent(new_event);
         }    
 
-        void scroll_down(Vector2d point)
+        void scroll_down(const Event &event)
         {
-            ScrollEvent(point, Vector2d(0, -1));
+            Event new_event;
+            new_event.type_ = EventType::ScrollbarMoved;
+            new_event.Oleg_.smedata.value = -1;
+            new_event.Oleg_.smedata.x = event.Oleg_.mbedata.x;
+            new_event.Oleg_.smedata.y = event.Oleg_.mbedata.y;
+            ScrollEvent(new_event);
         }
         
 
-        void clicked_scroll_button(Vector2d point)
+        void clicked_scroll_button(const Event &event)
         {
-            click_place_ = point;
+            click_place_ = Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y);
         }
 
-        void set_scroll_command(Command<Vector2d, Vector2d> *new_command)
+        void set_scroll_command(Command<const Event &> *new_command)
         {
             scroll_command_ = new_command;
         }

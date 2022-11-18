@@ -25,9 +25,18 @@ bool Window::isOpen()
 
 
 
-bool Window::pollEvent(sf::Event event)
+bool Window::pollEvent(Event &event)
 {
-    return window_.pollEvent(event);
+    sf::Event sfEvent;
+
+    if (!window_.pollEvent(sfEvent))
+    {
+        return false;
+    }
+
+    event = Event(sfEvent);
+
+    return true;
 }
 
 

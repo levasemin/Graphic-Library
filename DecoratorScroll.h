@@ -9,8 +9,10 @@ public :
     {
     }
 
-    void ScrollEvent (Vector2d point, Vector2d offset) override
+    void ScrollEvent (const Event &event) override
     {
+        Vector2d offset = Vector2d(0, event.Oleg_.smedata.value);
+        
         if (offset.y_ > 0)
         {
             offset.x_ = offset.x_ <= -global_offset0_.x_ ? offset.x_ :  -global_offset0_.x_;

@@ -45,19 +45,19 @@ public:
             render_texture_->draw(sprite_);
         };
 
-    virtual void ClickLeftEvent      (Vector2d point) {};
-    virtual void PressLeftEvent      (Vector2d point) {};
-    virtual void ReleasedLeftEvent   (Vector2d point) {};              
+    virtual void ClickLeftEvent      (const Event &event) {};
+    virtual void PressLeftEvent      (const Event &event) {};
+    virtual void ReleasedLeftEvent   (const Event &event) {};              
 
-    virtual void ClickRightEvent     (Vector2d point) {};
-    virtual void PressRightEvent     (Vector2d point) {};               
-    virtual void ReleasedRightEvent  (Vector2d point) {};              
+    virtual void ClickRightEvent     (const Event &event) {};
+    virtual void PressRightEvent     (const Event &event) {};               
+    virtual void ReleasedRightEvent  (const Event &event) {};              
     
-    virtual void MoveMouseEvent      (Vector2d point) {};
+    virtual void MoveMouseEvent      (const Event &event) {};
 
-    virtual void PressKeyEvent       (int key) {};
+    virtual void PressKeyEvent       (const Event &event) {};
 
-    virtual void ScrollEvent         (Vector2d point, Vector2d offset) {};
+    virtual void ScrollEvent         (const Event &event) {};
 
 
     bool point_belonging(Vector2d point) const override
