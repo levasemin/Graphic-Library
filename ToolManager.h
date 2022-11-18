@@ -1,22 +1,30 @@
 #include "Tool.h"
 #include <vector>
-#inc
+
 class ToolManager
 {
 private:
     
     std::vector<booba::Tool *> tools_;
-
+    booba::Tool* active_tool_;
 public:
-    ToolManager(std::vector<Tool *> tools):
+    ToolManager(const std::vector<booba::Tool *> &tools):
         tools_(tools)
     {}
 
-    void add(Tool *new_tool)
+    void add(booba::Tool *new_tool)
     {
         tools_.push_back(new_tool);
     }
     
+    void apply(booba::Image *image, const booba::Event *event)
+    {
+        if (active_tool_)
+        {
+            active_tool_->apply(image, event);
+        }
+    }
+
     void distribute_tool(Widget *)
     {
 

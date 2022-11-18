@@ -45,6 +45,20 @@ public:
             render_texture_->draw(sprite_);
         };
 
+    virtual void ClickLeftEvent      (Vector2d point) {};
+    virtual void PressLeftEvent      (Vector2d point) {};
+    virtual void ReleasedLeftEvent   (Vector2d point) {};              
+
+    virtual void ClickRightEvent     (Vector2d point) {};
+    virtual void PressRightEvent     (Vector2d point) {};               
+    virtual void ReleasedRightEvent  (Vector2d point) {};              
+    
+    virtual void MoveMouseEvent      (Vector2d point) {};
+
+    virtual void PressKeyEvent       (int key) {};
+
+    virtual void ScrollEvent         (Vector2d point, Vector2d offset) {};
+
 
     bool point_belonging(Vector2d point) const override
     {
@@ -54,29 +68,6 @@ public:
         return start_field.x_ < point.x_ && point.x_ < end_field.x_ &&
                start_field.y_ < point.y_ && point.y_ < end_field.y_;
     }
-
-    Vector2d get_start_field() const override
-    {
-        Vector2d start_field = center_ - shape_ / 2 + global_offset_;
-        Vector2d down_limit  = parent_ != nullptr ? parent_->get_start_field() : center_ - shape_ / 2;
-
-        start_field.x_ = start_field.x_ < down_limit.x_ ? down_limit.x_ : start_field.x_;
-        start_field.y_ = start_field.y_ < down_limit.y_ ? down_limit.y_ : start_field.y_;
-
-        return start_field;
-    }
-
-    Vector2d get_end_field() const override
-    {
-        Vector2d end_field = center_ + shape_ / 2 + global_offset_;
-        Vector2d hight_limit = parent_ != nullptr ? parent_->get_end_field()   : center_ + shape_ / 2;
-
-        end_field.x_ = end_field.x_ > hight_limit.x_ ? hight_limit.x_ : end_field.x_;
-        end_field.y_ = end_field.y_ > hight_limit.y_ ? hight_limit.y_ : end_field.y_;
-
-        return end_field;
-    }
-
 
     void draw() override
     {   
@@ -88,17 +79,6 @@ public:
             sprite_.setPosition(parent_->get_local_offset() * has_local_offset_ + center_ - shape_ / 2);
             parent_->get_render_texture()->draw(sprite_);
         }
-    }
-
-
-    void set_has_local_offset(bool has) override
-    {
-        has_local_offset_ = has;
-    }
-
-    bool get_has_local_offset () const override
-    {
-        return has_local_offset_;
     }
 
     void remove(Widget *window) override
@@ -113,16 +93,6 @@ public:
         throw exception;
     }
 
-    void set_texture(Texture texture)
-    {
-        texture_ = texture;
-    }
-
-    Texture get_texture()
-    {
-        return texture_;
-    }
-
     void display(Window *window) override
     {
         render_texture_->display();
@@ -130,29 +100,67 @@ public:
         window->display();
         window->clear();
     }
-    
-    Vector2d get_center() const override               { return center_; }
-    Vector2d get_shape() const override               { return shape_; }
-    Widget  *get_parent() const override                { return parent_; }
-    RenderTexture *get_render_texture() const override { return render_texture_; }
-    Vector2d get_global_shape() const override         { return shape_; }
-    Vector2d get_global_offset() const override        { return global_offset_; }
-    Vector2d get_local_offset() const override         { return local_offset_; }
 
-    std::vector<Widget *> get_children() const override
+
+    Vector2d get_center() const override
     {
-        // std::logic_error exception("try getting children from object\n");
-        // throw exception;
-        return {};
+        return center_; 
+    }
+    void set_center(Vector2d center) override
+    {
+        center_ = center; 
     }
 
-    void set_center(Vector2d center) override { center_ = center; }
-    void set_shape (Vector2d shape) override { shape_  = shape; }
-    void set_parent(Widget *parent) override { parent_ = parent; }
-    void set_render_texture(RenderTexture *render_texture) override {render_texture_ = render_texture;}
-    void set_global_shape(Vector2d global_shape) override     { shape_ = global_shape; }
-    
-    void set_local_offset(Vector2d diff_offset) override      
+    Vector2d get_shape() const override
+    {
+        return shape_; 
+    }
+    void set_shape (Vector2d shape) override
+    {
+        shape_  = shape; 
+    }
+
+    Widget  *get_parent() const override
+    {
+        return parent_; 
+    }
+    void set_parent(Widget *parent) override
+    { 
+        parent_ = parent; 
+    }
+
+    RenderTexture *get_render_texture() const override
+    {
+        return render_texture_; 
+    }
+    void set_render_texture(RenderTexture *render_texture) override
+    {
+        render_texture_ = render_texture;
+    }
+
+    Vector2d get_global_shape() const override
+    {
+        return shape_; 
+    }
+    void set_global_shape(Vector2d global_shape) override
+    {
+        shape_ = global_shape; 
+    }
+
+    Vector2d get_global_offset() const override
+    {
+        return global_offset_; 
+    }   
+    void set_global_offset(Vector2d diff_offset) override
+    {
+        global_offset_ += diff_offset; 
+    }
+
+    Vector2d get_local_offset() const override
+    {
+        return local_offset_; 
+    }
+    void set_local_offset(Vector2d diff_offset) override
     { 
         local_offset_ += diff_offset; 
 
@@ -163,8 +171,43 @@ public:
             children[i]->set_global_offset(diff_offset * children[i]->get_has_local_offset());
         }
     }
+    
+    bool get_has_local_offset () const override
+    {
+        return has_local_offset_;
+    }
+    void set_has_local_offset(bool has) override
+    {
+        has_local_offset_ = has;
+    }
+    
+    Vector2d get_start_field() const override
+    {
+        Vector2d start_field = center_ - shape_ / 2 + global_offset_;
+        Vector2d down_limit  = parent_ != nullptr ? parent_->get_start_field() : center_ - shape_ / 2;
 
-    void set_global_offset(Vector2d diff_offset) override      { global_offset_ += diff_offset; }
+        start_field.x_ = start_field.x_ < down_limit.x_ ? down_limit.x_ : start_field.x_;
+        start_field.y_ = start_field.y_ < down_limit.y_ ? down_limit.y_ : start_field.y_;
+
+        return start_field;
+    }
+    Vector2d get_end_field() const override
+    {
+        Vector2d end_field = center_ + shape_ / 2 + global_offset_;
+        Vector2d hight_limit = parent_ != nullptr ? parent_->get_end_field()   : center_ + shape_ / 2;
+
+        end_field.x_ = end_field.x_ > hight_limit.x_ ? hight_limit.x_ : end_field.x_;
+        end_field.y_ = end_field.y_ > hight_limit.y_ ? hight_limit.y_ : end_field.y_;
+
+        return end_field;
+    }
+
+    std::vector<Widget *> get_children() const override
+    {
+        // std::logic_error exception("try getting children from object\n");
+        // throw exception;
+        return {};
+    }
     void set_children(std::vector<Widget *> children) override
     {
         // std::logic_error exception("try setting children to object\n");

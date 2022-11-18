@@ -1,5 +1,7 @@
-#include <stding.h>
+#pragma once
+#include <stdint.h>
 #include "SFML/Graphics.hpp"
+#include "tools.h"
 
 enum class EventType
 {
@@ -162,13 +164,20 @@ struct ScrollMovedEventData
     int32_t value;
 };
 
+struct ScrollEventData
+{
+    uint64_t id;
+    int32_t value;
+    int16_t x, y;
+};
+
 struct CanvasEventData
 {
     uint64_t id;
     int32_t x, y; 
 };
 
-class Event 
+class Event : public booba::Event
 {
 public:
     EventType type_;
@@ -185,18 +194,18 @@ public:
     
     Event(const sf::Event& sfEvent) :
         type_(EventType::NoEvent),
-        Oleg_({0, 0, 0, 0})
+        Oleg_({})
     {   
         switch (sfEvent.type)
         {
-            case sf::Event::Closed
+            case sf::Event::Closed :
             {
                 type_ = EventType::Closed;
                 
                 break;
             }
 
-            case sf::Event::MouseMoved:
+            case sf::Event::MouseMoved :
             {
                 type_ = EventType::MouseMoved;
                 Oleg_.motion.x = sfEvent.mouseMove.x;
@@ -205,7 +214,7 @@ public:
                 break;
             }
 
-            case sf::Event::MouseButtonPressed
+            case sf::Event::MouseButtonPressed :
             {
                 type_ = EventType::MousePressed;
 
@@ -225,14 +234,14 @@ public:
                 break; 
             }
 
-            case sf::Event::MouseButtonReleased :
+            case sf::Event::MouseButtonReleased:
             {
                 type_ = EventType::MouseReleased;
 
                 break;
             }
 
-            case sf::Event::KeyPressed
+            case sf::Event::KeyPressed :
             {
                 type_ = EventType::KeyPressed;
 

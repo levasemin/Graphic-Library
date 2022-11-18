@@ -24,21 +24,7 @@ public:
             }
         }
 
-    void PressLeftEvent      (Vector2d point) override
-    {   
-        for (int i = 0; i < children_.size(); i++)
-        {
-            children_[i]->PressLeftEvent(point);
-        }
-    }
 
-    void PressRightEvent      (Vector2d point) override
-    {   
-        for (int i = 0; i < children_.size(); i++)
-        {
-            children_[i]->PressRightEvent(point);
-        }
-    }
 
     void ClickLeftEvent      (Vector2d point) override
     {   
@@ -47,7 +33,13 @@ public:
             children_[i]->ClickLeftEvent(point);
         }
     }
-
+    void PressLeftEvent      (Vector2d point) override
+    {
+        for (int i = 0; i < children_.size(); i++)
+        {
+            children_[i]->PressLeftEvent(point);
+        }
+    }
     void ReleasedLeftEvent   (Vector2d point) override
     {
         for (int i = 0; i < children_.size(); i++)
@@ -55,7 +47,7 @@ public:
             children_[i]->ReleasedLeftEvent(point);
         }
     }             
-
+    
     void ClickRightEvent     (Vector2d point) override
     {
         for (int i = 0; i < children_.size(); i++)
@@ -63,7 +55,13 @@ public:
             children_[i]->ClickRightEvent(point);
         }
     }
-               
+    void PressRightEvent      (Vector2d point) override
+    {
+        for (int i = 0; i < children_.size(); i++)
+        {
+            children_[i]->PressRightEvent(point);
+        }
+    }
     void ReleasedRightEvent  (Vector2d point) override
     {
         for (int i = 0; i < children_.size(); i++)
@@ -79,7 +77,7 @@ public:
             children_[i]->MoveMouseEvent(point);
         }
     }
-
+    
     void PressKeyEvent       (int key) override
     {
         for (int i = 0; i < children_.size(); i++)
@@ -87,15 +85,15 @@ public:
             children_[i]->PressKeyEvent(key);
         }
     }
-
+    
     void ScrollEvent         (Vector2d point, Vector2d offset) override
     {
         for (int i = 0; i < children_.size(); i++)
         {
             children_[i]->ScrollEvent(point, offset);
         }
-    }
-       
+    }  
+
     void set_global_offset(Vector2d diff_offset) override
     {
         Object::set_global_offset(diff_offset);

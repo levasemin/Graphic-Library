@@ -9,9 +9,7 @@ class Image : public booba::Image
     sf::Image image_;
 
 public:
-    
-    protected:
-        virtual ~Image() = 0;
+    virtual ~Image() = 0;
     
     Image ()
     {}
@@ -75,7 +73,7 @@ public:
         image_ = texture.texture_.copyToImage();
     }
 
-    Texture getTexture()
+    Texture getTexture() const
     {
         Texture texture;
         texture.texture_.loadFromImage(image_);

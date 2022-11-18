@@ -3,17 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Window.h"
 #include "Widget.h"
-
-template<class ...TParams>
-void give_event(Widget *window, void (Widget::*method)(TParams ...), TParams ...params)
-{
-    std::vector <Widget *> children = window->get_children();
-    
-    for (int i = 0; i < children.size(); i++)
-    {
-        ((children[i])->*method)(params ...);
-    }
-}
+#include "Event.h"
 
 
 class EventManager
@@ -39,14 +29,14 @@ void EventManager::distribute_event(Widget *window, sf::Event event)
             if (event.mouseButton.button == sf::Mouse::Left)
             {
                 is_left_button_clicked_ = true;   
-                give_event(window, &Widget::ClickLeftEvent, point);
+                window->ClickLeftEvent(point);
             }
 
             else
             if (event.mouseButton.button == sf::Mouse::Right)
             {         
                 is_right_button_clicked_ = true;
-                give_event(window, &Widget::ClickRightEvent, point);
+                window->ClickRightEvent(point);
             }
 
             break;
@@ -56,7 +46,7 @@ void EventManager::distribute_event(Widget *window, sf::Event event)
         {
             int key = event.key.code;
             
-            give_event(window, &Widget::PressKeyEvent, key);
+            window->PressKeyEvent(key);
 
             break;
         }
@@ -66,7 +56,7 @@ void EventManager::distribute_event(Widget *window, sf::Event event)
             double offset  = event.mouseWheelScroll.delta;
             Vector2d point = Vector2d(event.mouseWheelScroll.x, event.mouseWheelScroll.y);
 
-            give_event(window, &Widget::ScrollEvent, point, Vector2d(0, offset));
+            window->ScrollEvent(point, Vector2d(0, offset));
 
             break;
         }
@@ -75,7 +65,7 @@ void EventManager::distribute_event(Widget *window, sf::Event event)
         {
             Vector2d point(event.mouseMove.x, event.mouseMove.y);
             
-            give_event(window, &Widget::MoveMouseEvent, point);
+            window->MoveMouseEvent(point);
 
             break;
         }
@@ -87,14 +77,14 @@ void EventManager::distribute_event(Widget *window, sf::Event event)
             if (event.mouseButton.button == sf::Mouse::Left)
             {
                 is_left_button_clicked_ = false;
-                give_event(window, &Widget::ReleasedLeftEvent, point);
+                window->ReleasedLeftEvent(point);
             }
 
             else
             if (event.mouseButton.button == sf::Mouse::Right)
             {
                 is_right_button_clicked_ = false;
-                give_event(window, &Widget::ReleasedRightEvent, point);            
+                window->ReleasedRightEvent(point);            
             }
 
             break;
@@ -124,11 +114,11 @@ void EventManager::distribute_event(Window *window, Widget *main_window)
 
     if (is_left_button_clicked_)
     {
-        give_event(main_window, &Widget::PressLeftEvent, point);
+        main_window->PressLeftEvent(point);
     }
 
     if (is_right_button_clicked_)
     {
-        give_event(main_window, &Widget::PressRightEvent, point);
+        main_window->PressRightEvent(point);
     }
 }
