@@ -19,10 +19,6 @@ public:
     {
         widget_->ClickLeftEvent(event);
     }
-    void PressLeftEvent      (const Event &event) override
-    {
-        widget_->PressLeftEvent(event);
-    }
     void ReleasedLeftEvent   (const Event &event) override
     {
         widget_->ReleasedLeftEvent(event);
@@ -32,10 +28,7 @@ public:
     {
         widget_->ClickRightEvent(event);
     }
-    void PressRightEvent (const Event &event) override
-    {
-        widget_->PressRightEvent(event);
-    }               
+              
     void ReleasedRightEvent (const Event &event) override
     {
         widget_->ReleasedRightEvent(event);

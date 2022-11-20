@@ -28,8 +28,8 @@ enum class MouseButton
 
 struct MotionEventData
 {
-    int x, y;
-    int rel_x, rel_y;
+    int32_t x, y;
+    int32_t rel_x, rel_y;
 };
 
 struct MouseButtonEventData
@@ -159,12 +159,16 @@ struct KeyPressedEventData
     bool shift, alt, ctrl;
 };
 
+struct ButtonClickedEventData
+{
+    uint64_t id; 
+};
 
 
 struct ScrollMovedEventData
 {
     uint64_t id; 
-    int32_t value;
+    float value;
 };
 
 struct ScrollEventData
@@ -190,9 +194,13 @@ public:
         MotionEventData motion;
         MouseButtonEventData mbedata;
         MouseReleasedEventData mredata;
-        ScrollEventData smedata;
+        ScrollMovedEventData smedata;
+        ScrollEventData sedata;
         CanvasEventData cedata;
         KeyPressedEventData kpedata;
+
+        ButtonClickedEventData bcedata;
+
     } Oleg_;
     
     Event () {};
@@ -286,9 +294,9 @@ public:
             case sf::Event::MouseWheelScrolled:
             {
                 type_ = EventType::ScrollbarMoved;
-                Oleg_.smedata.value = sfEvent.mouseWheelScroll.delta;
-                Oleg_.smedata.x = sfEvent.mouseWheelScroll.x;
-                Oleg_.smedata.y = sfEvent.mouseWheelScroll.y;
+                Oleg_.sedata.value = sfEvent.mouseWheelScroll.delta;
+                Oleg_.sedata.x     = sfEvent.mouseWheelScroll.x;
+                Oleg_.sedata.y     = sfEvent.mouseWheelScroll.y;
                 break;
             }
 

@@ -46,11 +46,9 @@ public:
         };
 
     virtual void ClickLeftEvent      (const Event &event) {};
-    virtual void PressLeftEvent      (const Event &event) {};
     virtual void ReleasedLeftEvent   (const Event &event) {};              
 
     virtual void ClickRightEvent     (const Event &event) {};
-    virtual void PressRightEvent     (const Event &event) {};               
     virtual void ReleasedRightEvent  (const Event &event) {};              
     
     virtual void MoveMouseEvent      (const Event &event) {};

@@ -59,7 +59,7 @@ namespace booba {
     struct ScrollMovedEventData
     {
         uint64_t id; 
-        int32_t value;
+        float value;
     };
 
 
@@ -73,6 +73,7 @@ namespace booba {
     {
     public:
         EventType type;
+        
         union 
         {
             MotionEventData motion;
@@ -93,8 +94,8 @@ namespace booba {
         virtual void putPixel(uint32_t x, uint32_t y, uint32_t color) = 0;        
         virtual uint32_t& operator()(uint32_t x, uint32_t y) = 0;
         virtual const uint32_t& operator()(uint32_t x, uint32_t y) const = 0;
-    protected:
-        virtual ~Image() = 0;
+    // protected:
+    //     virtual ~Image() = 0;
     };
 
     struct ApplicationContext
@@ -106,7 +107,7 @@ namespace booba {
     {
     public:
         virtual void apply(Image* image, const Event* event) = 0;
-        virtual ~Tool() = 0;
+        //virtual ~Tool() = 0;
         virtual const char* getTexture() = 0; 
         virtual void buildSetupWidget() = 0;
     };

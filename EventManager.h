@@ -9,7 +9,6 @@ class EventManager
 {
 
 public: 
-    void distribute_event(Window *window, Widget *main_window);
     void distribute_event(Widget *window, const Event &event_);
 
 private:
@@ -26,15 +25,12 @@ void EventManager::distribute_event(Widget *window, const Event &event)
             if (event.Oleg_.mbedata.button == MouseButton::Left)
             {
                 is_left_button_clicked_ = true; 
-                window->PressLeftEvent(event);  
                 window->ClickLeftEvent(event);
             }
 
-            else
-            if (event.Oleg_.mbedata.button == MouseButton::Right)
+            else if (event.Oleg_.mbedata.button == MouseButton::Right)
             {         
                 is_right_button_clicked_ = true;
-                window->PressRightEvent(event);
                 window->ClickRightEvent(event);
             }
 
@@ -70,8 +66,7 @@ void EventManager::distribute_event(Widget *window, const Event &event)
                 window->ReleasedLeftEvent(event);
             }
 
-            else
-            if (event.Oleg_.mredata.button == MouseButton::Right)
+            else if (event.Oleg_.mredata.button == MouseButton::Right)
             {
                 is_right_button_clicked_ = false;
                 window->ReleasedRightEvent(event);            
@@ -86,18 +81,3 @@ void EventManager::distribute_event(Widget *window, const Event &event)
         }
     }
 }
-
-void EventManager::distribute_event(Window *window, Widget *main_window)
-{
-    Event event;
-    while (window->pollEvent(event))
-    {
-        if (event.type_ == EventType::Closed)
-        {
-            window->close();
-            break;
-        }
-
-        distribute_event(main_window, event);        
-    }
-};

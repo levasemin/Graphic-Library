@@ -35,9 +35,14 @@ void Application::exec()
 {        
     while(window_.isOpen())
     {
+        Event event;
+
+        while (window_.pollEvent(event))
+        {
+            event_manager_.distribute_event(main_window_, event);
+        }
+
         show(main_window_);
-        
-        event_manager_.distribute_event(&window_, main_window_);
     }
 }
 

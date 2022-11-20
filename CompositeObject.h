@@ -33,13 +33,7 @@ public:
             children_[i]->ClickLeftEvent(event);
         }
     }
-    void PressLeftEvent      (const Event &event) override
-    {
-        for (int i = 0; i < children_.size(); i++)
-        {
-            children_[i]->PressLeftEvent(event);
-        }
-    }
+
     void ReleasedLeftEvent   (const Event &event) override
     {
         for (int i = 0; i < children_.size(); i++)
@@ -53,13 +47,6 @@ public:
         for (int i = 0; i < children_.size(); i++)
         {
             children_[i]->ClickRightEvent(event);
-        }
-    }
-    void PressRightEvent     (const Event &event) override
-    {
-        for (int i = 0; i < children_.size(); i++)
-        {
-            children_[i]->PressRightEvent(event);
         }
     }
     void ReleasedRightEvent  (const Event &event) override

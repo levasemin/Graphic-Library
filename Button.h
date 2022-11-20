@@ -1,11 +1,5 @@
 #pragma once
-
-#include "Label.h"
-#include "Object.h"
-#include "Widget.h"
 #include "Command.h"
-#include "math.h"
-#include "Vector2d.h"
 #include "Event.h"
 
 class Button : public Object
@@ -20,43 +14,31 @@ public:
         {
         };
     
-    void set_left_click       (Command<const Event &> *command)
+    void set_left_click       (Command<const booba::Event &> *command)
     {
         left_click_command_ = command;
     }
 
-    void set_left_press  (Command<const Event &> *command)
-    {
-        left_press_command_ = command;
-    }
-
-    void set_release_left_click  (Command<const Event &> *command)
+    void set_release_left_click  (Command<const booba::Event &> *command)
     {
         release_left_click_command_ = command;
     }
 
-    void set_right_click      (Command<const Event &> *command)
+    void set_right_click      (Command<const booba::Event &> *command)
     {
         right_click_command_ = command;
     }
 
-    void set_right_press  (Command<const Event &> *command)
-    {
-        right_press_command_ = command;
-    }
-
-    void set_release_right_click  (Command<const Event &> *command)
+    void set_release_right_click  (Command<const booba::Event &> *command)
     {
         release_right_click_command_ = command;
     }
     
 
     void ClickLeftEvent     (const Event &event) override;
-    void PressLeftEvent     (const Event &event) override;
     void ReleasedLeftEvent  (const Event &event) override;
 
     void ClickRightEvent    (const Event &event) override;
-    void PressRightEvent    (const Event &event) override;
     void ReleasedRightEvent (const Event &event) override;
     
     void MoveMouseEvent     (const Event &event) override;
@@ -69,55 +51,38 @@ public:
     }
 
 private:
-    Command<const Event &> *left_click_command_          = nullptr;
-    Command<const Event &> *left_press_command_          = nullptr;
-    Command<const Event &> *release_left_click_command_  = nullptr;
+    Command<const booba::Event &> *left_click_command_          = nullptr;
+    Command<const booba::Event &> *release_left_click_command_  = nullptr;
 
-    Command<const Event &> *right_click_command_         = nullptr;
-    Command<const Event &> *right_press_command_         = nullptr;
-    Command<const Event &> *release_right_click_command_ = nullptr;
+    Command<const booba::Event &> *right_click_command_         = nullptr;
+    Command<const booba::Event &> *release_right_click_command_ = nullptr;
 };
 
 void Button::MoveMouseEvent(const Event &event)
 {
     if (is_left_clicked_)
     {        
-        if (left_press_command_ != nullptr)
+        if (left_click_command_ != nullptr)
         {
-            left_press_command_->Execute(event);
+            Event new_event;
+            new_event.type_ = EventType::ButtonClicked;
+            new_event.Oleg_.bcedata.id = (uint64_t)this;
+            left_click_command_->Execute(new_event);
         }
     }
 
     else if (is_right_clicked_)
     {
-        if (right_press_command_ != nullptr)
+        if (right_click_command_ != nullptr)
         {
-            right_press_command_->Execute(event);
+            Event new_event;
+            new_event.type_ = EventType::ButtonClicked;
+            new_event.Oleg_.bcedata.id = (uint64_t)this;
+            right_click_command_->Execute(new_event);
         }
     }
 }
 
-void Button::PressLeftEvent (const Event &event)
-{
-    if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
-    {
-        if (left_press_command_ != nullptr)
-        {
-            left_press_command_->Execute(event);
-        }
-    }
-}
-
-void Button::PressRightEvent (const Event &event)
-{
-    if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
-    {
-        if (right_press_command_ != nullptr)
-        {
-            right_press_command_->Execute(event);
-        }
-    }
-}
 
 void Button::ClickLeftEvent (const Event &event)
 {
@@ -127,7 +92,10 @@ void Button::ClickLeftEvent (const Event &event)
         
         if (left_click_command_ != nullptr)
         {
-            left_click_command_->Execute(event);
+            Event new_event;
+            new_event.type_ = EventType::ButtonClicked;
+            new_event.Oleg_.bcedata.id = (uint64_t)this;
+            left_click_command_->Execute(new_event);
         }
     }
 }
@@ -138,7 +106,10 @@ void Button::ReleasedLeftEvent (const Event &event)
 
     if (release_left_click_command_ != nullptr)
     {
-        release_left_click_command_->Execute(event);
+        Event new_event;
+        new_event.type_ = EventType::ButtonClicked;
+        new_event.Oleg_.bcedata.id = (uint64_t)this;
+        release_left_click_command_->Execute(new_event);
     }
 }
 
@@ -150,7 +121,10 @@ void Button::ClickRightEvent (const Event &event)
 
         if (right_click_command_ != nullptr)
         {
-            right_click_command_->Execute(event);
+            Event new_event;
+            new_event.type_ = EventType::ButtonClicked;
+            new_event.Oleg_.bcedata.id = (uint64_t)this;
+            right_click_command_->Execute(new_event);
         }
     }
 }
@@ -161,6 +135,9 @@ void Button::ReleasedRightEvent (const Event &event)
 
     if (release_right_click_command_ != nullptr)
     {
-        release_right_click_command_->Execute(event);
+        Event new_event;
+        new_event.type_ = EventType::ButtonClicked;
+        new_event.Oleg_.bcedata.id = (uint64_t)this;
+        release_right_click_command_->Execute(new_event);
     }
 }

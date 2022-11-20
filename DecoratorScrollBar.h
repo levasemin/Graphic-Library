@@ -18,26 +18,25 @@ public:
 
     void ScrollEvent(const Event &event) override
     {
-        if (point_belonging(Vector2d(event.Oleg_.smedata.x, event.Oleg_.smedata.y)))
+        if (point_belonging(Vector2d(event.Oleg_.sedata.x, event.Oleg_.sedata.y)))
         {   
             double coeff = (scroll_bar_.get_shape().y_ - scroll_bar_.up_button_.get_shape().y_ * 2 - scroll_bar_.scroll_button_.get_shape().y_) /
                            (widget_->get_global_shape().y_ - widget_->get_shape().y_);
 
             Event new_event = event;
-            new_event.Oleg_.smedata.value *= coeff;
-            scroll_bar_.ScrollEvent(new_event);
+            new_event.Oleg_.sedata.value *= coeff;
+            scroll_bar_.scroll_bar(new_event);
         }
     }
 
-
     void ScrollWidget(const Event &event)
-    {
+    {        
         double coeff = (scroll_bar_.get_shape().y_ - scroll_bar_.up_button_.get_shape().y_ * 2 - scroll_bar_.scroll_button_.get_shape().y_) /
                        (widget_->get_global_shape().y_ - widget_->get_shape().y_);
         
         Event new_event = event;
-        new_event.Oleg_.smedata.value *= 1 / coeff;
-        widget_->ScrollEvent(new_event);
+        new_event.Oleg_.sedata.value *= 1 / coeff;
+        widget_->set_local_offset(Vector2d(0, new_event.Oleg_.smedata.value));
     }
 
     void draw() override
@@ -52,13 +51,7 @@ public:
         scroll_bar_.ClickLeftEvent(event);
         widget_->ClickLeftEvent(event);
     }
-    
-    void PressLeftEvent (const Event &event) override
-    {
-        scroll_bar_.PressLeftEvent(event);
-        widget_->PressLeftEvent(event);
-    }
-    
+
     void ReleasedLeftEvent (const Event &event) override
     {
         scroll_bar_.ReleasedLeftEvent(event);
@@ -69,13 +62,7 @@ public:
     {
         scroll_bar_.ClickRightEvent(event);
         widget_->ClickRightEvent(event);
-    }
-
-    void PressRightEvent (const Event &event) override
-    {
-        scroll_bar_.PressRightEvent(event);
-        widget_->PressRightEvent(event);
-    }               
+    }           
     
     void ReleasedRightEvent (const Event &event) override
     {
