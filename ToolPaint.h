@@ -7,7 +7,6 @@
 
 uint64_t createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object);
 
-
 class ToolPaint : public Tool
 {
 public:
@@ -36,16 +35,13 @@ public:
                 if (event->Oleg.bcedata.id == tool_button_)
                 {
                     std::cout << is_on_ << std::endl;
+                    
                     if (!is_on_)
                     {
                         ToolManager &tool_manager = ToolManager::getInstance();
                         tool_manager.set_active_tool(this);
-                        printf("ON\n");
                     }
-                    else
-                    {
-                        printf("OFF\n");
-                    }
+
                     is_on_ = !is_on_;
                 }
             }

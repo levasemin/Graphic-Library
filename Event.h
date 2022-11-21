@@ -1,5 +1,7 @@
 #pragma once
 #include <stdint.h>
+#include <cstring>
+
 #include "SFML/Graphics.hpp"
 #include "tools.h"
 
@@ -184,7 +186,7 @@ struct CanvasEventData
     int32_t x, y; 
 };
 
-class Event : public booba::Event
+class Event
 {
 public:
     EventType type_;
@@ -307,3 +309,6 @@ public:
         }
     }
 };   
+
+
+booba::Event convert_event(const Event &event);

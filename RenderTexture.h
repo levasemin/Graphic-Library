@@ -16,13 +16,13 @@ public:
     {
         render_texture_.create(shape.x_, shape_.y_);
     };
-
-    void draw(Sprite sprite)
+    
+    void draw(const Sprite &sprite)
     {
         render_texture_.draw(sprite.sprite_);
     }
 
-    void draw(Text text)
+    void draw(const Text &text)
     {
         render_texture_.draw(text.text_);
     }

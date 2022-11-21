@@ -33,16 +33,10 @@ public:
     
     void apply(Image *image, const Event *event)
     {
-            std::cout << event->Oleg.motion.x << " " << event->Oleg.motion.y << std::endl;
-
         if (active_tool_)
         {
-            booba::Event new_event;
-            new_event.type = (booba::EventType) event->type_;
-            new_event.Oleg.motion.x = event->Oleg_.motion.x;
-            new_event.Oleg.motion.y = event->Oleg_.motion.y;
-
-            active_tool_->apply(image, &new_event);
+            booba::Event booba_event = convert_event(*event);
+            active_tool_->apply(image, &booba_event);
         }
     }
 

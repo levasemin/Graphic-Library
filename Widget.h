@@ -63,7 +63,7 @@ public:
 
     virtual Vector2d get_start_field() const = 0; 
     virtual Vector2d get_end_field()   const = 0;
-
+    
     virtual std::vector<Widget *> get_children() const        = 0;
     virtual void set_children(std::vector<Widget *> children) = 0;
 };

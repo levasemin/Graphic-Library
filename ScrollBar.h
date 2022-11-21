@@ -60,9 +60,9 @@ public:
             down_button_.set_has_local_offset(false);
             up_button_.set_has_local_offset(false);
             
-            up_button_.set_left_click    ((Command<const booba::Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::scroll_up));
-            down_button_.set_left_click  ((Command<const booba::Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::scroll_down));
-            scroll_button_.set_left_click((Command<const booba::Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::clicked_scroll_button));
+            up_button_.set_left_click    ((Command<const Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::scroll_up));
+            down_button_.set_left_click  ((Command<const Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::scroll_down));
+            scroll_button_.set_left_click((Command<const Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::clicked_scroll_button));
         };
 
         void ScrollEvent(const Event &event) override

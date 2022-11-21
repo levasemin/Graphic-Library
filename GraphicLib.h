@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Widget.h"
 #include "MainWindow.h"
 #include "Widget.h"
@@ -13,3 +15,5 @@
 #include "SimpleCommand.h"
 #include "Vector2d.h"
 #include "Canvas.h"
+#include "Font.h"
+#include "Text.h"

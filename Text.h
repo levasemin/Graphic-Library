@@ -2,17 +2,23 @@
 
 #include <SFML/Graphics.hpp>
 #include "Color.h"
+#include "Font.h"
 
 class Text
 {
 public:
-    Text() {};
+    sf::Text text_;
 
-    void setFont(const char *path)
+    Text () {}
+    
+    Text (const Font &font) 
     {
-        sf::Font font;
-        font.loadFromFile(path);
-        text_.setFont(font);
+        setFont(font);
+    };
+
+    void setFont(const Font &font)
+    {
+        text_.setFont(font.font_);
     }
 
     void setCharacterSize(int size)
@@ -30,8 +36,12 @@ public:
         text_.setFillColor(color.get_sf_color());
     }
 
+    Font getFont() 
+    {
+        return Font(*text_.getFont());
+    }
+
 private:
-    sf::Text text_;
     friend class Label;
     friend class RenderTexture;
 };

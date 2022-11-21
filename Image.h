@@ -6,6 +6,8 @@
 
 class Image : public booba::Image
 {
+
+protected:
     sf::Image image_;
 
 public:    
@@ -58,24 +60,29 @@ public:
     
     void putPixel(uint32_t x, uint32_t y, uint32_t color) override
     {
+        std::cout << x << " " << y << std::endl;
+        
         Color color_((uint8_t)(color >> 24), (color >> 16) & ((1 << 8) - 1), color >> 8 & ((1 << 8) - 1));
         setPixel(Vector2d(x, y), color_);
     }   
 
     void setPixel(Vector2d pos, const Color &color)
     {
-        image_.setPixel(pos.x_, pos.y_, color.get_sf_color());
+        image_.setPixel(pos.x_, pos.y_, sf::Color::Black);
     }
 
-    virtual uint32_t& operator()(uint32_t, uint32_t) override 
+    uint32_t& operator()(uint32_t, uint32_t) override 
     {
         return *(uint32_t *)this;
     }
 
-    virtual const uint32_t& operator()(uint32_t, uint32_t) const override 
+    const uint32_t& operator()(uint32_t, uint32_t) const override 
     {
         return *(uint32_t *)this;
     }
 
-    friend class Texture;
+    bool saveToFile(const char *filename)
+    {
+        return image_.saveToFile(filename);
+    }
 };

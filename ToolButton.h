@@ -1,50 +1,35 @@
-#pragma once
-#include "Command.h"
-#include "Event.h"
+#include "Button.h"
+#include "Vector2d.h"
 #include "Widget.h"
-#include "Text.h"
 
-class Button : public Object
+class ToolButton : public Button
 {
 public:
-
-    bool is_left_clicked_  = false;
-    bool is_right_clicked_ = false;
-    
-    Text text_;
-
-    Button(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr) : Object(shape, center, texture, parent), text_()
+        
+    ToolButton(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr) : Button(shape, center, texture, parent)
     {
     };
     
-    void set_left_click       (Command<const Event &> *command)
+    void set_left_click       (Command<const booba::Event &> *command)
     {
         left_click_command_ = command;
     }
 
-    void set_release_left_click  (Command<const Event &> *command)
+    void set_release_left_click  (Command<const booba::Event &> *command)
     {
         release_left_click_command_ = command;
     }
 
-    void set_right_click      (Command<const Event &> *command)
+    void set_right_click      (Command<const booba::Event &> *command)
     {
         right_click_command_ = command;
     }
 
-    void set_release_right_click  (Command<const Event &> *command)
+    void set_release_right_click  (Command<const booba::Event &> *command)
     {
         release_right_click_command_ = command;
     }
     
-    void set_text(const Text &text)
-    {
-        text_ = text;
-        sprite_.setTexture(texture_);
-        render_texture_->draw(sprite_);
-        sprite_.setTexture(text_.getFont().getTexture(100));
-        render_texture_->draw(sprite_);
-    }
 
     void ClickLeftEvent     (const Event &event) override;
     void ReleasedLeftEvent  (const Event &event) override;
@@ -56,20 +41,15 @@ public:
     void PressKeyEvent      (const Event &event) override {};
     void ScrollEvent        (const Event &event) override {};
 
-    void print(const Event &event)
-    {
-        printf("CLICKED!!\n");
-    }
-
 private:
-    Command<const Event &> *left_click_command_          = nullptr;
-    Command<const Event &> *release_left_click_command_  = nullptr;
+    Command<const booba::Event &> *left_click_command_          = nullptr;
+    Command<const booba::Event &> *release_left_click_command_  = nullptr;
 
-    Command<const Event &> *right_click_command_         = nullptr;
-    Command<const Event &> *release_right_click_command_ = nullptr;
+    Command<const booba::Event &> *right_click_command_         = nullptr;
+    Command<const booba::Event &> *release_right_click_command_ = nullptr;
 };
 
-void Button::MoveMouseEvent(const Event &event)
+void ToolButton::MoveMouseEvent(const Event &event)
 {
     if (is_left_clicked_)
     {        
@@ -78,7 +58,7 @@ void Button::MoveMouseEvent(const Event &event)
             Event new_event;
             new_event.type_ = EventType::ButtonClicked;
             new_event.Oleg_.bcedata.id = (uint64_t)this;
-            left_click_command_->Execute(new_event);
+            left_click_command_->Execute(convert_event(new_event));
         }
     }
 
@@ -89,13 +69,13 @@ void Button::MoveMouseEvent(const Event &event)
             Event new_event;
             new_event.type_ = EventType::ButtonClicked;
             new_event.Oleg_.bcedata.id = (uint64_t)this;
-            right_click_command_->Execute(new_event);
+            right_click_command_->Execute(convert_event(new_event));
         }
     }
 }
 
 
-void Button::ClickLeftEvent (const Event &event)
+void ToolButton::ClickLeftEvent (const Event &event)
 {
     if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
     {
@@ -106,12 +86,12 @@ void Button::ClickLeftEvent (const Event &event)
             Event new_event;
             new_event.type_ = EventType::ButtonClicked;
             new_event.Oleg_.bcedata.id = (uint64_t)this;
-            left_click_command_->Execute(new_event);
+            left_click_command_->Execute(convert_event(new_event));
         }
     }
 }
 
-void Button::ReleasedLeftEvent (const Event &event)
+void ToolButton::ReleasedLeftEvent (const Event &event)
 {
     is_left_clicked_ = false;
 
@@ -120,11 +100,11 @@ void Button::ReleasedLeftEvent (const Event &event)
         Event new_event;
         new_event.type_ = EventType::ButtonClicked;
         new_event.Oleg_.bcedata.id = (uint64_t)this;
-        release_left_click_command_->Execute(new_event);
+        release_left_click_command_->Execute(convert_event(new_event));
     }
 }
 
-void Button::ClickRightEvent (const Event &event)
+void ToolButton::ClickRightEvent (const Event &event)
 {
     if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
     {
@@ -135,12 +115,12 @@ void Button::ClickRightEvent (const Event &event)
             Event new_event;
             new_event.type_ = EventType::ButtonClicked;
             new_event.Oleg_.bcedata.id = (uint64_t)this;
-            right_click_command_->Execute(new_event);
+            right_click_command_->Execute(convert_event(new_event));
         }
     }
 }
 
-void Button::ReleasedRightEvent (const Event &event)
+void ToolButton::ReleasedRightEvent (const Event &event)
 {
     is_right_clicked_ = false;
 
@@ -149,6 +129,6 @@ void Button::ReleasedRightEvent (const Event &event)
         Event new_event;
         new_event.type_ = EventType::ButtonClicked;
         new_event.Oleg_.bcedata.id = (uint64_t)this;
-        release_right_click_command_->Execute(new_event);
+        release_right_click_command_->Execute(convert_event(new_event));
     }
 }
