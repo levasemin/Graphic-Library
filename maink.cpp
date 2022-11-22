@@ -59,7 +59,7 @@ int main()
     scroll_container.add(&first_button);
     scroll_container.add(&second_button);
     scroll_container.add(&third_button);
-    DecoratorScrollBar decorator(&scroll_container);
+    //DecoratorScrollBar decorator(&scroll_container);
 
     Font font("/home/levce/projectsDED/event_handler2/Event_handler/fonts/ofont.ru_Times New Roman.ttf");
     Text text(font);
@@ -67,7 +67,7 @@ int main()
     
     first_button.set_text(text);
 
-    main_window.add(&decorator);
+    main_window.add(&scroll_container);
     
     Application app(&main_window);
 

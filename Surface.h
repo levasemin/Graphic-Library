@@ -10,8 +10,9 @@ public:
     {}
 
     void draw() override
-    {
+    {   
         sprite_.setTexture(getTexture());
+        render_texture_->clear();
         render_texture_->draw(sprite_);
 
         Object::draw();

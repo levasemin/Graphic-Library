@@ -28,8 +28,11 @@ public :
         if (diff_offset.y_ < 0)
         {
             Vector2d max_offset =  global_offset0_ + widget_->get_global_shape() - widget_->get_shape();
+            
             diff_offset.x_ = -diff_offset.x_ <= max_offset.x_ ? diff_offset.x_ : - max_offset.x_;
             diff_offset.y_ = -diff_offset.y_ <= max_offset.y_ ? diff_offset.y_ : - max_offset.y_;
+
+            widget_->get_children()[0]->get_texture().getSize().print_value();
         }
 
         global_offset0_ += diff_offset;

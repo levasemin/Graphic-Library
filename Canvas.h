@@ -20,7 +20,7 @@ public:
 
     Canvas(Vector2d shape, Vector2d center, const Image &image, ToolPalette *tool_palette, Widget *parent = nullptr) : 
         CompositeObject(shape, center, Colors::Cyan, parent),
-        surface_(image.getSize(), image.getSize() / 2, image),
+        surface_(image.getSize(), Vector2d(image.getSize().x_ / 2, image.getSize().y_ / 2 - 100), image),
         tool_palette_(tool_palette),
         tool_manager_(ToolManager::getInstance())
     {   
