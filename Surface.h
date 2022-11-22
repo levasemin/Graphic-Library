@@ -11,6 +11,7 @@ public:
 
     void draw() override
     {   
+        sprite_.setPosition(Vector2d(0, 0));
         sprite_.setTexture(getTexture());
         render_texture_->clear();
         render_texture_->draw(sprite_);

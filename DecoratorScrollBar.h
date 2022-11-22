@@ -6,11 +6,14 @@
 
 class DecoratorScrollBar : public Decorator
 {
-
+    double coeff_ = 1;
 public:
     DecoratorScrollBar(Widget *widget) : Decorator(widget),
         scroll_bar_(Vector2d(20, 500), Vector2d(widget->get_center().x_ - widget->get_shape().x_ / 2 - 10, widget_->get_center().y_), Texture(Colors::Blue))
     {   
+        coeff_ = (scroll_bar_.get_shape().y_ - scroll_bar_.up_button_.get_shape().y_ * 2 - scroll_bar_.scroll_button_.get_shape().y_) /
+                 (widget_->get_global_shape().y_ - widget_->get_shape().y_);
+                 
         scroll_bar_.set_scroll_command ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollWidget));
     }
 
@@ -20,22 +23,16 @@ public:
     {
         if (point_belonging(Vector2d(event.Oleg_.sedata.x, event.Oleg_.sedata.y)))
         {   
-            double coeff = (scroll_bar_.get_shape().y_ - scroll_bar_.up_button_.get_shape().y_ * 2 - scroll_bar_.scroll_button_.get_shape().y_) /
-                           (widget_->get_global_shape().y_ - widget_->get_shape().y_);
-
             Event new_event = event;
-            new_event.Oleg_.sedata.value *= coeff;
+            new_event.Oleg_.sedata.value *= coeff_;
             scroll_bar_.scroll_bar(new_event);
         }
     }
 
     void ScrollWidget(const Event &event)
     {        
-        double coeff = (scroll_bar_.get_shape().y_ - scroll_bar_.up_button_.get_shape().y_ * 2 - scroll_bar_.scroll_button_.get_shape().y_) /
-                       (widget_->get_global_shape().y_ - widget_->get_shape().y_);
-        
         Event new_event = event;
-        new_event.Oleg_.sedata.value *= 1 / coeff;
+        new_event.Oleg_.sedata.value *= 1 / coeff_;
         widget_->set_local_offset(Vector2d(0, new_event.Oleg_.smedata.value));
     }
 
