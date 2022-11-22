@@ -42,8 +42,13 @@ public:
         text_ = text;
         sprite_.setTexture(texture_);
         render_texture_->draw(sprite_);
-        sprite_.setTexture(text_.getFont().getTexture(100));
-        render_texture_->draw(sprite_);
+
+        Vector2d text_position(0, 0);
+        text_position.x_ = shape_.x_ / 2 - text_.getGlobalBounds().x_ / 2;
+        text_position.y_ = shape_.y_ / 2 - text_.getGlobalBounds().y_; 
+        text_.setPosition(text_position);
+
+        render_texture_->draw(text_); 
     }
 
     void ClickLeftEvent     (const Event &event) override;
@@ -53,15 +58,13 @@ public:
     void ReleasedRightEvent (const Event &event) override;
     
     void MoveMouseEvent     (const Event &event) override;
-    void PressKeyEvent      (const Event &event) override {};
-    void ScrollEvent        (const Event &event) override {};
 
     void print(const Event &event)
     {
         printf("CLICKED!!\n");
     }
 
-private:
+protected:
     Command<const Event &> *left_click_command_          = nullptr;
     Command<const Event &> *release_left_click_command_  = nullptr;
 

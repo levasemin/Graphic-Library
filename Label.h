@@ -1,45 +1,33 @@
 #pragma once
-
-#include "Texture.h"
+#include "Command.h"
+#include "Event.h"
+#include "Object.h"
 #include "Text.h"
-#include "Sprite.h"
-#include "Vector2d.h"
-#include "Widget.h"
-#include <string>
 
-class Label: public Object
+class Label : public Object
 {
-
 public:
-    RenderTexture label_texture_;
+
+    bool is_left_clicked_  = false;
+    bool is_right_clicked_ = false;
+    
     Text text_;
 
-    Label(Vector2d shape, Vector2d center, Texture texture = Texture(Colors::White), Text text = Text()): Object(shape, center, texture),
-        label_texture_(shape),
-        text_(text)
-    {};
+    Label(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr) : Object(shape, center, texture, parent), text_()
+    {
+    };
 
-    void set_text(Text text)
+    void set_text(const Text &text)
     {
         text_ = text;
-        create();        
-    }
+        sprite_.setTexture(texture_);
+        render_texture_->draw(sprite_);
 
-    void set_texture(Texture texture)
-    {
-        sprite_.setTexture(texture);
-        create();
-    }
+        Vector2d text_position(0, 0);
+        text_position.x_ = shape_.x_ / 2 - text_.getGlobalBounds().x_ / 2;
+        text_position.y_ = shape_.y_ / 2 - text_.getGlobalBounds().y_; 
+        text_.setPosition(text_position);
 
-    void create()
-    {
-        label_texture_.draw(sprite_);
-        label_texture_.draw(text_);
-        label_texture_.display();
-    }
-
-    Texture get_texture()
-    {
-        return label_texture_.getTexture();
+        render_texture_->draw(text_); 
     }
 };

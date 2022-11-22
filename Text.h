@@ -26,6 +26,16 @@ public:
         text_.setCharacterSize(size);
     }
     
+    void setPosition(const Vector2d &position)
+    {
+        text_.setPosition(position.x_, position.y_);
+    }
+
+    Vector2d getGlobalBounds()
+    {
+        return Vector2d(text_.getGlobalBounds().width, text_.getGlobalBounds().height);
+    }
+
     void setString(const char *text)
     {
         text_.setString(text);

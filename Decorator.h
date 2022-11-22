@@ -103,6 +103,15 @@ public:
         widget_->set_parent(parent);
     }
 
+    virtual Texture get_texture() const override
+    {
+        return widget_->get_texture();
+    }
+    virtual void set_texture(const Texture &texture) override
+    {
+        return widget_->set_texture(texture);
+    }
+
     RenderTexture *get_render_texture() const override
     {
         return widget_->get_render_texture();   

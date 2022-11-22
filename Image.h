@@ -59,9 +59,7 @@ public:
     }
     
     void putPixel(uint32_t x, uint32_t y, uint32_t color) override
-    {
-        std::cout << x << " " << y << std::endl;
-        
+    {        
         Color color_((uint8_t)(color >> 24), (color >> 16) & ((1 << 8) - 1), color >> 8 & ((1 << 8) - 1));
         setPixel(Vector2d(x, y), color_);
     }   

@@ -5,11 +5,13 @@
 #include "RenderTexture.h"
 #include "Sprite.h"
 #include "Vector2d.h"
+#include "Widget.h"
 #include "functions.h"
 
 class Object : public Widget
 {
-public:
+    
+protected:
     Vector2d center_;
     Vector2d shape_;
     
@@ -45,17 +47,17 @@ public:
             render_texture_->draw(sprite_);
         };
 
-    virtual void ClickLeftEvent      (const Event &event) {};
-    virtual void ReleasedLeftEvent   (const Event &event) {};              
+    virtual void ClickLeftEvent      (const Event &event) override {}
+    virtual void ReleasedLeftEvent   (const Event &event) override {}              
 
-    virtual void ClickRightEvent     (const Event &event) {};
-    virtual void ReleasedRightEvent  (const Event &event) {};              
+    virtual void ClickRightEvent     (const Event &event) override {}
+    virtual void ReleasedRightEvent  (const Event &event) override {}              
     
-    virtual void MoveMouseEvent      (const Event &event) {};
+    virtual void MoveMouseEvent      (const Event &event) override {}
 
-    virtual void PressKeyEvent       (const Event &event) {};
+    virtual void PressKeyEvent       (const Event &event) override {}
 
-    virtual void ScrollEvent         (const Event &event) {};
+    virtual void ScrollEvent         (const Event &event) override {}
 
 
     bool point_belonging(Vector2d point) const override
@@ -125,6 +127,17 @@ public:
     void set_parent(Widget *parent) override
     { 
         parent_ = parent; 
+    }
+
+    virtual Texture get_texture() const override
+    {
+        return texture_;
+    }
+    virtual void set_texture(const Texture &texture) override
+    {
+        texture_ = texture;
+        sprite_.setTexture(texture_);
+        render_texture_->draw(sprite_);
     }
 
     RenderTexture *get_render_texture() const override

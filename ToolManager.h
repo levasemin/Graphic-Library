@@ -40,9 +40,9 @@ public:
         }
     }
 
-    void distribute_tool(Widget *)
+    void remove_active_tool()
     {
-
+        active_tool_ = nullptr;
     }
 
     void set_active_tool(Tool *tool)

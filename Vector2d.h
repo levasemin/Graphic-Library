@@ -23,9 +23,9 @@ public:
         y_(sf_vector.y)
     {}
 
-    sf::Vector2u to_sf_vector();
+    sf::Vector2u to_sf_vector() const;
     void set_value(double x, double y);
-    void print_value();
+    void print_value () const;
 
     friend Vector2d operator + (const Vector2d &first, const Vector2d &second);
     friend Vector2d operator - (const Vector2d &first, const Vector2d &second);

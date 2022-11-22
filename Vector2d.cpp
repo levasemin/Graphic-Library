@@ -1,11 +1,11 @@
 #include "Vector2d.h"
 
-sf::Vector2u Vector2d::to_sf_vector()
+sf::Vector2u Vector2d::to_sf_vector() const
 {
     return sf::Vector2u(x_, y_);
 }
 
-void Vector2d::print_value()
+void Vector2d::print_value() const
 {
     std::cout << x_ << std::endl;
     std::cout << y_ << std::endl << std::endl;

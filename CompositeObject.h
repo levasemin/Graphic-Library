@@ -163,7 +163,14 @@ public:
         reset_global_shape();
     }
     
-
+    virtual Texture get_texture() const override
+    {
+        return texture_;
+    }
+    virtual void set_texture(const Texture &texture) override
+    {
+        texture_ = texture;
+    }
 
     std::vector<Widget *> get_children() const override { return children_;}
     Vector2d get_global_shape() const override         { return global_shape_; }
