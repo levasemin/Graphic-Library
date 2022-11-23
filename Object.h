@@ -169,18 +169,11 @@ public:
 
     Vector2d get_local_offset() const override
     {
-        return local_offset_; 
+        return local_offset_;
     }
+
     void set_local_offset(Vector2d diff_offset) override
     { 
-        local_offset_ += diff_offset; 
-
-        std::vector <Widget *> children = get_children();
-
-        for (int i = 0; i < children.size(); i++)
-        {
-            children[i]->set_global_offset(diff_offset * children[i]->get_has_local_offset());
-        }
     }
     
     bool get_has_local_offset () const override

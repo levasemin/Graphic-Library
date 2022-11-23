@@ -177,4 +177,21 @@ public:
 
     void set_children(std::vector<Widget *> children) override { children_ = children; }
     void set_global_shape(Vector2d global_shape) override { global_shape_ = global_shape; }
+
+    Vector2d get_local_offset() const override
+    {
+        return local_offset_; 
+    }
+    
+    void set_local_offset(Vector2d diff_offset) override
+    { 
+        local_offset_ += diff_offset; 
+
+        std::vector <Widget *> children = get_children();
+
+        for (int i = 0; i < children.size(); i++)
+        {
+            children[i]->set_global_offset(diff_offset * children[i]->get_has_local_offset());
+        }
+    }
 };

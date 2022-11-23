@@ -20,7 +20,7 @@ public:
     {              
         diff_offset.x_ = parent_->get_local_offset().x_ + diff_offset.x_ > 0 ? diff_offset.x_ : 0 - parent_->get_local_offset().x_;
         diff_offset.y_ = parent_->get_local_offset().y_ + diff_offset.y_ > 0 ? diff_offset.y_ : 0 - parent_->get_local_offset().y_;
-        diff_offset.x_ = parent_->get_local_offset().x_ + diff_offset.x_ < parent_->get_shape().x_ - shape_.x_ ? 
+        diff_offset.x_ = parent_->get_local_offset().x_ + diff_offset.x_ < parent_->get_shape().x_ - shape_.x_ ?
                                                           diff_offset.x_ : parent_->get_shape().x_ - shape_.x_ - parent_->get_local_offset().x_;
         diff_offset.y_ = parent_->get_local_offset().y_ + diff_offset.y_ < parent_->get_shape().y_ - shape_.y_ - shape_.x_ * 2 ? 
                                         diff_offset.y_ : parent_->get_shape().y_ - shape_.y_ - shape_.x_ * 2 - parent_->get_local_offset().y_;
@@ -35,6 +35,7 @@ public:
     Button up_button_;
     Button down_button_;    
     ScrollBarButton scroll_button_;
+    Vector2d scroll_field_shape;
 
     Command<const Event&> *scroll_command_ = nullptr;
 
@@ -51,7 +52,8 @@ public:
                        Texture(Colors::White)),
         scroll_button_(Vector2d(shape.x_, (shape.y_ - shape.x_ * 2) / scroll_button_coeff_size),
                        Vector2d(shape.x_ / 2, shape.x_ + shape_.y_ / scroll_button_coeff_size  / 2), 
-                       Texture(Colors::Red))
+                       Texture(Colors::Red)),
+        scroll_field_shape(shape_.x_, shape_.y_ - shape_.x_ * 2 - scroll_button_.get_shape().y_)
         {
             add(&up_button_);
             add(&down_button_);
@@ -78,16 +80,13 @@ public:
 
         void scroll_bar(const Event &event)
         {
-            scroll_button_.set_local_offset(Vector2d(0, event.Oleg_.smedata.value * -1));
-
-            Event new_event = event;
-            new_event.type_ = EventType::ScrollbarMoved;
-            new_event.Oleg_.smedata.id = (int64_t) this;
-            new_event.Oleg_.smedata.value = event.Oleg_.sedata.value;
+            scroll_button_.set_local_offset(Vector2d(0, event.Oleg_.smedata.value * scroll_field_shape.y_ * -1));
 
             if (scroll_command_ != nullptr)
             {
-                scroll_command_->Execute(new_event);
+                printf("scroll bar %f\n",  event.Oleg_.smedata.value);
+
+                scroll_command_->Execute(event);
             }
         }   
 
@@ -98,7 +97,7 @@ public:
                 Event new_event;
 
                 new_event.type_ = EventType::ScrollbarMoved;
-                new_event.Oleg_.smedata.value = click_place_.y_ - event.Oleg_.motion.y;
+                new_event.Oleg_.smedata.value = (click_place_.y_ - event.Oleg_.motion.y) / scroll_field_shape.y_;
                 new_event.Oleg_.smedata.id = (int64_t)&scroll_button_;
 
                 scroll_bar(new_event);
@@ -111,7 +110,7 @@ public:
         {
             Event new_event;
             new_event.type_ = EventType::ScrollbarMoved;
-            new_event.Oleg_.smedata.value = (shape_.y_ - up_button_.get_shape().y_ - down_button_.get_shape().y_) / scroll_button_coeff_size_;
+            new_event.Oleg_.smedata.value = 1.0 / scroll_button_coeff_size_;
             new_event.Oleg_.smedata.id    = (int64_t)&up_button_;
             scroll_bar(new_event);
         }    
@@ -120,7 +119,7 @@ public:
         {
             Event new_event;
             new_event.type_ = EventType::ScrollbarMoved;
-            new_event.Oleg_.smedata.value = - (shape_.y_ - up_button_.get_shape().y_ - down_button_.get_shape().y_) / scroll_button_coeff_size_;
+            new_event.Oleg_.smedata.value = - 1.0 / scroll_button_coeff_size_;
             new_event.Oleg_.smedata.id    = (int64_t)&down_button_;
             scroll_bar(new_event);
         }

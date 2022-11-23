@@ -34,8 +34,8 @@ public:
             if (is_left_clicked_)
             {
                 Event new_event = event;
-                new_event.Oleg_.motion.x -= surface_.get_global_offset().x_ + local_offset_.x_;
-                new_event.Oleg_.motion.y -= surface_.get_global_offset().y_ + local_offset_.y_;
+                new_event.Oleg_.motion.x -= surface_.get_global_offset().x_;
+                new_event.Oleg_.motion.y -= surface_.get_global_offset().y_;
 
                 tool_manager_.apply(&surface_, &new_event);
             }
