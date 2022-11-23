@@ -12,15 +12,19 @@ int main()
 
     ComboBox combobox(Vector2d(80, 20), Vector2d(400, 100), Texture(Colors::Yellow));
     Button butt(Vector2d(50, 50), Vector2d(25, 25), Texture(Colors::Green));
-    combobox.item_box_.add(&butt);
+    combobox.add(&butt);
 
     Image image(path_british);
     ToolPalette tool_palette(Vector2d(100, 300), Vector2d(600, 200), Texture(Colors::Magenta));
     Canvas canvas(Vector2d(500, 500), Vector2d(300, 300), image, &tool_palette);
+    
     ToolPaint toolpaint;
     toolpaint.buildSetupWidget();
-    
     canvas.add_tool(&toolpaint);
+    ToolEraser tooleraser;
+    tooleraser.buildSetupWidget();
+    canvas.add_tool(&tooleraser);
+    
     DecoratorScroll scroll_canvas(&canvas);
 
     main_window.add(&scroll_canvas);    

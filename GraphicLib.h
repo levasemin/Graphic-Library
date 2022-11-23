@@ -12,6 +12,7 @@
 #include "Application.h"
 #include "Command.h"
 #include "ToolPaint.h"
+#include "ToolEraser.h"
 #include "SimpleCommand.h"
 #include "Vector2d.h"
 #include "Canvas.h"

@@ -14,7 +14,7 @@ public:
 
     uint64_t tool_button_;
 
-    char *icon_path_ = "source/paint-brush.png";
+    char icon_path_[128] = "";
     bool is_on_ = false;
 
     Tool() {};
@@ -32,6 +32,11 @@ uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, co
 
     ToolButton *tool_button = new ToolButton(Vector2d(w, h), Vector2d(x, y), Texture(tool->getTexture()));
     
+    if (object == nullptr)
+    {
+        printf("LOH\n");
+    }
+
     tool_button->set_left_click((Command<const Event &> *) new ToolCommand<Tool>(tool, &Tool::apply));
 
     return (int64_t)tool_button;

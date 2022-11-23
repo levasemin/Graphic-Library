@@ -8,7 +8,7 @@
 
 uint64_t createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object);
 
-class ToolPaint : public Tool
+class ToolEraser : public Tool
 {
 
 public:
@@ -19,12 +19,12 @@ public:
     }; 
 
     std::deque<point> points_;
+    uint32_t *default_image_ = nullptr;
 
-    ToolPaint() : Tool()
+    ToolEraser() : Tool()
     {
-        char icon_path[128] = "source/paint-brush.png";
+        char icon_path[128] = "source/eraser.png";
         std::memcpy(icon_path_, icon_path, 128);
-        
         buildSetupWidget();
     }
     
@@ -47,12 +47,30 @@ public:
         return {x, y};
     }
 
+    void create_default_image(booba::Image *image)
+    {
+        default_image_ = new uint32_t[image->getH() * image->getX()];
+        
+        for (int y = 0; y < image->getH(); y ++)
+        {
+            for (int x = 0; x < image->getX(); x++)
+            {
+                default_image_[y * image->getX() + x] = image->getPixel(x, y);
+            }
+        }
+    }
+
     void apply(booba::Image* image, const booba::Event* event) override
     {    
         switch (event->type)
         {
             case booba::EventType::MouseMoved:
             {
+                if (!default_image_)
+                {
+                    create_default_image(image);
+                }   
+
                 point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
 
                 if (points_.size() > 0)
@@ -70,10 +88,12 @@ public:
                     points_.pop_front();
                 }
 
+                std::cout << default_image_[(int)(new_point.y * image->getX() + new_point.x)] << std::endl;
+
                 for (float t = 0; t <= 1.0; t += 0.005)
                 {
                     point new_point = interpolate(t);
-                    image->putPixel(new_point.x, new_point.y, 0);
+                    image->putPixel(new_point.x, new_point.y, default_image_[(int)(new_point.y * image->getX() + new_point.x)]);
                 }
 
                 break;
@@ -83,7 +103,7 @@ public:
             {
                 if (event->Oleg.bcedata.id == tool_button_)
                 {
-                    std::cout << "Brush " << is_on_ << std::endl;
+                    std::cout << "Eraser " << is_on_ << std::endl;
 
                     ToolManager &tool_manager = ToolManager::getInstance();
                     

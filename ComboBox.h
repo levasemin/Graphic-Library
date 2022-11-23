@@ -9,12 +9,12 @@
 class ComboBox : public Button
 {
     bool is_showed_ = false;
-public:
     Container item_box_;
 
-    ComboBox(Vector2d shape, Vector2d center, const Texture &texture = Texture(Colors::Blue), Widget *parent = nullptr) : Button(shape, center, texture, parent),
-        item_box_(Vector2d(100, 200), center + Vector2d(0, shape.y_ / 2 + 100), Texture(Colors::White), parent)
+public:
 
+    ComboBox(Vector2d shape, Vector2d center, const Texture &texture = Texture(Colors::Blue), Widget *parent = nullptr) : Button(shape, center, texture, parent),
+        item_box_(Vector2d(1, 1), center + Vector2d(0, shape.y_ / 2), Texture(Colors::White), parent)
     {
         if (parent_ != nullptr)
         {
@@ -37,5 +37,21 @@ public:
         }
 
         is_showed_ = !is_showed_;
+    }
+
+    void add(Widget *widget) override
+    {
+        item_box_.add(widget);
+    }
+    
+    Vector2d get_box_shape()
+    {
+        return item_box_.get_shape();
+    }
+
+    void set_box_shape(const Vector2d &shape)
+    {
+        item_box_.set_shape(shape);
+        item_box_.set_center(center_ + shape_.y_ / 2 + item_box_.get_shape().y_ / 2);
     }
 };
