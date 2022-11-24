@@ -18,7 +18,7 @@ public:
     {
         scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<HSVpalette, const Event&>(this, &HSVpalette::change_H));
         scroll_bar_.set_scroll_button_size(Vector2d(20, 4));
-
+        scroll_bar_.set_button(false);
         Image scroll_bar_image(scroll_bar_.get_shape());
         
         for (float y = 0; y < scroll_bar_image.getSize().y_; y++)
