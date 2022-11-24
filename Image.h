@@ -6,11 +6,9 @@
 
 class Image : public booba::Image
 {
-
-protected:
+public:    
     sf::Image image_;
 
-public:    
     Image ()
     {}
     
@@ -24,6 +22,11 @@ public:
     Image(const Texture &texture)
     {
         image_ = texture.texture_.copyToImage();
+    }
+
+    Image (const Vector2d &shape)
+    {
+        image_.create(shape.x_, shape.y_);
     }
 
     Texture getTexture() const
@@ -47,10 +50,21 @@ public:
     {
         return Vector2d(image_.getSize());
     }
+    
+    static Color convert_uint_color(uint32_t color)
+    {
+        return Color((uint8_t)(color >> 24), (uint8_t)(color >> 16), (uint8_t)(color >> 8));
+    }
+
+    static uint32_t convert_color_uint(const Color &color)
+    {
+        return ((uint32_t)color.r_ << (uint32_t)24) + ((uint32_t)color.g_ << (uint32_t)16) + ((uint32_t)color.b_ << (uint32_t)8);
+    }
 
     uint32_t getPixel(int32_t x, int32_t y) override
     {
-        return (uint32_t(image_.getPixel(x, y).r) << 24) + (uint32_t(image_.getPixel(x, y).g) << 16) + (uint32_t(image_.getPixel(x, y).b) << 8);
+        Color color(image_.getPixel(x, y));
+        return convert_color_uint(color);
     }
 
     Color getPixel(Vector2d pos) const
@@ -60,13 +74,12 @@ public:
     
     void putPixel(uint32_t x, uint32_t y, uint32_t color) override
     {        
-        Color color_((uint8_t)(color >> 24), (color >> 16) & ((1 << 8) - 1), color >> 8 & ((1 << 8) - 1));
-        setPixel(Vector2d(x, y), color_);
+        setPixel(Vector2d(x, y), convert_uint_color(color));
     }   
 
     void setPixel(Vector2d pos, const Color &color)
     {
-        image_.setPixel(pos.x_, pos.y_, sf::Color::Black);
+        image_.setPixel(pos.x_, pos.y_, color.get_sf_color());
     }
 
     uint32_t& operator()(uint32_t, uint32_t) override 

@@ -13,14 +13,9 @@ class ComboBox : public Button
 
 public:
 
-    ComboBox(Vector2d shape, Vector2d center, const Texture &texture = Texture(Colors::Blue), Widget *parent = nullptr) : Button(shape, center, texture, parent),
-        item_box_(Vector2d(1, 1), center + Vector2d(0, shape.y_ / 2), Texture(Colors::White), parent)
+    ComboBox(Vector2d shape, Vector2d center, const Texture &texture = Texture(Colors::Blue)) : Button(shape, center, texture),
+        item_box_(Vector2d(1, 1), center + Vector2d(0, shape.y_ / 2), Texture(Colors::White))
     {
-        if (parent_ != nullptr)
-        {
-            parent_->add(&item_box_);
-        }
-
         set_left_click((Command<const Event&> *)new SimpleCommand<ComboBox, const Event &>(this, &ComboBox::show_item_container));
     }
 

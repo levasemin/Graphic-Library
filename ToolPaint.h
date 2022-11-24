@@ -4,6 +4,7 @@
 #include "Command.h"
 #include "ToolCommand.h"
 #include "ToolManager.h"
+#include "Color.h"
 #include <deque>
 
 uint64_t createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object);
@@ -19,6 +20,7 @@ public:
     }; 
 
     std::deque<point> points_;
+    uint32_t color_;
 
     ToolPaint() : Tool()
     {
@@ -28,23 +30,28 @@ public:
         buildSetupWidget();
     }
     
-    point interpolate(float t)
+    void paint(booba::Image *image)
     {
         float x = points_.back().x;
         float y = points_.back().y;
 
+        image->putPixel(x, y, (1 << 16) - 1);
+
         if (points_.size() == 4)
         {
-            float coeff_0 = -t * pow(1.0 - t, 2.0);
-            float coeff_1 = (2.0 - 5.0*pow(t, 2) + 3.0*pow(t, 3));
-            float coeff_2 = t * (1.0 + 4.0*t - 3.0*pow(t, 2));
-            float coeff_3 = pow(t, 2) * (1.0 - t);
+            for (float t = 0; t <= 1.0; t += 0.001)
+            {
+                float coeff_0 = -t * pow(1.0 - t, 2.0);
+                float coeff_1 = (2.0 - 5.0*pow(t, 2) + 3.0*pow(t, 3));
+                float coeff_2 = t * (1.0 + 4.0*t - 3.0*pow(t, 2));
+                float coeff_3 = pow(t, 2) * (1.0 - t);
 
-            x = 0.5 * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
-            y = 0.5 * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);
+                x = 0.5 * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
+                y = 0.5 * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);
+                
+                image->putPixel(x, y, (1 << 16) - 1);
+            }
         }
-
-        return {x, y};
     }
 
     void apply(booba::Image* image, const booba::Event* event) override
@@ -57,7 +64,7 @@ public:
 
                 if (points_.size() > 0)
                 {
-                    if (abs(points_.back().x - new_point.x) > 10 || abs(points_.back().y - new_point.y) > 10)
+                    if (abs(points_.back().x - new_point.x) > image->getX() / 100 + 1 || abs(points_.back().y - new_point.y) > image->getH() / 10 + 1)
                     {
                         points_.clear();
                     }
@@ -70,11 +77,7 @@ public:
                     points_.pop_front();
                 }
 
-                for (float t = 0; t <= 1.0; t += 0.005)
-                {
-                    point new_point = interpolate(t);
-                    image->putPixel(new_point.x, new_point.y, 0);
-                }
+                paint(image);
 
                 break;
             }
@@ -84,7 +87,7 @@ public:
                 if (event->Oleg.bcedata.id == tool_button_)
                 {
                     std::cout << "Brush " << is_on_ << std::endl;
-
+ 
                     ToolManager &tool_manager = ToolManager::getInstance();
                     
                     if (!is_on_)

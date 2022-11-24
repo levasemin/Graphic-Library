@@ -18,8 +18,8 @@ public:
 
     bool is_left_clicked_;
 
-    Canvas(Vector2d shape, Vector2d center, const Image &image, ToolPalette *tool_palette, Widget *parent = nullptr) : 
-        CompositeObject(shape, center, Colors::Cyan, parent),
+    Canvas(Vector2d shape, Vector2d center, const Image &image, ToolPalette *tool_palette) : 
+        CompositeObject(shape, center, Colors::Cyan),
         surface_(image.getSize(), image.getSize() / 2, image),
         tool_palette_(tool_palette),
         tool_manager_(ToolManager::getInstance())

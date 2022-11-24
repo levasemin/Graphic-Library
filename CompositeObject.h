@@ -9,22 +9,13 @@ class CompositeObject : public Object
 protected:
     std::vector<Widget *> children_;
 
-    Vector2d global_shape_       = (0, 0);
+    Vector2d global_shape_ = (0, 0);
 
 public:
-    CompositeObject(Vector2d shape, Vector2d center, Texture texture, Widget *parent = nullptr, std::vector<Widget *> children = {}):
-        Object(shape, center, texture, parent),
-        children_(children)
+    CompositeObject(Vector2d shape, Vector2d center, const Texture &texture = Texture(Colors::Red)):
+        Object(shape, center, texture)
         {
-            children_ = children;
-
-            for (int i = 0; i < children_.size(); i++)
-            {
-                add(children_[i]);
-            }
         }
-
-
 
     void ClickLeftEvent      (const Event &event) override
     {   
@@ -163,14 +154,14 @@ public:
         reset_global_shape();
     }
     
-    virtual Texture get_texture() const override
-    {
-        return texture_;
-    }
-    virtual void set_texture(const Texture &texture) override
-    {
-        texture_ = texture;
-    }
+    // virtual Texture get_texture() const override
+    // {
+    //     return texture_;
+    // }
+    // virtual void set_texture(const Texture &texture) override
+    // {
+    //     texture_ = texture;
+    // }
 
     std::vector<Widget *> get_children() const override { return children_;}
     Vector2d get_global_shape() const override         { return global_shape_; }
@@ -182,7 +173,7 @@ public:
     {
         return local_offset_; 
     }
-    
+
     void set_local_offset(Vector2d diff_offset) override
     { 
         local_offset_ += diff_offset; 

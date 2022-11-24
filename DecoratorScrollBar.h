@@ -9,7 +9,7 @@ class DecoratorScrollBar : public Decorator
     double coeff_ = 1;
 public:
     DecoratorScrollBar(Widget *widget) : Decorator(widget),
-        scroll_bar_(Vector2d(20, 500), Vector2d(widget->get_center().x_ - widget->get_shape().x_ / 2 - 10, widget_->get_center().y_), Texture(Colors::Blue))
+        scroll_bar_(Vector2d(20, 500), Vector2d(widget->get_center().x_ - widget->get_shape().x_ / 2 - 10, widget_->get_center().y_))
     {   
         scroll_bar_.set_scroll_command ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollWidget));
     }
@@ -28,8 +28,6 @@ public:
 
     void ScrollWidget(const Event &event)
     {
-        printf("decorator %f\n",  event.Oleg_.sedata.value);
-
         widget_->set_local_offset(Vector2d(0, event.Oleg_.smedata.value * (widget_->get_global_shape().y_ - widget_->get_shape().y_)));
     }
 

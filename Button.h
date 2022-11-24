@@ -13,7 +13,7 @@ public:
     
     Text text_;
 
-    Button(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr) : Object(shape, center, texture, parent), text_()
+    Button(Vector2d shape, Vector2d center, const Texture &texture) : Object(shape, center, texture), text_()
     {
     };
     

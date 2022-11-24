@@ -6,7 +6,7 @@ class Surface : public Image, public Object
 {
 public:
 
-    Surface(Vector2d shape, Vector2d center, const Image &image, Widget *parent = nullptr) : Image(image), Object(shape, center, image.getTexture(), parent)
+    Surface(Vector2d shape, Vector2d center, const Image &image) : Image(image), Object(shape, center, image.getTexture())
     {}
 
     void draw() override

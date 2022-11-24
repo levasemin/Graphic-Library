@@ -7,7 +7,7 @@ public:
 
     Vector2d curr_pos_;
 
-    ToolPalette(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr) : CompositeObject(shape, center, texture, parent)
+    ToolPalette(Vector2d shape, Vector2d center, const Texture &texture) : CompositeObject(shape, center, texture)
     {
 
     }

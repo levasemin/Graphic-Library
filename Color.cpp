@@ -341,7 +341,7 @@ sf::Color Color::get_sf_color() const
 
 void Color::print_color() const
 {
-    std::cout << r_ << '\n';
-    std::cout << g_ << '\n';
-    std::cout << b_ << '\n';
+    std::cout << (int)r_ << std::endl;
+    std::cout << (int)g_ << std::endl;
+    std::cout << (int)b_ << std::endl;
 }

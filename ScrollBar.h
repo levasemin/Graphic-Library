@@ -12,7 +12,7 @@ const double scroll_button_coeff_size = 10;
 class ScrollBarButton : public Button
 {
 public:
-    ScrollBarButton(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr) : Button(shape, center, texture, parent)
+    ScrollBarButton(Vector2d shape, Vector2d center, const Texture &texture) : Button(shape, center, texture)
     {
     }
 
@@ -43,8 +43,8 @@ public:
     
     Vector2d click_place_;
     
-    ScrollBar(Vector2d shape, Vector2d center, Texture texture):
-        CompositeObject  (shape, center, texture),
+    ScrollBar(Vector2d shape, Vector2d center):
+        CompositeObject  (shape, center),
         scroll_button_coeff_size_(scroll_button_coeff_size),
         up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape.x_ / 2),
                       Texture(Colors::White)),
@@ -82,10 +82,10 @@ public:
         {
             scroll_button_.set_local_offset(Vector2d(0, event.Oleg_.smedata.value * scroll_field_shape.y_ * -1));
 
+            std::cout << std::endl;
+            
             if (scroll_command_ != nullptr)
             {
-                printf("scroll bar %f\n",  event.Oleg_.smedata.value);
-
                 scroll_command_->Execute(event);
             }
         }   

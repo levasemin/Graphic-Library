@@ -6,7 +6,7 @@ class ToolButton : public Button
 {
 public:
         
-    ToolButton(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr) : Button(shape, center, texture, parent)
+    ToolButton(Vector2d shape, Vector2d center, const Texture &texture) : Button(shape, center, texture)
     {
     };
     

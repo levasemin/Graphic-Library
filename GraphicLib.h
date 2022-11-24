@@ -16,6 +16,7 @@
 #include "SimpleCommand.h"
 #include "Vector2d.h"
 #include "Canvas.h"
+#include "HSLpalette.h"
 #include "Font.h"
 #include "Text.h"
 #include "ComboBox.h"

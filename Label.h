@@ -13,7 +13,7 @@ public:
     
     Text text_;
 
-    Label(Vector2d shape, Vector2d center, const Texture &texture, Widget *parent = nullptr) : Object(shape, center, texture, parent), text_()
+    Label(Vector2d shape, Vector2d center, const Texture &texture) : Object(shape, center, texture, parent), text_()
     {
     };
 

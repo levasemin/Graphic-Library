@@ -20,18 +20,17 @@ protected:
     Sprite sprite_;
     Vector2d local_offset_;
     Vector2d global_offset_;
-    Widget *parent_;
+    Widget *parent_ = nullptr;
 
     bool has_local_offset_ = true;
 
 public:
 
-    Object(Vector2d shape, Vector2d center, Texture texture, Widget *parent = nullptr): Widget(),
+    Object(Vector2d shape, Vector2d center, const Texture &texture = Texture(Colors::White)): Widget(),
         shape_(shape),
         texture_(texture),
         sprite_(shape, texture, 0),
         center_(center),    
-        parent_(parent),
         local_offset_(Vector2d(0, 0)),
         global_offset_(Vector2d(0, 0))
         {

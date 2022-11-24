@@ -28,30 +28,34 @@ public:
         buildSetupWidget();
     }
     
-    point interpolate(float t)
+    void paint(booba::Image *image)
     {
         float x = points_.back().x;
         float y = points_.back().y;
 
         if (points_.size() == 4)
         {
-            float coeff_0 = -t * pow(1.0 - t, 2.0);
-            float coeff_1 = (2.0 - 5.0*pow(t, 2) + 3.0*pow(t, 3));
-            float coeff_2 = t * (1.0 + 4.0*t - 3.0*pow(t, 2));
-            float coeff_3 = pow(t, 2) * (1.0 - t);
+            for (float t = 0; t <= 1.0; t += 0.001)
+            {
+                float coeff_0 = -t * pow(1.0 - t, 2.0);
+                float coeff_1 = (2.0 - 5.0*pow(t, 2) + 3.0*pow(t, 3));
+                float coeff_2 = t * (1.0 + 4.0*t - 3.0*pow(t, 2));
+                float coeff_3 = pow(t, 2) * (1.0 - t);
 
-            x = 0.5 * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
-            y = 0.5 * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);
+                x = 0.5 * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
+                y = 0.5 * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);
+                
+                image->putPixel((int)x, (int)y, default_image_[(int)y * image->getX() + (int)x]);
+            }
         }
-
-        return {x, y};
     }
 
     void create_default_image(booba::Image *image)
     {
+        printf("reserve window was created\n");
         default_image_ = new uint32_t[image->getH() * image->getX()];
         
-        for (int y = 0; y < image->getH(); y ++)
+        for (int y = 0; y < image->getH(); y++)
         {
             for (int x = 0; x < image->getX(); x++)
             {
@@ -75,7 +79,7 @@ public:
 
                 if (points_.size() > 0)
                 {
-                    if (abs(points_.back().x - new_point.x) > 10 || abs(points_.back().y - new_point.y) > 10)
+                    if (abs(points_.back().x - new_point.x) > image->getX() / 100 + 1 || abs(points_.back().y - new_point.y) > image->getH() / 10 + 1)
                     {
                         points_.clear();
                     }
@@ -88,13 +92,7 @@ public:
                     points_.pop_front();
                 }
 
-                std::cout << default_image_[(int)(new_point.y * image->getX() + new_point.x)] << std::endl;
-
-                for (float t = 0; t <= 1.0; t += 0.005)
-                {
-                    point new_point = interpolate(t);
-                    image->putPixel(new_point.x, new_point.y, default_image_[(int)(new_point.y * image->getX() + new_point.x)]);
-                }
+                paint(image);
 
                 break;
             }
