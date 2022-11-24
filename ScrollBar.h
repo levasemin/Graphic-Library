@@ -15,18 +15,6 @@ public:
     ScrollBarButton(Vector2d shape, Vector2d center, const Texture &texture) : Button(shape, center, texture)
     {
     }
-
-    void set_local_offset(Vector2d diff_offset) override
-    {              
-        diff_offset.x_ = parent_->get_local_offset().x_ + diff_offset.x_ > 0 ? diff_offset.x_ : 0 - parent_->get_local_offset().x_;
-        diff_offset.y_ = parent_->get_local_offset().y_ + diff_offset.y_ > 0 ? diff_offset.y_ : 0 - parent_->get_local_offset().y_;
-        diff_offset.x_ = parent_->get_local_offset().x_ + diff_offset.x_ < parent_->get_shape().x_ - shape_.x_ ?
-                                                          diff_offset.x_ : parent_->get_shape().x_ - shape_.x_ - parent_->get_local_offset().x_;
-        diff_offset.y_ = parent_->get_local_offset().y_ + diff_offset.y_ < parent_->get_shape().y_ - shape_.y_ - shape_.x_ * 2 ? 
-                                        diff_offset.y_ : parent_->get_shape().y_ - shape_.y_ - shape_.x_ * 2 - parent_->get_local_offset().y_;
-
-        parent_->set_local_offset(diff_offset);
-    }
 };
 
 class ScrollBar : public CompositeObject
@@ -115,10 +103,17 @@ public:
             new_event.Oleg_.smedata.value = new_event.Oleg_.smedata.value < 0 ? 0 : new_event.Oleg_.smedata.value;
             new_event.Oleg_.smedata.value = new_event.Oleg_.smedata.value > 1 ? 1 : new_event.Oleg_.smedata.value;
             
-            Vector2d offset = Vector2d(0, new_event.Oleg_.smedata.value - local_offset_.y_ / scroll_field_shape.y_);
-            offset *= scroll_field_shape.y_;
+            Vector2d offset = Vector2d(0, scroll_field_shape.y_);
+            offset *= event.Oleg_.smedata.value;
+
+            offset.x_ = offset.x_ >= 0 ? offset.x_ : 0;
+            offset.y_ = offset.y_ >= 0 ? offset.y_ : 0;
             
-            scroll_button_.set_local_offset(offset);
+            Vector2d max_offset = Vector2d(0, shape_.y_ - up_button_.get_shape().y_ * 2 - scroll_button_.get_shape().y_);
+            offset.x_ = offset.x_ <= max_offset.x_ ? offset.x_ : max_offset.x_;
+            offset.y_ = offset.y_ <= max_offset.y_ ? offset.y_ : max_offset.y_;
+            
+            set_local_offset(offset);
                         
             if (scroll_command_ != nullptr)
             {
@@ -135,7 +130,6 @@ public:
                 new_event.type_ = EventType::ScrollbarMoved;
                 new_event.Oleg_.smedata.value = (event.Oleg_.motion.y - click_place_.y_) / scroll_field_shape.y_ + local_offset_.y_ / scroll_field_shape.y_;
                 new_event.Oleg_.smedata.id = (int64_t)&scroll_button_;
-                
                 
                 scroll_bar(new_event);
                 

@@ -174,15 +174,15 @@ public:
         return local_offset_; 
     }
 
-    void set_local_offset(Vector2d diff_offset) override
+    void set_local_offset(Vector2d offset) override
     { 
-        local_offset_ += diff_offset; 
-
         std::vector <Widget *> children = get_children();
 
         for (int i = 0; i < children.size(); i++)
         {
-            children[i]->set_global_offset(diff_offset * children[i]->get_has_local_offset());
+            children[i]->set_global_offset((offset - local_offset_) * children[i]->get_has_local_offset());
         }
+
+        local_offset_ = offset; 
     }
 };

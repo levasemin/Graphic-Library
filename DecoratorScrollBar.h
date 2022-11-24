@@ -31,8 +31,8 @@ public:
     void ScrollWidget(const Event &event)
     {
         Vector2d offset(0, 0);
-        offset.y_ = (-event.Oleg_.smedata.value - widget_->get_local_offset().y_ / (widget_->get_global_shape().y_ - widget_->get_shape().y_));
-        widget_->set_local_offset(Vector2d(0,  offset.y_ * (widget_->get_global_shape().y_ - widget_->get_shape().y_)));
+        offset.y_ = - event.Oleg_.smedata.value * (widget_->get_global_shape().y_ - widget_->get_shape().y_);
+        widget_->set_local_offset(offset);
     }
 
     void draw() override

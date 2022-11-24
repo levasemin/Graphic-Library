@@ -81,11 +81,6 @@ public:
             g = 0;
             b = x;
         }
-        
-        // std::cout << "r': " << r << std::endl;
-        // std::cout << "g': " << g << std::endl;
-        // std::cout << "b': " << b << std::endl;
-        // std::cout << "m': " << m << std::endl;
 
         Color color_rgb((uint8_t)(int)((r + m) * 255.0), (uint8_t)(int)((g + m) * 255.0), (uint8_t)(int)((b + m) * 255.0));
 

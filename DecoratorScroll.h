@@ -13,29 +13,20 @@ public :
     {
         if (point_belonging(Vector2d(event.Oleg_.sedata.x, event.Oleg_.sedata.y)))
         {
-            set_local_offset(Vector2d(0, event.Oleg_.sedata.value));   
+            set_local_offset(Vector2d(0, get_local_offset().y_ + event.Oleg_.sedata.value));   
         }
     }
 
-    void set_local_offset(Vector2d diff_offset) override
+    void set_local_offset(Vector2d offset) override
     {       
-        if (diff_offset.y_ > 0)
-        {
-            diff_offset.x_ = diff_offset.x_ <= -global_offset0_.x_ ? diff_offset.x_ :  -global_offset0_.x_;
-            diff_offset.y_ = diff_offset.y_ <= -global_offset0_.y_ ? diff_offset.y_ :  -global_offset0_.y_;
-        }
+        offset.x_ = offset.x_ <= 0 ? offset.x_ : 0;
+        offset.y_ = offset.y_ <= 0 ? offset.y_ : 0;
         
-        if (diff_offset.y_ < 0)
-        {
-            Vector2d max_offset =  global_offset0_ + widget_->get_global_shape() - widget_->get_shape();
-            
-            diff_offset.x_ = -diff_offset.x_ <= max_offset.x_ ? diff_offset.x_ : - max_offset.x_;
-            diff_offset.y_ = -diff_offset.y_ <= max_offset.y_ ? diff_offset.y_ : - max_offset.y_;
-        }
-
-        global_offset0_ += diff_offset;
+        Vector2d max_offset = get_shape() - get_global_shape();
+        offset.x_ = offset.x_ >= max_offset.x_ ? offset.x_ : max_offset.x_;
+        offset.y_ = offset.y_ >= max_offset.y_ ? offset.y_ : max_offset.y_;
         
-        Decorator::set_local_offset(diff_offset);
+        Decorator::set_local_offset(offset);
     }
 
     void add(Widget *widget) override

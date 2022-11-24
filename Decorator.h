@@ -143,9 +143,9 @@ public:
     {
         return widget_->get_local_offset();
     }
-    void set_local_offset(Vector2d diff_offset) override
+    void set_local_offset(Vector2d offset) override
     {
-        widget_->set_local_offset(diff_offset);
+        widget_->set_local_offset(offset);
     }
 
     bool get_has_local_offset() const override
