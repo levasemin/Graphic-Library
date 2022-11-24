@@ -116,6 +116,9 @@ public:
     }
     void set_shape (Vector2d shape) override
     {
+        sprite_.set_shape(shape);
+        render_texture_->create(shape);
+        render_texture_->draw(sprite_);
         shape_  = shape; 
     }
 

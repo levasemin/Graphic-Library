@@ -13,11 +13,12 @@ public:
     Image palette_;
 
     HSVpalette(Vector2d shape, Vector2d center) : Object(shape, center),
-        scroll_bar_(Vector2d(10, shape.y_), Vector2d(center.x_ + shape.x_ / 2 + 5, center.y_)),
+        scroll_bar_(Vector2d(20, shape.y_), Vector2d(center.x_ + shape.x_ / 2 + 10, center.y_)),
         palette_(shape)
     {
         scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<HSVpalette, const Event&>(this, &HSVpalette::change_H));
-        
+        scroll_bar_.set_scroll_button_size(Vector2d(20, 4));
+
         Image scroll_bar_image(scroll_bar_.get_shape());
         
         for (float y = 0; y < scroll_bar_image.getSize().y_; y++)
@@ -128,6 +129,6 @@ public:
 
     void change_H(const Event &event)
     {
-        h_ += 360.0 * event.Oleg_.smedata.value;
+        h_ = 360 - 360.0 * event.Oleg_.smedata.value;
     }
 };

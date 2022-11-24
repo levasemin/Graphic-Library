@@ -17,6 +17,11 @@ public:
         render_texture_.create(shape.x_, shape_.y_);
     };
     
+    void create(const Vector2d &shape)
+    {
+        render_texture_.create(shape.x_, shape.y_);      
+    }
+ 
     void draw(const Sprite &sprite)
     {
         render_texture_.draw(sprite.sprite_);

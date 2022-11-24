@@ -98,7 +98,7 @@ public:
         Object::draw(); 
 
     }
-
+    
     void reset_global_shape()
     {
         Vector2d global_end_field(INT64_MIN, INT64_MIN);
@@ -106,10 +106,10 @@ public:
 
         for (int i = 0; i < children_.size(); i++)
         {
-            global_start_field.x_   = children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 < global_start_field.x_ ? 
+            global_start_field.x_ = children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 < global_start_field.x_ ? 
                                       children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 : global_start_field.x_;
         
-            global_start_field.y_   = children_[i]->get_center().y_ - children_[i]->get_shape().y_ / 2 < global_start_field.y_ ? 
+            global_start_field.y_ = children_[i]->get_center().y_ - children_[i]->get_shape().y_ / 2 < global_start_field.y_ ? 
                                       children_[i]->get_center().y_ - children_[i]->get_shape().y_ / 2 : global_start_field.y_;
 
             global_end_field.x_   = children_[i]->get_center().x_ +  children_[i]->get_shape().x_ / 2 > global_end_field.x_ ? 

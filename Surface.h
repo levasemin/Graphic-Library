@@ -11,10 +11,9 @@ public:
 
     void draw() override
     {   
-        sprite_.setPosition(Vector2d(0, 0));
-        sprite_.setTexture(getTexture());
+        Sprite sprite(shape_, getTexture());
         render_texture_->clear();
-        render_texture_->draw(sprite_);
+        render_texture_->draw(sprite);
 
         Object::draw();
     }

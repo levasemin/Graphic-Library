@@ -21,14 +21,18 @@ public:
         if (point_belonging(Vector2d(event.Oleg_.sedata.x, event.Oleg_.sedata.y)))
         {   
             Event new_event = event;
-            new_event.Oleg_.sedata.value = event.Oleg_.sedata.value / (widget_->get_global_shape().y_ - widget_->get_shape().y_);
+            new_event.Oleg_.smedata.value = event.Oleg_.sedata.value / (widget_->get_global_shape().y_ - widget_->get_shape().y_) +
+                                           widget_->get_local_offset().y_ / (widget_->get_global_shape().y_ - widget_->get_shape().y_);
+            new_event.Oleg_.smedata.value *= -1;
             scroll_bar_.scroll_bar(new_event);
         }
     }
 
     void ScrollWidget(const Event &event)
     {
-        widget_->set_local_offset(Vector2d(0, event.Oleg_.smedata.value * (widget_->get_global_shape().y_ - widget_->get_shape().y_)));
+        Vector2d offset(0, 0);
+        offset.y_ = (-event.Oleg_.smedata.value - widget_->get_local_offset().y_ / (widget_->get_global_shape().y_ - widget_->get_shape().y_));
+        widget_->set_local_offset(Vector2d(0,  offset.y_ * (widget_->get_global_shape().y_ - widget_->get_shape().y_)));
     }
 
     void draw() override
