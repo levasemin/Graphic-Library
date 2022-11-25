@@ -4,13 +4,15 @@
 #include <SFML/Graphics.hpp>
 #include "functions.h"
 #include <stdint.h>
+#include <algorithm>
 
 class Color
 { 
 public:
     uint8_t r_, g_, b_;
-    
-    Color(double r_rel, double g_rel, double b_rel);
+    double h_, s_, v_;
+
+    Color(double h, double s, double v);
     Color(uint8_t r, uint8_t g, uint8_t b); 
     Color(sf::Color color);
     Color(){};
@@ -47,7 +49,8 @@ public:
 
     Color &operator =(const Color &that) = default;    
 
-    static Color convert_hsv_rgb(float h, float s, float v);
+    void convert_hsv_rgb();
+    void convert_rgb_hsv();
 
     friend Color operator + (const Color &color1,   const Color &color2);
     friend Color operator + (const Color &color,    const uint8_t &number);

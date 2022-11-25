@@ -300,7 +300,6 @@ void Color::set_relation(const double &r_rel, const double &g_rel, const double 
     g_rel_ = g_rel;
     b_rel_ = b_rel;
     this->claim();
-
 }
 
 void Color::claim()
@@ -323,14 +322,22 @@ Color::Color (uint8_t r, uint8_t g, uint8_t b): r_(r), g_(g), b_(b)
     r_rel_ = r / 255.0;
     g_rel_ = g / 255.0;
     b_rel_ = b / 255.0;
+    
     this->claim();
+
+    convert_rgb_hsv();
 };
 
 Color::Color (sf::Color color) : Color(color.r, color.g, color.b)
 {}
 
-Color::Color (double r_rel, double g_rel, double b_rel): r_rel_(r_rel), g_rel_(g_rel), b_rel_(b_rel)
+Color::Color (double h, double s, double v): h_(h), s_(s), v_(v)
 {
+    convert_hsv_rgb();
+
+    r_rel_ = r_ / 255.0;
+    g_rel_ = g_ / 255.0;
+    b_rel_ = b_ / 255.0;
     this->claim();
 };
 
@@ -346,43 +353,79 @@ void Color::print_color() const
     std::cout << (int)b_ << std::endl;
 }
 
-Color Color::convert_hsv_rgb(float h, float s, float v)
+void Color::convert_rgb_hsv()
 {
-    float c = v * s;
-    float mod_2 = (float)((int)(h / 60 * 10000) % 20000) / 10000.0;
-    float x = c * (1 - abs( mod_2 - 1));
-    float m = v - c;
-    float r = 0, g = 0, b = 0;
+    double cmax = std::max(r_rel_, std::max(g_rel_, b_rel_));
+    double cmin = std::min(r_rel_, std::min(g_rel_, b_rel_));
 
-    if (h < 60)
+    double delta = cmax - cmin;
+
+    v_ = (cmax + cmin) / 2;
+
+    if (delta == 0)
+    {
+        h_ = 0;
+        s_ = 0;
+    }
+
+    else
+    {
+        if (cmax == r_rel_)
+        {
+            h_ = 60.0 * ((int)((g_rel_ - b_rel_ ) / delta * 10000.0) % 60000) / 10000.0;
+        }
+
+        else if (cmax == g_rel_)
+        {
+            h_ = 60 * ((b_rel_ - r_rel_) / delta + 2);
+        }
+
+        else if (cmax == b_rel_)
+        {
+            h_ = 60 * ((r_rel_ - g_rel_) / delta + 4);
+        }
+
+        s_ = delta / (1 - abs(2 * v_ - 1));
+    }
+}
+
+void Color::convert_hsv_rgb()
+{
+    double c = v_ * s_;
+    double mod_2 = (double)((int)(h_ / 60.0 * 10000.0) % 20000) / 10000.0;
+    double x = c * (1 - abs( mod_2 - 1));
+    double m = v_ - c;
+    double r = 0, g = 0, b = 0;
+
+    if (h_ < 60)
     {
         r = c;
         g = x;
         b = 0;
     }
 
-    else if (h < 120)
+    else if (h_ < 120)
     {
         r = x;
         g = c;
         b = 0;
     }
 
-    else if (h < 180)
+    else if (h_ < 180)
     {
         r = 0;
         g = c;
         b = x;
     }
 
-    else if (h < 240)
+    else if (h_ < 240)
     {
         r = 0;
         g = x;
         b = c;
     }
 
-    else if (h < 300)
+    else if (h_ < 300)
     {
         r = x;
         g = 0;
@@ -395,8 +438,8 @@ Color Color::convert_hsv_rgb(float h, float s, float v)
         g = 0;
         b = x;
     }
-
-    Color color_rgb((uint8_t)(int)((r + m) * 255.0), (uint8_t)(int)((g + m) * 255.0), (uint8_t)(int)((b + m) * 255.0));
-
-    return color_rgb;
+    
+    r_ = (uint8_t)(int)((r + m) * 255.0);
+    g_ = (uint8_t)(int)((g + m) * 255.0);
+    b_ = (uint8_t)(int)((b + m) * 255.0);
 }

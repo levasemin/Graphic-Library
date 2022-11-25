@@ -16,6 +16,8 @@ public:
     
     bool clicked_ = false;
 
+    Command<Color> *palette_command_;
+
     HSVpalette(Vector2d shape, Vector2d center) : Object(shape, center),
         scroll_bar_(Vector2d(20, shape.y_), Vector2d(center.x_ + shape.x_ / 2 + 10, center.y_)),
         palette_(shape)
@@ -29,7 +31,7 @@ public:
         {
             for (float x = 0; x < scroll_bar_image.getSize().x_; x++)
             {
-                scroll_bar_image.setPixel(Vector2d(x, y), Color::convert_hsv_rgb((1.0 - y / scroll_bar_.get_shape().y_) * 360.0, 1.0, 1.0));
+                scroll_bar_image.setPixel(Vector2d(x, y), Color((1.0 - y / scroll_bar_.get_shape().y_) * 360.0, 1.0, 1.0));
             }
         }
 
@@ -52,7 +54,7 @@ public:
 
                 else
                 {
-                    palette_.setPixel(Vector2d(x, y), Color::convert_hsv_rgb(h_, x / shape_.x_, 1.0 - y / shape_.y_));
+                    palette_.setPixel(Vector2d(x, y), Color(h_, x / shape_.x_, 1.0 - y / shape_.y_));
                 }
             }
         }

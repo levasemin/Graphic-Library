@@ -1,3 +1,4 @@
+#pragma once
 #include "Label.h"
 
 class Editor : public Label 

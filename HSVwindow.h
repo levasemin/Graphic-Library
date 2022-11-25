@@ -31,20 +31,20 @@ public:
 
         void change_h(std::string string)
         {
-            int new_h = std::stoi(string);
-            hsv_palette_.set_h(new_h);
+            int new_r = std::stoi(string);
+            hsv_palette_.set_h(new_r);
         }
 
         void change_s(std::string string)
         {
-            int new_s = std::stoi(string);
-            hsv_palette_.set_s(new_s);
+            int new_g = std::stoi(string);
+            hsv_palette_.set_s(new_g);
         }
 
         void change_v(std::string string)
         {
-            int new_v = std::stoi(string);
-            hsv_palette_.set_v(new_v);
+            int new_b = std::stoi(string);
+            hsv_palette_.set_v(new_b);  
         }
 
     ~HSVwindow();
