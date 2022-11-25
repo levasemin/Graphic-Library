@@ -78,10 +78,10 @@ public:
         widget_->PressKeyEvent(event);
     }
 
-    void set_global_offset(Vector2d diff_offset) override
+    void set_global_offset(Vector2d offset) override
     {
-        scroll_bar_.set_global_offset(diff_offset);
-        widget_->set_global_offset(diff_offset);
+        scroll_bar_.set_global_offset(offset);
+        widget_->set_global_offset(offset);
     }
 
     bool point_belonging(Vector2d point) const override

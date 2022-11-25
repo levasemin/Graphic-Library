@@ -57,6 +57,7 @@ int main()
     Image image(path_british);
 
     scroll_container.add(&first_button);
+
     scroll_container.add(&second_button);
     scroll_container.add(&third_button);
     DecoratorScrollBar decorator(&scroll_container);

@@ -72,13 +72,13 @@ public:
         }
     }  
 
-    void set_global_offset(Vector2d diff_offset) override
+    void set_global_offset(Vector2d offset) override
     {
-        Object::set_global_offset(diff_offset);
+        Object::set_global_offset(offset);
 
         for (int i = 0; i < children_.size(); i++)
         {
-            children_[i]->set_global_offset(diff_offset);
+            children_[i]->set_global_offset(offset + get_start_field());
         }
     }
 
@@ -134,7 +134,7 @@ public:
             }
         }
 
-        widget->set_global_offset(get_start_field() * -1);
+        widget->set_global_offset(Vector2d(0, 0));
 
         reset_global_shape();
     }
@@ -154,15 +154,6 @@ public:
         reset_global_shape();
     }
     
-    // virtual Texture get_texture() const override
-    // {
-    //     return texture_;
-    // }
-    // virtual void set_texture(const Texture &texture) override
-    // {
-    //     texture_ = texture;
-    // }
-
     std::vector<Widget *> get_children() const override { return children_;}
     Vector2d get_global_shape() const override         { return global_shape_; }
 
@@ -180,7 +171,7 @@ public:
 
         for (int i = 0; i < children.size(); i++)
         {
-            children[i]->set_global_offset((offset - local_offset_) * children[i]->get_has_local_offset());
+            children[i]->set_global_offset(children[i]->get_global_offset() + (offset - local_offset_) * children[i]->get_has_local_offset());
         }
 
         local_offset_ = offset; 

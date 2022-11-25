@@ -164,9 +164,9 @@ public:
     {
         return global_offset_; 
     }   
-    void set_global_offset(Vector2d diff_offset) override
+    void set_global_offset(Vector2d offset) override
     {
-        global_offset_ += diff_offset; 
+        global_offset_ = offset; 
     }
 
     Vector2d get_local_offset() const override
@@ -197,6 +197,7 @@ public:
 
         return start_field;
     }
+    
     Vector2d get_end_field() const override
     {
         Vector2d end_field = center_ + shape_ / 2 + global_offset_;

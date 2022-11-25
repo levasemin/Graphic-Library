@@ -114,7 +114,7 @@ public:
             offset.y_ = offset.y_ <= max_offset.y_ ? offset.y_ : max_offset.y_;
             
             set_local_offset(offset);
-                        
+
             if (scroll_command_ != nullptr)
             {
                 scroll_command_->Execute(new_event);
@@ -161,7 +161,7 @@ public:
                !scroll_button_.point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)) &&
                !up_button_.point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)) &&
                !down_button_.point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
-            {
+            {                
                 Event new_event;
 
                 new_event.type_ = EventType::ScrollbarMoved;
