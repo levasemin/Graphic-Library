@@ -114,6 +114,7 @@ public:
     {
         return shape_; 
     }
+    
     void set_shape (Vector2d shape) override
     {
         sprite_.set_shape(shape);
@@ -135,6 +136,7 @@ public:
     {
         return texture_;
     }
+
     virtual void set_texture(const Texture &texture) override
     {
         texture_ = texture;

@@ -16,7 +16,7 @@ class Application
             {};
 
         void exec();
-        void add(Widget *main_window);
+        void set_main_window(Widget *main_window);
         void show(Widget *window);
         
     
@@ -26,7 +26,7 @@ class Application
         Window window_;
 };
 
-void Application::add(Widget *main_window)
+void Application::set_main_window(Widget *main_window)
 {
     main_window_ = main_window;
 }

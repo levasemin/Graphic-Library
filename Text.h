@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Color.h"
 #include "Font.h"
+#include <string>
 
 class Text
 {
@@ -41,9 +42,19 @@ public:
         text_.setString(text);
     }
 
-    void setFillColor(Color color)
+    std::string getString()
+    {
+        return std::string(text_.getString());
+    }
+
+    void setFillColor(const Color &color)
     {
         text_.setFillColor(color.get_sf_color());
+    }
+    
+    void setColor(const Color &color)
+    {
+        text_.setColor(color.get_sf_color());
     }
 
     Font getFont() 

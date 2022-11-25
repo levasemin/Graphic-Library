@@ -2,6 +2,7 @@
 
 #include "Object.h"
 #include "Image.h"
+#include "Edit.h"
 
 class HSVpalette : public Object
 {   
@@ -12,6 +13,8 @@ public:
 
     ScrollBar scroll_bar_;
     Image palette_;
+    
+    bool clicked_ = false;
 
     HSVpalette(Vector2d shape, Vector2d center) : Object(shape, center),
         scroll_bar_(Vector2d(20, shape.y_), Vector2d(center.x_ + shape.x_ / 2 + 10, center.y_)),
@@ -42,7 +45,15 @@ public:
         {
             for (float x = 0; x < shape_.x_; x++)
             {
-                palette_.setPixel(Vector2d(x, y), Color::convert_hsv_rgb(h_, x / shape_.x_, 1.0 - y / shape_.y_));
+                if ((int)(s_ * shape_.x_) == (int)x || (int)((1 - v_) * shape_.y_) == (int)y)
+                {
+                    palette_.setPixel(Vector2d(x, y), Colors::White);
+                }
+
+                else
+                {
+                    palette_.setPixel(Vector2d(x, y), Color::convert_hsv_rgb(h_, x / shape_.x_, 1.0 - y / shape_.y_));
+                }
             }
         }
 
@@ -53,6 +64,25 @@ public:
         
         scroll_bar_.draw();
         Object::draw();
+    }
+
+    void set_h(float h)
+    {
+        h_ = h;
+        Event new_event;
+        new_event.type_ = EventType::ScrollbarMoved;
+        new_event.Oleg_.smedata.value = h / 360;
+        scroll_bar_.scroll_bar(new_event);
+    }
+
+    void set_s(float s)
+    {
+        s_ = s;
+    }
+
+    void set_v(float v)
+    {
+        v_ = v;
     }
 
     void change_H(const Event &event)
@@ -66,13 +96,36 @@ public:
         
         if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
         {
+            clicked_ = true;
+
             s_ = (event.Oleg_.mbedata.x - get_start_field().x_) / shape_.x_;
             v_ = 1.0 - (event.Oleg_.mbedata.y - get_start_field().y_) / shape_.y_;
+        }
+
+        else
+        {
+            clicked_ = false;
+        }
+    }
+
+    void MoveMouseEvent(const Event &event) override
+    {
+        scroll_bar_.MoveMouseEvent(event);
+        
+        if (clicked_)
+        {
+            if (point_belonging(Vector2d(event.Oleg_.motion.x, event.Oleg_.motion.y)))
+            {
+                s_ = (event.Oleg_.motion.x - get_start_field().x_) / shape_.x_;
+                v_ = 1.0 - (event.Oleg_.motion.y - get_start_field().y_) / shape_.y_;
+            }
         }
     }
 
     void ReleasedLeftEvent (const Event &event) override
     {
+        clicked_ = false;
+        
         scroll_bar_.ReleasedLeftEvent(event);
         Object::ReleasedLeftEvent(event);
     }              
@@ -88,12 +141,6 @@ public:
         scroll_bar_.ReleasedRightEvent(event);
         Object::ReleasedRightEvent(event);
     }              
-    
-    void MoveMouseEvent (const Event &event) override
-    {
-        scroll_bar_.MoveMouseEvent(event);
-        Object::MoveMouseEvent(event);
-    }
 
     void PressKeyEvent (const Event &event) override
     {

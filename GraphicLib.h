@@ -19,4 +19,5 @@
 #include "HSVpalette.h"
 #include "Font.h"
 #include "Text.h"
+#include "Edit.h"
 #include "ComboBox.h"

@@ -10,3 +10,5 @@ enum types_event
 
 const int WIDTH  = 720;
 const int HEIGHT = 720;
+
+const char *TIMES_NEW_ROMAN_FONT = "fonts/Times_New_Roman.ttf";

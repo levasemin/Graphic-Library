@@ -13,15 +13,17 @@ public:
     
     Text text_;
 
-    Label(Vector2d shape, Vector2d center, const Texture &texture) : Object(shape, center, texture, parent), text_()
+    Label(Vector2d shape, Vector2d center) : Object(shape, center), text_()
     {
     };
-
+    
     void set_text(const Text &text)
     {
+        render_texture_->clear();
+        Sprite sprite(render_texture_->getSize(), texture_);
+        render_texture_->draw(sprite);
+
         text_ = text;
-        sprite_.setTexture(texture_);
-        render_texture_->draw(sprite_);
 
         Vector2d text_position(0, 0);
         text_position.x_ = shape_.x_ / 2 - text_.getGlobalBounds().x_ / 2;

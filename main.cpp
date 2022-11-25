@@ -32,7 +32,11 @@ int main()
     // main_window.add(&tool_palette);
     // main_window.add(&combobox);
 
+    Edit editor(Vector2d(300, 30), Vector2d(400, 550));
+    Font font(TIMES_NEW_ROMAN_FONT);
+    editor.setFont(font);
     Application app(&main_window);
     main_window.add(&color_palette);
+    main_window.add(&editor);
     app.exec();
 }
