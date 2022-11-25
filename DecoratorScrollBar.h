@@ -6,10 +6,9 @@
 
 class DecoratorScrollBar : public Decorator
 {
-    double coeff_ = 1;
 public:
     DecoratorScrollBar(Widget *widget) : Decorator(widget),
-        scroll_bar_(Vector2d(20, 500), Vector2d(widget->get_center().x_ - widget->get_shape().x_ / 2 - 10, widget_->get_center().y_))
+        scroll_bar_(Vector2d(20, widget->get_shape().y_), Vector2d(widget->get_center().x_ + widget->get_shape().x_ / 2 + 10, widget->get_center().y_))
     {   
         scroll_bar_.set_scroll_command ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollWidget));
     }
@@ -18,6 +17,8 @@ public:
 
     void ScrollEvent(const Event &event) override
     {
+        scroll_bar_.ScrollEvent(event);
+
         if (point_belonging(Vector2d(event.Oleg_.sedata.x, event.Oleg_.sedata.y)))
         {   
             Event new_event = event;
@@ -38,7 +39,6 @@ public:
     void draw() override
     {
         scroll_bar_.draw();
-
         widget_->draw();
     }
 
@@ -84,11 +84,6 @@ public:
         widget_->set_global_offset(offset);
     }
 
-    bool point_belonging(Vector2d point) const override
-    {
-        return widget_->point_belonging(point) || scroll_bar_.point_belonging(point);
-    }
-
     void display(Window *window) override
     {
         scroll_bar_.display(window);
@@ -97,7 +92,7 @@ public:
 
     void set_parent(Widget *parent_widget) override
     {
-        widget_->set_parent(parent_widget);
         scroll_bar_.set_parent(parent_widget);
+        widget_->set_parent(parent_widget);
     }
 };

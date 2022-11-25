@@ -47,6 +47,8 @@ public:
 
     Color &operator =(const Color &that) = default;    
 
+    static Color convert_hsv_rgb(float h, float s, float v);
+
     friend Color operator + (const Color &color1,   const Color &color2);
     friend Color operator + (const Color &color,    const uint8_t &number);
     friend Color operator + (const uint8_t &number, const Color &color);
