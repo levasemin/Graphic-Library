@@ -90,9 +90,10 @@ public:
         {            
             if (point_belonging(Vector2d(event.Oleg_.sedata.x, event.Oleg_.sedata.y)))
             {
-                Event new_event = event;
-                new_event.Oleg_.smedata.id = (int64_t)this;
-                new_event.Oleg_.smedata.value = event.Oleg_.sedata.value; 
+                Event new_event;
+                new_event.type_ = EventType::ScrollbarMoved;
+                new_event.Oleg_.smedata.value = (-event.Oleg_.sedata.value + local_offset_.y_) / scroll_field_shape.y_;
+                new_event.Oleg_.smedata.id    = (int64_t)&down_button_;
                 scroll_bar(new_event);
             }
         }
