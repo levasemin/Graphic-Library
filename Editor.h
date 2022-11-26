@@ -3,7 +3,7 @@
 
 class Editor : public Label 
 {
-    Command<std::string> *editor_command_;
+    Command<std::string> *editor_command_ = nullptr;
 
 public:
     bool clicked_ = false;
@@ -31,7 +31,10 @@ public:
 
             if (event.Oleg_.kpedata.code == Key::Backspace)
             {
-                string.pop_back();
+                if (string.size() > 0)
+                {
+                    string.pop_back();
+                }
             }
 
             else
@@ -56,11 +59,12 @@ public:
                 string.push_back(letter);
             }
             
-            text_.setString(string.c_str());
-            text_.setColor(Colors::Blue);
-            set_text(text_);
+            setString(string);
 
-            editor_command_->Execute(string);
+            if (editor_command_)
+            {
+                editor_command_->Execute(string);
+            }
         }
     }
 
@@ -73,7 +77,7 @@ public:
 
         else
         {
-            false;
+            clicked_ = false;
         }
     }
 

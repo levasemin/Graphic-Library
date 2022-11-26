@@ -26,7 +26,7 @@ protected:
 
 public:
 
-    Object(Vector2d shape, Vector2d center, const Texture &texture = Texture(Colors::White)): Widget(),
+    Object(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::White)): Widget(),
         shape_(shape),
         texture_(texture),
         sprite_(shape, texture, 0),

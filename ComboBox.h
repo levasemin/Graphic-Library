@@ -13,8 +13,8 @@ class ComboBox : public Button
 
 public:
 
-    ComboBox(Vector2d shape, Vector2d center, const Texture &texture = Texture(Colors::Blue)) : Button(shape, center, texture),
-        item_box_(Vector2d(1, 1), center + Vector2d(0, shape.y_ / 2), Texture(Colors::White))
+    ComboBox(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Blue)) : Button(shape, center, texture),
+        item_box_(Vector2d(shape.x_ * 2, shape.y_ * 10), center + shape / 2 + Vector2d(0, shape.y_ * 5), Texture(Color::White))
     {
         set_left_click((Command<const Event&> *)new SimpleCommand<ComboBox, const Event &>(this, &ComboBox::show_item_container));
     }
@@ -47,6 +47,6 @@ public:
     void set_box_shape(const Vector2d &shape)
     {
         item_box_.set_shape(shape);
-        item_box_.set_center(center_ + shape_.y_ / 2 + item_box_.get_shape().y_ / 2);
+        item_box_.set_center(center_ + shape_ / 2 + Vector2d(0, shape.y_ / 2));
     }
 };

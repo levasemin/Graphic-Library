@@ -37,7 +37,7 @@ public:
         return Vector2d(text_.getGlobalBounds().width, text_.getGlobalBounds().height);
     }
 
-    void setString(const char *text)
+    void setString(const std::string &text)
     {
         text_.setString(text);
     }
@@ -54,7 +54,8 @@ public:
     
     void setColor(const Color &color)
     {
-        text_.setColor(color.get_sf_color());
+        const sf::Color &sf_color = color.get_sf_color();
+        text_.setColor(sf_color);
     }
 
     Font getFont() 

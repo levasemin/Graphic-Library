@@ -1,10 +1,18 @@
 #include "Color.h"
 
+const Color Color::Black  ((uint8_t)0,   (uint8_t)0,   (uint8_t)0);
+const Color Color::White  ((uint8_t)255, (uint8_t)255, (uint8_t)255);       
+const Color Color::Red    ((uint8_t)255, (uint8_t)0,   (uint8_t)0);         
+const Color Color::Green  ((uint8_t)0,   (uint8_t)255, (uint8_t)0);       
+const Color Color::Blue   ((uint8_t)0,   (uint8_t)0,   (uint8_t)255);        
+const Color Color::Yellow ((uint8_t)255, (uint8_t)255, (uint8_t)0);      
+const Color Color::Magenta((uint8_t)255, (uint8_t)0,   (uint8_t)255);     
+const Color Color::Cyan   ((uint8_t)0,   (uint8_t)255, (uint8_t)255);  
+
 bool Color::operator == (const Color &color2)
 {
     return !(doublecmp(r_, color2.r_) || doublecmp(g_, color2.g_) || doublecmp(b_, color2.b_));
 }
-
 bool Color::operator != (const Color &color2)
 {
     return doublecmp(r_, color2.r_) || doublecmp(g_, color2.g_) || doublecmp(b_, color2.b_);
@@ -22,7 +30,6 @@ Color &Color::operator += (const Color &color2)
 
     return *this;
 }
-
 Color &Color::operator += (const double &number)
 {
     r_rel_ += number;
@@ -48,7 +55,6 @@ Color &Color::operator -= (const Color &color2)
 
     return *this;
 }
-
 Color &Color::operator -= (const double &number)
 {
     r_rel_ -= number;
@@ -65,7 +71,7 @@ Color &Color::operator -= (const double &number)
 Color &Color::operator *= (const Color &color2)
 {
     r_rel_ *= color2.r_rel_;
-    g_rel_ *= color2.r_rel_;
+    g_rel_ *= color2.g_rel_;
     b_rel_ *= color2.b_rel_;
 
     r_ = r_rel_ * 255.0;
@@ -74,7 +80,6 @@ Color &Color::operator *= (const Color &color2)
 
     return *this;
 }
-
 Color &Color::operator *= (const double &number)
 {
     r_rel_ *= number;
@@ -91,7 +96,7 @@ Color &Color::operator *= (const double &number)
 Color &Color::operator /= (const Color &color2)
 {
     r_rel_ /= color2.r_rel_;
-    g_rel_ /= color2.r_rel_;
+    g_rel_ /= color2.g_rel_;
     b_rel_ /= color2.b_rel_;
 
     r_ = r_rel_ * 255.0;
@@ -100,7 +105,6 @@ Color &Color::operator /= (const Color &color2)
 
     return *this;
 }
-
 Color &Color::operator /= (const double &number)
 {
     r_rel_ /= number;
@@ -121,7 +125,6 @@ Color operator + (const Color &color1, const Color &color2)
 
     return new_color;
 }
-
 Color operator + (const Color &color, const uint8_t &number)
 {
     Color new_color = color;
@@ -129,7 +132,6 @@ Color operator + (const Color &color, const uint8_t &number)
     
     return new_color;
 }
-
 Color operator + (const uint8_t &number, const Color &color)
 {
     Color new_color = color;
@@ -137,7 +139,6 @@ Color operator + (const uint8_t &number, const Color &color)
     
     return new_color;
 }
-
 Color operator + (const Color &color, const double &number)
 {
     Color new_color = color;
@@ -145,7 +146,6 @@ Color operator + (const Color &color, const double &number)
     
     return new_color;
 }
-
 Color operator + (const double &number, const Color &color)
 {
     Color new_color = color;
@@ -161,7 +161,6 @@ Color operator - (const Color &color1, const Color &color2)
     
     return new_color;
 }
-
 Color operator - (const Color &color, const uint8_t &number)
 {
     Color new_color = color;
@@ -169,7 +168,6 @@ Color operator - (const Color &color, const uint8_t &number)
     
     return new_color;
 }
-
 Color operator - (const Color &color, const double &number)
 {
     Color new_color = color;
@@ -185,7 +183,6 @@ Color operator * (const Color &color1, const Color &color2)
     
     return new_color;
 }
-
 Color operator * (const Color &color, const uint8_t &number)
 {
     Color new_color = color;
@@ -193,7 +190,6 @@ Color operator * (const Color &color, const uint8_t &number)
     
     return new_color;
 }
-
 Color operator * (const uint8_t &number, const Color &color)
 {
     Color new_color = color;
@@ -201,7 +197,6 @@ Color operator * (const uint8_t &number, const Color &color)
     
     return new_color;
 }
-
 Color operator * (const Color &color, const double &number)
 {
     Color new_color = color;
@@ -209,7 +204,6 @@ Color operator * (const Color &color, const double &number)
     
     return new_color;
 }
-
 Color operator * (const double &number, const Color &color)
 {
     Color new_color = color;
@@ -225,7 +219,6 @@ Color operator / (const Color &color1, const Color &color2)
     
     return new_color;
 }
-
 Color operator / (const Color &color, const uint8_t &number)
 {
     Color new_color = color;
@@ -233,7 +226,6 @@ Color operator / (const Color &color, const uint8_t &number)
     
     return new_color;
 }
-
 Color operator / (const Color &color, const double &number)
 {
     Color new_color = color;
@@ -247,24 +239,72 @@ void Color::pow(double degree)
     r_rel_ = powf64(r_rel_, degree);
     g_rel_ = powf64(g_rel_, degree);
     b_rel_ = powf64(b_rel_, degree);
+
+    claim();
 }
 
-void Color::set_color_r(const uint8_t &r)
+void Color::set_h(const double &h)
 {
-    r_rel_ = r / 255.0;
-    this->claim();
+    h_ = h;
+    convert_hsv_rgb();
+}
+void Color::set_s(const double &s)
+{
+    s_ = s;
+    convert_hsv_rgb();
+}
+void Color::set_v(const double &v)
+{
+    v_ = v;
+    convert_hsv_rgb();
 }
 
-void Color::set_color_g(const uint8_t &g)
+void Color::set_r(const uint8_t &r)
 {
-    g_rel_ = g / 255.0;
+    r_rel_ = (double)r / 255.0;
     this->claim();
+
+    convert_rgb_hsv();
+}
+void Color::set_g(const uint8_t &g)
+{
+    g_rel_ = (double)g / 255.0;
+    this->claim();
+
+    convert_rgb_hsv();
+}
+void Color::set_b(const uint8_t &b)
+{
+    b_rel_ = (double)b / 255.0;
+    this->claim();
+
+    convert_rgb_hsv();
 }
 
-void Color::set_color_b(const uint8_t &b)
+double Color::get_h() const
 {
-    b_rel_ = b / 255.0;
-    this->claim();
+    return h_;
+}
+double Color::get_s() const
+{
+    return s_;
+}
+double Color::get_v() const
+{
+    return v_;
+}
+
+uint8_t Color::get_r() const
+{
+    return r_;
+}
+uint8_t Color::get_g() const
+{
+    return g_;
+}
+uint8_t Color::get_b() const
+{
+    return b_;
 }
 
 void Color::set_relation_r(const double &r_rel)
@@ -272,13 +312,11 @@ void Color::set_relation_r(const double &r_rel)
     r_rel_ = r_rel;
     this->claim();
 }
-
 void Color::set_relation_g(const double &g_rel)
 {
     g_rel_ = g_rel;
     this->claim();
 }
-
 void Color::set_relation_b(const double &b_rel)
 {
     b_rel_ = b_rel;
@@ -287,9 +325,9 @@ void Color::set_relation_b(const double &b_rel)
 
 void Color::set_color(const uint8_t &r, const uint8_t &g, const uint8_t &b)
 {
-    r_rel_ = r / 255.0;
-    g_rel_ = g / 255.0;
-    b_rel_ = b / 255.0;
+    r_rel_ = (double)r / 255.0;
+    g_rel_ = (double)g / 255.0;
+    b_rel_ = (double)b / 255.0;
 
     this->claim();
 }
@@ -319,9 +357,9 @@ void Color::claim()
 
 Color::Color (uint8_t r, uint8_t g, uint8_t b): r_(r), g_(g), b_(b)
 {
-    r_rel_ = r / 255.0;
-    g_rel_ = g / 255.0;
-    b_rel_ = b / 255.0;
+    r_rel_ = (double)r / 255.0;
+    g_rel_ = (double)g / 255.0;
+    b_rel_ = (double)b / 255.0;
     
     this->claim();
 
@@ -360,86 +398,98 @@ void Color::convert_rgb_hsv()
 
     double delta = cmax - cmin;
 
-    v_ = (cmax + cmin) / 2;
-
-    if (delta == 0)
-    {
+    if (cmax == cmin)
         h_ = 0;
+ 
+    else if (!doublecmp(cmax, r_rel_))
+        h_ = fmod(60.0 * ((g_rel_ - b_rel_) / delta) + 360.0, 360.0);
+ 
+    else if (!doublecmp(cmax, g_rel_))
+        h_ = fmod(60.0 * ((b_rel_ - r_rel_) / delta) + 120.0, 360.0);
+ 
+    else if (!doublecmp(cmax, b_rel_))
+        h_ = fmod(60.0 * ((r_rel_ - g_rel_) / delta) + 240.0, 360.0);
+
+    if (!doublecmp(cmax, 0))
         s_ = 0;
+    else
+        s_ = (delta / cmax);
+ 
+    v_ = cmax;
+}
+
+/*
+void Color::convert_rgb_hsv()
+{
+    double cmax = std::max(r_rel_, std::max(g_rel_, b_rel_));
+    double cmin = std::min(r_rel_, std::min(g_rel_, b_rel_));
+
+    v_ = cmax;
+
+    s_ = cmax > 0 ? 1 - cmin / cmax : 0;
+    
+    if (g_ >= b_)
+    {
+        h_ = 1.0 / cos(((double)r_ - 0.5 * (double)g_ - 0.5 * (double)b_) / sqrt((double)std::pow(r_, 2) + (double)std::pow(g_, 2) + (double)std::pow(b_, 2) - (double)(r_ * g_ - r_ * b_ - g_ * b_)));
     }
 
     else
     {
-        if (cmax == r_rel_)
-        {
-            h_ = 60.0 * ((int)((g_rel_ - b_rel_ ) / delta * 10000.0) % 60000) / 10000.0;
-        }
-
-        else if (cmax == g_rel_)
-        {
-            h_ = 60 * ((b_rel_ - r_rel_) / delta + 2);
-        }
-
-        else if (cmax == b_rel_)
-        {
-            h_ = 60 * ((r_rel_ - g_rel_) / delta + 4);
-        }
-
-        s_ = delta / (1 - abs(2 * v_ - 1));
+        h_ = 360.0 - 1.0 / cos(((double)r_ - 0.5 * (double)g_ - 0.5 * (double)b_) / sqrt((double)std::pow(r_, 2) + (double)std::pow(g_, 2) + (double)std::pow(b_, 2) - (double)(r_ * g_ - r_ * b_ - g_ * b_)));
     }
 }
-
+*/
 void Color::convert_hsv_rgb()
 {
     double c = v_ * s_;
-    double mod_2 = (double)((int)(h_ / 60.0 * 10000.0) % 20000) / 10000.0;
-    double x = c * (1 - abs( mod_2 - 1));
+    double mod_2 = (fmod((h_ / 60.0), 2.0));
+    double x = c * (1.0 - abs( mod_2 - 1.0));
     double m = v_ - c;
-    double r = 0, g = 0, b = 0;
+    double r = 0.0, g = 0.0, b = 0.0;
 
-    if (h_ < 60)
+    if (h_ < 60.0)
     {
         r = c;
         g = x;
-        b = 0;
+        b = 0.0;
     }
 
-    else if (h_ < 120)
+    else if (h_ < 120.0)
     {
         r = x;
         g = c;
-        b = 0;
+        b = 0.0;
     }
 
-    else if (h_ < 180)
+    else if (h_ < 180.0)
     {
-        r = 0;
+        r = 0.0;
         g = c;
         b = x;
     }
 
-    else if (h_ < 240)
+    else if (h_ < 240.0)
     {
-        r = 0;
+        r = 0.0;
         g = x;
         b = c;
     }
 
-    else if (h_ < 300)
+    else if (h_ < 300.0)
     {
         r = x;
-        g = 0;
+        g = 0.0;
         b = c;
     }
 
     else
     {
         r = c;
-        g = 0;
+        g = 0.0;
         b = x;
     }
     
-    r_ = (uint8_t)(int)((r + m) * 255.0);
-    g_ = (uint8_t)(int)((g + m) * 255.0);
-    b_ = (uint8_t)(int)((b + m) * 255.0);
+    r_ = (uint8_t)(round((r + m) * 255.0));
+    g_ = (uint8_t)(round((g + m) * 255.0));
+    b_ = (uint8_t)(round((b + m) * 255.0));
 }

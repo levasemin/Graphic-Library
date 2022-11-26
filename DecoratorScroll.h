@@ -23,10 +23,12 @@ public :
         offset.y_ = offset.y_ <= 0 ? offset.y_ : 0;
         
         Vector2d max_offset = get_shape() - get_global_shape();
-        offset.x_ = offset.x_ >= max_offset.x_ ? offset.x_ : max_offset.x_;
+        offset.x_ = offset.x_ <= max_offset.x_ ? offset.x_ : max_offset.x_;
         offset.y_ = offset.y_ >= max_offset.y_ ? offset.y_ : max_offset.y_;
         
+        Decorator::get_local_offset().print_value();
         Decorator::set_local_offset(offset);
+        Decorator::get_local_offset().print_value();
     }
 
     void add(Widget *widget) override

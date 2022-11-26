@@ -12,7 +12,7 @@ protected:
     Vector2d global_shape_ = (0, 0);
 
 public:
-    CompositeObject(Vector2d shape, Vector2d center, const Texture &texture = Texture(Colors::Red)):
+    CompositeObject(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Red)):
         Object(shape, center, texture)
         {
         }

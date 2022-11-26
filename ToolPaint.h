@@ -9,6 +9,9 @@
 
 uint64_t createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object);
 
+int CATMULL_ROM = 0;
+
+
 class ToolPaint : public Tool
 {
 
@@ -19,10 +22,43 @@ public:
         float y;
     }; 
 
-    std::deque<point> points_;
-    uint32_t color_;
+    class Interpolator
+    {
+    public:
+        int type_ = 0;
 
-    ToolPaint() : Tool()
+        Interpolator(int type):
+            type_(type)
+        {
+
+        }
+
+        ToolPaint::point operator()(double t, ToolPaint::point point_0, ToolPaint::point point_1, ToolPaint::point point_2, ToolPaint::point point_3)
+        {
+            ToolPaint::point new_point = {0, 0};
+
+            if (type_ == CATMULL_ROM)
+            {
+                float coeff_0 = -t * pow(1.0 - t, 2.0);
+                float coeff_1 = (2.0 - 5.0*pow(t, 2) + 3.0*pow(t, 3));
+                float coeff_2 = t * (1.0 + 4.0*t - 3.0*pow(t, 2));
+                float coeff_3 = pow(t, 2) * (1.0 - t);
+
+                new_point.x = 0.5 * (coeff_0 * point_0.x + coeff_1 * point_1.x + coeff_2 * point_2.x - coeff_3 * point_3.x);
+                new_point.y = 0.5 * (coeff_0 * point_0.y + coeff_1 * point_1.y + coeff_2 * point_2.y - coeff_3 * point_3.y);
+            }
+
+            return new_point;
+        }
+    };
+    
+    std::deque<point> points_;
+    Interpolator interpolator_;
+    uint32_t color_ = (1 << 16) - 1;
+    uint32_t width_ = 1;
+    
+    ToolPaint() : Tool(),
+        interpolator_(CATMULL_ROM)
     {
         char icon_path[128] = "source/paint-brush.png";
         std::memcpy(icon_path_, icon_path, 128);
@@ -35,21 +71,14 @@ public:
         float x = points_.back().x;
         float y = points_.back().y;
 
-        image->putPixel(x, y, (1 << 16) - 1);
+        image->putPixel(x, y, color_);
 
         if (points_.size() == 4)
         {
             for (float t = 0; t <= 1.0; t += 0.001)
             {
-                float coeff_0 = -t * pow(1.0 - t, 2.0);
-                float coeff_1 = (2.0 - 5.0*pow(t, 2) + 3.0*pow(t, 3));
-                float coeff_2 = t * (1.0 + 4.0*t - 3.0*pow(t, 2));
-                float coeff_3 = pow(t, 2) * (1.0 - t);
-
-                x = 0.5 * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
-                y = 0.5 * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);
-                
-                image->putPixel(x, y, (1 << 16) - 1);
+                point new_point = interpolator_(t, points_[0], points_[1], points_[2], points_[3]);
+                image->putPixel(new_point.x, new_point.y, color_);
             }
         }
     }

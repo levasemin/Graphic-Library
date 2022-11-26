@@ -58,7 +58,7 @@ public:
 
     static uint32_t convert_color_uint(const Color &color)
     {
-        return ((uint32_t)color.r_ << (uint32_t)24) + ((uint32_t)color.g_ << (uint32_t)16) + ((uint32_t)color.b_ << (uint32_t)8);
+        return ((uint32_t)color.get_r() << (uint32_t)24) + ((uint32_t)color.get_g() << (uint32_t)16) + ((uint32_t)color.get_b() << (uint32_t)8);
     }
 
     uint32_t getPixel(int32_t x, int32_t y) override

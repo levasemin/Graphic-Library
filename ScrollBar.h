@@ -9,20 +9,13 @@
 
 const double SCROLL_COEFF = 0.1;
 
-class ScrollBarButton : public Button
-{
-public:
-    ScrollBarButton(Vector2d shape, Vector2d center, const Texture &texture) : Button(shape, center, texture)
-    {
-    }
-};
 
 class ScrollBar : public CompositeObject
 {
 public:
     Button up_button_;
     Button down_button_;    
-    ScrollBarButton scroll_button_;
+    Button scroll_button_;
     Vector2d scroll_field_shape;
 
     Command<const Event&> *scroll_command_ = nullptr;
@@ -35,12 +28,12 @@ public:
         CompositeObject  (shape, center),
         scroll_coeff_(SCROLL_COEFF),
         up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape.x_ / 2),
-                      Texture(Colors::White)),
+                      Texture(Color::White)),
         down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape_.y_   - shape.x_ / 2),
-                       Texture(Colors::White)),
+                       Texture(Color::White)),
         scroll_button_(Vector2d(shape.x_, (shape.y_ - shape.x_ * 2) * SCROLL_COEFF),
                        Vector2d(shape.x_ / 2, shape.x_ + shape_.y_ * SCROLL_COEFF  / 2), 
-                       Texture(Colors::Black)),
+                       Texture(Color::Black)),
         scroll_field_shape(shape_.x_, shape_.y_ - shape_.x_ * 2 - scroll_button_.get_shape().y_)
         {
             add(&up_button_);
@@ -116,7 +109,7 @@ public:
             
             set_local_offset(offset);
 
-            if (scroll_command_ != nullptr)
+            if (scroll_command_)
             {
                 scroll_command_->Execute(new_event);
             }

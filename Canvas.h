@@ -19,8 +19,8 @@ public:
     bool is_left_clicked_;
 
     Canvas(Vector2d shape, Vector2d center, const Image &image, ToolPalette *tool_palette) : 
-        CompositeObject(shape, center, Colors::Cyan),
-        surface_(image.getSize(), image.getSize() / 2, image),
+        CompositeObject(shape, center, Color::Cyan),
+        surface_(image.getSize(), Vector2d(shape.x_ / 2, image.getSize().y_ / 2), image),
         tool_palette_(tool_palette),
         tool_manager_(ToolManager::getInstance())
     {   
@@ -34,7 +34,10 @@ public:
             if (is_left_clicked_)
             {
                 Event new_event = event;
-                new_event.Oleg_.motion.x -= surface_.get_global_offset().x_;
+                //TODO
+                surface_.get_start_field().print_value();
+
+                new_event.Oleg_.motion.x -= surface_.get_start_field().x_;
                 new_event.Oleg_.motion.y -= surface_.get_global_offset().y_;
 
                 tool_manager_.apply(&surface_, &new_event);

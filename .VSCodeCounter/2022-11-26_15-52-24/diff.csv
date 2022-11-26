@@ -1,0 +1,15 @@
+"filename", "language", "C++", "comment", "blank", "total"
+"/home/levce/projectsDED/event_handler2/Event_handler/Color.cpp", "C++", 34, 0, 10, 44
+"/home/levce/projectsDED/event_handler2/Event_handler/Color.h", "C++", 3, 0, 0, 3
+"/home/levce/projectsDED/event_handler2/Event_handler/DialogWindow.h", "C++", 0, 0, 1, 1
+"/home/levce/projectsDED/event_handler2/Event_handler/Edit.h", "C++", -1, 0, 0, -1
+"/home/levce/projectsDED/event_handler2/Event_handler/Editor.h", "C++", 64, 0, 17, 81
+"/home/levce/projectsDED/event_handler2/Event_handler/GraphicLib.h", "C++", 2, 0, 0, 2
+"/home/levce/projectsDED/event_handler2/Event_handler/HSVpalette.h", "C++", 34, 0, 8, 42
+"/home/levce/projectsDED/event_handler2/Event_handler/HSVwindow.h", "C++", 55, 0, 9, 64
+"/home/levce/projectsDED/event_handler2/Event_handler/Label.h", "C++", 15, 0, 1, 16
+"/home/levce/projectsDED/event_handler2/Event_handler/Object.h", "C++", 0, 0, 2, 2
+"/home/levce/projectsDED/event_handler2/Event_handler/Text.h", "C++", 9, 0, 2, 11
+"/home/levce/projectsDED/event_handler2/Event_handler/constants.h", "C++", 1, 0, 1, 2
+"/home/levce/projectsDED/event_handler2/Event_handler/main.cpp", "C++", 1, 1, 0, 2
+"Total", "-", 217, 1, 51, 269

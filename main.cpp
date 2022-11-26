@@ -8,35 +8,37 @@ const char *path_british = "/home/levce/projectsDED/event_handler2/Event_handler
 
 int main()
 {          
-    MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Colors::Blue));
+    MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Color::Blue));
 
-    HSVpalette color_palette(Vector2d(200, 400), Vector2d(300, 300));
-    // ComboBox combobox(Vector2d(80, 20), Vector2d(400, 100), Texture(Colors::Yellow));
-    // Button butt(Vector2d(50, 50), Vector2d(25, 25), Texture(Colors::Green));
-    // combobox.add(&butt);
+    Image image(path_british);
+    ToolPalette tool_palette(Vector2d(100, 300), Vector2d(60, 160), Texture(Color::Magenta));
+    Canvas canvas(Vector2d(1400, 1000), Vector2d(820, 540), image, &tool_palette);
 
-    // Image image(path_british);
-    // ToolPalette tool_palette(Vector2d(100, 300), Vector2d(600, 200), Texture(Colors::Magenta));
-    // Canvas canvas(Vector2d(500, 500), Vector2d(300, 300), image, &tool_palette);
+
+    ComboBox combobox(Vector2d(80, 20), Vector2d(40, 10), Texture(Color::Yellow));
+    Button butt(Vector2d(50, 50), Vector2d(25, 25), Texture(Color::Green));
+    combobox.add(&butt);
+
     
-    // ToolPaint toolpaint;
-    // toolpaint.buildSetupWidget();
-    // canvas.add_tool(&toolpaint);
-    // ToolEraser tooleraser;
-    // tooleraser.buildSetupWidget();
-    // canvas.add_tool(&tooleraser);
     
-    // DecoratorScroll scroll_canvas(&canvas);
+    ToolPaint toolpaint;
+    toolpaint.buildSetupWidget();
+    canvas.add_tool(&toolpaint);
+    ToolEraser tooleraser;
+    tooleraser.buildSetupWidget();
+    canvas.add_tool(&tooleraser);
+    
+    DecoratorScroll scroll_canvas(&canvas);
 
-    // main_window.add(&scroll_canvas);    
-    // main_window.add(&tool_palette);
-    // main_window.add(&combobox);
-
-    Editor editor(Vector2d(300, 30), Vector2d(400, 550));
-    Font font(TIMES_NEW_ROMAN_FONT);
-    editor.setFont(font);
+    main_window.add(&scroll_canvas);    
+    main_window.add(&tool_palette);
+    main_window.add(&combobox);
+    
+    // Editor edit(Vector2d(100, 20), Vector2d(300, 300));
+    
+    // HSVwindow hsv_window(Vector2d(200, 400), Vector2d(200, 400) / 2);
+    // Font font(TIMES_NEW_ROMAN_FONT);
     Application app(&main_window);
-    main_window.add(&color_palette);
-    main_window.add(&editor);
+    
     app.exec();
 }

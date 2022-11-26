@@ -7,7 +7,7 @@ class MenuBar : public CompositeObject
 {
 public:
 
-    MenuBar(Vector2d shape, Vector2d center, Texture texture = Texture(Colors::White)) : 
+    MenuBar(Vector2d shape, Vector2d center, Texture texture = Texture(Color::White)) : 
         CompositeObject(shape, center, texture)
         {
 

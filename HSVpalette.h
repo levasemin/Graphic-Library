@@ -2,26 +2,25 @@
 
 #include "Object.h"
 #include "Image.h"
-#include "Edit.h"
+#include "Editor.h"
 
 class HSVpalette : public Object
 {   
 public:
-    float h_ = 360.0;
-    float s_;
-    float v_;
+    Color color_;
 
     ScrollBar scroll_bar_;
     Image palette_;
     
     bool clicked_ = false;
 
-    Command<Color> *palette_command_;
+    Command<const Color&> *palette_command_ = nullptr;
 
     HSVpalette(Vector2d shape, Vector2d center) : Object(shape, center),
         scroll_bar_(Vector2d(20, shape.y_), Vector2d(center.x_ + shape.x_ / 2 + 10, center.y_)),
-        palette_(shape)
-    {
+        palette_(shape),
+        color_(360., 0., 0.)
+    {   
         scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<HSVpalette, const Event&>(this, &HSVpalette::change_H));
         scroll_bar_.set_scroll_button_size(Vector2d(20, 4));
         scroll_bar_.set_button(false);
@@ -38,7 +37,11 @@ public:
         scroll_bar_.set_texture(scroll_bar_image.getTexture());
     }
     
-
+    void set_command(Command<const Color&> *command)
+    {
+        palette_command_ = command;
+    }
+    
     void draw() override
     {   
         scroll_bar_.draw();
@@ -47,14 +50,14 @@ public:
         {
             for (float x = 0; x < shape_.x_; x++)
             {
-                if ((int)(s_ * shape_.x_) == (int)x || (int)((1 - v_) * shape_.y_) == (int)y)
+                if ((int)(color_.get_s() * shape_.x_) == (int)x || (int)((1 - color_.get_v()) * shape_.y_) == (int)y)
                 {
-                    palette_.setPixel(Vector2d(x, y), Colors::White);
+                    palette_.setPixel(Vector2d(x, y), Color::White);
                 }
 
                 else
                 {
-                    palette_.setPixel(Vector2d(x, y), Color(h_, x / shape_.x_, 1.0 - y / shape_.y_));
+                    palette_.setPixel(Vector2d(x, y), Color(color_.get_h(), x / shape_.x_, 1.0 - y / shape_.y_));
                 }
             }
         }
@@ -68,28 +71,23 @@ public:
         Object::draw();
     }
 
-    void set_h(float h)
+    void set_color(const Color &color)
     {
-        h_ = h;
+        color_ = color;
         Event new_event;
         new_event.type_ = EventType::ScrollbarMoved;
-        new_event.Oleg_.smedata.value = h / 360;
+        new_event.Oleg_.smedata.value = 1.0 - color_.get_h() / 360.0;
         scroll_bar_.scroll_bar(new_event);
-    }
-
-    void set_s(float s)
-    {
-        s_ = s;
-    }
-
-    void set_v(float v)
-    {
-        v_ = v;
     }
 
     void change_H(const Event &event)
     {
-        h_ = 360 - 360.0 * event.Oleg_.smedata.value;
+        color_.set_h((1.0 - event.Oleg_.smedata.value) * 360.0);
+
+        if (palette_command_)
+        {
+            palette_command_->Execute(color_);
+        }
     }
 
     void ClickLeftEvent (const Event &event) override
@@ -100,8 +98,13 @@ public:
         {
             clicked_ = true;
 
-            s_ = (event.Oleg_.mbedata.x - get_start_field().x_) / shape_.x_;
-            v_ = 1.0 - (event.Oleg_.mbedata.y - get_start_field().y_) / shape_.y_;
+            color_.set_s((event.Oleg_.mbedata.x - get_start_field().x_) / shape_.x_);
+            color_.set_v(1.0 - (event.Oleg_.mbedata.y - get_start_field().y_) / shape_.y_);
+
+            if (palette_command_)
+            {
+                palette_command_->Execute(color_);
+            }
         }
 
         else
@@ -118,8 +121,13 @@ public:
         {
             if (point_belonging(Vector2d(event.Oleg_.motion.x, event.Oleg_.motion.y)))
             {
-                s_ = (event.Oleg_.motion.x - get_start_field().x_) / shape_.x_;
-                v_ = 1.0 - (event.Oleg_.motion.y - get_start_field().y_) / shape_.y_;
+                color_.set_s((event.Oleg_.motion.x - get_start_field().x_) / shape_.x_);
+                color_.set_v(1.0 - (event.Oleg_.motion.y - get_start_field().y_) / shape_.y_);
+                
+                if (palette_command_)
+                {
+                    palette_command_->Execute(color_);
+                }
             }
         }
     }

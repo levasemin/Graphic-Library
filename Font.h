@@ -9,7 +9,7 @@ class Font
 public:
 
     sf::Font font_;
-
+    
     Font (const sf::Font &font) : font_(font) 
     {}
 
