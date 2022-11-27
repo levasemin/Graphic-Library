@@ -39,7 +39,7 @@ int main()
     
     DecoratorScroll scroll_container = DecoratorScroll(&container);
 
-    Button first_button (Vector2d(100, 301), Vector2d(50, 160), Texture(Color::Blue));
+    Button first_button (Vector2d(100, 300), Vector2d(50, 160), Texture(Color::Blue));
 
     Command<const Event&> *command = (Command<const Event &> *)new SimpleCommand<Button, const Event&>(&first_button, &Button::print);
 

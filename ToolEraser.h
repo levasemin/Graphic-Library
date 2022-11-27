@@ -40,15 +40,15 @@ public:
 
         if (points_.size() == 4)
         {
-            for (float t = 0; t <= 1.f; t += 0.001)
+            for (float t = 0; t <= 1.f; t += 0.001f)
             {
                 float coeff_0 = -t * pow(1.f - t, 2.f);
-                float coeff_1 = (2.f - 5.f*pow(t, 2) + 3.f*pow(t, 3.f));
+                float coeff_1 = (2.f - 5.f*pow(t, 2.f) + 3.f*pow(t, 3.f));
                 float coeff_2 = t * (1.f + 4.f*t - 3.f*pow(t, 2.f));
                 float coeff_3 = pow(t, 2.f) * (1.f - t);
 
-                x = 0.5 * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
-                y = 0.5 * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);
+                x = 0.5f * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
+                y = 0.5f * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);
                 
                 image->putPixel((int)x, (int)y, default_image_[(int)y * image->getX() + (int)x]);
             }
@@ -64,7 +64,7 @@ public:
         {
             for (size_t x = 0; x < image->getX(); x++)
             {
-                default_image_[y * image->getX() + x] = image->getPixel(x, y);
+                default_image_[y * image->getX() + x] = image->getPixel((int)x, (int)y);
             }
         }
     }
@@ -80,7 +80,7 @@ public:
 
         switch (event->type)
         {
-            case booba::EventType::MouseMoved:
+            case booba::EventType::CanvasMMoved:
             {
                 if (!default_image_)
                 {
@@ -91,7 +91,7 @@ public:
 
                 if (points_.size() > 0)
                 {
-                    if (abs(points_.back().x - new_point.x) > image->getX() / 100 + 1 || abs(points_.back().y - new_point.y) > image->getH() / 10 + 1)
+                    if (abs(points_.back().x - new_point.x) > float(image->getX()) / 100.f + 1.f || abs(points_.back().y - new_point.y) > float(image->getH()) / 10.f + 1.f)
                     {
                         points_.clear();
                     }
@@ -133,8 +133,18 @@ public:
                 }
             }
             
+            case booba::EventType::NoEvent:
+            case booba::EventType::MouseMoved:
+            case booba::EventType::MousePressed:
+            case booba::EventType::MouseReleased:
+            case booba::EventType::ScrollbarMoved:
+            case booba::EventType::CanvasMPressed:
+            case booba::EventType::CanvasMReleased:
+            
             default:
+            {
                 break;
+            }
         }
     }
 

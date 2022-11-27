@@ -89,22 +89,19 @@ public:
 
     void set_width(const Event & event)
     {
-        width_ = event.Oleg_.smedata.value * 100;
+        width_ = uint32_t(event.Oleg_.smedata.value) * 100;
     }
 
     void paint(booba::Image *image)
     {
-        float x = points_.back().x;
-        float y = points_.back().y;
-
-        image->putPixel(x, y, color_);
+        image->putPixel((uint32_t)points_.back().x, (uint32_t)points_.back().y, color_);
 
         if (points_.size() == 4)
         {
-            for (float t = 0; t <= 1.f; t += 0.001)
+            for (float t = 0; t <= 1.f; t += 0.001f)
             {
                 point new_point = interpolator_(t, points_[0], points_[1], points_[2], points_[3]);
-                image->putPixel(new_point.x, new_point.y, color_);
+                image->putPixel(uint32_t(new_point.x), uint32_t(new_point.y), color_);
             }
         }
     }
@@ -126,7 +123,7 @@ public:
 
                 if (points_.size() > 0)
                 {
-                    if (abs(points_.back().x - new_point.x) > image->getX() / 100 + 1 || abs(points_.back().y - new_point.y) > image->getH() / 10 + 1)
+                    if (abs(points_.back().x - new_point.x) > float(image->getX()) / 100.f + 1.f || abs(points_.back().y - new_point.y) > float(image->getH()) / 10.f + 1.f)
                     {
                         points_.clear();
                     }
@@ -169,6 +166,7 @@ public:
             }
             
             case booba::EventType::NoEvent:
+            case booba::EventType::MouseMoved:
             case booba::EventType::MouseReleased:
             case booba::EventType::ScrollbarMoved:
             case booba::EventType::CanvasMPressed:

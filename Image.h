@@ -26,7 +26,7 @@ public:
 
     Image (const Vector2d &shape)
     {
-        image_.create(shape.x_, shape.y_);
+        image_.create(uint32_t(shape.x_), uint32_t(shape.y_));
     }
 
     Texture getTexture() const

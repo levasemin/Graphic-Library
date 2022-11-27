@@ -90,7 +90,7 @@ public:
     {    
         switch (event->type)
         {
-            case booba::EventType::MouseMoved:
+            case booba::EventType::CanvasMMoved:
             {
                 point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
 
