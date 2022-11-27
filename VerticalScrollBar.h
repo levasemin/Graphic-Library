@@ -50,8 +50,29 @@ public:
             scroll_button_.set_left_click((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::clicked_scroll_button));
         };
 
-        VerticalScrollBar(const VerticalScrollBar &) = default;
-        VerticalScrollBar &operator =(VerticalScrollBar &) = default;
+        VerticalScrollBar(const VerticalScrollBar &source) : CompositeObject(*(const CompositeObject *)&source),
+            scroll_coeff_(source.scroll_coeff_),
+            click_place_(0, 0),
+            up_button_(source.up_button_),
+            down_button_(source.down_button_),    
+            scroll_button_(source.scroll_button_),
+            scroll_field_shape(source.scroll_field_shape),
+            scroll_command_(source.scroll_command_)
+        {}
+
+        VerticalScrollBar &operator =(const VerticalScrollBar &source)
+        {
+            CompositeObject::operator=(*(const CompositeObject *)&source);
+            scroll_coeff_      = source.scroll_coeff_;
+            click_place_       = Vector2d(0, 0);
+            up_button_         = source.up_button_;
+            down_button_       = source.down_button_;    
+            scroll_button_     = source.scroll_button_;
+            scroll_field_shape = source.scroll_field_shape;
+            scroll_command_    = source.scroll_command_;
+
+            return *this;
+        }
         
         ~VerticalScrollBar()
         {

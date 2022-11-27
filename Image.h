@@ -9,22 +9,26 @@ class Image : public booba::Image
 public:    
     sf::Image image_;
 
-    Image ()
+    Image () : 
+        image_()
     {}
     
     ~Image() override {}
     
-    Image(const char *path)
+    Image(const char *path):
+        image_()
     {
         image_.loadFromFile(path);
     }
 
-    Image(const Texture &texture)
+    Image(const Texture &texture):
+        image_()
     {
         image_ = texture.texture_.copyToImage();
     }
 
-    Image (const Vector2d &shape)
+    Image (const Vector2d &shape):
+        image_()
     {
         image_.create(uint32_t(shape.x_), uint32_t(shape.y_));
     }

@@ -13,9 +13,10 @@ public:
     Editor r_editor_;
     Editor g_editor_;
     Editor b_editor_;
-    
-    Command<const Color &> *hsv_window_command_ = nullptr; 
+
     Color color_;
+
+    Command<const Color &> *hsv_window_command_ = nullptr; 
 
     HSVwindow(Vector2d shape, Vector2d center) : CompositeObject(shape, center),
         hsv_palette_(Vector2d(shape.x_ * 2 / 3, shape.y_ * 9 / 10), Vector2d(shape.x_ / 3, shape.y_ * 9 / 20) + shape / 50),
@@ -34,6 +35,28 @@ public:
             g_editor_.set_editor_command((Command <std::string> *)  new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_g));
             b_editor_.set_editor_command((Command <std::string> *)  new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_b));
         };
+
+        HSVwindow(const HSVwindow &source) : CompositeObject(*(const CompositeObject *)&source),
+            hsv_palette_(source.hsv_palette_),
+            r_editor_(source.r_editor_),
+            g_editor_(source.g_editor_),
+            b_editor_(source.b_editor_),
+            color_(source.color_),
+            hsv_window_command_(source.hsv_window_command_)
+        {}
+        
+        HSVwindow operator=(const HSVwindow &source)
+        {
+            CompositeObject::operator=(*(CompositeObject *)&source);
+            hsv_palette_ = source.hsv_palette_;
+            r_editor_    = source.r_editor_;
+            g_editor_    = source.g_editor_;
+            b_editor_    = source.b_editor_;
+            
+            color_ = source.color_;
+            
+            hsv_window_command_ = source.hsv_window_command_;
+        }
 
         void change_color(const Color &color)
         {            

@@ -13,6 +13,17 @@ public:
         std::string string = text_.getString();
     }
 
+    Editor(const Editor &source): Label(*(const Label *)&source),    
+        editor_command_(source.editor_command_)
+    {}
+    Editor &operator=(const Editor &source)
+    {
+        Label::operator=(*(const Label *)&source);
+        editor_command_ = source.editor_command_;
+
+        return *this;
+    }
+
     void set_editor_command(Command<std::string> *editor_command)
     {
         editor_command_ = editor_command;
@@ -48,12 +59,12 @@ public:
 
                 else if (Key::Num0 <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Num9)    
                 {
-                    letter = event.Oleg_.kpedata.code - Key::Num0 + '0';
+                    letter = char(event.Oleg_.kpedata.code - Key::Num0) + '0';
                 }
 
                 else if (Key::Numpad0 <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Numpad9)
                 {
-                    letter = event.Oleg_.kpedata.code - Key::Numpad0 + '0';
+                    letter = char(event.Oleg_.kpedata.code - Key::Numpad0) + '0';
                 }
 
                 string.push_back(letter);

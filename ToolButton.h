@@ -10,8 +10,27 @@ public:
         
     ToolButton(Vector2d shape, Vector2d center, const Texture &texture) : Button(shape, center, texture)
     {
-    };
+    }
     
+    ToolButton(const ToolButton &source) : Button(*(const Button *)&source),
+        left_click_command_         (source.left_click_command_),
+        release_left_click_command_ (source.release_left_click_command_),
+        right_click_command_        (source.right_click_command_),
+        release_right_click_command_(source.release_right_click_command_)
+    {}
+    
+    ToolButton &operator= (const ToolButton &source)
+    {
+        Button::operator=(*(const Button *)&source);
+
+        left_click_command_          = source.left_click_command_;
+        release_left_click_command_  = source.release_left_click_command_;
+        right_click_command_         = source.right_click_command_;
+        release_right_click_command_ = source.release_right_click_command_;
+
+        return *this;
+    }
+
     void set_left_click       (Command<const booba::Event &> *command)
     {
         left_click_command_ = command;
@@ -43,7 +62,7 @@ public:
     void PressKeyEvent      (const Event &event) override {};
     void ScrollEvent        (const Event &event) override {};
 
-private:
+protected:
     Command<const booba::Event &> *left_click_command_          = nullptr;
     Command<const booba::Event &> *release_left_click_command_  = nullptr;
 

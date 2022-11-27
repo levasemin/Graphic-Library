@@ -5,8 +5,6 @@
 #include "ToolButton.h"
 #include "tools.h"
 
-uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object);
-
 class Tool : public booba::Tool
 {
     

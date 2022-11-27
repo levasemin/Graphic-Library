@@ -22,6 +22,21 @@ class Application
             event_manager_()
             {};
 
+        Application (const Application &source):
+            main_window_(source.main_window_),
+            window_(source.window_),
+            event_manager_(source.event_manager_)
+        {}
+        
+        Application &operator=(const Application &source)
+        {
+            main_window_   = source.main_window_;
+            window_        = source.window_;
+            event_manager_ = source.event_manager_;
+
+            return *this;
+        }
+
         void exec();
         void set_main_window(Widget *main_window);
         void show(Widget *window);

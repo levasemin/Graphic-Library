@@ -18,6 +18,19 @@ public:
 
     }
 
+    ToolCommand(const ToolCommand &source):
+        receiver_(source.receiver_),
+        action_  (source.action_)
+    {}
+
+    ToolCommand &operator=(const ToolCommand &source)
+    {
+        receiver_ = source.receiver_;
+        action_   = source.action_;
+
+        return *this; 
+    }
+
     void Execute(const booba::Event &event) override
     {
         (receiver_->*action_)(nullptr, &event);

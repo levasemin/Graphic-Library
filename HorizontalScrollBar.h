@@ -1,4 +1,5 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 #pragma once
 
@@ -48,7 +49,7 @@ public:
             scroll_button_.set_left_click((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::clicked_scroll_button));
         };
 
-        HorizontalScrollBar(const HorizontalScrollBar &source) : CompositeObject(*(CompositeObject *)&source),
+        HorizontalScrollBar(const HorizontalScrollBar &source) : CompositeObject(*(const CompositeObject *)&source),
             up_button_(source.up_button_),
             down_button_(source.down_button_),
             scroll_button_(source.scroll_button_),
@@ -58,12 +59,14 @@ public:
 
         HorizontalScrollBar &operator=(const HorizontalScrollBar &source)
         {
-            CompositeObject::operator=(*(CompositeObject *)&source);
+            CompositeObject::operator=(*(const CompositeObject *)&source);
             up_button_         = source.up_button_;
             down_button_       = source.down_button_;
             scroll_button_     = source.scroll_button_;
             scroll_field_shape = source.scroll_field_shape;
             click_place_ = Vector2d(0.f, 0.f);
+
+            return *this;
         }
 
         void set_button(bool able)

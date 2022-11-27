@@ -18,15 +18,24 @@ public:
     Button(Vector2d shape, Vector2d center, const Texture &texture) : Object(shape, center, texture), text_()
     {
     };
-    
+
     Button(const Button& source) : Object(*(const Object *)&source),
-        text_(source.text_)
+        text_(source.text_),
+        left_click_command_         (source.left_click_command_),
+        release_left_click_command_ (source.release_left_click_command_),
+        right_click_command_        (source.right_click_command_),
+        release_right_click_command_(source.release_right_click_command_)
     {}
     
     Button &operator=(const Button &source)
     {
         Object::operator=(*(const Object *)&source);
+        
         text_ = source.text_;
+        left_click_command_          = source.left_click_command_;
+        release_left_click_command_  = source.release_left_click_command_;
+        right_click_command_         = source.right_click_command_;
+        release_right_click_command_ = source.release_right_click_command_;
 
         return *this;
     }

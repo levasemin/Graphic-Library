@@ -15,6 +15,9 @@ public:
     {
     }
 
+    Decorator(const Decorator &source) = default;
+    Decorator &operator=(const Decorator &source) = default;
+
     void ClickLeftEvent      (const Event &event) override
     {
         widget_->ClickLeftEvent(event);
@@ -174,4 +177,6 @@ public:
     {
         widget_->set_children(children);
     }
+
+    virtual ~Decorator () {};
 };

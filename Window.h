@@ -24,7 +24,15 @@ public:
     void draw(Sprite sprite);
     void clear();
     
-    Window &operator =(const Window &that) = default;    
+    Window (const Window &source):
+        window_(sf::VideoMode(source.window_.getSize().x, source.window_.getSize().y), "Vectors")
+    {}
+
+    Window &operator =(const Window &source)
+    {
+        window_.create(sf::VideoMode(source.window_.getSize().x, source.window_.getSize().y), "Vectors");
+        return *this;
+    }    
     
     bool isOpen();
     bool pollEvent(Event &event);

@@ -24,6 +24,15 @@ public:
         children_(source.children_)
         {}
 
+    CompositeObject &operator=(const CompositeObject &source)
+    {
+        Object::operator=(*(const Object *)&source);
+        global_shape_ = source.global_shape_;
+        children_ = source.children_;
+
+        return *this;
+    }
+
     void ClickLeftEvent      (const Event &event) override
     {   
         for (size_t i = 0; i < children_.size(); i++)

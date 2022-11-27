@@ -9,14 +9,30 @@
 class ToolManager
 {
 private:
-    ToolManager() {}
-    ToolManager( const ToolManager&);  
-    ToolManager& operator=( ToolManager& );
-
     std::vector<Tool *> tools_;
-    Tool* active_tool_;
+    Tool* active_tool_ = nullptr;
     
     std::vector <Texture *> textures_;
+
+    ToolManager(): 
+        tools_({}),
+        textures_({})
+    {}
+
+    ToolManager( const ToolManager &source):
+        tools_(source.tools_),
+        active_tool_(source.active_tool_),
+        textures_(source.textures_)
+    {}
+
+    ToolManager& operator=(const ToolManager& source)
+    {
+        tools_       = source.tools_;
+        active_tool_ = source.active_tool_;
+        textures_    = source.textures_;
+
+        return *this;
+    }
 
 public:
     static ToolManager& getInstance()

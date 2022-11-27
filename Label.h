@@ -20,6 +20,18 @@ public:
         text_.setColor(Color::Black);
     };
     
+    Label(const Label &source): Object(*(const Object *)&source),
+        text_(source.text_)
+    {}
+
+    Label &operator=(const Label &source)
+    {
+        Object::operator=(*(const Object *)&source);
+        text_ = source.text_;
+
+        return *this;
+    }
+
     void setString(const std::string &string)
     {
         text_.setString(string.c_str());

@@ -4,13 +4,10 @@
 
 class DecoratorScroll : public Decorator
 {
-    Vector2d global_offset0_;
 
 public :
-    DecoratorScroll(Widget *widget) : Decorator(widget),
-        global_offset0_(0.f, 0.f)
-    {
-    }
+    DecoratorScroll(Widget *widget) : Decorator(widget)
+    {}
 
     void ScrollEvent (const Event &event) override
     {

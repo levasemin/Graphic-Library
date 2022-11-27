@@ -35,7 +35,25 @@ public:
 
         scroll_bar_.set_texture(scroll_bar_image.getTexture());
     }
-    
+
+    HSVpalette(const HSVpalette &source) : Object(*(Object *)&source),
+        color_(source.color_),
+        palette_(source.palette_),
+        scroll_bar_(source.scroll_bar_),
+        palette_command_(source.palette_command_)
+        {}
+
+    HSVpalette &operator=(const HSVpalette &source)
+    {
+        Object::operator=(*(Object *)&source);
+        color_           = source.color_;
+        palette_         = source.palette_;
+        scroll_bar_      = source.scroll_bar_;
+        palette_command_ = source.palette_command_;
+
+        return *this;
+    }
+
     void set_command(Command<const Color&> *command)
     {
         palette_command_ = command;
