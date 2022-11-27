@@ -72,6 +72,9 @@ public:
     void convert_hsv_rgb();
     void convert_rgb_hsv();
 
+    static Color convert_uint_color(uint32_t color);
+    static uint32_t convert_color_uint(const Color &color);
+
     friend Color operator + (const Color &color1,   const Color &color2);
     friend Color operator + (const Color &color,    const uint8_t &number);
     friend Color operator + (const uint8_t &number, const Color &color);

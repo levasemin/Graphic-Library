@@ -13,7 +13,7 @@ public :
     {
         if (point_belonging(Vector2d(event.Oleg_.sedata.x, event.Oleg_.sedata.y)))
         {
-            set_local_offset(Vector2d(0, get_local_offset().y_ + event.Oleg_.sedata.value));   
+            set_local_offset(Vector2d(0, get_local_offset().y_ + event.Oleg_.sedata.value * 10.0));   
         }
     }
 
@@ -23,12 +23,18 @@ public :
         offset.y_ = offset.y_ <= 0 ? offset.y_ : 0;
         
         Vector2d max_offset = get_shape() - get_global_shape();
-        offset.x_ = offset.x_ <= max_offset.x_ ? offset.x_ : max_offset.x_;
-        offset.y_ = offset.y_ >= max_offset.y_ ? offset.y_ : max_offset.y_;
         
-        Decorator::get_local_offset().print_value();
+        if (max_offset.x_ < 0)
+        {
+            offset.x_ = offset.x_ >= max_offset.x_ ? offset.x_ : max_offset.x_;
+        }
+
+        if (max_offset.y_ < 0)
+        {
+            offset.y_ = offset.y_ >= max_offset.y_ ? offset.y_ : max_offset.y_;
+        }
+        
         Decorator::set_local_offset(offset);
-        Decorator::get_local_offset().print_value();
     }
 
     void add(Widget *widget) override

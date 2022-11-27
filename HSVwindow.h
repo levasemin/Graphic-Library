@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Editor.h"
 #include "HSVpalette.h"
 #include "CompositeObject.h"
@@ -16,7 +18,7 @@ public:
     Color color_;
 
     HSVwindow(Vector2d shape, Vector2d center) : CompositeObject(shape, center),
-        hsv_palette_(shape * 2 / 3, shape / 3 + shape / 50),
+        hsv_palette_(Vector2d(shape.x_ * 2 / 3, shape.y_ * 9 / 10), Vector2d(shape.x_ / 3, shape.y_ * 9 / 20) + shape / 50),
         r_editor_(Vector2d(shape.x_ / 5, shape.y_ / 15), Vector2d((shape.x_ * 2 / 3 + shape.x_ / 50) + shape.x_ / 10 + shape.x_ / 10, shape.y_ * 2 / 15)),
         g_editor_(Vector2d(shape.x_ / 5, shape.y_ / 15), Vector2d((shape.x_ * 2 / 3 + shape.x_ / 50) + shape.x_ / 10 + shape.x_ / 10, shape.y_ * 4 / 15)),
         b_editor_(Vector2d(shape.x_ / 5, shape.y_ / 15), Vector2d((shape.x_ * 2 / 3 + shape.x_ / 50) + shape.x_ / 10 + shape.x_ / 10, shape.y_ * 6 / 15)),
@@ -90,4 +92,16 @@ public:
                 hsv_window_command_->Execute(color_);
             }
         }
+
+        void ClickLeftEvent      (const Event &event) override
+    {  
+        printf("$$$$$$\n");
+        get_start_field().print_value();
+        printf("$$$$$$\n");
+        
+        for (int i = 0; i < children_.size(); i++)
+        {
+            children_[i]->ClickLeftEvent(event);
+        }
+    }
 };

@@ -13,16 +13,18 @@ class Canvas : public CompositeObject
 public:
     ToolManager &tool_manager_;
     ToolPalette *tool_palette_;
+    Container *setting_palette_;
 
     Surface surface_;
 
     bool is_left_clicked_;
 
-    Canvas(Vector2d shape, Vector2d center, const Image &image, ToolPalette *tool_palette) : 
+    Canvas(Vector2d shape, Vector2d center, const Image &image, ToolPalette *tool_palette, Container * setting_palette_) : 
         CompositeObject(shape, center, Color::Cyan),
-        surface_(image.getSize(), Vector2d(shape.x_ / 2, image.getSize().y_ / 2), image),
+        surface_(image.getSize(), image.getSize() / 2, image),
         tool_palette_(tool_palette),
-        tool_manager_(ToolManager::getInstance())
+        tool_manager_(ToolManager::getInstance()),
+        setting_palette_(setting_palette_)
     {   
         add(&surface_);
     }
@@ -34,11 +36,9 @@ public:
             if (is_left_clicked_)
             {
                 Event new_event = event;
-                //TODO
-                surface_.get_start_field().print_value();
 
-                new_event.Oleg_.motion.x -= surface_.get_start_field().x_;
-                new_event.Oleg_.motion.y -= surface_.get_global_offset().y_;
+                new_event.Oleg_.motion.x -= surface_.get_global_offset().x_ + (surface_.get_center().x_ - surface_.get_shape().x_ / 2);
+                new_event.Oleg_.motion.y -= surface_.get_global_offset().y_ + (surface_.get_center().y_ - surface_.get_shape().y_ / 2 );
 
                 tool_manager_.apply(&surface_, &new_event);
             }
@@ -67,5 +67,9 @@ public:
     {
         tool_manager_.add(new_tool);
         tool_palette_->add(new_tool->get_tool_widget());
+        if (new_tool->get_setting_widget() != nullptr)
+        {
+            setting_palette_->add(new_tool->get_setting_widget());
+        }
     }    
 };

@@ -6,27 +6,27 @@
 #include "Button.h"
 #include "SimpleCommand.h"
 #include "Command.h"
+#include "constants.h"
 
-const double SCROLL_COEFF = 0.1;
-
-
-class ScrollBar : public CompositeObject
+class VerticalScrollBar : public CompositeObject
 {
 public:
+    
+    double scroll_coeff_ = SCROLL_COEFF;
+    
+    Vector2d click_place_;
+    
     Button up_button_;
     Button down_button_;    
     Button scroll_button_;
     Vector2d scroll_field_shape;
 
     Command<const Event&> *scroll_command_ = nullptr;
-
-    double scroll_coeff_;
     
-    Vector2d click_place_;
-    
-    ScrollBar(Vector2d shape, Vector2d center):
+    VerticalScrollBar(Vector2d shape, Vector2d center):
         CompositeObject  (shape, center),
         scroll_coeff_(SCROLL_COEFF),
+        click_place_(0, 0),
         up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape.x_ / 2),
                       Texture(Color::White)),
         down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape_.y_   - shape.x_ / 2),
@@ -43,12 +43,21 @@ public:
             down_button_.set_has_local_offset(false);
             up_button_.set_has_local_offset(false);
             
-            up_button_.set_left_click    ((Command<const Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::scroll_up));
-            down_button_.set_left_click  ((Command<const Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::scroll_down));
-            scroll_button_.set_left_click((Command<const Event &> *) new SimpleCommand<ScrollBar, const Event &>(this, &ScrollBar::clicked_scroll_button));
+            up_button_.set_left_click    ((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::scroll_up));
+            down_button_.set_left_click  ((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::scroll_down));
+            scroll_button_.set_left_click((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::clicked_scroll_button));
         };
 
+        VerticalScrollBar(const VerticalScrollBar &) = default;
+        VerticalScrollBar &operator =(VerticalScrollBar &) = default;
         
+        ~VerticalScrollBar()
+        {
+            delete up_button_.get_left_click();
+            delete down_button_.get_left_click();
+            delete scroll_button_.get_left_click();
+        }
+
         void set_button(bool able)
         {
             Vector2d new_shape = up_button_.get_shape();
@@ -149,7 +158,7 @@ public:
             scroll_bar(new_event);
         }
         
-        void ClickLeftEvent(const Event &event)
+        void ClickLeftEvent(const Event &event) override
         {
             if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)) &&
                !scroll_button_.point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)) &&

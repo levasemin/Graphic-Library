@@ -26,6 +26,7 @@ public:
 
     }
 
+    ~SimpleCommand() {}
 private:
     Receiver *receiver_;
     Action action_;

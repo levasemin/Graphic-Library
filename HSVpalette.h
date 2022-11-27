@@ -9,7 +9,7 @@ class HSVpalette : public Object
 public:
     Color color_;
 
-    ScrollBar scroll_bar_;
+    VerticalScrollBar scroll_bar_;
     Image palette_;
     
     bool clicked_ = false;
@@ -92,10 +92,17 @@ public:
 
     void ClickLeftEvent (const Event &event) override
     {
+        printf("!ClIck!\n"); 
+
         scroll_bar_.ClickLeftEvent(event);
         
+        // printf("!!!!!\n");
+        // Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y).print_value();
+        // get_global_offset().print_value();
+        // printf("?????\n");
         if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
         {
+            printf("YEAH\n");
             clicked_ = true;
 
             color_.set_s((event.Oleg_.mbedata.x - get_start_field().x_) / shape_.x_);

@@ -14,7 +14,7 @@ class ComboBox : public Button
 public:
 
     ComboBox(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Blue)) : Button(shape, center, texture),
-        item_box_(Vector2d(shape.x_ * 2, shape.y_ * 10), center + shape / 2 + Vector2d(0, shape.y_ * 5), Texture(Color::White))
+        item_box_(Vector2d(shape.x_ * 2, shape.y_ * 10), center + shape / 2 + Vector2d(0, shape.y_ * 5))
     {
         set_left_click((Command<const Event&> *)new SimpleCommand<ComboBox, const Event &>(this, &ComboBox::show_item_container));
     }

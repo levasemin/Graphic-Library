@@ -9,7 +9,15 @@ class Container : public CompositeObject
 {
 public:
 
-    Container(Vector2d shape, Vector2d center, const Texture &texture): 
-        CompositeObject(shape, center, texture)
+    Container(Vector2d shape, Vector2d center): 
+        CompositeObject(shape, center)
         {};
+
+    void ClickLeftEvent      (const Event &event) override
+    {
+        for (int i = 0; i < children_.size(); i++)
+        {
+            children_[i]->ClickLeftEvent(event);
+        }
+    }
 };

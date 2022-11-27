@@ -47,6 +47,14 @@ public:
 
     void set_active_tool(Tool *tool)
     {
+        for (int i = 0; i < tools_.size(); i++)
+        {
+            if (tools_[i] != tool)
+            {
+                tools_[i]->apply(nullptr, nullptr);
+            }
+        }
+
         active_tool_ = tool;
     }
 

@@ -5,6 +5,7 @@
 #include "ToolCommand.h"
 #include "ToolManager.h"
 #include "Color.h"
+#include "HSVwindow.h"
 #include <deque>
 
 uint64_t createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object);
@@ -56,9 +57,11 @@ public:
     Interpolator interpolator_;
     uint32_t color_ = (1 << 16) - 1;
     uint32_t width_ = 1;
-    
+    HSVwindow hsv_window_;
+
     ToolPaint() : Tool(),
-        interpolator_(CATMULL_ROM)
+        interpolator_(CATMULL_ROM),
+        hsv_window_(Vector2d(200, 400), Vector2d(110, 600))
     {
         char icon_path[128] = "source/paint-brush.png";
         std::memcpy(icon_path_, icon_path, 128);

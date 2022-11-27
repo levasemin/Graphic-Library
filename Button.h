@@ -37,6 +37,26 @@ public:
         release_right_click_command_ = command;
     }
     
+    Command<const Event &> * get_left_click       ()
+    {
+        return left_click_command_;
+    }
+
+    Command<const Event &> * get_release_left_click  ()
+    {
+        return release_left_click_command_;
+    }
+
+    Command<const Event &> * get_right_click      ()
+    {
+        return right_click_command_;
+    }
+
+    Command<const Event &> * set_release_right_click  ()
+    {
+        return release_right_click_command_;
+    }
+
     void set_text(const Text &text)
     {
         text_ = text;

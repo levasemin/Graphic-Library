@@ -493,3 +493,12 @@ void Color::convert_hsv_rgb()
     g_ = (uint8_t)(round((g + m) * 255.0));
     b_ = (uint8_t)(round((b + m) * 255.0));
 }
+
+Color Color::convert_uint_color(uint32_t color)
+{
+    return Color((uint8_t)(color >> 24), (uint8_t)(color >> 16), (uint8_t)(color >> 8));
+}
+uint32_t Color::convert_color_uint(const Color &color)
+{
+    return ((uint32_t)color.get_r() << (uint32_t)24) + ((uint32_t)color.get_g() << (uint32_t)16) + ((uint32_t)color.get_b() << (uint32_t)8);
+}
