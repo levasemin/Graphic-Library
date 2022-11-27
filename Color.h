@@ -9,9 +9,9 @@
 class Color
 { 
     uint8_t r_, g_, b_;
-    double h_, s_, v_;
+    float h_, s_, v_;
 public:
-    Color(double h, double s, double v);
+    Color(float h, float s, float v);
     Color(uint8_t r, uint8_t g, uint8_t b); 
     Color(sf::Color color);
     Color(){};
@@ -32,40 +32,40 @@ public:
     void claim();
     
     void set_color(const uint8_t &r, const uint8_t &g, const uint8_t &b);
-    void set_relation(const double &r_rel, const double &g_rel, const double &b_rel);
+    void set_relation(const float &r_rel, const float &g_rel, const float &b_rel);
         
     void set_r(const uint8_t &r);
     void set_g(const uint8_t &g);
     void set_b(const uint8_t &b);
 
-    void set_h(const double &r);
-    void set_s(const double &g);
-    void set_v(const double &b);
+    void set_h(const float &r);
+    void set_s(const float &g);
+    void set_v(const float &b);
 
     uint8_t get_r() const;
     uint8_t get_g() const;
     uint8_t get_b() const;
 
-    double get_h() const;
-    double get_s() const;
-    double get_v() const;
+    float get_h() const;
+    float get_s() const;
+    float get_v() const;
 
-    void set_relation_r(const double &r_rel);
-    void set_relation_g(const double &g_rel);
-    void set_relation_b(const double &b_rel);
+    void set_relation_r(const float &r_rel);
+    void set_relation_g(const float &g_rel);
+    void set_relation_b(const float &b_rel);
 
-    void pow(double degree);
+    void pow(float degree);
     
     bool operator == (const Color &color2);
     bool operator != (const Color &color2);
     Color &operator += (const Color &color2);
-    Color &operator += (const double &number);
+    Color &operator += (const float &number);
     Color &operator -= (const Color &color2);
-    Color &operator -= (const double &number);
+    Color &operator -= (const float &number);
     Color &operator *= (const Color &color2);
-    Color &operator *= (const double &number);
+    Color &operator *= (const float &number);
     Color &operator /= (const Color &color2);
-    Color &operator /= (const double &number);
+    Color &operator /= (const float &number);
 
     Color &operator =(const Color &that) = default;    
 
@@ -78,23 +78,23 @@ public:
     friend Color operator + (const Color &color1,   const Color &color2);
     friend Color operator + (const Color &color,    const uint8_t &number);
     friend Color operator + (const uint8_t &number, const Color &color);
-    friend Color operator + (const Color &color,    const double &number);
-    friend Color operator + (const double &number,  const Color &color);
+    friend Color operator + (const Color &color,    const float &number);
+    friend Color operator + (const float &number,  const Color &color);
 
     friend Color operator - (const Color &color1, const Color &color2);
     friend Color operator - (const Color &color,  const uint8_t &number);
-    friend Color operator - (const Color &color,  const double &number);
+    friend Color operator - (const Color &color,  const float &number);
 
     friend Color operator * (const Color &color1, const Color &color2);
     friend Color operator * (const Color &color,  const uint8_t &number);
     friend Color operator * (const uint8_t &number,   const Color &color);
-    friend Color operator * (const Color &color,  const double &number);
-    friend Color operator * (const double &number,const Color &color);
+    friend Color operator * (const Color &color,  const float &number);
+    friend Color operator * (const float &number,const Color &color);
 
     friend Color operator / (const Color &color1, const Color &color2);
     friend Color operator / (const Color &color,  const uint8_t &number);
-    friend Color operator / (const Color &color,  const double &number);
+    friend Color operator / (const Color &color,  const float &number);
 
 private:
-    double r_rel_, g_rel_, b_rel_;   
+    float r_rel_, g_rel_, b_rel_;   
 };

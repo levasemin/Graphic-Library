@@ -2,6 +2,6 @@
 #include <iostream>
 #include <math.h>
 
-double get_determinant(double *array, int n);
-int doublecmp(double number1, double number2);
-std::pair<double, double> solve_quadtratic(double a, double b, double c);
+float get_determinant(float *array, int n);
+int doublecmp(float number1, float number2);
+std::pair<float, float> solve_quadtratic(float a, float b, float c);

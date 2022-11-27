@@ -70,8 +70,8 @@ public:
 
     void rescale()
     {
-        double scale_x = shape_.x_ / sprite_.getTexture()->getSize().x;
-        double scale_y = shape_.y_ / sprite_.getTexture()->getSize().y;
+        float scale_x = shape_.x_ / sprite_.getTexture()->getSize().x;
+        float scale_y = shape_.y_ / sprite_.getTexture()->getSize().y;
 
         if (mode_ == FILL_X)
         {

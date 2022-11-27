@@ -58,6 +58,7 @@ public:
 
     virtual void ScrollEvent         (const Event &event) override {}
 
+    ~Object () override {}
 
     bool point_belonging(Vector2d point) const override
     {

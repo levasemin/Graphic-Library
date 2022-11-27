@@ -19,7 +19,7 @@ public:
     bool is_on_ = false;
 
     Tool() {};
-    ~Tool() {};
+    ~Tool() override {};
 
     Widget *get_tool_widget()
     {

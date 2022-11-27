@@ -18,7 +18,7 @@ public:
 
     Command<const Event&> *scroll_command_ = nullptr;
 
-    double scroll_coeff_;
+    float scroll_coeff_;
     
     Vector2d click_place_;
     

@@ -19,7 +19,7 @@ public:
     HSVpalette(Vector2d shape, Vector2d center) : Object(shape, center),
         scroll_bar_(Vector2d(20, shape.y_), Vector2d(center.x_ + shape.x_ / 2 + 10, center.y_)),
         palette_(shape),
-        color_(360., 0., 0.)
+        color_(360.f, 0.f, 0.f)
     {   
         scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<HSVpalette, const Event&>(this, &HSVpalette::change_H));
         scroll_bar_.set_scroll_button_size(Vector2d(20, 4));
@@ -30,7 +30,7 @@ public:
         {
             for (float x = 0; x < scroll_bar_image.getSize().x_; x++)
             {
-                scroll_bar_image.setPixel(Vector2d(x, y), Color((1.0 - y / scroll_bar_.get_shape().y_) * 360.0, 1.0, 1.0));
+                scroll_bar_image.setPixel(Vector2d(x, y), Color((1.0 - y / scroll_bar_.get_shape().y_) * 360.f, 1.f, 1.f));
             }
         }
 

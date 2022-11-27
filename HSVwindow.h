@@ -22,7 +22,7 @@ public:
         r_editor_(Vector2d(shape.x_ / 5, shape.y_ / 15), Vector2d((shape.x_ * 2 / 3 + shape.x_ / 50) + shape.x_ / 10 + shape.x_ / 10, shape.y_ * 2 / 15)),
         g_editor_(Vector2d(shape.x_ / 5, shape.y_ / 15), Vector2d((shape.x_ * 2 / 3 + shape.x_ / 50) + shape.x_ / 10 + shape.x_ / 10, shape.y_ * 4 / 15)),
         b_editor_(Vector2d(shape.x_ / 5, shape.y_ / 15), Vector2d((shape.x_ * 2 / 3 + shape.x_ / 50) + shape.x_ / 10 + shape.x_ / 10, shape.y_ * 6 / 15)),
-        color_(0., 0., 0.)
+        color_(0.f, 0.f, 0.f)
         {
             add(&hsv_palette_);
             add(&r_editor_);

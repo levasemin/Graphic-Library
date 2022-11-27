@@ -11,7 +11,7 @@ void Vector2d::print_value() const
     std::cout << y_ << std::endl << std::endl;
 }
 
-void Vector2d::set_value(double x, double y)
+void Vector2d::set_value(float x, float y)
 {
     x_ = x;
     y_ = y;
@@ -31,19 +31,19 @@ Vector2d operator - (const Vector2d &first, const Vector2d &second)
     return new_vector;
 }
 
-Vector2d operator * (const Vector2d &that, double num)
+Vector2d operator * (const Vector2d &that, float num)
 {
     Vector2d new_vector = that;
     new_vector *= num;
     return new_vector;
 }
 
-Vector2d operator * (double num, const Vector2d &that)
+Vector2d operator * (float num, const Vector2d &that)
 {
     return that * num;
 }
 
-Vector2d operator / (const Vector2d &that, double num)
+Vector2d operator / (const Vector2d &that, float num)
 {
     Vector2d new_vector = that;
     new_vector /= num;
@@ -66,7 +66,7 @@ Vector2d &Vector2d::operator+= (const Vector2d &that)
     return *this;
 }
 
-Vector2d &Vector2d::operator *= (double num)
+Vector2d &Vector2d::operator *= (float num)
 {
     x_ *= num;
     y_ *= num;
@@ -74,7 +74,7 @@ Vector2d &Vector2d::operator *= (double num)
     return *this;
 }
 
-Vector2d &Vector2d::operator /= (double num)
+Vector2d &Vector2d::operator /= (float num)
 {
     x_ /= num;
     y_ /= num;

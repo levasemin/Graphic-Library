@@ -12,7 +12,7 @@ class VerticalScrollBar : public CompositeObject
 {
 public:
     
-    double scroll_coeff_ = SCROLL_COEFF;
+    float scroll_coeff_ = SCROLL_COEFF;
     
     Vector2d click_place_;
     

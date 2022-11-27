@@ -35,7 +35,7 @@ public:
 
         }
 
-        ToolPaint::point operator()(double t, ToolPaint::point point_0, ToolPaint::point point_1, ToolPaint::point point_2, ToolPaint::point point_3)
+        ToolPaint::point operator()(float t, ToolPaint::point point_0, ToolPaint::point point_1, ToolPaint::point point_2, ToolPaint::point point_3)
         {
             ToolPaint::point new_point = {0, 0};
 

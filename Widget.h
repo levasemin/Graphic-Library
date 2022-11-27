@@ -69,4 +69,7 @@ public:
     
     virtual std::vector<Widget *> get_children() const             = 0;
     virtual void set_children(std::vector<Widget *> children)      = 0;
+
+protected:
+    virtual ~Widget() = default;
 };

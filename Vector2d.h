@@ -6,9 +6,9 @@
 class Vector2d
 {
 public:
-    double x_, y_;
+    float x_, y_;
 
-    Vector2d(double x = 0, double y = 0): 
+    Vector2d(float x = 0, float y = 0): 
         x_(x),
         y_(y)
         {};
@@ -24,16 +24,16 @@ public:
     {}
 
     sf::Vector2u to_sf_vector() const;
-    void set_value(double x, double y);
+    void set_value(float x, float y);
     void print_value () const;
 
     friend Vector2d operator + (const Vector2d &first, const Vector2d &second);
     friend Vector2d operator - (const Vector2d &first, const Vector2d &second);
-    friend Vector2d operator * (const Vector2d &first, double num);
-    friend Vector2d operator * (double num, const Vector2d &first);
-    friend Vector2d operator / (const Vector2d &first, double num);
+    friend Vector2d operator * (const Vector2d &first, float num);
+    friend Vector2d operator * (float num, const Vector2d &first);
+    friend Vector2d operator / (const Vector2d &first, float num);
     Vector2d &operator -= (const Vector2d &that);
     Vector2d &operator += (const Vector2d &that);
-    Vector2d &operator *= (double num);
-    Vector2d &operator /= (double num);
+    Vector2d &operator *= (float num);
+    Vector2d &operator /= (float num);
 };

@@ -12,8 +12,8 @@ public:
     Image ()
     {}
     
-    ~Image ()
-    {}
+    ~Image() override {}
+    
     Image(const char *path)
     {
         image_.loadFromFile(path);
