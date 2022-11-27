@@ -19,14 +19,13 @@ public:
     {
     };
     
-    Button(const Button& source) : Object(*(Object *)&source)
-    {
-        text_ = source.text_;
-    }
+    Button(const Button& source) : Object(*(const Object *)&source),
+        text_(source.text_)
+    {}
     
     Button &operator=(const Button &source)
     {
-        Object::operator=(*(Object *)&source);
+        Object::operator=(*(const Object *)&source);
         text_ = source.text_;
 
         return *this;

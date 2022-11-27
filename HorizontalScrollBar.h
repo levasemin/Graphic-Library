@@ -33,7 +33,8 @@ public:
         scroll_button_(Vector2d((shape.x_ - shape.y_ * 2) * SCROLL_COEFF, shape.y_),
                        Vector2d(up_button_.get_shape().x_ + shape.x_ * SCROLL_COEFF  / 2, shape.y_ / 2), 
                        Texture(Color::Black)),
-        scroll_field_shape(shape.x_ - up_button_.get_shape().x_ - down_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape.y_)
+        scroll_field_shape(shape.x_ - up_button_.get_shape().x_ - down_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape.y_),
+        click_place_(0.f, 0.f)
         {
             add(&up_button_);
             add(&down_button_);
@@ -47,7 +48,24 @@ public:
             scroll_button_.set_left_click((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::clicked_scroll_button));
         };
 
-        
+        HorizontalScrollBar(const HorizontalScrollBar &source) : CompositeObject(*(CompositeObject *)&source),
+            up_button_(source.up_button_),
+            down_button_(source.down_button_),
+            scroll_button_(source.scroll_button_),
+            scroll_field_shape(source.scroll_field_shape),
+            click_place_(0.f, 0.f)
+        {}
+
+        HorizontalScrollBar &operator=(const HorizontalScrollBar &source)
+        {
+            CompositeObject::operator=(*(CompositeObject *)&source);
+            up_button_         = source.up_button_;
+            down_button_       = source.down_button_;
+            scroll_button_     = source.scroll_button_;
+            scroll_field_shape = source.scroll_field_shape;
+            click_place_ = Vector2d(0.f, 0.f);
+        }
+
         void set_button(bool able)
         {
             Vector2d new_shape = up_button_.get_shape();
@@ -166,4 +184,6 @@ public:
         {
             scroll_command_ = new_command;
         }
+
+        ~HorizontalScrollBar() override {}
 };

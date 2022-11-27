@@ -12,9 +12,10 @@ public:
     SimpleCommand(Receiver *receiver, Action action) : Command<TParams...>(),
         receiver_(receiver),
         action_(action) 
-    {
+    {}
 
-    }
+    SimpleCommand(const SimpleCommand &command) = default;
+    SimpleCommand &operator= (const SimpleCommand &command) = default; 
 
     void Execute(TParams... params) override
     {
@@ -26,7 +27,9 @@ public:
 
     }
 
-    ~SimpleCommand() {}
+
+    ~SimpleCommand() override {}
+    
 private:
     Receiver *receiver_ = nullptr;
     Action action_;

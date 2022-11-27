@@ -19,6 +19,11 @@ public:
         {
         }
 
+    CompositeObject(const CompositeObject &source) : Object(*(const Object *)&source),
+        global_shape_(source.global_shape_),
+        children_(source.children_)
+        {}
+
     void ClickLeftEvent      (const Event &event) override
     {   
         for (size_t i = 0; i < children_.size(); i++)
