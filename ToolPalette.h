@@ -12,7 +12,7 @@ public:
 
     }
 
-    void add(Widget *widget)
+    void add(Widget *widget) override
     {
         if (curr_pos_.y_ == 0)
         {

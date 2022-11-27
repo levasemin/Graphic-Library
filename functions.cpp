@@ -14,9 +14,9 @@ int doublecmp(float number1, float number2)
 
 std::pair<float, float> solve_quadtratic(float a, float b, float c)
 {
-    float D = pow(b, 2) - 4 * a * c;
+    float D = pow(b, 2.f) - 4.f * a * c;
         
-    if(doublecmp(D, 0) < 0)
+    if(doublecmp(D, 0.f) < 0)
     {
         return {NAN, NAN};
     } 
@@ -25,17 +25,17 @@ std::pair<float, float> solve_quadtratic(float a, float b, float c)
     {
         D = sqrt(D);
         
-        if (doublecmp(D, 0) == 0)
+        if (doublecmp(D, 0.f) == 0)
         {
-            float coeff = (-b + D) / 2 / a;
+            float coeff = (-b + D) / 2.f / a;
 
             return {coeff, coeff};
         }
 
         else
         {
-            float coeff_1 = (-b + D) / 2 / a;
-            float coeff_2 = (-b - D) / 2 / a;     
+            float coeff_1 = (-b + D) / 2.f / a;
+            float coeff_2 = (-b - D) / 2.f / a;     
 
             return {coeff_1, coeff_2};
         }

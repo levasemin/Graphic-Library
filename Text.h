@@ -10,7 +10,9 @@ class Text
 public:
     sf::Text text_;
 
-    Text () {}
+    Text ():
+        text_()
+    {}
     
     Text (const Font &font) 
     {

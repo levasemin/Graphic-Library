@@ -37,17 +37,17 @@ public:
 
         ToolPaint::point operator()(float t, ToolPaint::point point_0, ToolPaint::point point_1, ToolPaint::point point_2, ToolPaint::point point_3)
         {
-            ToolPaint::point new_point = {0, 0};
+            ToolPaint::point new_point = {0.f, 0.f};
 
             if (type_ == CATMULL_ROM)
             {
                 float coeff_0 = -t * pow(1.f - t, 2.f);
-                float coeff_1 = (2.f - 5.f*pow(t, 2) + 3.f*pow(t, 3));
-                float coeff_2 = t * (1.f + 4.f*t - 3.f*pow(t, 2));
-                float coeff_3 = pow(t, 2) * (1.f - t);
+                float coeff_1 = (2.f - 5.f*pow(t, 2.f) + 3.f*pow(t, 3.f));
+                float coeff_2 = t * (1.f + 4.f*t - 3.f*pow(t, 2.f));
+                float coeff_3 = pow(t, 2.f) * (1.f - t);
 
-                new_point.x = 0.5 * (coeff_0 * point_0.x + coeff_1 * point_1.x + coeff_2 * point_2.x - coeff_3 * point_3.x);
-                new_point.y = 0.5 * (coeff_0 * point_0.y + coeff_1 * point_1.y + coeff_2 * point_2.y - coeff_3 * point_3.y);
+                new_point.x = 0.5f * (coeff_0 * point_0.x + coeff_1 * point_1.x + coeff_2 * point_2.x - coeff_3 * point_3.x);
+                new_point.y = 0.5f * (coeff_0 * point_0.y + coeff_1 * point_1.y + coeff_2 * point_2.y - coeff_3 * point_3.y);
             }
 
             return new_point;
@@ -146,11 +146,6 @@ public:
 
             case booba::EventType::ButtonClicked:
             {
-                // printf("--------\n");
-                // hsv_window_.get_global_offset().print_value();
-                // printf("--------\n");
-                
-                printf("BUTTTON WAS PREDDSD\n");
                 if (event->Oleg.bcedata.id == tool_button_)
                 {
                     settings_container_.set_shape(Vector2d(300, 400));
@@ -172,6 +167,12 @@ public:
                     is_on_ = !is_on_;
                 }
             }
+            
+            case booba::EventType::NoEvent:
+            case booba::EventType::MouseReleased:
+            case booba::EventType::ScrollbarMoved:
+            case booba::EventType::CanvasMPressed:
+            case booba::EventType::CanvasMReleased:
             
             default:
                 break;

@@ -9,9 +9,8 @@ class CompositeObject : public Object
 {
 
 protected:
-    std::vector<Widget *> children_;
-
     Vector2d global_shape_;
+    std::vector<Widget *> children_;
 
 public:
     CompositeObject(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Red)): Object(shape, center, texture),

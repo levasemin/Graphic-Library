@@ -36,7 +36,7 @@ public:
         local_offset_(Vector2d(0, 0)),
         global_offset_(Vector2d(0, 0))
         {
-            if (center.x_ == -1 && center.y_ == -1)
+            if (!doublecmp(center.x_, -1.f) && !doublecmp(center.y_, -1))
             {
                 center_ = shape_ / 2;
             }

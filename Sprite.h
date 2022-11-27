@@ -21,17 +21,18 @@ public:
     Sprite(Vector2d shape, const Texture &texture, int mode = FILL):
         mode_(mode),
         shape_(shape),
-        texture_(texture)
+        texture_(texture), 
+        sprite_()
     {
         setTexture(texture_);
     };
 
     Sprite(sf::Sprite sprite):
         mode_(0),
-        sprite_(sprite),
+        shape_(float(sprite.getTextureRect().width)   * sprite.getScale().x,
+               float(sprite_.getTextureRect().height) * sprite.getScale().y),
         texture_(*sprite.getTexture()),
-        shape_(float(sprite.getTextureRect().width   * sprite.getScale().x),
-               float(sprite_.getTextureRect().height * sprite.getScale().y))
+        sprite_(sprite)
     {
     }
 
@@ -73,8 +74,8 @@ public:
 
     void rescale()
     {
-        float scale_x = shape_.x_ / sprite_.getTexture()->getSize().x;
-        float scale_y = shape_.y_ / sprite_.getTexture()->getSize().y;
+        float scale_x = shape_.x_ / float(sprite_.getTexture()->getSize().x);
+        float scale_y = shape_.y_ / float(sprite_.getTexture()->getSize().y);
 
         if (mode_ == FILL_X)
         {

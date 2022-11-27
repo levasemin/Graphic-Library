@@ -298,7 +298,7 @@ public:
             {
                 type_ = EventType::ScrollbarMoved;
                 Oleg_.sedata.value = sfEvent.mouseWheelScroll.delta;
-                Oleg_.sedata.pos = Vector2d(sfEvent.mouseWheelScroll.x, sfEvent.mouseWheelScroll.y);
+                Oleg_.sedata.pos = Vector2d((float)sfEvent.mouseWheelScroll.x, (float)sfEvent.mouseWheelScroll.y);
                 break;
             }
 
