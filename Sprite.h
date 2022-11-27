@@ -10,10 +10,13 @@ const int CROP   = 3;
 class Sprite
 {
 
+private:
+    int mode_;
+
 public:
     Vector2d shape_;
-    sf::Sprite sprite_;
     Texture texture_;
+    sf::Sprite sprite_;
 
     Sprite(Vector2d shape, const Texture &texture, int mode = FILL):
         mode_(mode),
@@ -27,14 +30,14 @@ public:
         mode_(0),
         sprite_(sprite),
         texture_(*sprite.getTexture()),
-        shape_(sprite.getTextureRect().width   * sprite.getScale().x,
-               sprite_.getTextureRect().height * sprite.getScale().y)
+        shape_(float(sprite.getTextureRect().width   * sprite.getScale().x),
+               float(sprite_.getTextureRect().height * sprite.getScale().y))
     {
     }
 
     void setTextureRect(Vector2d start, Vector2d end)
     {
-        sprite_.setTextureRect(sf::IntRect(start.x_, start.y_, end.x_, end.y_));
+        sprite_.setTextureRect(sf::IntRect((int)start.x_, (int)start.y_, (int)end.x_, (int)end.y_));
     }
 
     void set_shape(Vector2d shape, bool with_rescale = true)
@@ -90,7 +93,4 @@ public:
     {
         return Vector2d(sprite_.getScale());
     }
-
-private:
-    int mode_;
 };

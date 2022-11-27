@@ -12,7 +12,7 @@ public:
     sf::RenderWindow window_;
     
     Window(Vector2d shape):
-        window_(sf::VideoMode(shape.x_, shape.y_), "Vectors")
+        window_(sf::VideoMode((uint32_t)shape.x_, (uint32_t)shape.y_), "Vectors")
         {
         };
         

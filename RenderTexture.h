@@ -14,12 +14,12 @@ public:
         shape_(shape),
         render_texture_()
     {
-        render_texture_.create(shape.x_, shape_.y_);
+        create(shape);
     };
     
     void create(const Vector2d &shape)
     {
-        render_texture_.create(shape.x_, shape.y_);      
+        render_texture_.create((uint32_t)shape.x_, (uint32_t)shape.y_);      
     }
  
     void draw(const Sprite &sprite)

@@ -1,3 +1,5 @@
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 #pragma once
 
 #include "Tool.h"
@@ -48,7 +50,7 @@ public:
 
     void set_active_tool(Tool *tool)
     {
-        for (int i = 0; i < tools_.size(); i++)
+        for (size_t i = 0; i < tools_.size(); i++)
         {
             if (tools_[i] != tool)
             {

@@ -1,3 +1,5 @@
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 #pragma once
 
 #include "Object.h"
@@ -9,17 +11,18 @@ class CompositeObject : public Object
 protected:
     std::vector<Widget *> children_;
 
-    Vector2d global_shape_ = (0, 0);
+    Vector2d global_shape_;
 
 public:
-    CompositeObject(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Red)):
-        Object(shape, center, texture)
+    CompositeObject(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Red)): Object(shape, center, texture),
+        global_shape_(0, 0),
+        children_({})
         {
         }
 
     void ClickLeftEvent      (const Event &event) override
     {   
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             children_[i]->ClickLeftEvent(event);
         }
@@ -27,7 +30,7 @@ public:
 
     void ReleasedLeftEvent   (const Event &event) override
     {
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             children_[i]->ReleasedLeftEvent(event);
         }
@@ -35,14 +38,14 @@ public:
     
     void ClickRightEvent     (const Event &event) override
     {
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             children_[i]->ClickRightEvent(event);
         }
     }
     void ReleasedRightEvent  (const Event &event) override
     {
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             children_[i]->ReleasedLeftEvent(event);
         }
@@ -50,7 +53,7 @@ public:
     
     void MoveMouseEvent      (const Event &event) override
     {
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             children_[i]->MoveMouseEvent(event);
         }
@@ -58,7 +61,7 @@ public:
     
     void PressKeyEvent       (const Event &event) override
     {
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             children_[i]->PressKeyEvent(event);
         }
@@ -66,7 +69,7 @@ public:
     
     void ScrollEvent         (const Event &event) override
     {
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             children_[i]->ScrollEvent(event);
         }
@@ -76,7 +79,7 @@ public:
     {
         Object::set_global_offset(offset);
 
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             children_[i]->set_global_offset(offset + get_start_field());
         }
@@ -90,7 +93,7 @@ public:
         sprite_.setPosition(Vector2d(0, 0));
         render_texture_->draw(sprite_);
         
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             children_[i]->draw();
         }
@@ -104,7 +107,7 @@ public:
         Vector2d global_end_field(INT64_MIN, INT64_MIN);
         Vector2d global_start_field(INT64_MAX, INT64_MAX);
 
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             global_start_field.x_ = children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 < global_start_field.x_ ? 
                                       children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 : global_start_field.x_;
@@ -126,7 +129,7 @@ public:
     {
         widget->set_parent(nullptr);
 
-        for (int i = 0; i < children_.size(); i++)
+        for (size_t i = 0; i < children_.size(); i++)
         {
             if (widget == children_[i])
             {
@@ -169,7 +172,7 @@ public:
     { 
         std::vector <Widget *> children = get_children();
 
-        for (int i = 0; i < children.size(); i++)
+        for (size_t i = 0; i < children.size(); i++)
         {
             children[i]->set_global_offset(children[i]->get_global_offset() + (offset - local_offset_) * children[i]->get_has_local_offset());
         }

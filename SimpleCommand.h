@@ -28,6 +28,6 @@ public:
 
     ~SimpleCommand() {}
 private:
-    Receiver *receiver_;
+    Receiver *receiver_ = nullptr;
     Action action_;
 };

@@ -40,12 +40,12 @@ public:
 
         if (points_.size() == 4)
         {
-            for (float t = 0; t <= 1.0; t += 0.001)
+            for (float t = 0; t <= 1.f; t += 0.001)
             {
-                float coeff_0 = -t * pow(1.0 - t, 2.0);
-                float coeff_1 = (2.0 - 5.0*pow(t, 2) + 3.0*pow(t, 3));
-                float coeff_2 = t * (1.0 + 4.0*t - 3.0*pow(t, 2));
-                float coeff_3 = pow(t, 2) * (1.0 - t);
+                float coeff_0 = -t * pow(1.f - t, 2.f);
+                float coeff_1 = (2.f - 5.f*pow(t, 2) + 3.f*pow(t, 3));
+                float coeff_2 = t * (1.f + 4.f*t - 3.f*pow(t, 2));
+                float coeff_3 = pow(t, 2) * (1.f - t);
 
                 x = 0.5 * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
                 y = 0.5 * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);

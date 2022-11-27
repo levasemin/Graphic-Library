@@ -8,8 +8,8 @@
 
 class Color
 { 
-    uint8_t r_, g_, b_;
-    float h_, s_, v_;
+    uint8_t r_ = 0, g_ = 0, b_ = 0;
+    float   h_ = 0, s_ = 0, v_ = 0;
 public:
     Color(float h, float s, float v);
     Color(uint8_t r, uint8_t g, uint8_t b); 
@@ -96,5 +96,5 @@ public:
     friend Color operator / (const Color &color,  const float &number);
 
 private:
-    float r_rel_, g_rel_, b_rel_;   
+    float r_rel_ = 0, g_rel_ = 0, b_rel_ = 0;   
 };

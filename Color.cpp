@@ -24,9 +24,9 @@ Color &Color::operator += (const Color &color2)
     g_ += color2.g_;
     b_ += color2.b_;
     
-    r_rel_ = r_ / 255.0;
-    g_rel_ = g_ / 255.0;
-    b_rel_ = b_ / 255.0;
+    r_rel_ = r_ / 255.f;
+    g_rel_ = g_ / 255.f;
+    b_rel_ = b_ / 255.f;
 
     return *this;
 }
@@ -36,9 +36,9 @@ Color &Color::operator += (const float &number)
     g_rel_ += number;
     b_rel_ += number;
 
-    r_ = r_rel_ * 255.0;
-    g_ = g_rel_ * 255.0;
-    b_ = b_rel_ * 255.0;
+    r_ = uint8_t(r_rel_ * 255.f);
+    g_ = uint8_t(g_rel_ * 255.f);
+    b_ = uint8_t(b_rel_ * 255.f);
 
     return *this;
 }
@@ -49,9 +49,9 @@ Color &Color::operator -= (const Color &color2)
     g_ -= color2.g_;
     b_ -= color2.b_;
 
-    r_rel_ = r_ / 255.0;
-    g_rel_ = g_ / 255.0;
-    b_rel_ = b_ / 255.0;
+    r_ = uint8_t(r_rel_ * 255.f);
+    g_ = uint8_t(g_rel_ * 255.f);
+    b_ = uint8_t(b_rel_ * 255.f);
 
     return *this;
 }
@@ -61,9 +61,9 @@ Color &Color::operator -= (const float &number)
     g_rel_ -= number;
     b_rel_ -= number;
 
-    r_ = r_rel_ * 255.0;
-    g_ = g_rel_ * 255.0;
-    b_ = b_rel_ * 255.0;
+    r_ = uint8_t(r_rel_ * 255.f);
+    g_ = uint8_t(g_rel_ * 255.f);
+    b_ = uint8_t(b_rel_ * 255.f);
 
     return *this;
 }
@@ -74,9 +74,9 @@ Color &Color::operator *= (const Color &color2)
     g_rel_ *= color2.g_rel_;
     b_rel_ *= color2.b_rel_;
 
-    r_ = r_rel_ * 255.0;
-    g_ = g_rel_ * 255.0;
-    b_ = b_rel_ * 255.0;
+    r_ = uint8_t(r_rel_ * 255.f);
+    g_ = uint8_t(g_rel_ * 255.f);
+    b_ = uint8_t(b_rel_ * 255.f);
 
     return *this;
 }
@@ -86,9 +86,9 @@ Color &Color::operator *= (const float &number)
     g_rel_ *= number;
     b_rel_ *= number;
 
-    r_ = r_rel_ * 255.0;
-    g_ = g_rel_ * 255.0;
-    b_ = b_rel_ * 255.0;
+    r_ = uint8_t(r_rel_ * 255.f);
+    g_ = uint8_t(g_rel_ * 255.f);
+    b_ = uint8_t(b_rel_ * 255.f);
 
     return *this;
 }
@@ -99,9 +99,9 @@ Color &Color::operator /= (const Color &color2)
     g_rel_ /= color2.g_rel_;
     b_rel_ /= color2.b_rel_;
 
-    r_ = r_rel_ * 255.0;
-    g_ = g_rel_ * 255.0;
-    b_ = b_rel_ * 255.0;
+    r_ = uint8_t(r_rel_ * 255.f);
+    g_ = uint8_t(g_rel_ * 255.f);
+    b_ = uint8_t(b_rel_ * 255.f);
 
     return *this;
 }
@@ -111,9 +111,9 @@ Color &Color::operator /= (const float &number)
     g_rel_ /= number;
     b_rel_ /= number;
 
-    r_ = r_rel_ * 255.0;
-    g_ = g_rel_ * 255.0;
-    b_ = b_rel_ * 255.0;
+    r_ = uint8_t(r_rel_ * 255.f);
+    g_ = uint8_t(g_rel_ * 255.f);
+    b_ = uint8_t(b_rel_ * 255.f);
 
     return *this;
 }
@@ -236,9 +236,9 @@ Color operator / (const Color &color, const float &number)
 
 void Color::pow(float degree)
 {
-    r_rel_ = powf64(r_rel_, degree);
-    g_rel_ = powf64(g_rel_, degree);
-    b_rel_ = powf64(b_rel_, degree);
+    r_rel_ = powf32(r_rel_, degree);
+    g_rel_ = powf32(g_rel_, degree);
+    b_rel_ = powf32(b_rel_, degree);
 
     claim();
 }
@@ -261,21 +261,21 @@ void Color::set_v(const float &v)
 
 void Color::set_r(const uint8_t &r)
 {
-    r_rel_ = (float)r / 255.0;
+    r_rel_ = (float)r / 255.f;
     this->claim();
 
     convert_rgb_hsv();
 }
 void Color::set_g(const uint8_t &g)
 {
-    g_rel_ = (float)g / 255.0;
+    g_rel_ = (float)g / 255.f;
     this->claim();
 
     convert_rgb_hsv();
 }
 void Color::set_b(const uint8_t &b)
 {
-    b_rel_ = (float)b / 255.0;
+    b_rel_ = (float)b / 255.f;
     this->claim();
 
     convert_rgb_hsv();
@@ -325,9 +325,9 @@ void Color::set_relation_b(const float &b_rel)
 
 void Color::set_color(const uint8_t &r, const uint8_t &g, const uint8_t &b)
 {
-    r_rel_ = (float)r / 255.0;
-    g_rel_ = (float)g / 255.0;
-    b_rel_ = (float)b / 255.0;
+    r_rel_ = (float)r / 255.f;
+    g_rel_ = (float)g / 255.f;
+    b_rel_ = (float)b / 255.f;
 
     this->claim();
 }
@@ -350,16 +350,16 @@ void Color::claim()
     g_rel_ = g_rel_ >= 0 ? g_rel_ : 0;
     b_rel_ = b_rel_ >= 0 ? b_rel_ : 0;
 
-    r_ = uint8_t(r_rel_ * 255.0);
-    g_ = uint8_t(g_rel_ * 255.0);
-    b_ = uint8_t(b_rel_ * 255.0);
+    r_ = uint8_t(r_rel_ * 255.f);
+    g_ = uint8_t(g_rel_ * 255.f);
+    b_ = uint8_t(b_rel_ * 255.f);
 }
 
 Color::Color (uint8_t r, uint8_t g, uint8_t b): r_(r), g_(g), b_(b)
 {
-    r_rel_ = (float)r / 255.0;
-    g_rel_ = (float)g / 255.0;
-    b_rel_ = (float)b / 255.0;
+    r_rel_ = (float)r / 255.f;
+    g_rel_ = (float)g / 255.f;
+    b_rel_ = (float)b / 255.f;
     
     this->claim();
 
@@ -373,9 +373,9 @@ Color::Color (float h, float s, float v): h_(h), s_(s), v_(v)
 {
     convert_hsv_rgb();
 
-    r_rel_ = r_ / 255.0;
-    g_rel_ = g_ / 255.0;
-    b_rel_ = b_ / 255.0;
+    r_rel_ = r_ / 255.f;
+    g_rel_ = g_ / 255.f;
+    b_rel_ = b_ / 255.f;
     this->claim();
 };
 
@@ -398,17 +398,17 @@ void Color::convert_rgb_hsv()
 
     float delta = cmax - cmin;
 
-    if (cmax == cmin)
+    if (!doublecmp(cmax, cmin))
         h_ = 0;
  
     else if (!doublecmp(cmax, r_rel_))
-        h_ = fmod(60.0 * ((g_rel_ - b_rel_) / delta) + 360.0, 360.0);
+        h_ = fmod(60.f * ((g_rel_ - b_rel_) / delta) + 360.f, 360.f);
  
     else if (!doublecmp(cmax, g_rel_))
-        h_ = fmod(60.0 * ((b_rel_ - r_rel_) / delta) + 120.0, 360.0);
+        h_ = fmod(60.f * ((b_rel_ - r_rel_) / delta) + 120.f, 360.f);
  
     else if (!doublecmp(cmax, b_rel_))
-        h_ = fmod(60.0 * ((r_rel_ - g_rel_) / delta) + 240.0, 360.0);
+        h_ = fmod(60.f * ((r_rel_ - g_rel_) / delta) + 240.f, 360.f);
 
     if (!doublecmp(cmax, 0))
         s_ = 0;
@@ -430,12 +430,12 @@ void Color::convert_rgb_hsv()
     
     if (g_ >= b_)
     {
-        h_ = 1.0 / cos(((float)r_ - 0.5 * (float)g_ - 0.5 * (float)b_) / sqrt((float)std::pow(r_, 2) + (float)std::pow(g_, 2) + (float)std::pow(b_, 2) - (float)(r_ * g_ - r_ * b_ - g_ * b_)));
+        h_ = 1.f / cos(((float)r_ - 0.5 * (float)g_ - 0.5 * (float)b_) / sqrt((float)std::pow(r_, 2) + (float)std::pow(g_, 2) + (float)std::pow(b_, 2) - (float)(r_ * g_ - r_ * b_ - g_ * b_)));
     }
 
     else
     {
-        h_ = 360.0 - 1.0 / cos(((float)r_ - 0.5 * (float)g_ - 0.5 * (float)b_) / sqrt((float)std::pow(r_, 2) + (float)std::pow(g_, 2) + (float)std::pow(b_, 2) - (float)(r_ * g_ - r_ * b_ - g_ * b_)));
+        h_ = 360.f - 1.f / cos(((float)r_ - 0.5 * (float)g_ - 0.5 * (float)b_) / sqrt((float)std::pow(r_, 2) + (float)std::pow(g_, 2) + (float)std::pow(b_, 2) - (float)(r_ * g_ - r_ * b_ - g_ * b_)));
     }
 }
 */
@@ -443,55 +443,55 @@ void Color::convert_hsv_rgb()
 {
     float c = v_ * s_;
     float mod_2 = (fmod((h_ / 60.f), 2.f));
-    float x = c * (1.0 - abs( mod_2 - 1.f));
+    float x = c * (1.f - abs( mod_2 - 1.f));
     float m = v_ - c;
-    float r = 0.0, g = 0.0, b = 0.0;
+    float r = 0.f, g = 0.f, b = 0.f;
 
-    if (h_ < 60.0)
+    if (h_ < 60.f)
     {
         r = c;
         g = x;
-        b = 0.0;
+        b = 0.f;
     }
 
-    else if (h_ < 120.0)
+    else if (h_ < 120.f)
     {
         r = x;
         g = c;
-        b = 0.0;
+        b = 0.f;
     }
 
-    else if (h_ < 180.0)
+    else if (h_ < 180.f)
     {
-        r = 0.0;
+        r = 0.f;
         g = c;
         b = x;
     }
 
-    else if (h_ < 240.0)
+    else if (h_ < 240.f)
     {
-        r = 0.0;
+        r = 0.f;
         g = x;
         b = c;
     }
 
-    else if (h_ < 300.0)
+    else if (h_ < 300.f)
     {
         r = x;
-        g = 0.0;
+        g = 0.f;
         b = c;
     }
 
     else
     {
         r = c;
-        g = 0.0;
+        g = 0.f;
         b = x;
     }
     
-    r_ = (uint8_t)(round((r + m) * 255.0));
-    g_ = (uint8_t)(round((g + m) * 255.0));
-    b_ = (uint8_t)(round((b + m) * 255.0));
+    r_ = (uint8_t)(round((r + m) * 255.f));
+    g_ = (uint8_t)(round((g + m) * 255.f));
+    b_ = (uint8_t)(round((b + m) * 255.f));
 }
 
 Color Color::convert_uint_color(uint32_t color)

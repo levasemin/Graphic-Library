@@ -33,6 +33,20 @@ booba::Event convert_event(const Event &event)
             booba_event.type = booba::EventType::ButtonClicked;
             booba_event.Oleg.bcedata.id = event.Oleg_.bcedata.id;
         }
+
+        case EventType::NoEvent:
+        case EventType::MouseReleased:
+        case EventType::ScrollbarMoved:
+        case EventType::CanvasMPressed:
+        case EventType::CanvasMReleased:
+        case EventType::CanvasMMoved:
+        case EventType::KeyPressed:
+        case EventType::Closed:
+
+        default:
+        {
+            break;
+        }
     }
 
     return booba_event;

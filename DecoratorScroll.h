@@ -1,11 +1,14 @@
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 #include "Decorator.h"
 
 class DecoratorScroll : public Decorator
 {
-    Vector2d global_offset0_ = (0, 0);
+    Vector2d global_offset0_;
 
 public :
-    DecoratorScroll(Widget *widget) : Decorator(widget)
+    DecoratorScroll(Widget *widget) : Decorator(widget),
+        global_offset0_(0.f, 0.f)
     {
     }
 
@@ -13,7 +16,7 @@ public :
     {
         if (point_belonging(event.Oleg_.sedata.pos))
         {
-            set_local_offset(Vector2d(0, get_local_offset().y_ + event.Oleg_.sedata.value * 10.0));   
+            set_local_offset(Vector2d(0, get_local_offset().y_ + event.Oleg_.sedata.value * 10.f));   
         }
     }
 

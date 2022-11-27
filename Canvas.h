@@ -1,3 +1,5 @@
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 #pragma once
 
 #include "RenderTexture.h"
@@ -11,19 +13,19 @@
 class Canvas : public CompositeObject
 {
 public:
-    ToolManager &tool_manager_;
-    ToolPalette *tool_palette_;
-    Container *setting_palette_;
-
     Surface surface_;
 
-    bool is_left_clicked_;
+    ToolManager &tool_manager_;
+    ToolPalette *tool_palette_ = nullptr;
+    Container *setting_palette_ = nullptr;
+
+    bool is_left_clicked_ = false;
 
     Canvas(Vector2d shape, Vector2d center, const Image &image, ToolPalette *tool_palette, Container * setting_palette_) : 
         CompositeObject(shape, center, Color::Cyan),
         surface_(image.getSize(), image.getSize() / 2, image),
-        tool_palette_(tool_palette),
         tool_manager_(ToolManager::getInstance()),
+        tool_palette_(tool_palette),
         setting_palette_(setting_palette_)
     {   
         add(&surface_);

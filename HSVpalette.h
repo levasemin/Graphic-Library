@@ -30,7 +30,7 @@ public:
         {
             for (float x = 0; x < scroll_bar_image.getSize().x_; x++)
             {
-                scroll_bar_image.setPixel(Vector2d(x, y), Color((1.0 - y / scroll_bar_.get_shape().y_) * 360.f, 1.f, 1.f));
+                scroll_bar_image.setPixel(Vector2d(x, y), Color((1.f - y / scroll_bar_.get_shape().y_) * 360.f, 1.f, 1.f));
             }
         }
 
@@ -57,7 +57,7 @@ public:
 
                 else
                 {
-                    palette_.setPixel(Vector2d(x, y), Color(color_.get_h(), x / shape_.x_, 1.0 - y / shape_.y_));
+                    palette_.setPixel(Vector2d(x, y), Color(color_.get_h(), x / shape_.x_, 1.f - y / shape_.y_));
                 }
             }
         }
@@ -76,13 +76,13 @@ public:
         color_ = color;
         Event new_event;
         new_event.type_ = EventType::ScrollbarMoved;
-        new_event.Oleg_.smedata.value = 1.0 - color_.get_h() / 360.0;
+        new_event.Oleg_.smedata.value = 1.f - color_.get_h() / 360.f;
         scroll_bar_.scroll_bar(new_event);
     }
 
     void change_H(const Event &event)
     {
-        color_.set_h((1.0 - event.Oleg_.smedata.value) * 360.0);
+        color_.set_h((1.f - event.Oleg_.smedata.value) * 360.f);
 
         if (palette_command_)
         {
@@ -106,7 +106,7 @@ public:
             clicked_ = true;
 
             color_.set_s((event.Oleg_.mbedata.pos.x_ - get_start_field().x_) / shape_.x_);
-            color_.set_v(1.0 - (event.Oleg_.mbedata.pos.y_ - get_start_field().y_) / shape_.y_);
+            color_.set_v(1.f - (event.Oleg_.mbedata.pos.y_ - get_start_field().y_) / shape_.y_);
 
             if (palette_command_)
             {
@@ -129,7 +129,7 @@ public:
             if (point_belonging(event.Oleg_.motion.pos))
             {
                 color_.set_s((event.Oleg_.motion.pos.x_ - get_start_field().x_) / shape_.x_);
-                color_.set_v(1.0 - (event.Oleg_.motion.pos.y_ - get_start_field().y_) / shape_.y_);
+                color_.set_v(1.f - (event.Oleg_.motion.pos.y_ - get_start_field().y_) / shape_.y_);
                 
                 if (palette_command_)
                 {

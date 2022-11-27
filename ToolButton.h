@@ -1,3 +1,5 @@
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 #include "Button.h"
 #include "Vector2d.h"
 #include "Widget.h"

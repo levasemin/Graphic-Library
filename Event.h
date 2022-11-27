@@ -302,10 +302,26 @@ public:
                 break;
             }
 
+            case sf::Event::Count:
+            case sf::Event::Resized:
+            case sf::Event::LostFocus:
+            case sf::Event::GainedFocus:
+            case sf::Event::TextEntered:
+            case sf::Event::KeyReleased:
+            case sf::Event::MouseWheelMoved:
+            case sf::Event::MouseEntered:
+            case sf::Event::MouseLeft:
+            case sf::Event::JoystickButtonPressed:
+            case sf::Event::JoystickButtonReleased:
+            case sf::Event::JoystickConnected:
+            case sf::Event::JoystickDisconnected:
+            case sf::Event::JoystickMoved:
+            case sf::Event::TouchBegan:
+            case sf::Event::TouchMoved:
+            case sf::Event::TouchEnded:
+            case sf::Event::SensorChanged:
             default:
-            {
                 break;
-            }
         }
     }
 };   

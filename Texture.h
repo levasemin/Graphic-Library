@@ -10,30 +10,32 @@ class Texture
 public:
     sf::Texture texture_;    
     
-    Texture ()
-    {}
-
-    Texture(const char *path) 
+    Texture (): 
+        texture_()
+        {}
+    
+    Texture (const Texture &) = default;
+    Texture& operator= (const Texture &) = default; 
+    
+    ~Texture(){}
+    
+    Texture(const char *path):
+        texture_()
     {
         texture_.loadFromFile(path);
     };
     
-    Texture (const Color &color)
+    Texture (const Color &color):
+        texture_()
     {
         sf::Image image;
         image.create(100, 100, color.get_sf_color());
         texture_.loadFromImage(image);
     }
-    
 
-    Texture (const Texture &texture)
+    Texture (const sf::Texture &texture):
+        texture_(texture)
     {
-        texture_ = texture.texture_;
-    }
-
-    Texture (const sf::Texture &texture)
-    {
-        texture_ = texture;
     }
 
     Vector2d getSize() const
