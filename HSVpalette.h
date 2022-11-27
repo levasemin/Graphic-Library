@@ -100,13 +100,13 @@ public:
         // Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y).print_value();
         // get_global_offset().print_value();
         // printf("?????\n");
-        if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
+        if (point_belonging(event.Oleg_.mbedata.pos))
         {
             printf("YEAH\n");
             clicked_ = true;
 
-            color_.set_s((event.Oleg_.mbedata.x - get_start_field().x_) / shape_.x_);
-            color_.set_v(1.0 - (event.Oleg_.mbedata.y - get_start_field().y_) / shape_.y_);
+            color_.set_s((event.Oleg_.mbedata.pos.x_ - get_start_field().x_) / shape_.x_);
+            color_.set_v(1.0 - (event.Oleg_.mbedata.pos.y_ - get_start_field().y_) / shape_.y_);
 
             if (palette_command_)
             {
@@ -126,10 +126,10 @@ public:
         
         if (clicked_)
         {
-            if (point_belonging(Vector2d(event.Oleg_.motion.x, event.Oleg_.motion.y)))
+            if (point_belonging(event.Oleg_.motion.pos))
             {
-                color_.set_s((event.Oleg_.motion.x - get_start_field().x_) / shape_.x_);
-                color_.set_v(1.0 - (event.Oleg_.motion.y - get_start_field().y_) / shape_.y_);
+                color_.set_s((event.Oleg_.motion.pos.x_ - get_start_field().x_) / shape_.x_);
+                color_.set_v(1.0 - (event.Oleg_.motion.pos.y_ - get_start_field().y_) / shape_.y_);
                 
                 if (palette_command_)
                 {

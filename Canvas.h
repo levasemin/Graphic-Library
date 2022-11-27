@@ -31,14 +31,13 @@ public:
 
     void MoveMouseEvent (const Event &event)
     {
-        if (point_belonging(Vector2d(event.Oleg_.motion.x, event.Oleg_.motion.y)))
+        if (point_belonging(event.Oleg_.motion.pos))
         {
             if (is_left_clicked_)
             {
                 Event new_event = event;
 
-                new_event.Oleg_.motion.x -= surface_.get_global_offset().x_ + (surface_.get_center().x_ - surface_.get_shape().x_ / 2);
-                new_event.Oleg_.motion.y -= surface_.get_global_offset().y_ + (surface_.get_center().y_ - surface_.get_shape().y_ / 2 );
+                new_event.Oleg_.motion.pos -= surface_.get_global_offset() + (surface_.get_center() - surface_.get_shape() / 2);
 
                 tool_manager_.apply(&surface_, &new_event);
             }
@@ -47,7 +46,7 @@ public:
 
     void ClickLeftEvent(const Event &event) override
     {
-        if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
+        if (point_belonging(event.Oleg_.mbedata.pos))
         {
             is_left_clicked_ = true;
         }

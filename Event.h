@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <cstring>
+#include "Vector2d.h"
 
 #include "SFML/Graphics.hpp"
 #include "tools.h"
@@ -30,20 +31,20 @@ enum class MouseButton
 
 struct MotionEventData
 {
-    int32_t x, y;
+    Vector2d pos;
     int32_t rel_x, rel_y;
 };
 
 struct MouseButtonEventData
 {
-    int x, y;
+    Vector2d pos;
     MouseButton button; 
     bool shift, alt, ctrl;
 };
 
 struct MouseReleasedEventData
 {
-    int x, y;
+    Vector2d pos;
     MouseButton button;
 };
 
@@ -177,13 +178,13 @@ struct ScrollEventData
 {
     uint64_t id;
     float value;
-    int16_t x, y;
+    Vector2d pos;
 };
 
 struct CanvasEventData
 {
     uint64_t id;
-    int32_t x, y; 
+    Vector2d pos; 
 };
 
 class Event
@@ -205,7 +206,10 @@ public:
 
     } Oleg_;
     
-    Event () {};
+    Event ():
+        type_(EventType::NoEvent),
+        Oleg_({})
+        {}
     
     Event(const sf::Event& sfEvent) :
         type_(EventType::NoEvent),
@@ -223,8 +227,7 @@ public:
             case sf::Event::MouseMoved:
             {
                 type_ = EventType::MouseMoved;
-                Oleg_.motion.x = sfEvent.mouseMove.x;
-                Oleg_.motion.y = sfEvent.mouseMove.y;
+                Oleg_.motion.pos = Vector2d((float)sfEvent.mouseMove.x, (float)sfEvent.mouseMove.y);
 
                 break;
             }
@@ -243,8 +246,7 @@ public:
                     Oleg_.mbedata.button = MouseButton::Right;
                 }
 
-                Oleg_.mbedata.x = sfEvent.mouseButton.x;
-                Oleg_.mbedata.y = sfEvent.mouseButton.y;
+                Oleg_.mbedata.pos = Vector2d((float)sfEvent.mouseButton.x, (float)sfEvent.mouseButton.y);
 
                 break; 
             }
@@ -263,8 +265,7 @@ public:
                     Oleg_.mredata.button = MouseButton::Left;
                 }
 
-                Oleg_.mredata.x = sfEvent.mouseButton.x;
-                Oleg_.mredata.y = sfEvent.mouseButton.y;
+                Oleg_.mredata.pos = Vector2d((float)sfEvent.mouseButton.x, (float)sfEvent.mouseButton.y);
                 
                 break;
             }
@@ -297,8 +298,7 @@ public:
             {
                 type_ = EventType::ScrollbarMoved;
                 Oleg_.sedata.value = sfEvent.mouseWheelScroll.delta;
-                Oleg_.sedata.x     = sfEvent.mouseWheelScroll.x;
-                Oleg_.sedata.y     = sfEvent.mouseWheelScroll.y;
+                Oleg_.sedata.pos = Vector2d(sfEvent.mouseWheelScroll.x, sfEvent.mouseWheelScroll.y);
                 break;
             }
 

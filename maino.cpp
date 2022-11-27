@@ -35,11 +35,11 @@ int main()
 {          
     MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Color::Yellow));
             
-    Container container(Vector2d(100, 400), Vector2d(300, 250), Texture(Color::Green));
+    Container container(Vector2d(100, 400), Vector2d(300, 250));
     
     DecoratorScroll scroll_container = DecoratorScroll(&container);
 
-    Button first_button (Vector2d(100, 301), Vector2d(50, 160), Texture(Color::Red));
+    Button first_button (Vector2d(100, 301), Vector2d(50, 160), Texture(Color::Blue));
 
     Command<const Event&> *command = (Command<const Event &> *)new SimpleCommand<Button, const Event&>(&first_button, &Button::print);
 

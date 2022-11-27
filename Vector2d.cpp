@@ -2,7 +2,7 @@
 
 sf::Vector2u Vector2d::to_sf_vector() const
 {
-    return sf::Vector2u(x_, y_);
+    return sf::Vector2u((uint32_t)x_, (uint32_t)y_);
 }
 
 void Vector2d::print_value() const

@@ -14,8 +14,8 @@ public:
         {};
 
     Vector2d(sf::Vector2u sf_vector):
-        x_(sf_vector.x),
-        y_(sf_vector.y)
+        x_((float)sf_vector.x),
+        y_((float)sf_vector.y)
     {}
 
     Vector2d(sf::Vector2f sf_vector):

@@ -442,8 +442,8 @@ void Color::convert_rgb_hsv()
 void Color::convert_hsv_rgb()
 {
     float c = v_ * s_;
-    float mod_2 = (fmod((h_ / 60.0), 2.0));
-    float x = c * (1.0 - abs( mod_2 - 1.0));
+    float mod_2 = (fmod((h_ / 60.f), 2.f));
+    float x = c * (1.0 - abs( mod_2 - 1.f));
     float m = v_ - c;
     float r = 0.0, g = 0.0, b = 0.0;
 

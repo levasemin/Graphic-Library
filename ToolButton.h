@@ -77,7 +77,7 @@ void ToolButton::MoveMouseEvent(const Event &event)
 
 void ToolButton::ClickLeftEvent (const Event &event)
 {
-    if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
+    if (point_belonging(event.Oleg_.mbedata.pos))
     {
         is_left_clicked_ = true;
         
@@ -106,7 +106,7 @@ void ToolButton::ReleasedLeftEvent (const Event &event)
 
 void ToolButton::ClickRightEvent (const Event &event)
 {
-    if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
+    if (point_belonging(event.Oleg_.mbedata.pos))
     {
         is_right_clicked_ = true;
 

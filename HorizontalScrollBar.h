@@ -108,12 +108,12 @@ public:
                 Event new_event;
 
                 new_event.type_ = EventType::ScrollbarMoved;
-                new_event.Oleg_.smedata.value = (event.Oleg_.motion.x - click_place_.x_) / scroll_field_shape.x_ + local_offset_.x_ / scroll_field_shape.x_;
+                new_event.Oleg_.smedata.value = (event.Oleg_.motion.pos.x_ - click_place_.x_) / scroll_field_shape.x_ + local_offset_.x_ / scroll_field_shape.x_;
                 new_event.Oleg_.smedata.id = (int64_t)&scroll_button_;
                 
                 scroll_bar(new_event);
                 
-                click_place_ = Vector2d(event.Oleg_.motion.x, event.Oleg_.motion.y);
+                click_place_ = event.Oleg_.motion.pos;
             }
         };
 
@@ -137,20 +137,20 @@ public:
         
         void ClickLeftEvent(const Event &event)
         {
-            if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)) &&
-               !scroll_button_.point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)) &&
-               !up_button_.point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)) &&
-               !down_button_.point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
+            if (point_belonging(event.Oleg_.mbedata.pos) &&
+               !scroll_button_.point_belonging(event.Oleg_.mbedata.pos) &&
+               !up_button_.point_belonging(event.Oleg_.mbedata.pos) &&
+               !down_button_.point_belonging(event.Oleg_.mbedata.pos))
             {                
                 Event new_event;
 
                 new_event.type_ = EventType::ScrollbarMoved;
-                new_event.Oleg_.smedata.value = (event.Oleg_.motion.x - get_start_field().x_ - up_button_.get_shape().x_) / scroll_field_shape.x_ - scroll_coeff_ / 2;
+                new_event.Oleg_.smedata.value = (event.Oleg_.motion.pos.x_ - get_start_field().x_ - up_button_.get_shape().x_) / scroll_field_shape.x_ - scroll_coeff_ / 2;
                 new_event.Oleg_.smedata.id = (int64_t)&scroll_button_;
                 
                 scroll_bar(new_event);
                 
-                click_place_ = Vector2d(event.Oleg_.motion.x, event.Oleg_.motion.y);
+                click_place_ = event.Oleg_.motion.pos;
             }
             
             CompositeObject::ClickLeftEvent(event);

@@ -70,7 +70,7 @@ public:
 
     void ClickLeftEvent(const Event &event) override
     {
-        if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
+        if (point_belonging(event.Oleg_.mbedata.pos))
         {
             clicked_ = true;
         }

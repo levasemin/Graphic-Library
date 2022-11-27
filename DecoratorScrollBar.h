@@ -30,7 +30,7 @@ public:
             scroll_bar_vertical_.ScrollEvent(event);
         }
 
-        if (point_belonging(Vector2d(event.Oleg_.sedata.x, event.Oleg_.sedata.y)))
+        if (point_belonging(event.Oleg_.sedata.pos))
         {   
             Event new_event = event;
             new_event.Oleg_.smedata.value = (float)( event.Oleg_.sedata.value * 2 / (widget_->get_global_shape().y_ - widget_->get_shape().y_) +

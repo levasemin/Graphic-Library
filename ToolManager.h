@@ -35,6 +35,7 @@ public:
     {
         if (active_tool_)
         {
+            //TODO converter
             booba::Event booba_event = convert_event(*event);
             active_tool_->apply(image, &booba_event);
         }

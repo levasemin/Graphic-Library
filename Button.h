@@ -120,7 +120,7 @@ void Button::MoveMouseEvent(const Event &event)
 
 void Button::ClickLeftEvent (const Event &event)
 {
-    if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
+    if (point_belonging(Vector2d(event.Oleg_.mbedata.pos)))
     {
         is_left_clicked_ = true;
         
@@ -149,7 +149,7 @@ void Button::ReleasedLeftEvent (const Event &event)
 
 void Button::ClickRightEvent (const Event &event)
 {
-    if (point_belonging(Vector2d(event.Oleg_.mbedata.x, event.Oleg_.mbedata.y)))
+    if (point_belonging(event.Oleg_.mbedata.pos))
     {
         is_right_clicked_ = true;
 

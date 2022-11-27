@@ -11,7 +11,7 @@ public :
 
     void ScrollEvent (const Event &event) override
     {
-        if (point_belonging(Vector2d(event.Oleg_.sedata.x, event.Oleg_.sedata.y)))
+        if (point_belonging(event.Oleg_.sedata.pos))
         {
             set_local_offset(Vector2d(0, get_local_offset().y_ + event.Oleg_.sedata.value * 10.0));   
         }

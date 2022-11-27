@@ -120,7 +120,7 @@ public:
 
         switch (event->type)
         {
-            case booba::EventType::MouseMoved:
+            case booba::EventType::CanvasMMoved:
             {
                 point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
 
@@ -146,10 +146,11 @@ public:
 
             case booba::EventType::ButtonClicked:
             {
-                printf("--------\n");
-                hsv_window_.get_global_offset().print_value();
-                printf("--------\n");
+                // printf("--------\n");
+                // hsv_window_.get_global_offset().print_value();
+                // printf("--------\n");
                 
+                printf("BUTTTON WAS PREDDSD\n");
                 if (event->Oleg.bcedata.id == tool_button_)
                 {
                     settings_container_.set_shape(Vector2d(300, 400));
