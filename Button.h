@@ -19,6 +19,19 @@ public:
     {
     };
     
+    Button(const Button& source) : Object(*(Object *)&source)
+    {
+        text_ = source.text_;
+    }
+    
+    Button &operator=(const Button &source)
+    {
+        Object::operator=(*(Object *)&source);
+        text_ = source.text_;
+
+        return *this;
+    }
+
     void set_left_click       (Command<const Event &> *command)
     {
         left_click_command_ = command;

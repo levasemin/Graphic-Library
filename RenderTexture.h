@@ -18,7 +18,15 @@ public:
     };
     
     RenderTexture(const RenderTexture &) = default;
-    RenderTexture& operator=(const RenderTexture &) = default;
+    RenderTexture& operator=(const RenderTexture &source)
+    {
+        shape_ = source.shape_;
+        render_texture_.create(source.render_texture_.getSize().x, source.render_texture_.getSize().y);
+        sf::Sprite sprite(source.render_texture_.getTexture());
+        render_texture_.draw(sprite);
+
+        return *this;
+    }
 
     void create(const Vector2d &shape)
     {

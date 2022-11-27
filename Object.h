@@ -57,7 +57,7 @@ public:
         global_offset_(source.global_offset_)
     {
         render_texture_ = new RenderTexture(shape_);
-        std::memcpy(render_texture_, source.render_texture_, sizeof(RenderTexture));
+        *render_texture_ = *source.render_texture_;
     }
 
     Object &operator=(const Object& source)
@@ -69,7 +69,8 @@ public:
         local_offset_  = source.local_offset_;
         global_offset_ = source.global_offset_;
 
-        std::memcpy(render_texture_, source.render_texture_, sizeof(RenderTexture));
+        render_texture_ = new RenderTexture(shape_);
+        *render_texture_ = *source.render_texture_;
         
         return *this;
     }
@@ -86,7 +87,10 @@ public:
 
     virtual void ScrollEvent         (const Event &event) override {}
 
-    ~Object () override {}
+    ~Object () override 
+    {
+        delete render_texture_;
+    }
 
     bool point_belonging(Vector2d point) const override
     {

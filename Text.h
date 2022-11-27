@@ -1,3 +1,5 @@
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 #pragma once
 
 #include <SFML/Graphics.hpp>
