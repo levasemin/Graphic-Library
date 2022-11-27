@@ -43,9 +43,9 @@ public:
             for (float t = 0; t <= 1.f; t += 0.001)
             {
                 float coeff_0 = -t * pow(1.f - t, 2.f);
-                float coeff_1 = (2.f - 5.f*pow(t, 2) + 3.f*pow(t, 3));
-                float coeff_2 = t * (1.f + 4.f*t - 3.f*pow(t, 2));
-                float coeff_3 = pow(t, 2) * (1.f - t);
+                float coeff_1 = (2.f - 5.f*pow(t, 2) + 3.f*pow(t, 3.f));
+                float coeff_2 = t * (1.f + 4.f*t - 3.f*pow(t, 2.f));
+                float coeff_3 = pow(t, 2.f) * (1.f - t);
 
                 x = 0.5 * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
                 y = 0.5 * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);
@@ -60,9 +60,9 @@ public:
         printf("reserve window was created\n");
         default_image_ = new uint32_t[image->getH() * image->getX()];
         
-        for (int y = 0; y < image->getH(); y++)
+        for (size_t y = 0; y < image->getH(); y++)
         {
-            for (int x = 0; x < image->getX(); x++)
+            for (size_t x = 0; x < image->getX(); x++)
             {
                 default_image_[y * image->getX() + x] = image->getPixel(x, y);
             }
@@ -143,7 +143,7 @@ public:
         return icon_path_;
     } 
 
-    void buildSetupWidget()
+    void buildSetupWidget() override
     {
         tool_button_ = booba::createButton(25, 25, 50, 50, (char *)this);   
     }

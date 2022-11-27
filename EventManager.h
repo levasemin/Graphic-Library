@@ -75,6 +75,12 @@ void EventManager::distribute_event(Widget *window, const Event &event)
             break;
         }
 
+        case EventType::NoEvent:
+        case EventType::ButtonClicked:
+        case EventType::CanvasMPressed:
+        case EventType::CanvasMReleased:
+        case EventType::CanvasMMoved:
+        case EventType::Closed:
         default:
         {
             break;

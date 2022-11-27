@@ -14,7 +14,7 @@ public:
 
     void add(Widget *widget) override
     {
-        if (curr_pos_.y_ == 0)
+        if (!doublecmp(curr_pos_.y_, 0))
         {
             if (curr_pos_.y_ + widget->get_shape().y_ < shape_.y_)
             {

@@ -68,8 +68,10 @@ public:
         sprite_        = source.sprite_;
         local_offset_  = source.local_offset_;
         global_offset_ = source.global_offset_;
-        
+
         std::memcpy(render_texture_, source.render_texture_, sizeof(RenderTexture));
+        
+        return *this;
     }
 
     virtual void ClickLeftEvent      (const Event &event) override {}

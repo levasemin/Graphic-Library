@@ -8,18 +8,17 @@ class HSVpalette : public Object
 {   
 public:
     Color color_;
-
-    VerticalScrollBar scroll_bar_;
     Image palette_;
+    VerticalScrollBar scroll_bar_;
     
     bool clicked_ = false;
 
     Command<const Color&> *palette_command_ = nullptr;
 
     HSVpalette(Vector2d shape, Vector2d center) : Object(shape, center),
-        scroll_bar_(Vector2d(20, shape.y_), Vector2d(center.x_ + shape.x_ / 2 + 10, center.y_)),
+        color_(360.f, 0.f, 0.f),
         palette_(shape),
-        color_(360.f, 0.f, 0.f)
+        scroll_bar_(Vector2d(20, shape.y_), Vector2d(center.x_ + shape.x_ / 2 + 10, center.y_))
     {   
         scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<HSVpalette, const Event&>(this, &HSVpalette::change_H));
         scroll_bar_.set_scroll_button_size(Vector2d(20, 4));

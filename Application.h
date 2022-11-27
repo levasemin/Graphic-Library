@@ -11,6 +11,11 @@
 class Application
 {
     public: 
+        Widget *main_window_ = nullptr;
+        Window window_;
+
+        EventManager event_manager_;
+
         Application(Widget *window):
             main_window_(window),
             window_(window->get_shape()),
@@ -22,10 +27,7 @@ class Application
         void show(Widget *window);
         
     
-        Widget *main_window_ = nullptr;
-        EventManager event_manager_;
-    private:
-        Window window_;
+        
 };
 
 void Application::set_main_window(Widget *main_window)

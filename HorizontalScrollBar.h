@@ -20,13 +20,12 @@ public:
 
     Command<const Event&> *scroll_command_ = nullptr;
 
-    float scroll_coeff_;
+    float scroll_coeff_ = SCROLL_COEFF;
     
     Vector2d click_place_;
     
     HorizontalScrollBar(Vector2d shape, Vector2d center):
         CompositeObject  (shape, center),
-        scroll_coeff_(SCROLL_COEFF),
         up_button_    (Vector2d(shape.y_, shape.y_), Vector2d(shape.y_ / 2, shape.y_ / 2),
                       Texture(Color::White)),
         down_button_  (Vector2d(shape.y_, shape.y_), Vector2d(shape.x_   - shape.y_ / 2, shape.y_ / 2),
@@ -137,7 +136,7 @@ public:
             scroll_bar(new_event);
         }
         
-        void ClickLeftEvent(const Event &event)
+        void ClickLeftEvent(const Event &event) override
         {
             if (point_belonging(event.Oleg_.mbedata.pos) &&
                !scroll_button_.point_belonging(event.Oleg_.mbedata.pos) &&

@@ -36,7 +36,7 @@ uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, co
 {   
     Tool *tool = (Tool *)object;
 
-    ToolButton *tool_button = new ToolButton(Vector2d(w, h), Vector2d(x, y), Texture(tool->getTexture()));
+    ToolButton *tool_button = new ToolButton(Vector2d((float)w, (float)h), Vector2d((float)x, (float)y), Texture(tool->getTexture()));
 
     tool_button->set_left_click((Command<const Event &> *) new ToolCommand<Tool>(tool, &Tool::apply));
 

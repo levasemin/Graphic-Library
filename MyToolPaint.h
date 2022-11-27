@@ -184,7 +184,7 @@ public:
         return icon_path_;
     } 
 
-    void buildSetupWidget()
+    void buildSetupWidget() override
     {
         tool_button_ = booba::createButton(25, 25, 50, 50, (char *)this);   
         tool_settings_ = (uint64_t) &settings_container_;

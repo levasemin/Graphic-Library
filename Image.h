@@ -38,12 +38,12 @@ public:
 
     uint32_t getH() override
     {
-        return getSize().y_;
+        return uint32_t(getSize().y_);
     }
 
     uint32_t getX() override
     {
-        return getSize().x_;
+        return uint32_t(getSize().x_);
     }
 
     Vector2d getSize() const
@@ -69,17 +69,17 @@ public:
 
     Color getPixel(Vector2d pos) const
     {
-        return Color(image_.getPixel(pos.x_, pos.y_));
+        return Color(image_.getPixel(uint32_t(pos.x_), uint32_t(pos.y_)));
     }
     
     void putPixel(uint32_t x, uint32_t y, uint32_t color) override
     {        
-        setPixel(Vector2d(x, y), convert_uint_color(color));
+        setPixel(Vector2d(float(x), float(y)), convert_uint_color(color));
     }   
 
     void setPixel(Vector2d pos, const Color &color)
     {
-        image_.setPixel(pos.x_, pos.y_, color.get_sf_color());
+        image_.setPixel(uint32_t(pos.x_), uint32_t(pos.y_), color.get_sf_color());
     }
 
     uint32_t& operator()(uint32_t, uint32_t) override 

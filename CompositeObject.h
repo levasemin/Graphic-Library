@@ -103,8 +103,8 @@ public:
     
     void reset_global_shape()
     {
-        Vector2d global_end_field(INT64_MIN, INT64_MIN);
-        Vector2d global_start_field(INT64_MAX, INT64_MAX);
+        Vector2d global_end_field  (-10000000.f, -10000000.f);
+        Vector2d global_start_field( 10000000.f,  10000000.f);
 
         for (size_t i = 0; i < children_.size(); i++)
         {

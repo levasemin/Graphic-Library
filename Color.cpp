@@ -20,9 +20,9 @@ bool Color::operator != (const Color &color2)
 
 Color &Color::operator += (const Color &color2)
 {
-    r_ += color2.r_;
-    g_ += color2.g_;
-    b_ += color2.b_;
+    r_ = uint8_t(r_ + color2.r_);
+    g_ = uint8_t(g_ + color2.g_);
+    b_ = uint8_t(b_ + color2.b_);
     
     r_rel_ = r_ / 255.f;
     g_rel_ = g_ / 255.f;
@@ -45,9 +45,9 @@ Color &Color::operator += (const float &number)
 
 Color &Color::operator -= (const Color &color2)
 {
-    r_ -= color2.r_;
-    g_ -= color2.g_;
-    b_ -= color2.b_;
+    r_ = uint8_t(r_ - color2.r_);
+    g_ = uint8_t(g_ - color2.g_);
+    b_ = uint8_t(b_ - color2.b_);
 
     r_ = uint8_t(r_rel_ * 255.f);
     g_ = uint8_t(g_rel_ * 255.f);
