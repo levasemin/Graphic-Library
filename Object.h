@@ -14,14 +14,14 @@ class Object : public Widget
 {
     
 protected:
-    Vector2d center_;
     Vector2d shape_;
-    
-    RenderTexture *render_texture_;
+    Vector2d center_;
     Texture texture_;
     Sprite sprite_;
     Vector2d local_offset_;
     Vector2d global_offset_;
+    
+    RenderTexture *render_texture_ = nullptr;
     Widget *parent_ = nullptr;
 
     bool has_local_offset_ = true;
@@ -30,11 +30,11 @@ public:
 
     Object(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::White)): Widget(),
         shape_(shape),
+        center_(center),    
         texture_(texture),
         sprite_(shape, texture, 0),
-        center_(center),    
-        local_offset_(Vector2d(0, 0)),
-        global_offset_(Vector2d(0, 0))
+        local_offset_(0, 0),
+        global_offset_(0, 0)
         {
             if (!doublecmp(center.x_, -1.f) && !doublecmp(center.y_, -1))
             {
@@ -47,6 +47,30 @@ public:
 
             render_texture_->draw(sprite_);
         };
+
+    Object(const Object& source):
+        shape_(source.shape_),
+        center_(source.center_),    
+        texture_(source.texture_),
+        sprite_(source.sprite_),
+        local_offset_(source.local_offset_),
+        global_offset_(source.global_offset_)
+    {
+        render_texture_ = new RenderTexture(shape_);
+        std::memcpy(render_texture_, source.render_texture_, sizeof(RenderTexture));
+    }
+
+    Object &operator=(const Object& source)
+    {
+        shape_         = source.shape_;
+        center_        = source.center_;    
+        texture_       = source.texture_;
+        sprite_        = source.sprite_;
+        local_offset_  = source.local_offset_;
+        global_offset_ = source.global_offset_;
+        
+        std::memcpy(render_texture_, source.render_texture_, sizeof(RenderTexture));
+    }
 
     virtual void ClickLeftEvent      (const Event &event) override {}
     virtual void ReleasedLeftEvent   (const Event &event) override {}              

@@ -14,7 +14,8 @@ public:
         text_()
     {}
     
-    Text (const Font &font) 
+    Text (const Font &font): 
+        text_()
     {
         setFont(font);
     };

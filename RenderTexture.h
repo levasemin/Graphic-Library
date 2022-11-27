@@ -17,6 +17,9 @@ public:
         create(shape);
     };
     
+    RenderTexture(const RenderTexture &) = default;
+    RenderTexture& operator=(const RenderTexture &) = default;
+
     void create(const Vector2d &shape)
     {
         render_texture_.create((uint32_t)shape.x_, (uint32_t)shape.y_);      
@@ -51,4 +54,6 @@ public:
     {
         render_texture_.clear();
     }
+
+    ~RenderTexture() = default;
 };
