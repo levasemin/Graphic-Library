@@ -45,9 +45,9 @@ public:
             hsv_window_command_(source.hsv_window_command_)
         {}
         
-        HSVwindow operator=(const HSVwindow &source)
+        HSVwindow &operator=(const HSVwindow &source)
         {
-            CompositeObject::operator=(*(CompositeObject *)&source);
+            CompositeObject::operator=(*(const CompositeObject *)&source);
             hsv_palette_ = source.hsv_palette_;
             r_editor_    = source.r_editor_;
             g_editor_    = source.g_editor_;
@@ -56,15 +56,17 @@ public:
             color_ = source.color_;
             
             hsv_window_command_ = source.hsv_window_command_;
+
+            return *this;
         }
 
         void change_color(const Color &color)
         {            
             color_ = color;
 
-            std::string r = std::to_string(color_.get_r());
-            std::string g = std::to_string(color_.get_g());
-            std::string b = std::to_string(color_.get_b());
+            std::string r = std::to_string(int(color_.get_r()));
+            std::string g = std::to_string(int(color_.get_g()));
+            std::string b = std::to_string(int(color_.get_b()));
             r_editor_.setString(r);
             g_editor_.setString(g);
             b_editor_.setString(b);
@@ -83,7 +85,7 @@ public:
         void change_r(std::string string)
         {            
             int new_r = string.size() > 0 ? std::stoi(string) : 0;
-            color_.set_r(new_r);
+            color_.set_r(uint8_t(new_r));
             hsv_palette_.set_color(color_);
 
             if (hsv_window_command_)
@@ -95,7 +97,7 @@ public:
         void change_g(std::string string)
         {
             int new_g = string.size() > 0 ? std::stoi(string) : 0;
-            color_.set_g(new_g);
+            color_.set_g(uint8_t(new_g));
             hsv_palette_.set_color(color_);
 
             if (hsv_window_command_)
@@ -107,7 +109,7 @@ public:
         void change_b(std::string string)
         {
             int new_b = string.size() > 0 ? std::stoi(string) : 0;
-            color_.set_b(new_b);
+            color_.set_b(uint8_t(new_b));
             hsv_palette_.set_color(color_);  
             
             if (hsv_window_command_)

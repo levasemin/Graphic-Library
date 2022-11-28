@@ -54,17 +54,17 @@ public:
 
                 if (Key::A <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Z)
                 {
-                    letter = (event.Oleg_.kpedata.shift ? event.Oleg_.kpedata.code + 'A' : event.Oleg_.kpedata.code + 'a');
+                    letter = event.Oleg_.kpedata.shift ? char(event.Oleg_.kpedata.code + int('A')) : char(event.Oleg_.kpedata.code + int('a'));
                 }
 
                 else if (Key::Num0 <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Num9)    
                 {
-                    letter = char(event.Oleg_.kpedata.code - Key::Num0) + '0';
+                    letter = char(event.Oleg_.kpedata.code - Key::Num0 + int('0'));
                 }
 
                 else if (Key::Numpad0 <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Numpad9)
                 {
-                    letter = char(event.Oleg_.kpedata.code - Key::Numpad0) + '0';
+                    letter = char(event.Oleg_.kpedata.code - Key::Numpad0 + int('0'));
                 }
 
                 string.push_back(letter);

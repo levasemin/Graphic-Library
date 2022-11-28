@@ -3,5 +3,5 @@
 
 int main()
 {
-    std::cout << "HI";
+    char letter = char(10 + int('A'));
 }

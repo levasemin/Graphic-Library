@@ -88,12 +88,14 @@ public:
 
     uint32_t& operator()(uint32_t, uint32_t) override 
     {
-        return *(uint32_t *)this;
+        uint32_t *smth = new uint32_t;
+        return *smth;
     }
 
     const uint32_t& operator()(uint32_t, uint32_t) const override 
     {
-        return *(uint32_t *)this;
+        uint32_t *smth = new uint32_t;
+        return *smth;
     }
 
     bool saveToFile(const char *filename)

@@ -54,21 +54,22 @@ public:
         }
     };
     
-    std::deque<point> points_;
-    
     Interpolator interpolator_;
+    HSVwindow hsv_window_;
     HorizontalScrollBar width_scroll_bar_;
+    Container settings_container_;
+
+    std::deque<point> points_;
 
     uint32_t color_ = (1 << 16) - 1;
     uint32_t width_ = 1;
-    Container settings_container_;
-    HSVwindow hsv_window_;
 
     ToolPaint() : Tool(),
         interpolator_(CATMULL_ROM),
         hsv_window_(Vector2d(200, 300), Vector2d(150, 250)),
         width_scroll_bar_(Vector2d(100, 30), Vector2d(150, 40)),
-        settings_container_(Vector2d(0, 0), Vector2d(150, 200))
+        settings_container_(Vector2d(0, 0), Vector2d(150, 200)),
+        points_({})
     {
         hsv_window_.set_command(             (Command<const Color &> *) new SimpleCommand<ToolPaint, const Color &>(this, &ToolPaint::set_color));
         width_scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<ToolPaint, const Event &>(this, &ToolPaint::set_width));
@@ -81,6 +82,9 @@ public:
         
         buildSetupWidget();
     }
+
+    ToolPaint(const ToolPaint &) = default;
+    ToolPaint &operator=(const ToolPaint &) = default;
 
     void set_color(const Color &color)
     {
@@ -167,6 +171,7 @@ public:
             
             case booba::EventType::NoEvent:
             case booba::EventType::MouseMoved:
+            case booba::EventType::MousePressed:
             case booba::EventType::MouseReleased:
             case booba::EventType::ScrollbarMoved:
             case booba::EventType::CanvasMPressed:

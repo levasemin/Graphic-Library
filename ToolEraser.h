@@ -6,8 +6,6 @@
 #include "ToolManager.h"
 #include <deque>
 
-uint64_t createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object);
-
 class ToolEraser : public Tool
 {
 
@@ -19,11 +17,14 @@ public:
     }; 
 
     std::deque<point> points_;
-    uint32_t *default_image_ = nullptr;
+
     HorizontalScrollBar width_scroll_bar_;
     Container settings_container_;
 
+    uint32_t *default_image_ = nullptr;
+
     ToolEraser() : Tool(),
+        points_({}),
         width_scroll_bar_(Vector2d(100, 30), Vector2d(150, 40)),
         settings_container_(Vector2d(300, 400), Vector2d(150, 200))
     {
@@ -33,6 +34,24 @@ public:
         buildSetupWidget();
     }
     
+    ToolEraser(const ToolEraser &source) : Tool(*(const Tool *)&source),
+        points_(source.points_),
+        width_scroll_bar_(source.width_scroll_bar_),
+        settings_container_(source.settings_container_),
+        default_image_(source.default_image_)
+    {}
+
+    ToolEraser &operator=(const ToolEraser &source)
+    {
+        Tool::operator=(*(const Tool *)&source);
+        points_             = source.points_;
+        width_scroll_bar_   = source.width_scroll_bar_;
+        settings_container_ = source.settings_container_;
+        default_image_      = source.default_image_;
+
+        return *this;
+    }
+
     void paint(booba::Image *image)
     {
         float x = points_.back().x;

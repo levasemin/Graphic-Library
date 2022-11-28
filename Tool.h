@@ -5,6 +5,8 @@
 #include "ToolButton.h"
 #include "tools.h"
 
+uint64_t setup_widget_ = (uint64_t)nullptr;
+
 class Tool : public booba::Tool
 {
     
@@ -16,7 +18,11 @@ public:
     char icon_path_[128] = "";
     bool is_on_ = false;
 
-    Tool() {};
+    Tool() 
+    {
+        setup_widget_ = (uint64_t)this;
+    };
+
     ~Tool() override {};
 
     Widget *get_tool_widget()
@@ -32,7 +38,7 @@ public:
 
 uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object)
 {   
-    Tool *tool = (Tool *)object;
+    Tool *tool = (Tool *)setup_widget_;
 
     ToolButton *tool_button = new ToolButton(Vector2d((float)w, (float)h), Vector2d((float)x, (float)y), Texture(tool->getTexture()));
 

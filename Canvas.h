@@ -31,6 +31,24 @@ public:
         add(&surface_);
     }
 
+    Canvas (const Canvas &source): CompositeObject(*(const CompositeObject *)&source),
+        surface_(source.surface_),
+        tool_manager_(source.tool_manager_),
+        tool_palette_(source.tool_palette_),
+        setting_palette_(source.setting_palette_)
+    {} 
+
+    Canvas &operator= (const Canvas &source)
+    { 
+        CompositeObject::operator=(*(const CompositeObject *)&source);
+        surface_         = source.surface_;
+        tool_manager_    = source.tool_manager_;
+        tool_palette_    = source.tool_palette_;
+        setting_palette_ = source.setting_palette_;
+
+        return *this;
+    }
+
     void MoveMouseEvent (const Event &event) override
     {
         if (point_belonging(event.Oleg_.motion.pos))

@@ -36,7 +36,7 @@ public:
         scroll_bar_.set_texture(scroll_bar_image.getTexture());
     }
 
-    HSVpalette(const HSVpalette &source) : Object(*(Object *)&source),
+    HSVpalette(const HSVpalette &source) : Object(*(const Object *)&source),
         color_(source.color_),
         palette_(source.palette_),
         scroll_bar_(source.scroll_bar_),
@@ -45,7 +45,7 @@ public:
 
     HSVpalette &operator=(const HSVpalette &source)
     {
-        Object::operator=(*(Object *)&source);
+        Object::operator=(*(const Object *)&source);
         color_           = source.color_;
         palette_         = source.palette_;
         scroll_bar_      = source.scroll_bar_;

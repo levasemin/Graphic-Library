@@ -7,7 +7,8 @@ public:
 
     Vector2d curr_pos_;
 
-    ToolPalette(Vector2d shape, Vector2d center, const Texture &texture) : CompositeObject(shape, center, texture)
+    ToolPalette(Vector2d shape, Vector2d center, const Texture &texture) : CompositeObject(shape, center, texture),
+        curr_pos_(0.f, 0.f)
     {
 
     }

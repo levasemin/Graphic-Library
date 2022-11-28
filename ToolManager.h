@@ -25,6 +25,10 @@ private:
         textures_(source.textures_)
     {}
 
+    
+
+public:
+
     ToolManager& operator=(const ToolManager& source)
     {
         tools_       = source.tools_;
@@ -34,7 +38,6 @@ private:
         return *this;
     }
 
-public:
     static ToolManager& getInstance()
     {
         static ToolManager instance;
