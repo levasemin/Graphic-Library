@@ -16,26 +16,23 @@ public:
     Surface surface_;
 
     ToolManager &tool_manager_;
-    ToolPalette *tool_palette_ = nullptr;
-    Container *setting_palette_ = nullptr;
 
     bool is_left_clicked_ = false;
 
     Canvas(Vector2d shape, Vector2d center, const Image &image, ToolPalette *tool_palette, Container * setting_palette) : 
         CompositeObject(shape, center, Color::Cyan),
         surface_(image.getSize(), image.getSize() / 2, image),
-        tool_manager_(ToolManager::getInstance()),
-        tool_palette_(tool_palette),
-        setting_palette_(setting_palette)
+        tool_manager_(ToolManager::getInstance())
     {   
         add(&surface_);
+
+        tool_manager_.set_tool_palette(tool_palette);
+        tool_manager_.set_setting_palette(setting_palette);
     }
 
     Canvas (const Canvas &source): CompositeObject(*(const CompositeObject *)&source),
         surface_(source.surface_),
-        tool_manager_(source.tool_manager_),
-        tool_palette_(source.tool_palette_),
-        setting_palette_(source.setting_palette_)
+        tool_manager_(source.tool_manager_)
     {} 
 
     Canvas &operator= (const Canvas &source)
@@ -43,8 +40,6 @@ public:
         CompositeObject::operator=(*(const CompositeObject *)&source);
         surface_         = source.surface_;
         tool_manager_    = source.tool_manager_;
-        tool_palette_    = source.tool_palette_;
-        setting_palette_ = source.setting_palette_;
 
         return *this;
     }
@@ -85,10 +80,5 @@ public:
     void add_tool(Tool *new_tool)
     {
         tool_manager_.add(new_tool);
-        tool_palette_->add(new_tool->get_tool_widget());
-        if (new_tool->get_setting_widget() != nullptr)
-        {
-            setting_palette_->add(new_tool->get_setting_widget());
-        }
     }    
 };

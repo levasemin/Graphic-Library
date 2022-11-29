@@ -13,12 +13,13 @@
 
 class HorizontalScrollBar : public CompositeObject
 {
-public:
+protected:
     Button up_button_;
     Button down_button_;    
     Button scroll_button_;
     Vector2d scroll_field_shape;
 
+public:
     Command<const Event&> *scroll_command_ = nullptr;
 
     float scroll_coeff_ = SCROLL_COEFF;
@@ -80,17 +81,13 @@ public:
 
             else 
             {
-                new_shape = Vector2d(shape_.x_, shape_.x_);
+                new_shape = Vector2d(shape_.y_, shape_.y_);
             }
 
-            up_button_.set_shape(new_shape);
-            down_button_.set_shape(new_shape);
-            
-            scroll_button_.set_center(Vector2d(shape_.y_ / 2, up_button_.get_shape().x_ + shape_.x_ * SCROLL_COEFF  / 2));
-            scroll_field_shape = Vector2d(shape_.x_ - up_button_.get_shape().x_ - down_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape_.y_);
+            set_up_down_button_shape(new_shape);
         }
 
-        void set_scroll_button_size(const Vector2d &shape)
+        void set_scroll_button_shape(const Vector2d &shape)
         {
             scroll_button_.set_shape(shape);
             scroll_button_.set_center(Vector2d(up_button_.get_shape().x_ + scroll_button_.get_shape().x_  / 2, scroll_button_.get_shape().y_ / 2));
@@ -98,6 +95,14 @@ public:
             scroll_coeff_ = scroll_button_.get_shape().x_ / (shape_.x_ - down_button_.get_shape().x_ * 2);
         }
 
+        void set_up_down_button_shape(const Vector2d &shape)
+        {
+            up_button_.set_shape(shape);
+            down_button_.set_shape(shape);
+            
+            scroll_button_.set_center(Vector2d(shape_.y_ / 2, up_button_.get_shape().x_ + shape_.x_ * SCROLL_COEFF  / 2));
+            scroll_field_shape = Vector2d(shape_.x_ - up_button_.get_shape().x_ - down_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape_.y_);
+        }
 
         void scroll_bar(const Event &event)
         {

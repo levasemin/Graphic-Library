@@ -20,11 +20,11 @@ int main()
     ComboBox combobox(Vector2d(80, 20), Vector2d(40, 10), Texture(Color::Yellow));
     Button butt(Vector2d(50, 50), Vector2d(25, 25), Texture(Color::Green));
     combobox.add(&butt);
-
     
     
     ToolPaint toolpaint;
     toolpaint.buildSetupWidget();
+
     canvas.add_tool(&toolpaint);
     ToolEraser tooleraser;
     tooleraser.buildSetupWidget();
@@ -38,11 +38,12 @@ int main()
     main_window.add(&setting_container);
     main_window.add(&combobox);
     
-    // Editor edit(Vector2d(100, 20), Vector2d(300, 300));
+    Editor edit(Vector2d(100, 20), Vector2d(300, 300));
     
-    // HSVwindow hsv_window(Vector2d(200, 400), Vector2d(200, 400) / 2);
-    // Font font(TIMES_NEW_ROMAN_FONT);
-    
+    HSVwindow hsv_window(Vector2d(200, 400), Vector2d(200, 400) / 2);
+    Font font(TIMES_NEW_ROMAN_FONT);
+
+
     Application app(&main_window);
     
     app.exec();

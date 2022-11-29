@@ -1,0 +1,45 @@
+Date : 2022-11-28 11:52:56
+Directory : /home/levce/projectsDED/event_handler2/Event_handler
+Total : 21 files,  168 codes, -2 comments, 45 blanks, all 211 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |         21 |        168 |         -2 |         45 |        211 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                     | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                        |         21 |        168 |         -2 |         45 |        211 |
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                 | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /home/levce/projectsDED/event_handler2/Event_handler/Button.h            | C++      |          8 |          0 |          1 |          9 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Canvas.h            | C++      |         15 |          0 |          4 |         19 |
+| /home/levce/projectsDED/event_handler2/Event_handler/CompositeObject.h   | C++      |          0 |          0 |          1 |          1 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Container.h         | C++      |          6 |          4 |          3 |         13 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Editor.h            | C++      |          9 |          0 |          2 |         11 |
+| /home/levce/projectsDED/event_handler2/Event_handler/HSVpalette.h        | C++      |         15 |         -4 |          3 |         14 |
+| /home/levce/projectsDED/event_handler2/Event_handler/HSVwindow.h         | C++      |         14 |          0 |          6 |         20 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Image.h             | C++      |          6 |          0 |          0 |          6 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Label.h             | C++      |          9 |          0 |          3 |         12 |
+| /home/levce/projectsDED/event_handler2/Event_handler/MyToolPaint.h       | C++      |          4 |          1 |          2 |          7 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Tool.h              | C++      |          3 |          0 |          1 |          4 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ToolButton.h        | C++      |         15 |          0 |          4 |         19 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ToolCommand.h       | C++      |         10 |          0 |          3 |         13 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ToolEraser.h        | C++      |         15 |          0 |          4 |         19 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ToolManager.h       | C++      |         13 |          0 |          6 |         19 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ToolPaint.h         | C++      |          0 |          0 |         -1 |         -1 |
+| /home/levce/projectsDED/event_handler2/Event_handler/ToolPalette.h       | C++      |          1 |          0 |          0 |          1 |
+| /home/levce/projectsDED/event_handler2/Event_handler/VerticalScrollBar.h | C++      |         19 |          0 |          2 |         21 |
+| /home/levce/projectsDED/event_handler2/Event_handler/main.cpp            | C++      |          6 |         -3 |          1 |          4 |
+| /home/levce/projectsDED/event_handler2/Event_handler/main8.cpp           | C++      |         52 |          0 |         24 |         76 |
+| /home/levce/projectsDED/event_handler2/Event_handler/maino.cpp           | C++      |        -52 |          0 |        -24 |        -76 |
+| Total                                                                    |          |        168 |         -2 |         45 |        211 |
++--------------------------------------------------------------------------+----------+------------+------------+------------+------------+

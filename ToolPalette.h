@@ -1,3 +1,5 @@
+#pragma once 
+
 #include "CompositeObject.h"
 
 class ToolPalette : public CompositeObject

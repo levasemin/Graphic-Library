@@ -150,10 +150,17 @@ public:
     
     void set_shape (Vector2d shape) override
     {
-        sprite_.set_shape(shape);
-        render_texture_->create(shape);
-        render_texture_->draw(sprite_);
         shape_  = shape; 
+
+        render_texture_->clear();
+        sprite_.set_shape(shape);
+
+        if (doublecmp(shape.x_, 0.f) && doublecmp(shape.y_, 0.f))
+        {
+            render_texture_->create(shape);
+        }
+
+        render_texture_->draw(sprite_);
     }
 
     Widget  *get_parent() const override

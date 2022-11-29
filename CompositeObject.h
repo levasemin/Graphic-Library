@@ -10,9 +10,10 @@ class CompositeObject : public Object
 
 protected:
     Vector2d global_shape_;
-    std::vector<Widget *> children_;
 
 public:
+    std::vector<Widget *> children_;
+
     CompositeObject(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Red)): Object(shape, center, texture),
         global_shape_(0, 0),
         children_({})
@@ -94,7 +95,7 @@ public:
 
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->set_global_offset(offset + get_start_field());
+            children_[i]->set_global_offset(offset + center_ - shape_ / 2 + local_offset_);
         }
     }
 
@@ -138,6 +139,7 @@ public:
         }
     }
 
+    
     void remove(Widget *widget) override
     {
         widget->set_parent(nullptr);
@@ -163,7 +165,7 @@ public:
         }
 
         widget->set_parent(this);
-        widget->set_global_offset(get_start_field());
+        widget->set_global_offset(global_offset_ + center_ - shape_ / 2 + local_offset_);
 
         children_.push_back(widget);
         

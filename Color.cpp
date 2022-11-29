@@ -15,7 +15,7 @@ bool Color::operator == (const Color &color2)
 }
 bool Color::operator != (const Color &color2)
 {
-    return doublecmp(r_, color2.r_) || doublecmp(g_, color2.g_) || doublecmp(b_, color2.b_);
+    return !operator==(color2);
 }
 
 Color &Color::operator += (const Color &color2)

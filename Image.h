@@ -54,7 +54,12 @@ public:
     {
         return Vector2d(image_.getSize());
     }
-    
+
+    void setSize(const Vector2d &size)
+    {
+        image_.create(uint32_t(size.x_), uint32_t(size.y_));
+    }   
+
     static Color convert_uint_color(uint32_t color)
     {
         return Color((uint8_t)(color >> 24), (uint8_t)(color >> 16), (uint8_t)(color >> 8));

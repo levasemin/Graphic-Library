@@ -118,15 +118,8 @@ public:
             }
         }
 
-        void ClickLeftEvent      (const Event &event) override
-    {  
-        printf("$$$$$$\n");
-        get_start_field().print_value();
-        printf("$$$$$$\n");
-        
-        for (size_t i = 0; i < children_.size(); i++)
-        {
-            children_[i]->ClickLeftEvent(event);
+        void ClickLeftEvent(const Event &event) override
+        {            
+            CompositeObject::ClickLeftEvent(event);
         }
-    }
 };

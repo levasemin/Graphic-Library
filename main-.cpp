@@ -34,8 +34,11 @@ const char *path_british = "/home/levce/projectsDED/event_handler2/Event_handler
 int main()
 {          
     MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Color::Yellow));
-            
-    Container container(Vector2d(100, 400), Vector2d(300, 250));
+
+    Container main_container(Vector2d(500, 500), Vector2d(500, 400));
+    main_container.set_texture(Texture(Color::Green));
+
+    Container container(Vector2d(100, 400), Vector2d(50, 200));
     
     DecoratorScroll scroll_container = DecoratorScroll(&container);
 
@@ -68,8 +71,22 @@ int main()
     
     first_button.set_text(text);
 
-    main_window.add(&decorator);
+    first_button.get_global_offset().print_value();
+    first_button.get_global_offset().print_value();
+
+    main_container.add(&decorator);
     
+    main_window.add(&main_container);
+
+    std::vector<Widget *> main_container_widget_ = main_container.get_children();
+    
+    for (int i = 0; i < main_container_widget_.size(); i++)
+    {
+        main_container.remove(main_container_widget_[i]);
+    }
+
+    main_container.add(&decorator);
+
     Application app(&main_window);
 
     app.exec();

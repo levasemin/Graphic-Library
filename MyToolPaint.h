@@ -5,6 +5,7 @@
 #include "ToolCommand.h"
 #include "ToolManager.h"
 #include "Color.h"
+#include "Circle.h"
 #include "HorizontalScrollBar.h"
 #include "HSVwindow.h"
 #include <deque>
@@ -61,22 +62,22 @@ public:
 
     std::deque<point> points_;
 
-    uint32_t color_ = (1 << 16) - 1;
-    uint32_t width_ = 1;
+    Circle drawing_object_;
 
     ToolPaint() : Tool(),
         interpolator_(CATMULL_ROM),
         hsv_window_(Vector2d(200, 300), Vector2d(150, 250)),
-        width_scroll_bar_(Vector2d(100, 30), Vector2d(150, 40)),
-        settings_container_(Vector2d(0, 0), Vector2d(150, 200)),
-        points_({})
+        width_scroll_bar_(Vector2d(200, 30), Vector2d(150, 40)),
+        settings_container_(Vector2d(300, 400), Vector2d(150, 200)),
+        points_({}),
+        drawing_object_(1.f)
     {
         hsv_window_.set_command(             (Command<const Color &> *) new SimpleCommand<ToolPaint, const Color &>(this, &ToolPaint::set_color));
         width_scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<ToolPaint, const Event &>(this, &ToolPaint::set_width));
         
-        settings_container_.add(&hsv_window_);
         settings_container_.add(&width_scroll_bar_);
-
+        settings_container_.add(&hsv_window_);
+        
         char icon_path[128] = "source/paint-brush.png";
         std::memcpy(icon_path_, icon_path, 128);
         
@@ -88,24 +89,25 @@ public:
 
     void set_color(const Color &color)
     {
-        color_ = Color::convert_color_uint(color);
+        drawing_object_.set_color(color);
     }
 
     void set_width(const Event & event)
     {
-        width_ = uint32_t(event.Oleg_.smedata.value) * 100;
+        drawing_object_.set_radius(int(event.Oleg_.smedata.value * 100.f));
     }
 
     void paint(booba::Image *image)
     {
-        image->putPixel((uint32_t)points_.back().x, (uint32_t)points_.back().y, color_);
+        drawing_object_.draw_on_image(image, Vector2d(points_.back().x, points_.back().y));
 
         if (points_.size() == 4)
         {
-            for (float t = 0; t <= 1.f; t += 0.001f)
+            for (float t = 0; t <= 1.f; t += 0.1f)
             {
                 point new_point = interpolator_(t, points_[0], points_[1], points_[2], points_[3]);
-                image->putPixel(uint32_t(new_point.x), uint32_t(new_point.y), color_);
+                
+                drawing_object_.draw_on_image(image, Vector2d(new_point.x, new_point.y));
             }
         }
     }
@@ -114,8 +116,6 @@ public:
     {    
         if (image == nullptr && event == nullptr)
         {
-            settings_container_.set_shape(Vector2d(0, 0));
-
             return;
         }
 
@@ -149,8 +149,6 @@ public:
             {
                 if (event->Oleg.bcedata.id == tool_button_)
                 {
-                    settings_container_.set_shape(Vector2d(300, 400));
-
                     std::cout << "Brush " << is_on_ << std::endl;
 
                     ToolManager &tool_manager = ToolManager::getInstance();
