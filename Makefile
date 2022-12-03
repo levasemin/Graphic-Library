@@ -2,8 +2,8 @@ CC = g+++
 
 BuildF = obj/
 
-event_handler: clean $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o
-	$(CC) 			 $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o -o event_handler -lsfml-graphics -lsfml-window -lsfml-system
+event_handler: clean $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o
+	$(CC) 			 $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o -o event_handler -lsfml-graphics -lsfml-window -lsfml-system 
 
 $(BuildF)main.o:
 	$(CC) -c main.cpp -o $(BuildF)main.o
@@ -23,6 +23,17 @@ $(BuildF)Vector2d.o:
 $(BuildF)Event.o:
 	$(CC) -c Event.cpp -o $(BuildF)Event.o
 
+$(BuildF)plugin_func.o:
+	$(CC) -c plugin_func.cpp -o $(BuildF)plugin_func.o
+
+$(BuildF)ToolButton.o:
+	$(CC) -c ToolButton.cpp -o $(BuildF)ToolButton.o
+
+$(BuildF)Button.o:
+	$(CC) -c Button.cpp -o $(BuildF)Button.o
+
+$(BuildF)Font.o:
+	$(CC) -c Font.cpp -o $(BuildF)Font.o
 
 clean:
 	rm -rf $(BuildF)/*.o

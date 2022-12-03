@@ -9,6 +9,8 @@
 #include "ToolManager.h"
 #include "ToolPalette.h"
 #include "Vector2d.h"
+#include <filesystem>
+#include <dlfcn.h>
 
 class Canvas : public CompositeObject
 {
@@ -19,17 +21,44 @@ public:
 
     bool is_left_clicked_ = false;
 
-    Canvas(Vector2d shape, Vector2d center, const Image &image, ToolPalette *tool_palette, Container * setting_palette) : 
+    Canvas(Vector2d shape, Vector2d center, const Image &image = Image(), ToolPalette *tool_palette = nullptr, Container * setting_palette = nullptr) : 
         CompositeObject(shape, center, Color::Cyan),
         surface_(image.getSize(), image.getSize() / 2, image),
         tool_manager_(ToolManager::getInstance())
     {   
         add(&surface_);
 
-        tool_manager_.set_tool_palette(tool_palette);
-        tool_manager_.set_setting_palette(setting_palette);
-    }
+        if (tool_palette)
+        {
+            tool_manager_.set_tool_palette(tool_palette);
+        }
 
+        if (setting_palette)
+        {
+            tool_manager_.set_setting_field(setting_palette);
+        }
+
+        // std::string dlPath = "./Plugins";
+        
+        // for (const auto& curFile : std::filesystem::directory_iterator(dlPath)) {
+        //     if (curFile.is_directory()) {
+        //         continue;
+        //     }
+
+        //     void* dlHandler = dlopen(curFile.path().c_str(), RTLD_LAZY);
+            
+        // //     if (dlHandler) {
+        // //         void (*initFunc)()   = nullptr; 
+        // //         *((void**)&initFunc) = dlsym(dlHandler, "init_module");
+
+        // //         (*initFunc)();
+        // //     }
+        // //     else {
+        // //         fprintf(stderr, "Unable to open lib: %s\n", dlerror());
+        // //     }
+        // }
+    }
+    
     Canvas (const Canvas &source): CompositeObject(*(const CompositeObject *)&source),
         surface_(source.surface_),
         tool_manager_(source.tool_manager_)

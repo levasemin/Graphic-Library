@@ -4,18 +4,10 @@
 #include "Command.h"
 #include "ToolCommand.h"
 #include "ToolManager.h"
-#include "Color.h"
-#include "Circle.h"
 #include "HorizontalScrollBar.h"
-#include "HSVwindow.h"
 #include <deque>
 
-uint64_t createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object);
-
-int CATMULL_ROM = 0;
-
-
-class ToolPaint : public Tool
+class ToolEraser : public Tool
 {
 
 public:
@@ -25,89 +17,74 @@ public:
         float y;
     }; 
 
-    class Interpolator
+    std::deque<point> points_;
+
+    HorizontalScrollBar width_scroll_bar_;
+    Container settings_container_;
+
+    uint32_t *default_image_ = nullptr;
+
+    ToolEraser() : Tool(),
+        points_({}),
+        width_scroll_bar_(Vector2d(100, 30), Vector2d(150, 40)),
+        settings_container_(Vector2d(300, 400), Vector2d(150, 200))
     {
-    public:
-        int type_ = 0;
+        char icon_path[128] = "source/eraser.png";
+        settings_container_.add(&width_scroll_bar_);
+        std::memcpy(icon_path_, icon_path, 128);
+        buildSetupWidget();
+    }
+    
+    ToolEraser(const ToolEraser &source) : Tool(*(const Tool *)&source),
+        points_(source.points_),
+        width_scroll_bar_(source.width_scroll_bar_),
+        settings_container_(source.settings_container_),
+        default_image_(source.default_image_)
+    {}
 
-        Interpolator(int type):
-            type_(type)
+    ToolEraser &operator=(const ToolEraser &source)
+    {
+        Tool::operator=(*(const Tool *)&source);
+        points_             = source.points_;
+        width_scroll_bar_   = source.width_scroll_bar_;
+        settings_container_ = source.settings_container_;
+        default_image_      = source.default_image_;
+
+        return *this;
+    }
+
+    void paint(booba::Image *image)
+    {
+        float x = points_.back().x;
+        float y = points_.back().y;
+
+        if (points_.size() == 4)
         {
-
-        }
-
-        ToolPaint::point operator()(float t, ToolPaint::point point_0, ToolPaint::point point_1, ToolPaint::point point_2, ToolPaint::point point_3)
-        {
-            ToolPaint::point new_point = {0.f, 0.f};
-
-            if (type_ == CATMULL_ROM)
+            for (float t = 0; t <= 1.f; t += 0.001f)
             {
                 float coeff_0 = -t * pow(1.f - t, 2.f);
                 float coeff_1 = (2.f - 5.f*pow(t, 2.f) + 3.f*pow(t, 3.f));
                 float coeff_2 = t * (1.f + 4.f*t - 3.f*pow(t, 2.f));
                 float coeff_3 = pow(t, 2.f) * (1.f - t);
 
-                new_point.x = 0.5f * (coeff_0 * point_0.x + coeff_1 * point_1.x + coeff_2 * point_2.x - coeff_3 * point_3.x);
-                new_point.y = 0.5f * (coeff_0 * point_0.y + coeff_1 * point_1.y + coeff_2 * point_2.y - coeff_3 * point_3.y);
-            }
-
-            return new_point;
-        }
-    };
-    
-    Interpolator interpolator_;
-    HSVwindow hsv_window_;
-    HorizontalScrollBar width_scroll_bar_;
-    Container settings_container_;
-
-    std::deque<point> points_;
-
-    Circle drawing_object_;
-
-    ToolPaint() : Tool(),
-        interpolator_(CATMULL_ROM),
-        hsv_window_(Vector2d(200, 300), Vector2d(150, 250)),
-        width_scroll_bar_(Vector2d(200, 30), Vector2d(150, 40)),
-        settings_container_(Vector2d(300, 400), Vector2d(150, 200)),
-        points_({}),
-        drawing_object_(1.f)
-    {
-        hsv_window_.set_command(             (Command<const Color &> *) new SimpleCommand<ToolPaint, const Color &>(this, &ToolPaint::set_color));
-        width_scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<ToolPaint, const Event &>(this, &ToolPaint::set_width));
-        
-        settings_container_.add(&width_scroll_bar_);
-        settings_container_.add(&hsv_window_);
-        
-        char icon_path[128] = "source/paint-brush.png";
-        std::memcpy(icon_path_, icon_path, 128);
-        
-        buildSetupWidget();
-    }
-
-    ToolPaint(const ToolPaint &) = default;
-    ToolPaint &operator=(const ToolPaint &) = default;
-
-    void set_color(const Color &color)
-    {
-        drawing_object_.set_color(color);
-    }
-
-    void set_width(const Event & event)
-    {
-        drawing_object_.set_radius(int(event.Oleg_.smedata.value * 100.f));
-    }
-
-    void paint(booba::Image *image)
-    {
-        drawing_object_.draw_on_image(image, Vector2d(points_.back().x, points_.back().y));
-
-        if (points_.size() == 4)
-        {
-            for (float t = 0; t <= 1.f; t += 0.1f)
-            {
-                point new_point = interpolator_(t, points_[0], points_[1], points_[2], points_[3]);
+                x = 0.5f * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
+                y = 0.5f * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);
                 
-                drawing_object_.draw_on_image(image, Vector2d(new_point.x, new_point.y));
+                image->putPixel((int)x, (int)y, default_image_[(int)y * image->getX() + (int)x]);
+            }
+        }
+    }
+
+    void create_default_image(booba::Image *image)
+    {
+        printf("reserve window was created\n");
+        default_image_ = new uint32_t[image->getH() * image->getX()];
+        
+        for (size_t y = 0; y < image->getH(); y++)
+        {
+            for (size_t x = 0; x < image->getX(); x++)
+            {
+                default_image_[y * image->getX() + x] = image->getPixel((int)x, (int)y);
             }
         }
     }
@@ -116,6 +93,8 @@ public:
     {    
         if (image == nullptr && event == nullptr)
         {
+            settings_container_.set_shape(Vector2d(0, 0));
+
             return;
         }
 
@@ -123,6 +102,11 @@ public:
         {
             case booba::EventType::CanvasMMoved:
             {
+                if (!default_image_)
+                {
+                    create_default_image(image);
+                }   
+
                 point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
 
                 if (points_.size() > 0)
@@ -149,7 +133,9 @@ public:
             {
                 if (event->Oleg.bcedata.id == tool_button_)
                 {
-                    std::cout << "Brush " << is_on_ << std::endl;
+                    settings_container_.set_shape(Vector2d(300, 400));
+                    
+                    std::cout << "Eraser " << is_on_ << std::endl;
 
                     ToolManager &tool_manager = ToolManager::getInstance();
                     
@@ -176,7 +162,9 @@ public:
             case booba::EventType::CanvasMReleased:
             
             default:
+            {
                 break;
+            }
         }
     }
 
@@ -188,6 +176,5 @@ public:
     void buildSetupWidget() override
     {
         tool_button_ = booba::createButton(25, 25, 50, 50, (char *)this);   
-        tool_settings_ = (uint64_t) &settings_container_;
     }
 };

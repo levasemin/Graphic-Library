@@ -11,33 +11,38 @@
 class ToolManager
 {
 private:
-    std::vector<Tool *> tools_;
-    Tool* active_tool_ = nullptr;
+    std::vector<booba::Tool *> tools_;
 
-    ToolPalette *tool_palette_ = nullptr;
-    Container *setting_palette_ = nullptr;
+    booba::Tool* active_tool_ = nullptr;
     
     ToolManager(): 
-        tools_({})
+        tools_({}),
+        setting_palettes_({})
     {}
 
     ToolManager( const ToolManager &source):
         tools_(source.tools_),
         active_tool_(source.active_tool_),
         tool_palette_(source.tool_palette_),
-        setting_palette_(source.setting_palette_)
+        setting_field_(source.setting_field_),
+        setting_palettes_(source.setting_palettes_)
     {}
 
-    
-
 public:
+    booba::Tool *init_tool_ = nullptr;
 
+    ToolPalette *tool_palette_ = nullptr;
+    Container *setting_field_ = nullptr;
+    
+    std::vector<Container *> setting_palettes_;
+    
     ToolManager& operator=(const ToolManager& source)
     {
-        tools_           = source.tools_;
-        active_tool_     = source.active_tool_;
-        tool_palette_    = source.tool_palette_;
-        setting_palette_ = source.setting_palette_;
+        tools_            = source.tools_;
+        active_tool_      = source.active_tool_;
+        tool_palette_     = source.tool_palette_;
+        setting_field_   = source.setting_field_;
+        setting_palettes_ = source.setting_palettes_;
 
         return *this;
     }
@@ -53,16 +58,22 @@ public:
         tool_palette_ = tool_palette;
     }
 
-    void set_setting_palette(Container *setting_palette)
+    void set_setting_field(Container *setting_palette)
     {
-        setting_palette_ = setting_palette;
+        setting_field_ = setting_palette;
     }
 
-    void add(Tool *new_tool)
+    void add(booba::Tool *new_tool)
     {
         tools_.push_back(new_tool);
-
-        tool_palette_->add(new_tool->get_tool_widget());
+        
+        ToolButton *tool_button_ = new ToolButton(Vector2d(25, 25), Vector2d(50, 50));
+        tool_button_->set_left_click((Command<const booba::Event &> *) new ToolCommand<booba::Tool>(new_tool, &booba::Tool::apply));
+        tool_palette_->add(tool_button_);
+        
+        Container *setting_palette = new Container(Vector2d(setting_field_->get_shape()), Vector2d(setting_field_->get_shape()));
+        setting_palettes_.push_back(setting_palette);
+        init_tool_ = new_tool;
     }
     
     void apply(Image *image, const Event *event)
@@ -76,33 +87,36 @@ public:
 
     void remove_active_tool()
     {
-        setting_palette_->remove((Container *) active_tool_->get_setting_widget());
+        // setting_field_->remove((Container *) active_tool_->get_setting_widget());
         active_tool_ = nullptr;
     }
 
     void set_active_tool(Tool *tool)
     {
+        size_t current_tool = -1;
+
         for (size_t i = 0; i < tools_.size(); i++)
         {
-            if (tools_[i] != tool)
+            if (tools_[i] == tool)
             {
-                tools_[i]->apply(nullptr, nullptr);
+                current_tool = i;
+                break;   
             }
         }
 
         active_tool_    = tool;
 
-        std::vector<Widget *> setting_palette_children = setting_palette_->get_children();
+        std::vector<Widget *> setting_field_children = setting_field_->get_children();
 
-        for (size_t i = 0; i < setting_palette_children.size(); i++)
+        for (size_t i = 0; i < setting_field_children.size(); i++)
         {
-            setting_palette_->remove(setting_palette_children[i]);
+            setting_field_->remove(setting_field_children[i]);
         }
-
-        setting_palette_->add((Container *)tool->tool_settings_);
+    
+        setting_field_->add(setting_palettes_[current_tool]);
     }
 
-    Tool *get_active_tool(Tool *tool)
+    booba::Tool *get_active_tool(booba::Tool *tool)
     {
         return active_tool_;
     }

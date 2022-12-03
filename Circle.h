@@ -10,7 +10,7 @@ protected:
     Color color_;
      
 public:
-    Circle(int radius, Color color = Color::Black): Image(Vector2d(radius * 2, radius * 2)),
+    Circle(int radius, Color color = Color::Black): Image(Vector2d(float(radius * 2), float(radius * 2))),
         radius_(radius),
         color_(color)
     {
@@ -34,7 +34,7 @@ public:
                     
                 }
 
-                setPixel(Vector2d(x, y), point_color);
+                setPixel(Vector2d(float(x), float(y)), point_color);
             }
         }
     }
@@ -42,13 +42,13 @@ public:
     void set_radius(int radius)
     {
         radius_ = radius;
-        setSize(Vector2d(radius * 2, radius * 2));
+        setSize(Vector2d(float(radius * 2), float(radius * 2)));
         
         fill_circle();
     }
 
     int get_radius()
-    {
+    {   
         return radius_;
     }
 
@@ -64,7 +64,7 @@ public:
         {
             for (int x = 0; x < radius_ * 2; x++)
             {
-                if (getPixel(Vector2d((int)x, (int)y)) == color_)
+                if (getPixel(Vector2d(float(x), float(y))) == color_)
                 {
                     image->putPixel(uint32_t((int)center.x_ + x - radius_), (uint32_t)((int)center.y_ + y - radius_), convert_color_uint(color_));
                 }

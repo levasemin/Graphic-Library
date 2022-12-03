@@ -15,8 +15,7 @@ public:
 
     Label(Vector2d shape, Vector2d center) : Object(shape, center), text_()
     {
-        Font *default_font = new Font(TIMES_NEW_ROMAN_FONT); 
-        text_.setFont(*default_font);
+        text_.setFont(Font::Times_new_roman);
         text_.setColor(Color::Black);
     };
     

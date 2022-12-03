@@ -2,8 +2,8 @@
 
 #include "Tool.h"
 #include "Command.h"
-#include "ToolCommand.h"
-#include "ToolManager.h"
+#include "Color.h"
+#include "Circle.h"
 #include <deque>
 
 class ToolEraser : public Tool
@@ -16,74 +16,72 @@ public:
         float y;
     }; 
 
-    std::deque<point> points_;
-
-    HorizontalScrollBar width_scroll_bar_;
-    Container settings_container_;
-
-    uint32_t *default_image_ = nullptr;
-
-    ToolEraser() : Tool(),
-        points_({}),
-        width_scroll_bar_(Vector2d(100, 30), Vector2d(150, 40)),
-        settings_container_(Vector2d(300, 400), Vector2d(150, 200))
+    class Interpolator
     {
-        char icon_path[128] = "source/eraser.png";
-        settings_container_.add(&width_scroll_bar_);
-        std::memcpy(icon_path_, icon_path, 128);
-        buildSetupWidget();
-    }
-    
-    ToolEraser(const ToolEraser &source) : Tool(*(const Tool *)&source),
-        points_(source.points_),
-        width_scroll_bar_(source.width_scroll_bar_),
-        settings_container_(source.settings_container_),
-        default_image_(source.default_image_)
-    {}
+    public:
+        int type_ = 0;
 
-    ToolEraser &operator=(const ToolEraser &source)
-    {
-        Tool::operator=(*(const Tool *)&source);
-        points_             = source.points_;
-        width_scroll_bar_   = source.width_scroll_bar_;
-        settings_container_ = source.settings_container_;
-        default_image_      = source.default_image_;
+        static const int CATMULL_ROM = 0;
 
-        return *this;
-    }
-
-    void paint(booba::Image *image)
-    {
-        float x = points_.back().x;
-        float y = points_.back().y;
-
-        if (points_.size() == 4)
+        Interpolator(int type):
+            type_(type)
         {
-            for (float t = 0; t <= 1.f; t += 0.001f)
+
+        }
+        
+        ToolEraser::point operator()(float t, ToolEraser::point point_0, ToolEraser::point point_1, ToolEraser::point point_2, ToolEraser::point point_3)
+        {
+            ToolEraser::point new_point = {0.f, 0.f};
+
+            if (type_ == CATMULL_ROM)
             {
                 float coeff_0 = -t * pow(1.f - t, 2.f);
                 float coeff_1 = (2.f - 5.f*pow(t, 2.f) + 3.f*pow(t, 3.f));
                 float coeff_2 = t * (1.f + 4.f*t - 3.f*pow(t, 2.f));
                 float coeff_3 = pow(t, 2.f) * (1.f - t);
 
-                x = 0.5f * (coeff_0 * points_[0].x + coeff_1 * points_[1].x + coeff_2 * points_[2].x - coeff_3 * points_[3].x);
-                y = 0.5f * (coeff_0 * points_[0].y + coeff_1 * points_[1].y + coeff_2 * points_[2].y - coeff_3 * points_[3].y);
-                
-                image->putPixel((int)x, (int)y, default_image_[(int)y * image->getX() + (int)x]);
+                new_point.x = 0.5f * (coeff_0 * point_0.x + coeff_1 * point_1.x + coeff_2 * point_2.x - coeff_3 * point_3.x);
+                new_point.y = 0.5f * (coeff_0 * point_0.y + coeff_1 * point_1.y + coeff_2 * point_2.y - coeff_3 * point_3.y);
             }
+
+            return new_point;
         }
+    };
+    
+    Interpolator interpolator_;
+    uint64_t width_scroll_bar_   = (uint64_t)nullptr;
+    uint64_t settings_container_ = (uint64_t)nullptr;
+
+    std::deque<point> points_;
+
+    Circle drawing_object_;
+
+    ToolEraser() : Tool(),
+        interpolator_(Interpolator::CATMULL_ROM),
+        points_({}),
+        drawing_object_(1.f, Color::White)
+    {         
+        char icon_path[128] = "source/eraser.png";
+        std::memcpy(icon_path_, icon_path, 128);
+
+        booba::addTool(this);
+        buildSetupWidget();
     }
 
-    void create_default_image(booba::Image *image)
+    ToolEraser(const ToolEraser &) = default;
+    ToolEraser &operator=(const ToolEraser &) = default;
+
+    void paint(booba::Image *image)
     {
-        printf("reserve window was created\n");
-        default_image_ = new uint32_t[image->getH() * image->getX()];
-        
-        for (size_t y = 0; y < image->getH(); y++)
+        drawing_object_.draw_on_image(image, Vector2d(points_.back().x, points_.back().y));
+
+        if (points_.size() == 4)
         {
-            for (size_t x = 0; x < image->getX(); x++)
+            for (float t = 0; t <= 1.f; t += 0.1f)
             {
-                default_image_[y * image->getX() + x] = image->getPixel((int)x, (int)y);
+                point new_point = interpolator_(t, points_[0], points_[1], points_[2], points_[3]);
+                
+                drawing_object_.draw_on_image(image, Vector2d(new_point.x, new_point.y));
             }
         }
     }
@@ -92,8 +90,6 @@ public:
     {    
         if (image == nullptr && event == nullptr)
         {
-            settings_container_.set_shape(Vector2d(0, 0));
-
             return;
         }
 
@@ -101,11 +97,6 @@ public:
         {
             case booba::EventType::CanvasMMoved:
             {
-                if (!default_image_)
-                {
-                    create_default_image(image);
-                }   
-
                 point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
 
                 if (points_.size() > 0)
@@ -130,40 +121,44 @@ public:
 
             case booba::EventType::ButtonClicked:
             {
-                if (event->Oleg.bcedata.id == tool_button_)
+                std::cout << "Brush " << is_on_ << std::endl;
+
+                ToolManager &tool_manager = ToolManager::getInstance();
+                
+                if (!is_on_)
                 {
-                    settings_container_.set_shape(Vector2d(300, 400));
-                    
-                    std::cout << "Eraser " << is_on_ << std::endl;
-
-                    ToolManager &tool_manager = ToolManager::getInstance();
-                    
-                    if (!is_on_)
-                    {
-                        tool_manager.set_active_tool(this);
-                    }
-                    
-                    else
-                    {
-                        tool_manager.remove_active_tool();                        
-                    }
-
-                    is_on_ = !is_on_;
+                    tool_manager.set_active_tool(this);
                 }
+                
+                else
+                {
+                    tool_manager.remove_active_tool();                        
+                }
+
+                is_on_ = !is_on_;
+
+                break;
             }
-            
+
+            case booba::EventType::ScrollbarMoved:
+            {
+                if (width_scroll_bar_ == event->Oleg.smedata.id)
+                {
+                    drawing_object_.set_radius(int(event->Oleg.smedata.value * 100.f));
+                }
+
+                break;
+            }
+
             case booba::EventType::NoEvent:
             case booba::EventType::MouseMoved:
             case booba::EventType::MousePressed:
             case booba::EventType::MouseReleased:
-            case booba::EventType::ScrollbarMoved:
             case booba::EventType::CanvasMPressed:
             case booba::EventType::CanvasMReleased:
             
             default:
-            {
                 break;
-            }
         }
     }
 
@@ -174,6 +169,11 @@ public:
 
     void buildSetupWidget() override
     {
-        tool_button_ = booba::createButton(25, 25, 50, 50, (char *)this);   
+        width_scroll_bar_ = (uint64_t)booba::createScrollbar(100, 100, 100, 30);
     }
 };
+
+void booba::init_module()
+{
+    ToolEraser *tool_eraser = new ToolEraser();
+}

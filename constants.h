@@ -12,5 +12,3 @@ const int WIDTH  = 1920;
 const int HEIGHT = 1080;
 
 const float SCROLL_COEFF = 0.1f;
-
-const char *TIMES_NEW_ROMAN_FONT = "fonts/Times_New_Roman.ttf";

@@ -5,14 +5,15 @@
 #include "ToolCommand.h"
 #include "ToolManager.h"
 #include "Color.h"
+#include "Circle.h"
+#include "HorizontalScrollBar.h"
 #include "HSVwindow.h"
 #include <deque>
 
 uint64_t createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object);
 
-int CATMULL_ROM = 0;
 
-class ToolPaint : public Tool
+class SuperToolPaint : public Tool
 {
 
 public:
@@ -32,61 +33,92 @@ public:
         {
 
         }
+        
+        static const int CATMULL_ROM = 0;
 
-        ToolPaint::point operator()(float t, ToolPaint::point point_0, ToolPaint::point point_1, ToolPaint::point point_2, ToolPaint::point point_3)
+        SuperToolPaint::point operator()(float t, SuperToolPaint::point point_0, SuperToolPaint::point point_1, SuperToolPaint::point point_2, SuperToolPaint::point point_3)
         {
-            ToolPaint::point new_point = {0, 0};
+            SuperToolPaint::point new_point = {0.f, 0.f};
 
             if (type_ == CATMULL_ROM)
             {
                 float coeff_0 = -t * pow(1.f - t, 2.f);
-                float coeff_1 = (2.f - 5.f*pow(t, 2) + 3.f*pow(t, 3));
-                float coeff_2 = t * (1.f + 4.f*t - 3.f*pow(t, 2));
-                float coeff_3 = pow(t, 2) * (1.f - t);
+                float coeff_1 = (2.f - 5.f*pow(t, 2.f) + 3.f*pow(t, 3.f));
+                float coeff_2 = t * (1.f + 4.f*t - 3.f*pow(t, 2.f));
+                float coeff_3 = pow(t, 2.f) * (1.f - t);
 
-                new_point.x = 0.5 * (coeff_0 * point_0.x + coeff_1 * point_1.x + coeff_2 * point_2.x - coeff_3 * point_3.x);
-                new_point.y = 0.5 * (coeff_0 * point_0.y + coeff_1 * point_1.y + coeff_2 * point_2.y - coeff_3 * point_3.y);
+                new_point.x = 0.5f * (coeff_0 * point_0.x + coeff_1 * point_1.x + coeff_2 * point_2.x - coeff_3 * point_3.x);
+                new_point.y = 0.5f * (coeff_0 * point_0.y + coeff_1 * point_1.y + coeff_2 * point_2.y - coeff_3 * point_3.y);
             }
 
             return new_point;
         }
     };
     
-    std::deque<point> points_;
     Interpolator interpolator_;
-    uint32_t color_ = (1 << 16) - 1;
-    uint32_t width_ = 1;
     HSVwindow hsv_window_;
+    HorizontalScrollBar width_scroll_bar_;
+    Container settings_container_;
 
-    ToolPaint() : Tool(),
-        interpolator_(CATMULL_ROM),
-        hsv_window_(Vector2d(200, 400), Vector2d(110, 600))
+    std::deque<point> points_;
+
+    Circle drawing_object_;
+
+    SuperToolPaint() : Tool(),
+        interpolator_(Interpolator::CATMULL_ROM),
+        hsv_window_(Vector2d(200, 300), Vector2d(150, 250)),
+        width_scroll_bar_(Vector2d(200, 30), Vector2d(150, 40)),
+        settings_container_(Vector2d(300, 400), Vector2d(150, 200)),
+        points_({}),
+        drawing_object_(1.f)
     {
+        hsv_window_.set_command(             (Command<const Color &> *) new SimpleCommand<SuperToolPaint, const Color &>(this, &SuperToolPaint::set_color));
+        width_scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<SuperToolPaint, const Event &>(this, &SuperToolPaint::set_width));
+        
+        settings_container_.add(&width_scroll_bar_);
+        settings_container_.add(&hsv_window_);
+        
         char icon_path[128] = "source/paint-brush.png";
         std::memcpy(icon_path_, icon_path, 128);
         
         buildSetupWidget();
     }
-    
+
+    SuperToolPaint(const SuperToolPaint &) = default;
+    SuperToolPaint &operator=(const SuperToolPaint &) = default;
+
+    void set_color(const Color &color)
+    {
+        drawing_object_.set_color(color);
+    }
+
+    void set_width(const Event & event)
+    {
+        drawing_object_.set_radius(int(event.Oleg_.smedata.value * 100.f));
+    }
+
     void paint(booba::Image *image)
     {
-        float x = points_.back().x;
-        float y = points_.back().y;
-
-        image->putPixel(x, y, color_);
+        drawing_object_.draw_on_image(image, Vector2d(points_.back().x, points_.back().y));
 
         if (points_.size() == 4)
         {
-            for (float t = 0; t <= 1.f; t += 0.001)
+            for (float t = 0; t <= 1.f; t += 0.1f)
             {
                 point new_point = interpolator_(t, points_[0], points_[1], points_[2], points_[3]);
-                image->putPixel(new_point.x, new_point.y, color_);
+                
+                drawing_object_.draw_on_image(image, Vector2d(new_point.x, new_point.y));
             }
         }
     }
 
     void apply(booba::Image* image, const booba::Event* event) override
     {    
+        if (image == nullptr && event == nullptr)
+        {
+            return;
+        }
+
         switch (event->type)
         {
             case booba::EventType::CanvasMMoved:
@@ -95,7 +127,7 @@ public:
 
                 if (points_.size() > 0)
                 {
-                    if (abs(points_.back().x - new_point.x) > image->getX() / 100 + 1 || abs(points_.back().y - new_point.y) > image->getH() / 10 + 1)
+                    if (abs(points_.back().x - new_point.x) > float(image->getX()) / 100.f + 1.f || abs(points_.back().y - new_point.y) > float(image->getH()) / 10.f + 1.f)
                     {
                         points_.clear();
                     }
@@ -118,7 +150,7 @@ public:
                 if (event->Oleg.bcedata.id == tool_button_)
                 {
                     std::cout << "Brush " << is_on_ << std::endl;
- 
+
                     ToolManager &tool_manager = ToolManager::getInstance();
                     
                     if (!is_on_)
@@ -135,6 +167,14 @@ public:
                 }
             }
             
+            case booba::EventType::NoEvent:
+            case booba::EventType::MouseMoved:
+            case booba::EventType::MousePressed:
+            case booba::EventType::MouseReleased:
+            case booba::EventType::ScrollbarMoved:
+            case booba::EventType::CanvasMPressed:
+            case booba::EventType::CanvasMReleased:
+            
             default:
                 break;
         }
@@ -145,8 +185,9 @@ public:
         return icon_path_;
     } 
 
-    void buildSetupWidget()
+    void buildSetupWidget() override
     {
         tool_button_ = booba::createButton(25, 25, 50, 50, (char *)this);   
+        tool_settings_ = (uint64_t) &settings_container_;
     }
 };

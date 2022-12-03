@@ -13,6 +13,8 @@ public:
     Font (const sf::Font &font) : font_(font) 
     {}
 
+    static const Font Times_new_roman;
+
     Font (const char *filename) : font_()
     {
         font_.loadFromFile(filename);
