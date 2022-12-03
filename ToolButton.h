@@ -8,7 +8,7 @@
 class ToolButton : public Button
 {
 public:
-        
+    
     ToolButton(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::White)) : Button(shape, center, texture)
     {
     }

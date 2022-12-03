@@ -13,7 +13,6 @@
 #include "Application.h"
 #include "Command.h"
 #include "ToolPaint.h"
-#include "ToolEraser.h"
 #include "plugin_func.h"
 #include "SimpleCommand.h"
 #include "Vector2d.h"

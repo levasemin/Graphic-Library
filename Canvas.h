@@ -38,25 +38,25 @@ public:
             tool_manager_.set_setting_field(setting_palette);
         }
 
-        // std::string dlPath = "./Plugins";
+        std::string dlPath = "./Plugins";
         
-        // for (const auto& curFile : std::filesystem::directory_iterator(dlPath)) {
-        //     if (curFile.is_directory()) {
-        //         continue;
-        //     }
+        for (const auto& curFile : std::filesystem::directory_iterator(dlPath)) {
+            if (curFile.is_directory()) {
+                continue;
+            }
 
-        //     void* dlHandler = dlopen(curFile.path().c_str(), RTLD_LAZY);
+            void* dlHandler = dlopen(curFile.path().c_str(), RTLD_LAZY);
             
-        // //     if (dlHandler) {
-        // //         void (*initFunc)()   = nullptr; 
-        // //         *((void**)&initFunc) = dlsym(dlHandler, "init_module");
+            if (dlHandler) {
+                void (*initFunc)()   = nullptr; 
+                *((void**)&initFunc) = dlsym(dlHandler, "init_module");
 
-        // //         (*initFunc)();
-        // //     }
-        // //     else {
-        // //         fprintf(stderr, "Unable to open lib: %s\n", dlerror());
-        // //     }
-        // }
+                (*initFunc)();
+            }
+            else {
+                fprintf(stderr, "Unable to open lib: %s\n", dlerror());
+            }
+        }
     }
     
     Canvas (const Canvas &source): CompositeObject(*(const CompositeObject *)&source),

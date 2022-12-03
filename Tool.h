@@ -23,14 +23,4 @@ public:
     };
 
     ~Tool() override {};
-
-    Widget *get_tool_widget()
-    {
-        return (Widget *)tool_button_;
-    }
-
-    Widget *get_setting_widget()
-    {
-        return (Widget *)tool_settings_;
-    }
 };

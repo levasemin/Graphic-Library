@@ -9,7 +9,7 @@
 #include "tools.h"
 
 
-uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* text)
+extern "C" uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* text)
 {   
     ToolManager &tool_manager = ToolManager::getInstance();
 
@@ -22,7 +22,7 @@ uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, co
     return (int64_t)tool_button;
 }
 
-uint64_t booba::createLabel    (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* text)
+extern "C" uint64_t booba::createLabel    (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* text)
 {
     ToolManager &tool_manager = ToolManager::getInstance();
 
@@ -34,7 +34,7 @@ uint64_t booba::createLabel    (int32_t x, int32_t y, uint32_t w, uint32_t h, co
     return (int64_t)label;    
 }   
 
-uint64_t booba::createScrollbar(int32_t x, int32_t y, uint32_t w, uint32_t h)
+extern "C" uint64_t booba::createScrollbar(int32_t x, int32_t y, uint32_t w, uint32_t h)
 {
     ToolManager &tool_manager = ToolManager::getInstance();
 
@@ -47,7 +47,7 @@ uint64_t booba::createScrollbar(int32_t x, int32_t y, uint32_t w, uint32_t h)
     return (int64_t)scroll_bar;     
 }
 
-uint64_t booba::createCanvas(int32_t x, int32_t y, int32_t w, int32_t h)
+extern "C" uint64_t booba::createCanvas(int32_t x, int32_t y, int32_t w, int32_t h)
 {
     ToolManager &tool_manager = ToolManager::getInstance();
 
@@ -58,7 +58,7 @@ uint64_t booba::createCanvas(int32_t x, int32_t y, int32_t w, int32_t h)
     return (int64_t)canvas;
 }
 
-uint64_t booba::putPixel (uint64_t canvas, int32_t x, int32_t y, uint32_t color)
+extern "C" uint64_t booba::putPixel (uint64_t canvas, int32_t x, int32_t y, uint32_t color)
 {
     if (canvas)
     {
@@ -69,7 +69,7 @@ uint64_t booba::putPixel (uint64_t canvas, int32_t x, int32_t y, uint32_t color)
     return canvas;
 }
 
-uint64_t booba::putSprite(uint64_t canvas, int32_t x, int32_t y, uint32_t w, uint32_t h, const char* texture)
+extern "C" uint64_t booba::putSprite(uint64_t canvas, int32_t x, int32_t y, uint32_t w, uint32_t h, const char* texture)
 {
     // if (canvas)
     // {
@@ -80,13 +80,13 @@ uint64_t booba::putSprite(uint64_t canvas, int32_t x, int32_t y, uint32_t w, uin
     return canvas;
 }
 
-void booba::addTool(booba::Tool* tool)
+extern "C" void booba::addTool(booba::Tool* tool)
 {
     ToolManager &tool_manager = ToolManager::getInstance();
     tool_manager.add(tool);  
 }
 
-void booba::addFilter(booba::Tool* tool)
+extern "C" void booba::addFilter(booba::Tool* tool)
 {
 
 }
