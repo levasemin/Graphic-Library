@@ -10,9 +10,6 @@
 #include "HSVwindow.h"
 #include <deque>
 
-uint64_t createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* object);
-
-
 class SuperToolPaint : public Tool
 {
 
@@ -58,28 +55,26 @@ public:
     Interpolator interpolator_;
     HSVwindow hsv_window_;
     HorizontalScrollBar width_scroll_bar_;
-    Container settings_container_;
 
     std::deque<point> points_;
 
     Circle drawing_object_;
 
+    bool clicked_ = false;
+
     SuperToolPaint() : Tool(),
         interpolator_(Interpolator::CATMULL_ROM),
         hsv_window_(Vector2d(200, 300), Vector2d(150, 250)),
         width_scroll_bar_(Vector2d(200, 30), Vector2d(150, 40)),
-        settings_container_(Vector2d(300, 400), Vector2d(150, 200)),
         points_({}),
         drawing_object_(1.f)
     {
         hsv_window_.set_command(             (Command<const Color &> *) new SimpleCommand<SuperToolPaint, const Color &>(this, &SuperToolPaint::set_color));
         width_scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<SuperToolPaint, const Event &>(this, &SuperToolPaint::set_width));
-        
-        settings_container_.add(&width_scroll_bar_);
-        settings_container_.add(&hsv_window_);
-        
-        char icon_path[128] = "source/paint-brush.png";
+                
+        char icon_path[128] = "source/Brush.png";
         std::memcpy(icon_path_, icon_path, 128);
+        booba::addTool(this);
         
         buildSetupWidget();
     }
@@ -94,7 +89,7 @@ public:
 
     void set_width(const Event & event)
     {
-        drawing_object_.set_radius(int(event.Oleg_.smedata.value * 100.f));
+        drawing_object_.set_radius(int(event.Oleg_.smedata.value * 30.f));
     }
 
     void paint(booba::Image *image)
@@ -114,14 +109,35 @@ public:
 
     void apply(booba::Image* image, const booba::Event* event) override
     {    
-        if (image == nullptr && event == nullptr)
+         if (image == nullptr && event == nullptr)
+    {
+        return;
+    }
+
+    switch (event->type)
+    {
+        case booba::EventType::CanvasMPressed:
         {
-            return;
+            clicked_ = true;
+
+            point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
+
+            points_.push_back(new_point);
+            paint(image);
+            points_.pop_back();
+
+            break;
         }
 
-        switch (event->type)
+        case booba::EventType::CanvasMReleased:
         {
-            case booba::EventType::CanvasMMoved:
+            clicked_ = false;
+            break;
+        }
+
+        case booba::EventType::CanvasMMoved:
+        {
+            if (clicked_)
             {
                 point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
 
@@ -141,43 +157,31 @@ public:
                 }
 
                 paint(image);
-
-                break;
-            }
-
-            case booba::EventType::ButtonClicked:
-            {
-                if (event->Oleg.bcedata.id == tool_button_)
-                {
-                    std::cout << "Brush " << is_on_ << std::endl;
-
-                    ToolManager &tool_manager = ToolManager::getInstance();
-                    
-                    if (!is_on_)
-                    {
-                        tool_manager.set_active_tool(this);
-                    }
-                    
-                    else
-                    {
-                        tool_manager.remove_active_tool();                        
-                    }
-
-                    is_on_ = !is_on_;
-                }
             }
             
-            case booba::EventType::NoEvent:
-            case booba::EventType::MouseMoved:
-            case booba::EventType::MousePressed:
-            case booba::EventType::MouseReleased:
-            case booba::EventType::ScrollbarMoved:
-            case booba::EventType::CanvasMPressed:
-            case booba::EventType::CanvasMReleased:
-            
-            default:
-                break;
+            break;
         }
+
+        case booba::EventType::ButtonClicked:
+
+        case booba::EventType::ScrollbarMoved:
+
+        case booba::EventType::NoEvent:
+        case booba::EventType::MouseMoved:
+        {
+            clicked_ = false;
+            break;
+        }
+        case booba::EventType::MousePressed:
+        case booba::EventType::MouseReleased:
+        {
+            clicked_ = false;
+            break;
+        }
+        
+        default:
+            break;
+    }
     }
 
     const char* getTexture() override
@@ -187,7 +191,10 @@ public:
 
     void buildSetupWidget() override
     {
-        tool_button_ = booba::createButton(25, 25, 50, 50, (char *)this);   
-        tool_settings_ = (uint64_t) &settings_container_;
+        ToolManager &tool_manager = ToolManager::getInstance();
+
+        tool_manager.setting_palettes_.back()->add(&width_scroll_bar_);
+        tool_manager.setting_palettes_.back()->add(&hsv_window_);
+        hsv_window_.set_texture(tool_manager.get_setting_field()->get_texture());
     }
 };

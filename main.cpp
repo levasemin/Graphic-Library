@@ -15,13 +15,14 @@ int main()
     texture_manager.load_textures("Textures");
 
     Image image(path_mountain);
-    ToolPalette tool_palette(Vector2d(100, 300), Vector2d(60, 158), Texture(Color::Magenta));
+    ToolPalette tool_palette(Vector2d(100, 300), Vector2d(60, 158), Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
     Container setting_container(Vector2d(300, 400), Vector2d(160, 700));
     setting_container.set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
 
-    SuperToolPaint super_tool_paint();
-    
     Canvas canvas(Vector2d(1400, 970), Vector2d(1020, 508), image, &tool_palette, &setting_container);
+
+    SuperToolPaint super_tool_paint;
+
         
     DecoratorScroll scroll_canvas(&canvas);
     DecoratorScrollBar scroll_bar_canvas(&scroll_canvas);

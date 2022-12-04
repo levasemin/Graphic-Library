@@ -68,17 +68,25 @@ public:
         setting_field_ = setting_palette;
     }
 
+    Container *get_setting_field()
+    {
+        return setting_field_;
+    }
+
     void add(booba::Tool *new_tool)
     {
         tools_.push_back(new_tool);
         
-        Button *tool_button_ = new Button(Vector2d(25, 25), Vector2d(50, 50));
+        Button *tool_button_ = new Button(Vector2d(50, 50), Vector2d(25, 25));
+        
+        tool_button_->set_texture(tool_palette_->get_texture());
+        tool_button_->set_texture(Texture(new_tool->getTexture()));
         tool_button_->set_left_click((Command<const Event &> *) new SimpleCommand<ToolManager, const Event &>(this, &ToolManager::tool_choose));
         
         tool_palette_->add(tool_button_);
         
         Container *setting_palette = new Container(Vector2d(setting_field_->get_shape()), Vector2d(setting_field_->get_shape()) / 2);
-        setting_palette->set_texture(Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
+        setting_palette->set_texture(setting_field_->get_texture());
         setting_palettes_.push_back(setting_palette);
         init_tool_ = new_tool;
     }

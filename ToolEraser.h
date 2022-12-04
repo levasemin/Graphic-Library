@@ -49,7 +49,7 @@ public:
     };
 
     bool clicked_ = false;
-    char icon_path_[128] = "source/eraser.png";
+    char icon_path_[128] = "source/Eraser.png";
 
     Interpolator interpolator_;
     uint64_t width_scroll_bar_   = (uint64_t)nullptr;

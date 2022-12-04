@@ -12,7 +12,7 @@ public:
     ToolPalette(Vector2d shape, Vector2d center, const Texture &texture) : CompositeObject(shape, center, texture),
         curr_pos_(0.f, 0.f)
     {
-
+        
     }
 
     void add(Widget *widget) override
@@ -36,6 +36,5 @@ public:
                 CompositeObject::add(widget);
             }
         }
-        
     }
 };
