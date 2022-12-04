@@ -2,15 +2,15 @@
 
 void ToolEraser::paint(booba::Image *image)
 {
-    drawing_object_.draw_on_image(image, Vector2d(points_.back().x, points_.back().y));
+    drawing_object_.draw_on_image(image, Vector2d(points_.back().x_, points_.back().y_));
 
     if (points_.size() == 4)
     {
         for (float t = 0; t <= 1.f; t += 0.1f)
         {
-            point new_point = interpolator_(t, points_[0], points_[1], points_[2], points_[3]);
+            Vector2d new_point = interpolator_(t, points_[0], points_[1], points_[2], points_[3]);
             
-            drawing_object_.draw_on_image(image, Vector2d(new_point.x, new_point.y));
+            drawing_object_.draw_on_image(image, new_point);
         }
     }
 }
@@ -28,7 +28,7 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
         {
             clicked_ = true;
 
-            point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
+            Vector2d new_point((float)event->Oleg.motion.x, (float)event->Oleg.motion.y);
 
             points_.push_back(new_point);
             paint(image);
@@ -47,11 +47,11 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
         {
             if (clicked_)
             {
-                point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
+                Vector2d new_point((float)event->Oleg.motion.x, (float)event->Oleg.motion.y);
 
                 if (points_.size() > 0)
                 {
-                    if (abs(points_.back().x - new_point.x) > float(image->getX()) / 100.f + 1.f || abs(points_.back().y - new_point.y) > float(image->getH()) / 10.f + 1.f)
+                    if (abs(points_.back().x_ - new_point.x_) > float(image->getX()) / 100.f + 1.f || abs(points_.back().y_ - new_point.y_) > float(image->getH()) / 10.f + 1.f)
                     {
                         points_.clear();
                     }

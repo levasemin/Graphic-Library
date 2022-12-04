@@ -3,10 +3,10 @@ CC = g+++
 BuildF = obj/
 
 eraser: 
-	$(CC) -shared -fPIC -Wextra ToolEraser.cpp Color.cpp functions.cpp tools.h -o Plugins/Eraser.so
+	$(CC) -shared -fPIC -Wextra ToolEraser.cpp Interpolator.cpp Color.cpp functions.cpp -o Plugins/Eraser.so
 
-event_handler: clean $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o $(BuildF)ToolManager.o
-	$(CC) 			 $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o $(BuildF)ToolManager.o -o event_handler -lsfml-graphics -lsfml-window -lsfml-system -ldl -export-dynamic
+event_handler: clean $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o $(BuildF)ToolManager.o $(Buildf)Interpolator.o
+	$(CC) 			 $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o $(BuildF)ToolManager.o $(Buildf)Interpolator.o -o event_handler -lsfml-graphics -lsfml-window -lsfml-system -ldl -export-dynamic
 
 $(BuildF)main.o:
 	$(CC) -c main.cpp -o $(BuildF)main.o
@@ -43,6 +43,9 @@ $(BuildF)ToolEraser.o:
 
 $(BuildF)ToolManager.o:
 	$(CC) -c ToolManager.cpp -o $(BuildF)ToolManager.o
+
+$(BuildF)Interpolator.o:
+	$(CC) -c Interpolator.cpp -o $(Buildf)Interpolator.o
 
 clean:
 	rm -rf $(BuildF)/*.o
