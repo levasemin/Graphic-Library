@@ -1,6 +1,6 @@
 #include "ToolManager.h"
 
-int ToolManager::numCommands_(0);
-std::vector<booba::Tool *> ToolManager::toolList_(20);
-std::vector<booba::Event>  ToolManager::commandList_(20);
-std::vector<Memento *>     ToolManager:: mementoList_(20);
+int ToolManager::numCommands_(-1);
+int ToolManager::max_forward_(0);
+
+std::deque<Memento *> ToolManager:: mementoList_(32);

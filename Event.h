@@ -281,12 +281,12 @@ public:
                     Oleg_.kpedata.alt = true;
                 }
 
-                else if (sfEvent.key.control)
+                if (sfEvent.key.control)
                 {
                     Oleg_.kpedata.ctrl = true;
                 }
 
-                else if (sfEvent.key.shift)
+                if (sfEvent.key.shift)
                 {
                     Oleg_.kpedata.shift = true;
                 }

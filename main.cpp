@@ -19,8 +19,8 @@ int main()
     Container setting_container(Vector2d(300, 400), Vector2d(160, 700));
     setting_container.set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
 
-    // Color((uint8_t(92), uint8_t(92), uint8_t(92)));
-
+    SuperToolPaint super_tool_paint();
+    
     Canvas canvas(Vector2d(1400, 970), Vector2d(1020, 508), image, &tool_palette, &setting_container);
         
     DecoratorScroll scroll_canvas(&canvas);

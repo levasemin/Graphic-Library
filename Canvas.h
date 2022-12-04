@@ -27,17 +27,18 @@ public:
         tool_manager_(ToolManager::getInstance())
     {   
         add(&surface_);
+        
+        tool_manager_.set_suface(&surface_);
 
         if (tool_palette)
         {
             tool_manager_.set_tool_palette(tool_palette);
         }
-
         if (setting_palette)
         {
             tool_manager_.set_setting_field(setting_palette);
         }
-
+               
         std::string dlPath = "./Plugins";
         
         for (const auto& curFile : std::filesystem::directory_iterator(dlPath)) {
@@ -118,6 +119,27 @@ public:
         
 
         is_left_clicked_ = false;
+    }
+
+    void PressKeyEvent(const Event &event) override
+    {
+        if (event.Oleg_.kpedata.ctrl)
+        {
+            if (event.Oleg_.kpedata.code == Key::Z)
+            {
+                if (event.Oleg_.kpedata.shift)
+                {
+                    printf("Ctrl SHift Z\n");
+                    tool_manager_.redo(&surface_);
+                }
+
+                else
+                {
+                    printf("Ctrl Z\n");
+                    tool_manager_.undo(&surface_);
+                }
+            }
+        }
     }
 
     void set_image(Image *new_image)

@@ -27,6 +27,13 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
         case booba::EventType::CanvasMPressed:
         {
             clicked_ = true;
+
+            point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
+
+            points_.push_back(new_point);
+            paint(image);
+            points_.pop_back();
+
             break;
         }
 
@@ -69,7 +76,7 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
         {
             if (width_scroll_bar_ == event->Oleg.smedata.id)
             {
-                drawing_object_.set_radius(int(event->Oleg.smedata.value * 100.f));
+                drawing_object_.set_radius(int(event->Oleg.smedata.value * 30.f));
             }
 
             break;

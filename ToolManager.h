@@ -9,6 +9,7 @@
 #include "SimpleCommand.h"
 #include "Memento.h"
 #include "Surface.h"
+#include <deque>
 
 class ToolManager
 {
@@ -48,6 +49,8 @@ public:
     Container *setting_field_ = nullptr;
     
     std::vector<Container *> setting_palettes_;
+    
+    Surface *surface_ = nullptr;
 
     static ToolManager& getInstance()
     {
@@ -74,7 +77,8 @@ public:
         
         tool_palette_->add(tool_button_);
         
-        Container *setting_palette = new Container(Vector2d(setting_field_->get_shape()), Vector2d(setting_field_->get_shape()));
+        Container *setting_palette = new Container(Vector2d(setting_field_->get_shape()), Vector2d(setting_field_->get_shape()) / 2);
+        setting_palette->set_texture(Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
         setting_palettes_.push_back(setting_palette);
         init_tool_ = new_tool;
     }
@@ -100,15 +104,32 @@ public:
         }
     }
 
+    void create_memento(Surface *surface)
+    {                
+        if (numCommands_ >= max_backup_)
+        {
+            mementoList_.pop_front();
+            mementoList_.push_back(nullptr);
+            numCommands_--;
+        }
+
+        std::cout << "Copy created " << numCommands_ + 1 << std::endl;
+
+        numCommands_++;
+        mementoList_[numCommands_] = surface->createMemento();
+        max_forward_ = numCommands_;
+    }
+    
     void apply(Surface *surface, const Event *event)
     {
         if (active_tool_)
         {
-            // mementoList_[numCommands_] = surface->createMemento();
+            if (event->type_ == EventType::CanvasMReleased)
+            {
+                create_memento(surface);
+            }
+
             booba::Event booba_event   = convert_event(*event);
-            // commandList_[numCommands_] = booba_event;
-            // toolList_   [numCommands_]  = active_tool_;
-            // numCommands_ ++;
             active_tool_->apply(&surface->image_, &booba_event);
         }
     }
@@ -117,7 +138,7 @@ public:
     {
         if (numCommands_ == 0)
         {
-            std::cout << "*** Attempt to run off the end!! ***" << std::endl;
+            std::cout << "undo fuck up" << std::endl;
             return ;
         }
 
@@ -127,13 +148,13 @@ public:
     
     void static redo(Surface *surface)
     {
-        if (numCommands_ > highWater_)
+        if (numCommands_ >= max_forward_)
         {
-            std::cout << "*** Attempt to run off the end!! ***" << std::endl;
             return ;
         }
 
-        toolList_[numCommands_]->apply(&surface->image_, &commandList_[numCommands_]);
+        surface->reinstateMemento(mementoList_[numCommands_ + 1]);
+
         numCommands_++;
     }
 
@@ -143,8 +164,15 @@ public:
         active_tool_ = nullptr;
     }
 
+    void set_suface(Surface *surface)
+    {
+        surface_ = surface;
+    }
+
     void set_active_tool(booba::Tool *tool)
     {
+        create_memento(surface_);
+
         size_t current_tool = -1;
 
         for (size_t i = 0; i < tools_.size(); i++)
@@ -176,10 +204,11 @@ public:
     ~ToolManager() {};
 
 protected:
-    static std::vector<booba::Tool *> toolList_;
-    static std::vector<booba::Event> commandList_;
-    static std::vector<Memento *> mementoList_;
+    static std::deque<Memento *> mementoList_;
     static int numCommands_;
-    static const int highWater_ = 20;
+    static int max_forward_;
+    static const int max_backup_ = 32;
+
+    friend class Canvas;
 };
 
