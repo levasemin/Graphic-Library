@@ -55,6 +55,10 @@ public:
     void set_relation_g(const float &g_rel);
     void set_relation_b(const float &b_rel);
 
+    float get_relation_r();
+    float get_relation_g();
+    float get_relation_b();
+
     void pow(float degree);
     
     bool operator == (const Color &color2);

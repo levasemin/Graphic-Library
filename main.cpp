@@ -15,8 +15,8 @@ int main()
     texture_manager.load_textures("Textures");
 
     Image image(path_mountain);
-    ToolPalette tool_palette(Vector2d(100, 300), Vector2d(60, 158), Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
-    Container setting_container(Vector2d(300, 400), Vector2d(160, 700));
+    ToolPalette tool_palette(Vector2d(300, 300), Vector2d(160, 173), Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
+    Container setting_container(Vector2d(300, 588), Vector2d(160, 700));
     setting_container.set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
 
     Canvas canvas(Vector2d(1400, 970), Vector2d(1020, 508), image, &tool_palette, &setting_container);
@@ -33,8 +33,6 @@ int main()
         
     Editor edit(Vector2d(100, 20), Vector2d(300, 300));
     
-    HSVwindow hsv_window(Vector2d(200, 400), Vector2d(200, 400) / 2);
-
     Application app(&main_window);
     
     app.exec();

@@ -248,16 +248,36 @@ void Color::set_h(const float &h)
 {
     h_ = h;
     convert_hsv_rgb();
+
+    r_rel_ = r_ / 255.f;
+    g_rel_ = g_ / 255.f;
+    b_rel_ = b_ / 255.f;
+    
+    claim();
 }
+
 void Color::set_s(const float &s)
 {
     s_ = s;
     convert_hsv_rgb();
+
+    r_rel_ = r_ / 255.f;
+    g_rel_ = g_ / 255.f;
+    b_rel_ = b_ / 255.f;
+
+    claim();
 }
+
 void Color::set_v(const float &v)
 {
     v_ = v;
     convert_hsv_rgb();
+
+    r_rel_ = r_ / 255.f;
+    g_rel_ = g_ / 255.f;
+    b_rel_ = b_ / 255.f;
+    
+    claim();
 }
 
 void Color::set_r(const uint8_t &r)
@@ -322,6 +342,21 @@ void Color::set_relation_b(const float &b_rel)
 {
     b_rel_ = b_rel;
     this->claim();
+}
+
+float Color::get_relation_r()
+{
+    return r_rel_;
+}
+
+float Color::get_relation_g()
+{
+    return g_rel_;
+}
+
+float Color::get_relation_b()
+{
+    return b_rel_;
 }
 
 void Color::set_color(const uint8_t &r, const uint8_t &g, const uint8_t &b)
@@ -419,27 +454,6 @@ void Color::convert_rgb_hsv()
     v_ = cmax;
 }
 
-/*
-void Color::convert_rgb_hsv()
-{
-    float cmax = std::max(r_rel_, std::max(g_rel_, b_rel_));
-    float cmin = std::min(r_rel_, std::min(g_rel_, b_rel_));
-
-    v_ = cmax;
-
-    s_ = cmax > 0 ? 1 - cmin / cmax : 0;
-    
-    if (g_ >= b_)
-    {
-        h_ = 1.f / cos(((float)r_ - 0.5 * (float)g_ - 0.5 * (float)b_) / sqrt((float)std::pow(r_, 2) + (float)std::pow(g_, 2) + (float)std::pow(b_, 2) - (float)(r_ * g_ - r_ * b_ - g_ * b_)));
-    }
-
-    else
-    {
-        h_ = 360.f - 1.f / cos(((float)r_ - 0.5 * (float)g_ - 0.5 * (float)b_) / sqrt((float)std::pow(r_, 2) + (float)std::pow(g_, 2) + (float)std::pow(b_, 2) - (float)(r_ * g_ - r_ * b_ - g_ * b_)));
-    }
-}
-*/
 void Color::convert_hsv_rgb()
 {
     float c = v_ * s_;

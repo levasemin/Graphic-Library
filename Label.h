@@ -43,6 +43,11 @@ public:
         redraw();
     }
 
+    void set_color_text(const Color &color)
+    {
+        text_.setColor(color.get_sf_color());
+    }
+
     void redraw()
     {
         render_texture_->clear();
