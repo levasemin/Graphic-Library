@@ -23,7 +23,9 @@ public:
     Container settings_container_;
 
     uint32_t *default_image_ = nullptr;
-
+    
+    bool clicked_ = false;
+    
     ToolEraser() : Tool(),
         points_({}),
         width_scroll_bar_(Vector2d(100, 30), Vector2d(150, 40)),
@@ -158,7 +160,12 @@ public:
             case booba::EventType::MousePressed:
             case booba::EventType::MouseReleased:
             case booba::EventType::ScrollbarMoved:
-            case booba::EventType::CanvasMPressed:
+            case booba::EventType::CanvasMPressed
+            {
+                clicked_ = true;
+                break;
+            }
+            
             case booba::EventType::CanvasMReleased:
             
             default:

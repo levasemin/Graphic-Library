@@ -47,7 +47,8 @@ public:
             return new_point;
         }
     };
-    
+
+    bool clicked_ = false;
     char icon_path_[128] = "source/eraser.png";
 
     Interpolator interpolator_;
@@ -57,7 +58,7 @@ public:
     std::deque<point> points_;
 
     Circle drawing_object_;
-
+    
     ToolEraser() : Tool(),
         interpolator_(Interpolator::CATMULL_ROM),
         points_({}),

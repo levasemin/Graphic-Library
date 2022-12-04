@@ -22,7 +22,7 @@ public:
     Texture(const char *path):
         texture_()
     {
-        texture_.loadFromFile(path);
+        loadFromFile(path);
     };
     
     Texture (const Color &color):
@@ -37,6 +37,11 @@ public:
         texture_(texture)
     {
     }
+    
+    bool loadFromFile(const char *path)
+    {
+        return texture_.loadFromFile(path);
+    }
 
     Vector2d getSize() const
     {
@@ -44,6 +49,5 @@ public:
     }    
 
 private:
-
     friend class Sprite;
 };

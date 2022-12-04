@@ -35,7 +35,7 @@ public:
         sprite_(sprite)
     {
     }
-
+    
     void setTextureRect(Vector2d start, Vector2d end)
     {
         sprite_.setTextureRect(sf::IntRect((int)start.x_, (int)start.y_, (int)end.x_, (int)end.y_));

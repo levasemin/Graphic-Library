@@ -74,7 +74,7 @@ public:
         
         return *this;
     }
-
+    
     virtual void ClickLeftEvent      (const Event &event) override {}
     virtual void ReleasedLeftEvent   (const Event &event) override {}              
 

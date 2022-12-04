@@ -1,20 +1,51 @@
+#pragma once
+
 #include "Image.h"
 #include "Widget.h"
 #include "Object.h"
 
-class Surface : public Image, public Object 
+class Surface;
+
+class Memento
+{
+  public:
+    Memento(const Image &image):
+        state_()
+    {
+        state_ = image;
+    }
+  private:
+    friend class Surface;
+    Image state_;
+};
+
+class Surface : public Object 
 {
 public:
 
-    Surface(Vector2d shape, Vector2d center, const Image &image = Image()) : Image(image), Object(shape, center, image.getTexture())
-    {}
+    Image image_;
 
+    Surface(Vector2d shape, Vector2d center, const Image &image = Image()) : Object(shape, center, image.getTexture()),
+        image_(image)
+    {}
+        
     void draw() override
     {   
-        Sprite sprite(shape_, getTexture());
+        Sprite sprite(shape_, image_.getTexture());
         render_texture_->clear();
         render_texture_->draw(sprite);
 
         Object::draw();
     }
+
+    Memento *createMemento()
+    {
+        return new Memento(image_);
+    }
+
+    void reinstateMemento(Memento *mem)
+    {
+        image_ = mem->state_;
+    }
+
 };

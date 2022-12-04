@@ -12,7 +12,7 @@ public:
     Image () : 
         image_()
     {}
-    // gcc -shared -o libfoo.so library.o
+
     ~Image() override {}
     
     Image(const char *path):

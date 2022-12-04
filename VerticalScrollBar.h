@@ -9,6 +9,7 @@
 #include "SimpleCommand.h"
 #include "Command.h"
 #include "constants.h"
+#include "TextureManager.h"
 
 class VerticalScrollBar : public CompositeObject
 {
@@ -29,15 +30,23 @@ public:
         CompositeObject  (shape, center),
         scroll_coeff_(SCROLL_COEFF),
         click_place_(0, 0),
-        up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape.x_ / 2),
-                      Texture(Color::White)),
-        down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape_.y_   - shape.x_ / 2),
-                       Texture(Color::White)),
+        up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape.x_ / 2)),
+        down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape_.y_   - shape.x_ / 2)),
         scroll_button_(Vector2d(shape.x_, (shape.y_ - shape.x_ * 2) * SCROLL_COEFF),
-                       Vector2d(shape.x_ / 2, shape.x_ + shape_.y_ * SCROLL_COEFF  / 2), 
-                       Texture(Color::Black)),
+                       Vector2d(shape.x_ / 2, shape.x_ + shape_.y_ * SCROLL_COEFF  / 2)),
         scroll_field_shape(shape_.x_, shape_.y_ - shape_.x_ * 2 - scroll_button_.get_shape().y_)
         {
+            set_texture(Texture(Color((uint8_t)92, (uint8_t)92, (uint8_t)92)));
+            
+            TextureManager &texture_manager = TextureManager::getInstance();
+
+            up_button_.    set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
+            down_button_.  set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
+            scroll_button_.set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
+            
+            up_button_.  set_texture(texture_manager["UpArrow"]);
+            down_button_.set_texture(texture_manager["DownArrow"]);
+
             add(&up_button_);
             add(&down_button_);
             add(&scroll_button_);

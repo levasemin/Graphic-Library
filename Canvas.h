@@ -68,36 +68,55 @@ public:
     { 
         CompositeObject::operator=(*(const CompositeObject *)&source);
         surface_         = source.surface_;
-        tool_manager_    = source.tool_manager_;
-
+        
         return *this;
     }
 
     void MoveMouseEvent (const Event &event) override
     {
+        Event new_event = event;
+
         if (point_belonging(event.Oleg_.motion.pos))
         {
-            if (is_left_clicked_)
-            {
-                Event new_event = event;
-
-                new_event.Oleg_.motion.pos -= surface_.get_global_offset() + (surface_.get_center() - surface_.get_shape() / 2);
-
-                tool_manager_.apply(&surface_, &new_event);
-            }
+            new_event.type_ = EventType::CanvasMMoved;
         }
+        
+        new_event.Oleg_.motion.pos -= surface_.get_global_offset() + (surface_.get_center() - surface_.get_shape() / 2);
+
+        tool_manager_.apply(&surface_, &new_event);
     }
 
     void ClickLeftEvent(const Event &event) override
     {
+        Event new_event = event;
+
         if (point_belonging(event.Oleg_.mbedata.pos))
         {
-            is_left_clicked_ = true;
+            new_event.type_ = EventType::CanvasMPressed;
         }
+
+        new_event.Oleg_.motion.pos -= surface_.get_global_offset() + (surface_.get_center() - surface_.get_shape() / 2);
+
+        tool_manager_.apply(&surface_, &new_event);
+
+        is_left_clicked_ = true;
+        
     }
 
     void ReleasedLeftEvent (const Event &event) override
     {
+        Event new_event = event;
+
+        if (point_belonging(event.Oleg_.mbedata.pos))
+        {
+            new_event.type_ = EventType::CanvasMReleased;
+        }
+        
+        new_event.Oleg_.motion.pos -= surface_.get_global_offset() + (surface_.get_center() - surface_.get_shape() / 2);
+
+        tool_manager_.apply(&surface_, &new_event);   
+        
+
         is_left_clicked_ = false;
     }
 

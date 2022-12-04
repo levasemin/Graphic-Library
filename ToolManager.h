@@ -3,11 +3,12 @@
 #pragma once
 
 #include "Tool.h"
-#include "Image.h"
 #include "ToolPalette.h"
 #include "Container.h"
 #include <vector>
 #include "SimpleCommand.h"
+#include "Memento.h"
+#include "Surface.h"
 
 class ToolManager
 {
@@ -29,14 +30,6 @@ private:
         setting_palettes_(source.setting_palettes_)
     {}
 
-public:
-    booba::Tool *init_tool_ = nullptr;
-
-    ToolPalette *tool_palette_ = nullptr;
-    Container *setting_field_ = nullptr;
-    
-    std::vector<Container *> setting_palettes_;
-
     ToolManager& operator=(const ToolManager& source)
     {
         tools_            = source.tools_;
@@ -47,6 +40,14 @@ public:
 
         return *this;
     }
+    
+public:
+    booba::Tool *init_tool_ = nullptr;
+
+    ToolPalette *tool_palette_ = nullptr;
+    Container *setting_field_ = nullptr;
+    
+    std::vector<Container *> setting_palettes_;
 
     static ToolManager& getInstance()
     {
@@ -99,13 +100,41 @@ public:
         }
     }
 
-    void apply(Image *image, const Event *event)
+    void apply(Surface *surface, const Event *event)
     {
         if (active_tool_)
         {
-            booba::Event booba_event = convert_event(*event);
-            active_tool_->apply(image, &booba_event);
+            // mementoList_[numCommands_] = surface->createMemento();
+            booba::Event booba_event   = convert_event(*event);
+            // commandList_[numCommands_] = booba_event;
+            // toolList_   [numCommands_]  = active_tool_;
+            // numCommands_ ++;
+            active_tool_->apply(&surface->image_, &booba_event);
         }
+    }
+
+    static void undo(Surface *surface)
+    {
+        if (numCommands_ == 0)
+        {
+            std::cout << "*** Attempt to run off the end!! ***" << std::endl;
+            return ;
+        }
+
+        surface->reinstateMemento(mementoList_[numCommands_ - 1]);
+        numCommands_--;
+    }
+    
+    void static redo(Surface *surface)
+    {
+        if (numCommands_ > highWater_)
+        {
+            std::cout << "*** Attempt to run off the end!! ***" << std::endl;
+            return ;
+        }
+
+        toolList_[numCommands_]->apply(&surface->image_, &commandList_[numCommands_]);
+        numCommands_++;
     }
 
     void remove_active_tool()
@@ -145,4 +174,12 @@ public:
     }
 
     ~ToolManager() {};
+
+protected:
+    static std::vector<booba::Tool *> toolList_;
+    static std::vector<booba::Event> commandList_;
+    static std::vector<Memento *> mementoList_;
+    static int numCommands_;
+    static const int highWater_ = 20;
 };
+

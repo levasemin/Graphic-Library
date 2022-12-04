@@ -2,8 +2,8 @@ CC = g+++
 
 BuildF = obj/
 
-event_handler: clean $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o $(BuildF)ToolEraser.o
-	$(CC) 			 $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o $(BuildF)ToolEraser.o -o event_handler -lsfml-graphics -lsfml-window -lsfml-system -ldl -export-dynamic
+event_handler: clean $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o $(BuildF)ToolEraser.o $(BuildF)ToolManager.o
+	$(CC) 			 $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o $(BuildF)ToolEraser.o $(BuildF)ToolManager.o -o event_handler -lsfml-graphics -lsfml-window -lsfml-system -ldl -export-dynamic
 
 $(BuildF)main.o:
 	$(CC) -c main.cpp -o $(BuildF)main.o
@@ -37,6 +37,9 @@ $(BuildF)Font.o:
 
 $(BuildF)ToolEraser.o:
 	$(CC) -fPIC -c ToolEraser.cpp -o $(BuildF)ToolEraser.o
+
+$(BuildF)ToolManager.o:
+	$(CC) -fPIC -c ToolManager.cpp -o $(BuildF)ToolManager.o
 
 clean:
 	rm -rf $(BuildF)/*.o

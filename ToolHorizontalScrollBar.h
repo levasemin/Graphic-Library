@@ -35,7 +35,7 @@ public:
         offset.x_ = offset.x_ >= 0 ? offset.x_ : 0;
         offset.y_ = offset.y_ >= 0 ? offset.y_ : 0;
         
-        Vector2d max_offset = Vector2d(shape_.x_ - up_button_.get_shape().x_ * 2 - scroll_button_.get_shape().x_, 0);
+        Vector2d max_offset = Vector2d(shape_.x_ - left_button_.get_shape().x_ * 2 - scroll_button_.get_shape().x_, 0);
         offset.x_ = offset.x_ <= max_offset.x_ ? offset.x_ : max_offset.x_;
         offset.y_ = offset.y_ <= max_offset.y_ ? offset.y_ : max_offset.y_;
         

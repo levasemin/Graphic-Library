@@ -24,34 +24,46 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
 
     switch (event->type)
     {
+        case booba::EventType::CanvasMPressed:
+        {
+            clicked_ = true;
+            break;
+        }
+
+        case booba::EventType::CanvasMReleased:
+        {
+            clicked_ = false;
+            break;
+        }
+
         case booba::EventType::CanvasMMoved:
         {
-            point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
-
-            if (points_.size() > 0)
+            if (clicked_)
             {
-                if (abs(points_.back().x - new_point.x) > float(image->getX()) / 100.f + 1.f || abs(points_.back().y - new_point.y) > float(image->getH()) / 10.f + 1.f)
+                point new_point = {(float)event->Oleg.motion.x, (float)event->Oleg.motion.y};
+
+                if (points_.size() > 0)
                 {
-                    points_.clear();
+                    if (abs(points_.back().x - new_point.x) > float(image->getX()) / 100.f + 1.f || abs(points_.back().y - new_point.y) > float(image->getH()) / 10.f + 1.f)
+                    {
+                        points_.clear();
+                    }
                 }
-            }
 
-            points_.push_back(new_point);
+                points_.push_back(new_point);
+                
+                if (points_.size() > 4)
+                {
+                    points_.pop_front();
+                }
+
+                paint(image);
+            }
             
-            if (points_.size() > 4)
-            {
-                points_.pop_front();
-            }
-
-            paint(image);
-
             break;
         }
 
         case booba::EventType::ButtonClicked:
-        {
-            break;
-        }
 
         case booba::EventType::ScrollbarMoved:
         {
@@ -65,10 +77,16 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
 
         case booba::EventType::NoEvent:
         case booba::EventType::MouseMoved:
+        {
+            clicked_ = false;
+            break;
+        }
         case booba::EventType::MousePressed:
         case booba::EventType::MouseReleased:
-        case booba::EventType::CanvasMPressed:
-        case booba::EventType::CanvasMReleased:
+        {
+            clicked_ = false;
+            break;
+        }
         
         default:
             break;
