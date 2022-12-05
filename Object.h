@@ -193,6 +193,9 @@ public:
         render_texture_ = render_texture;
     }
 
+    Vector2d get_indent() const override { return Vector2d(0, 0); }
+    void set_indent(Vector2d indent) override {}
+
     Vector2d get_global_shape() const override
     {
         return shape_; 

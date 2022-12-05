@@ -31,15 +31,19 @@ public:
         }
 
         if (point_belonging(event.Oleg_.sedata.pos))
-        {   
-            Event new_event = event;
-            new_event.Oleg_.smedata.value = (float)( event.Oleg_.sedata.value * 2 / (widget_->get_global_shape().y_ - widget_->get_shape().y_) +
-                                           widget_->get_local_offset().y_ / (widget_->get_global_shape().y_ - widget_->get_shape().y_));
-            new_event.Oleg_.smedata.value *= -1;
-            
-            if (scroll_bar_vertical_able_)
+        {               
+            if (widget_->get_global_shape().y_ != widget_->get_shape().y_)
             {
-                scroll_bar_vertical_.scroll_bar(new_event);
+                Event new_event = event;
+
+                new_event.Oleg_.smedata.value = (float)( event.Oleg_.sedata.value * 2 / (widget_->get_global_shape().y_ - widget_->get_shape().y_) +
+                                            widget_->get_local_offset().y_ / (widget_->get_global_shape().y_ - widget_->get_shape().y_));
+                new_event.Oleg_.smedata.value *= -1;
+                
+                if (scroll_bar_vertical_able_)
+                {
+                    scroll_bar_vertical_.scroll_bar(new_event);
+                }
             }
         }
     }

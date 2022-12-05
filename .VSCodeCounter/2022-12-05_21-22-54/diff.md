@@ -1,21 +1,21 @@
 # Diff Summary
 
-Date : 2022-11-27 22:11:41
+Date : 2022-12-05 21:22:54
 
 Directory /home/levce/projectsDED/event_handler2/Event_handler
 
-Total : 41 files,  622 codes, 1 comments, 159 blanks, all 782 lines
+Total : 8 files,  22 codes, 0 comments, 10 blanks, all 32 lines
 
 [Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| C++ | 41 | 622 | 1 | 159 | 782 |
+| C++ | 8 | 22 | 0 | 10 | 32 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 41 | 622 | 1 | 159 | 782 |
+| . | 8 | 22 | 0 | 10 | 32 |
 
 [Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)

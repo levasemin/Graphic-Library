@@ -14,6 +14,8 @@ protected:
 public:
     std::vector<Widget *> children_;
 
+    Vector2d indent_; 
+
     CompositeObject(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Red)): Object(shape, center, texture),
         global_shape_(0, 0),
         children_({})
@@ -119,15 +121,15 @@ public:
     void reset_global_shape()
     {
         Vector2d global_end_field  (-10000000.f, -10000000.f);
-        Vector2d global_start_field( 10000000.f,  10000000.f);
-
+        Vector2d global_start_field( 0.f,  0.f);
+        
         for (size_t i = 0; i < children_.size(); i++)
         {
             global_start_field.x_ = children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 < global_start_field.x_ ? 
-                                      children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 : global_start_field.x_;
+                                    children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 : global_start_field.x_;
         
             global_start_field.y_ = children_[i]->get_center().y_ - children_[i]->get_shape().y_ / 2 < global_start_field.y_ ? 
-                                      children_[i]->get_center().y_ - children_[i]->get_shape().y_ / 2 : global_start_field.y_;
+                                    children_[i]->get_center().y_ - children_[i]->get_shape().y_ / 2 : global_start_field.y_;
 
             global_end_field.x_   = children_[i]->get_center().x_ +  children_[i]->get_shape().x_ / 2 > global_end_field.x_ ? 
                                     children_[i]->get_center().x_ +  children_[i]->get_shape().x_ / 2 : global_end_field.x_;
@@ -137,6 +139,9 @@ public:
 
             global_shape_ = global_end_field - global_start_field;
         }
+
+        global_shape_.x_ = global_shape_.x_ > shape_.x_ ? global_shape_.x_ : shape_.x_;
+        global_shape_.y_ = global_shape_.y_ > shape_.y_ ? global_shape_.y_ : shape_.y_;
     }
 
     
@@ -172,11 +177,15 @@ public:
         reset_global_shape();
     }
     
-    std::vector<Widget *> get_children() const override { return children_;}
-    Vector2d get_global_shape() const override         { return global_shape_; }
-
+    std::vector<Widget *> get_children() const override        { return children_; }
     void set_children(std::vector<Widget *> children) override { children_ = children; }
+
+    Vector2d get_indent() const override      { return indent_; }
+    void set_indent(Vector2d indent) override { indent_ = indent; }
+
+    Vector2d get_global_shape() const override            { return global_shape_; }
     void set_global_shape(Vector2d global_shape) override { global_shape_ = global_shape; }
+
 
     Vector2d get_local_offset() const override
     {

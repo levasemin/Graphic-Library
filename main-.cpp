@@ -71,9 +71,6 @@ int main()
     
     first_button.set_text(text);
 
-    first_button.get_global_offset().print_value();
-    first_button.get_global_offset().print_value();
-
     main_container.add(&decorator);
     
     main_window.add(&main_container);

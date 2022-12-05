@@ -24,8 +24,7 @@ int main()
     SuperToolPaint super_tool_paint;
 
         
-    DecoratorScroll scroll_canvas(&canvas);
-    DecoratorScrollBar scroll_bar_canvas(&scroll_canvas);
+    DecoratorScrollBar scroll_bar_canvas(&canvas);
 
     HorizontalScrollBar scope_scroll_bar(Vector2d(100, 20), Vector2d(1350, 50));
     // scope_scroll_bar.set_scroll_command();

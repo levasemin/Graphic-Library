@@ -177,6 +177,14 @@ public:
         zoom_ = value;
 
         surface_.set_shape(surface_.image_.getSize() * value);
+
+        Vector2d new_center = surface_.get_shape() / 2;
+
+        new_center.x_ = surface_.get_shape().x_ > shape_.x_ ? new_center.x_ : shape_.x_ / 2; 
+        new_center.y_ = surface_.get_shape().y_ > shape_.y_ ? new_center.y_ : shape_.y_ / 2; 
+        
+        surface_.set_center(new_center);
+        reset_global_shape();
     }
 
     void set_image(Image *new_image)

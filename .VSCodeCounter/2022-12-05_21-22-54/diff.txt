@@ -1,0 +1,32 @@
+Date : 2022-12-05 21:22:54
+Directory : /home/levce/projectsDED/event_handler2/Event_handler
+Total : 8 files,  22 codes, 0 comments, 10 blanks, all 32 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |          8 |         22 |          0 |         10 |         32 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                      | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                         |          8 |         22 |          0 |         10 |         32 |
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                  | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /home/levce/projectsDED/event_handler2/Event_handler/Canvas.h             | C++      |          5 |          0 |          3 |          8 |
+| /home/levce/projectsDED/event_handler2/Event_handler/CompositeObject.h    | C++      |          5 |          0 |          4 |          9 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Decorator.h          | C++      |          8 |          0 |          1 |          9 |
+| /home/levce/projectsDED/event_handler2/Event_handler/DecoratorScrollBar.h | C++      |          3 |          0 |          1 |          4 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Object.h             | C++      |          2 |          0 |          1 |          3 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Widget.h             | C++      |          2 |          0 |          1 |          3 |
+| /home/levce/projectsDED/event_handler2/Event_handler/main-.cpp            | C++      |         -2 |          0 |         -1 |         -3 |
+| /home/levce/projectsDED/event_handler2/Event_handler/main.cpp             | C++      |         -1 |          0 |          0 |         -1 |
+| Total                                                                     |          |         22 |          0 |         10 |         32 |
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+

@@ -124,6 +124,15 @@ public:
         widget_->set_render_texture(render_texture);
     }
 
+    Vector2d get_indent() const override     
+    {
+        return widget_->get_indent();
+    }
+    void set_indent(Vector2d indent) override
+    {
+        widget_->set_indent(indent);
+    }
+
     Vector2d get_global_shape() const override
     {
         return widget_->get_global_shape();
