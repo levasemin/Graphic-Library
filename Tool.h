@@ -11,9 +11,6 @@ class Tool : public booba::Tool
 {
     
 public:
-    uint64_t tool_button_   = (uint64_t)nullptr;
-    uint64_t tool_settings_ = (uint64_t)nullptr;
-
     char icon_path_[128] = "";
     bool is_on_ = false;
 

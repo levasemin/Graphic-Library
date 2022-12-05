@@ -27,10 +27,14 @@ int main()
     DecoratorScroll scroll_canvas(&canvas);
     DecoratorScrollBar scroll_bar_canvas(&scroll_canvas);
 
+    HorizontalScrollBar scope_scroll_bar(Vector2d(100, 20), Vector2d(1350, 50));
+    // scope_scroll_bar.set_scroll_command();
+
     main_window.add(&scroll_bar_canvas);    
     main_window.add(&tool_palette);
     main_window.add(&setting_container);
-        
+    main_window.add(&scope_scroll_bar);
+
     Editor edit(Vector2d(100, 20), Vector2d(300, 300));
     
     Application app(&main_window);

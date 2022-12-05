@@ -1,4 +1,5 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wswitch-enum"
 
 #pragma once
 
@@ -20,6 +21,8 @@ public:
     ToolManager &tool_manager_;
 
     bool is_left_clicked_ = false;
+    
+    float zoom_ = 1;
 
     Canvas(Vector2d shape, Vector2d center, const Image &image = Image(), ToolPalette *tool_palette = nullptr, Container * setting_palette = nullptr) : 
         CompositeObject(shape, center, Color::Cyan),
@@ -77,12 +80,14 @@ public:
     {
         Event new_event = event;
 
-        if (point_belonging(event.Oleg_.motion.pos))
+        if (surface_.point_belonging(event.Oleg_.motion.pos))
         {
             new_event.type_ = EventType::CanvasMMoved;
+            
+            new_event.Oleg_.cedata.pos  = event.Oleg_.motion.pos - surface_.get_global_offset() - (surface_.get_center() - surface_.get_shape() / 2);
+            new_event.Oleg_.cedata.pos /= zoom_;
+            new_event.Oleg_.cedata.id   = (uint64_t)this;
         }
-        
-        new_event.Oleg_.motion.pos -= surface_.get_global_offset() + (surface_.get_center() - surface_.get_shape() / 2);
 
         tool_manager_.apply(&surface_, &new_event);
     }
@@ -91,12 +96,14 @@ public:
     {
         Event new_event = event;
 
-        if (point_belonging(event.Oleg_.mbedata.pos))
+        if (surface_.point_belonging(event.Oleg_.mbedata.pos))
         {
             new_event.type_ = EventType::CanvasMPressed;
-        }
-
-        new_event.Oleg_.motion.pos -= surface_.get_global_offset() + (surface_.get_center() - surface_.get_shape() / 2);
+            
+            new_event.Oleg_.cedata.pos  = event.Oleg_.mbedata.pos - surface_.get_global_offset() - (surface_.get_center() - surface_.get_shape() / 2);
+            new_event.Oleg_.cedata.pos /= zoom_;
+            new_event.Oleg_.cedata.id   = (uint64_t)this;
+        }   
 
         tool_manager_.apply(&surface_, &new_event);
 
@@ -108,38 +115,68 @@ public:
     {
         Event new_event = event;
 
-        if (point_belonging(event.Oleg_.mbedata.pos))
+        if (surface_.point_belonging(event.Oleg_.mredata.pos))
         {
             new_event.type_ = EventType::CanvasMReleased;
+            
+            new_event.Oleg_.cedata.pos  = event.Oleg_.mredata.pos - surface_.get_global_offset() - (surface_.get_center() - surface_.get_shape() / 2);
+            new_event.Oleg_.cedata.pos /= zoom_;
+            new_event.Oleg_.cedata.id   = (uint64_t)this;
         }
-        
-        new_event.Oleg_.motion.pos -= surface_.get_global_offset() + (surface_.get_center() - surface_.get_shape() / 2);
 
         tool_manager_.apply(&surface_, &new_event);   
-        
-
+    
         is_left_clicked_ = false;
     }
 
     void PressKeyEvent(const Event &event) override
     {
         if (event.Oleg_.kpedata.ctrl)
-        {
-            if (event.Oleg_.kpedata.code == Key::Z)
+        {            
+            switch(event.Oleg_.kpedata.code)
             {
-                if (event.Oleg_.kpedata.shift)
+                case Key::Z:
                 {
-                    printf("Ctrl SHift Z\n");
-                    tool_manager_.redo(&surface_);
+                    if (event.Oleg_.kpedata.shift)
+                    {
+                        tool_manager_.redo(&surface_);
+                    }
+
+                    else
+                    {
+                        tool_manager_.undo(&surface_);
+                    }
+
+                    break;
                 }
 
-                else
+                case Key::Equal:
                 {
-                    printf("Ctrl Z\n");
-                    tool_manager_.undo(&surface_);
+                    set_zoom(zoom_ + 0.1f);
+
+                    break;
+                }
+
+                case Key::Hyphen:
+                {
+                    set_zoom(zoom_ - 0.1f);
+
+                    break;
+                }
+
+                default:
+                {
+                    break;
                 }
             }
         }
+    }
+
+    void set_zoom(float value)
+    {
+        zoom_ = value;
+
+        surface_.set_shape(surface_.image_.getSize() * value);
     }
 
     void set_image(Image *new_image)

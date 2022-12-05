@@ -89,7 +89,7 @@ public:
             {
                 clicked_ = true;
 
-                Vector2d new_point((float)event->Oleg.motion.x, (float)event->Oleg.motion.y);
+                Vector2d new_point((float)event->Oleg.cedata.x, (float)event->Oleg.cedata.y);
 
                 points_.push_back(new_point);
                 paint(image);
@@ -108,7 +108,7 @@ public:
             {
                 if (clicked_)
                 {
-                    Vector2d new_point((float)event->Oleg.motion.x, (float)event->Oleg.motion.y);
+                    Vector2d new_point((float)event->Oleg.cedata.x, (float)event->Oleg.cedata.y);
 
                     if (points_.size() > 0)
                     {

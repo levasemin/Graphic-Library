@@ -61,33 +61,29 @@ booba::Event convert_event(const Event &event)
         case EventType::CanvasMPressed:
         {
             booba_event.type = booba::EventType::CanvasMPressed;
-            booba_event.Oleg.mbedata.x = (int)event.Oleg_.mbedata.pos.x_;
-            booba_event.Oleg.mbedata.y = (int)event.Oleg_.mbedata.pos.y_;
+            booba_event.Oleg.cedata.id = event.Oleg_.cedata.id;
+            booba_event.Oleg.cedata.x = (uint32_t)event.Oleg_.cedata.pos.x_;
+            booba_event.Oleg.cedata.y = (uint32_t)event.Oleg_.cedata.pos.y_;
             
-            booba_event.Oleg.mbedata.button = (booba::MouseButton)event.Oleg_.mbedata.button;
-            booba_event.Oleg.mbedata.alt    = event.Oleg_.mbedata.alt;
-            booba_event.Oleg.mbedata.ctrl   = event.Oleg_.mbedata.ctrl;
-            booba_event.Oleg.mbedata.shift  = event.Oleg_.mbedata.shift;
-
             break;
         }
 
         case EventType::CanvasMReleased:
         {
             booba_event.type = booba::EventType::CanvasMReleased;
-            booba_event.Oleg.mbedata.x = (int)event.Oleg_.mredata.pos.x_;
-            booba_event.Oleg.mbedata.y = (int)event.Oleg_.mredata.pos.y_;
-            
-            booba_event.Oleg.mbedata.button = (booba::MouseButton)event.Oleg_.mredata.button;
-            
+            booba_event.Oleg.cedata.id = event.Oleg_.cedata.id;
+            booba_event.Oleg.cedata.x = (uint32_t)event.Oleg_.cedata.pos.x_;
+            booba_event.Oleg.cedata.y = (uint32_t)event.Oleg_.cedata.pos.y_;
+                        
             break;
         }
 
         case EventType::CanvasMMoved:
         {
             booba_event.type = booba::EventType::CanvasMMoved;
-            booba_event.Oleg.motion.x = (int)event.Oleg_.motion.pos.x_;
-            booba_event.Oleg.motion.y = (int)event.Oleg_.motion.pos.y_;
+            booba_event.Oleg.cedata.id = event.Oleg_.cedata.id;
+            booba_event.Oleg.cedata.x = (uint32_t)event.Oleg_.cedata.pos.x_;
+            booba_event.Oleg.cedata.y = (uint32_t)event.Oleg_.cedata.pos.y_;
             break;
         }
 

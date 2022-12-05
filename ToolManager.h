@@ -121,8 +121,6 @@ public:
             numCommands_--;
         }
 
-        std::cout << "Copy created " << numCommands_ + 1 << std::endl;
-
         numCommands_++;
         mementoList_[numCommands_] = surface->createMemento();
         max_forward_ = numCommands_;
@@ -158,6 +156,7 @@ public:
     {
         if (numCommands_ >= max_forward_)
         {
+            std::cout << "redo fuck up" << std::endl;
             return ;
         }
 
