@@ -63,7 +63,6 @@ namespace booba {
         float value;
     };
 
-
     struct CanvasEventData
     {
         uint64_t id;

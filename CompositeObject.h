@@ -18,13 +18,15 @@ public:
 
     CompositeObject(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Red)): Object(shape, center, texture),
         global_shape_(0, 0),
-        children_({})
+        children_({}),
+        indent_(0, 0)
         {
         }
 
     CompositeObject(const CompositeObject &source) : Object(*(const Object *)&source),
         global_shape_(source.global_shape_),
-        children_(source.children_)
+        children_(source.children_),
+        indent_(source.indent_)
         {}
 
     CompositeObject &operator=(const CompositeObject &source)
@@ -32,7 +34,7 @@ public:
         Object::operator=(*(const Object *)&source);
         global_shape_ = source.global_shape_;
         children_ = source.children_;
-
+        indent_ = source.indent_;
         return *this;
     }
 

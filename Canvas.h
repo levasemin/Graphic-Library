@@ -16,7 +16,7 @@
 class Canvas : public CompositeObject
 {
 public:
-    Surface *surface_;
+    Surface *surface_ = nullptr;
 
     ToolManager &tool_manager_;
 
@@ -32,7 +32,7 @@ public:
         
         add(surface_);
         
-        tool_manager_.set_suface(surface_);
+        tool_manager_.set_surface(surface_);
 
         if (tool_palette)
         {
@@ -45,20 +45,26 @@ public:
                
         std::string dlPath = "./Plugins";
         
-        for (const auto& curFile : std::filesystem::directory_iterator(dlPath)) {
-            if (curFile.is_directory()) {
+        for (const auto& curFile : std::filesystem::directory_iterator(dlPath)) 
+        {
+            if (curFile.is_directory()) 
+            {
                 continue;
             }
 
+            std::cout << curFile.path().c_str() << std::endl;
             void* dlHandler = dlopen(curFile.path().c_str(), RTLD_LAZY);
             
-            if (dlHandler) {
+            if (dlHandler) 
+            {
                 void (*initFunc)()   = nullptr; 
                 *((void**)&initFunc) = dlsym(dlHandler, "init_module");
 
                 (*initFunc)();
             }
-            else {
+
+            else 
+            {
                 fprintf(stderr, "Unable to open lib: %s\n", dlerror());
             }
         }

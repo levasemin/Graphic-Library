@@ -51,19 +51,19 @@ extern "C" uint64_t booba::createCanvas(int32_t x, int32_t y, int32_t w, int32_t
 {
     ToolManager &tool_manager = ToolManager::getInstance();
 
-    Canvas *canvas = new Canvas(Vector2d(float(w), float(h)), Vector2d(float(x), float(y)));
+    Surface *surface = new Surface(Vector2d(float(w), float(h)), Vector2d(float(x), float(y)), Texture(Color::Black));
 
-    tool_manager.setting_palettes_.back()->add(canvas);
+    tool_manager.setting_palettes_.back()->add(surface);
 
-    return (int64_t)canvas;
+    return (int64_t)surface;
 }
 
 extern "C" uint64_t booba::putPixel (uint64_t canvas, int32_t x, int32_t y, uint32_t color)
 {
     if (canvas)
     {
-        Canvas *my_canvas = (Canvas *)canvas;
-        my_canvas->surface_->image_.putPixel(x, y, color);
+        Surface *surface = (Surface *)canvas;
+        surface->image_.putPixel(x, y, color);
     }
 
     return canvas;

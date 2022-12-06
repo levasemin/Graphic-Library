@@ -171,7 +171,7 @@ public:
         active_tool_ = nullptr;
     }
 
-    void set_suface(Surface *surface)
+    void set_surface(Surface *surface)
     {
         surface_ = surface;
     }

@@ -32,7 +32,7 @@ public:
 
         if (point_belonging(event.Oleg_.sedata.pos))
         {               
-            if (widget_->get_global_shape().y_ != widget_->get_shape().y_)
+            if (doublecmp(widget_->get_global_shape().y_, widget_->get_shape().y_))
             {
                 Event new_event = event;
 

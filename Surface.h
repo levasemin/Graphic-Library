@@ -34,7 +34,7 @@ public:
         Sprite sprite(shape_, image_.getTexture());
         render_texture_->clear();
         render_texture_->draw(sprite);
-
+        
         Object::draw();
     }
 
