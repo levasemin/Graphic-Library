@@ -63,7 +63,7 @@ extern "C" uint64_t booba::putPixel (uint64_t canvas, int32_t x, int32_t y, uint
     if (canvas)
     {
         Canvas *my_canvas = (Canvas *)canvas;
-        my_canvas->surface_.image_.putPixel(x, y, color);
+        my_canvas->surface_->image_.putPixel(x, y, color);
     }
 
     return canvas;

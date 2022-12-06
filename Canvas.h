@@ -16,7 +16,7 @@
 class Canvas : public CompositeObject
 {
 public:
-    Surface surface_;
+    Surface *surface_;
 
     ToolManager &tool_manager_;
 
@@ -24,14 +24,15 @@ public:
     
     float zoom_ = 1;
 
-    Canvas(Vector2d shape, Vector2d center, const Image &image = Image(), ToolPalette *tool_palette = nullptr, Container * setting_palette = nullptr) : 
-        CompositeObject(shape, center, Color::Cyan),
-        surface_(image.getSize(), image.getSize() / 2, image),
+    Canvas(Vector2d shape, Vector2d center, ToolPalette *tool_palette = nullptr, Container * setting_palette = nullptr) : 
+        CompositeObject(shape, center, Texture(Color::Grey)),
         tool_manager_(ToolManager::getInstance())
     {   
-        add(&surface_);
+        surface_ = new Surface(Vector2d(1, 1), Vector2d(0, 0), Image(Texture(Color::Grey)));
         
-        tool_manager_.set_suface(&surface_);
+        add(surface_);
+        
+        tool_manager_.set_suface(surface_);
 
         if (tool_palette)
         {
@@ -80,32 +81,32 @@ public:
     {
         Event new_event = event;
 
-        if (surface_.point_belonging(event.Oleg_.motion.pos))
+        if (surface_->point_belonging(event.Oleg_.motion.pos))
         {
             new_event.type_ = EventType::CanvasMMoved;
             
-            new_event.Oleg_.cedata.pos  = event.Oleg_.motion.pos - surface_.get_global_offset() - (surface_.get_center() - surface_.get_shape() / 2);
+            new_event.Oleg_.cedata.pos  = event.Oleg_.motion.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
             new_event.Oleg_.cedata.pos /= zoom_;
             new_event.Oleg_.cedata.id   = (uint64_t)this;
         }
 
-        tool_manager_.apply(&surface_, &new_event);
+        tool_manager_.apply(surface_, &new_event);
     }
 
     void ClickLeftEvent(const Event &event) override
     {
         Event new_event = event;
 
-        if (surface_.point_belonging(event.Oleg_.mbedata.pos))
+        if (surface_->point_belonging(event.Oleg_.mbedata.pos))
         {
             new_event.type_ = EventType::CanvasMPressed;
             
-            new_event.Oleg_.cedata.pos  = event.Oleg_.mbedata.pos - surface_.get_global_offset() - (surface_.get_center() - surface_.get_shape() / 2);
+            new_event.Oleg_.cedata.pos  = event.Oleg_.mbedata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
             new_event.Oleg_.cedata.pos /= zoom_;
             new_event.Oleg_.cedata.id   = (uint64_t)this;
         }   
 
-        tool_manager_.apply(&surface_, &new_event);
+        tool_manager_.apply(surface_, &new_event);
 
         is_left_clicked_ = true;
         
@@ -115,16 +116,16 @@ public:
     {
         Event new_event = event;
 
-        if (surface_.point_belonging(event.Oleg_.mredata.pos))
+        if (surface_->point_belonging(event.Oleg_.mredata.pos))
         {
             new_event.type_ = EventType::CanvasMReleased;
             
-            new_event.Oleg_.cedata.pos  = event.Oleg_.mredata.pos - surface_.get_global_offset() - (surface_.get_center() - surface_.get_shape() / 2);
+            new_event.Oleg_.cedata.pos  = event.Oleg_.mredata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
             new_event.Oleg_.cedata.pos /= zoom_;
             new_event.Oleg_.cedata.id   = (uint64_t)this;
         }
 
-        tool_manager_.apply(&surface_, &new_event);   
+        tool_manager_.apply(surface_, &new_event);   
     
         is_left_clicked_ = false;
     }
@@ -139,12 +140,12 @@ public:
                 {
                     if (event.Oleg_.kpedata.shift)
                     {
-                        tool_manager_.redo(&surface_);
+                        tool_manager_.redo(surface_);
                     }
 
                     else
                     {
-                        tool_manager_.undo(&surface_);
+                        tool_manager_.undo(surface_);
                     }
 
                     break;
@@ -176,20 +177,31 @@ public:
     {
         zoom_ = value;
 
-        surface_.set_shape(surface_.image_.getSize() * value);
+        surface_->set_shape(surface_->image_.getSize() * value);
 
-        Vector2d new_center = surface_.get_shape() / 2;
+        Vector2d new_center = surface_->get_shape() / 2;
 
-        new_center.x_ = surface_.get_shape().x_ > shape_.x_ ? new_center.x_ : shape_.x_ / 2; 
-        new_center.y_ = surface_.get_shape().y_ > shape_.y_ ? new_center.y_ : shape_.y_ / 2; 
+        new_center.x_ = surface_->get_shape().x_ > shape_.x_ ? new_center.x_ : shape_.x_ / 2; 
+        new_center.y_ = surface_->get_shape().y_ > shape_.y_ ? new_center.y_ : shape_.y_ / 2; 
         
-        surface_.set_center(new_center);
+        surface_->set_center(new_center);
         reset_global_shape();
     }
 
-    void set_image(Image *new_image)
+    void set_image(const Image &new_image)
     {
-        surface_ = Surface(new_image->getSize(), new_image->getSize() / 2, *new_image);
+        remove(surface_);
+
+        *surface_ = Surface(new_image.getSize(), new_image.getSize() / 2, new_image);
+
+        Vector2d new_center = surface_->get_shape() / 2;
+
+        new_center.x_ = surface_->get_shape().x_ > shape_.x_ ? new_center.x_ : shape_.x_ / 2; 
+        new_center.y_ = surface_->get_shape().y_ > shape_.y_ ? new_center.y_ : shape_.y_ / 2; 
+        
+        surface_->set_center(new_center);
+
+        add(surface_);
     }
 
     void add_tool(Tool *new_tool)
