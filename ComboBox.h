@@ -49,4 +49,9 @@ public:
         item_box_.set_shape(shape);
         item_box_.set_center(center_ + shape_ / 2 + Vector2d(0, shape.y_ / 2));
     }
+    
+    void set_box_texture(const Texture &texture)
+    {
+        item_box_.set_texture(texture);
+    }
 };

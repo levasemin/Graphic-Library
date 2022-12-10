@@ -61,5 +61,7 @@ public:
         text_.setPosition(text_position);
         
         render_texture_->draw(text_); 
+
+        render_texture_->display();
     }
 };

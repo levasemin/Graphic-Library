@@ -12,14 +12,22 @@ public:
 
     bool is_left_clicked_  = false;
     bool is_right_clicked_ = false;
-    
-    Text text_;
+    bool is_pressed_       = false;
 
-    Button(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::White)) : Object(shape, center, texture), text_()
+    bool is_press_button_ = false;
+
+    Color default_sprite_color_;
+    Text text_;
+    
+    Button(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::White)) : Object(shape, center, texture), 
+        default_sprite_color_(sprite_.getColor()),
+        text_()
     {
+        text_.setFont(Font::Times_new_roman);
     };
 
     Button(const Button& source) : Object(*(const Object *)&source),
+        default_sprite_color_(source.default_sprite_color_),
         text_(source.text_),
         left_click_command_         (source.left_click_command_),
         release_left_click_command_ (source.release_left_click_command_),
@@ -30,7 +38,8 @@ public:
     Button &operator=(const Button &source)
     {
         Object::operator=(*(const Object *)&source);
-        
+
+        default_sprite_color_ = source.default_sprite_color_;        
         text_ = source.text_;
         left_click_command_          = source.left_click_command_;
         release_left_click_command_  = source.release_left_click_command_;
@@ -40,44 +49,73 @@ public:
         return *this;
     }
 
-    void set_left_click       (Command<const Event &> *command)
+    void setTextColor(const Color &color)
+    {
+        text_.setColor(color);
+        set_text(text_);
+    }
+
+    void setCharacterSize(int text_size)
+    {
+        text_.setCharacterSize(text_size);
+        set_text(text_);
+    }
+
+    void set_pressed(bool is_press_button)
+    {
+        is_press_button_ = is_press_button;
+    }
+
+    void set_left_click           (Command<const Event &> *command)
     {
         left_click_command_ = command;
     }
-
-    void set_release_left_click  (Command<const Event &> *command)
+    void set_release_left_click   (Command<const Event &> *command)
     {
         release_left_click_command_ = command;
     }
-
-    void set_right_click      (Command<const Event &> *command)
+    void set_right_click          (Command<const Event &> *command)
     {
         right_click_command_ = command;
     }
-
     void set_release_right_click  (Command<const Event &> *command)
     {
         release_right_click_command_ = command;
     }
     
+    
     Command<const Event &> * get_left_click       ()
     {
         return left_click_command_;
     }
-
     Command<const Event &> * get_release_left_click  ()
     {
         return release_left_click_command_;
     }
-
     Command<const Event &> * get_right_click      ()
     {
         return right_click_command_;
     }
-
     Command<const Event &> * set_release_right_click  ()
     {
         return release_right_click_command_;
+    }
+
+    void set_click_color(const Color &color)
+    {
+           
+    }
+
+    virtual void set_texture(const Texture &texture) override
+    {
+        Object::set_texture(texture);
+        default_sprite_color_ = sprite_.getColor();
+    }
+    
+    void setString(const std::string &text)
+    {
+        text_.setString(text);
+        set_text(text_);
     }
 
     void set_text(const Text &text)

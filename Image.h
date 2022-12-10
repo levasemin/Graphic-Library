@@ -18,7 +18,7 @@ public:
     Image(const char *path):
         image_()
     {
-        image_.loadFromFile(path);
+        loadFromFile(path);
     }
 
     Image(const Texture &texture):
@@ -31,6 +31,16 @@ public:
         image_()
     {
         image_.create(uint32_t(shape.x_), uint32_t(shape.y_));
+    }
+    
+    void saveToFile(const std::string &path)
+    {
+        image_.saveToFile(path);
+    }
+
+    void loadFromFile(const std::string &path)
+    {
+        image_.loadFromFile(path);
     }
 
     Texture getTexture() const

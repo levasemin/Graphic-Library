@@ -31,7 +31,7 @@ Color &Color::operator += (const Color &color2)
 
     return *this;
 }
-Color &Color::operator += (const float &number)
+Color &Color::operator += (float number)
 {
     r_rel_ += number;
     g_rel_ += number;
@@ -56,7 +56,7 @@ Color &Color::operator -= (const Color &color2)
 
     return *this;
 }
-Color &Color::operator -= (const float &number)
+Color &Color::operator -= (float number)
 {
     r_rel_ -= number;
     g_rel_ -= number;
@@ -81,7 +81,7 @@ Color &Color::operator *= (const Color &color2)
 
     return *this;
 }
-Color &Color::operator *= (const float &number)
+Color &Color::operator *= (float number)
 {
     r_rel_ *= number;
     g_rel_ *= number;
@@ -106,7 +106,7 @@ Color &Color::operator /= (const Color &color2)
 
     return *this;
 }
-Color &Color::operator /= (const float &number)
+Color &Color::operator /= (float number)
 {
     r_rel_ /= number;
     g_rel_ /= number;
@@ -126,28 +126,28 @@ Color operator + (const Color &color1, const Color &color2)
 
     return new_color;
 }
-Color operator + (const Color &color, const uint8_t &number)
+Color operator + (const Color &color, uint8_t number)
 {
     Color new_color = color;
     new_color += number;
     
     return new_color;
 }
-Color operator + (const uint8_t &number, const Color &color)
+Color operator + (uint8_t number, const Color &color)
 {
     Color new_color = color;
     new_color += number;
     
     return new_color;
 }
-Color operator + (const Color &color, const float &number)
+Color operator + (const Color &color, float number)
 {
     Color new_color = color;
     new_color += number;
     
     return new_color;
 }
-Color operator + (const float &number, const Color &color)
+Color operator + (float number, const Color &color)
 {
     Color new_color = color;
     new_color += number;
@@ -162,14 +162,14 @@ Color operator - (const Color &color1, const Color &color2)
     
     return new_color;
 }
-Color operator - (const Color &color, const uint8_t &number)
+Color operator - (const Color &color, uint8_t number)
 {
     Color new_color = color;
     new_color -= number;
     
     return new_color;
 }
-Color operator - (const Color &color, const float &number)
+Color operator - (const Color &color, float number)
 {
     Color new_color = color;
     new_color -= number;
@@ -184,28 +184,28 @@ Color operator * (const Color &color1, const Color &color2)
     
     return new_color;
 }
-Color operator * (const Color &color, const uint8_t &number)
+Color operator * (const Color &color, uint8_t number)
 {
     Color new_color = color;
     new_color *= number;
     
     return new_color;
 }
-Color operator * (const uint8_t &number, const Color &color)
+Color operator * (uint8_t number, const Color &color)
 {
     Color new_color = color;
     new_color *= number;
     
     return new_color;
 }
-Color operator * (const Color &color, const float &number)
+Color operator * (const Color &color, float number)
 {
     Color new_color = color;
     new_color *= number;
     
     return new_color;
 }
-Color operator * (const float &number, const Color &color)
+Color operator * (float number, const Color &color)
 {
     Color new_color = color;
     new_color *= number;
@@ -220,14 +220,14 @@ Color operator / (const Color &color1, const Color &color2)
     
     return new_color;
 }
-Color operator / (const Color &color, const uint8_t &number)
+Color operator / (const Color &color, uint8_t number)
 {
     Color new_color = color;
     new_color /= number;
     
     return new_color;
 }
-Color operator / (const Color &color, const float &number)
+Color operator / (const Color &color, float number)
 {
     Color new_color = color;
     new_color /= number;
@@ -244,7 +244,7 @@ void Color::pow(float degree)
     claim();
 }
 
-void Color::set_h(const float &h)
+void Color::set_h(float h)
 {
     h_ = h;
     convert_hsv_rgb();
@@ -256,7 +256,7 @@ void Color::set_h(const float &h)
     claim();
 }
 
-void Color::set_s(const float &s)
+void Color::set_s(float s)
 {
     s_ = s;
     convert_hsv_rgb();
@@ -268,7 +268,7 @@ void Color::set_s(const float &s)
     claim();
 }
 
-void Color::set_v(const float &v)
+void Color::set_v(float v)
 {
     v_ = v;
     convert_hsv_rgb();
@@ -280,26 +280,31 @@ void Color::set_v(const float &v)
     claim();
 }
 
-void Color::set_r(const uint8_t &r)
+void Color::set_r(uint8_t r)
 {
     r_rel_ = (float)r / 255.f;
     this->claim();
 
     convert_rgb_hsv();
 }
-void Color::set_g(const uint8_t &g)
+void Color::set_g(uint8_t g)
 {
     g_rel_ = (float)g / 255.f;
     this->claim();
 
     convert_rgb_hsv();
 }
-void Color::set_b(const uint8_t &b)
+void Color::set_b(uint8_t b)
 {
     b_rel_ = (float)b / 255.f;
     this->claim();
 
     convert_rgb_hsv();
+}
+
+void Color::set_a(uint8_t a)
+{
+    a_ = a;
 }
 
 float Color::get_h() const
@@ -327,18 +332,22 @@ uint8_t Color::get_b() const
 {
     return b_;
 }
+uint8_t Color::get_a() const 
+{
+    return a_;
+}
 
-void Color::set_relation_r(const float &r_rel)
+void Color::set_relation_r(float r_rel)
 {
     r_rel_ = r_rel;
     this->claim();
 }
-void Color::set_relation_g(const float &g_rel)
+void Color::set_relation_g(float g_rel)
 {
     g_rel_ = g_rel;
     this->claim();
 }
-void Color::set_relation_b(const float &b_rel)
+void Color::set_relation_b(float b_rel)
 {
     b_rel_ = b_rel;
     this->claim();
@@ -359,7 +368,7 @@ float Color::get_relation_b()
     return b_rel_;
 }
 
-void Color::set_color(const uint8_t &r, const uint8_t &g, const uint8_t &b)
+void Color::set_color(uint8_t r, uint8_t g, uint8_t b)
 {
     r_rel_ = (float)r / 255.f;
     g_rel_ = (float)g / 255.f;
@@ -368,7 +377,7 @@ void Color::set_color(const uint8_t &r, const uint8_t &g, const uint8_t &b)
     this->claim();
 }
 
-void Color::set_relation(const float &r_rel, const float &g_rel, const float &b_rel)
+void Color::set_relation(float r_rel, float g_rel, float b_rel)
 {
     r_rel_ = r_rel;
     g_rel_ = g_rel;
@@ -391,7 +400,7 @@ void Color::claim()
     b_ = uint8_t(b_rel_ * 255.f);
 }
 
-Color::Color (uint8_t r, uint8_t g, uint8_t b): r_(r), g_(g), b_(b)
+Color::Color (uint8_t r, uint8_t g, uint8_t b, uint8_t a): r_(r), g_(g), b_(b), a_(a)
 {
     r_rel_ = (float)r / 255.f;
     g_rel_ = (float)g / 255.f;
@@ -402,7 +411,7 @@ Color::Color (uint8_t r, uint8_t g, uint8_t b): r_(r), g_(g), b_(b)
     convert_rgb_hsv();
 };
 
-Color::Color (sf::Color color) : Color(color.r, color.g, color.b)
+Color::Color (sf::Color color) : Color(color.r, color.g, color.b, color.a)
 {}
 
 Color::Color (float h, float s, float v): h_(h), s_(s), v_(v)
@@ -417,7 +426,7 @@ Color::Color (float h, float s, float v): h_(h), s_(s), v_(v)
 
 sf::Color Color::get_sf_color() const
 {
-    return sf::Color(r_, g_, b_);
+    return sf::Color(r_, g_, b_, a_);
 }
 
 void Color::print_color() const

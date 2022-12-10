@@ -2,6 +2,23 @@
 
 void Button::MoveMouseEvent(const Event &event)
 {
+    if ((!is_press_button_ || !is_pressed_))
+    {
+        if (point_belonging(event.Oleg_.motion.pos))
+        {
+            Color new_color = default_sprite_color_;
+        
+            new_color.set_a(uint8_t(new_color.get_a() / 3 * 2));
+
+            sprite_.setColor(new_color);
+        }
+
+        else if (!is_press_button_ || !is_pressed_) 
+        {
+            sprite_.setColor(default_sprite_color_);
+        }
+    }
+
     if (is_left_clicked_)
     {        
         if (left_click_command_ != nullptr)
@@ -31,7 +48,25 @@ void Button::ClickLeftEvent (const Event &event)
     if (point_belonging(Vector2d(event.Oleg_.mbedata.pos)))
     {
         is_left_clicked_ = true;
+        is_pressed_ = !is_pressed_;
+
+        if (is_press_button_)
+        {
+            if (is_pressed_)
+            {
+                Color new_color = default_sprite_color_;
         
+                new_color.set_a(uint8_t(new_color.get_a() / 3 * 2));
+
+                sprite_.setColor(new_color);
+            }
+
+            else
+            {
+                sprite_.setColor(default_sprite_color_);
+            }
+        }
+
         if (left_click_command_ != nullptr)
         {
             Event new_event;

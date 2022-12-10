@@ -56,6 +56,16 @@ public:
         return texture_;
     }
 
+    Color getColor()
+    {
+        return Color(sprite_.getColor());
+    }
+    
+    void setColor(const Color &color)
+    {
+        sprite_.setColor(color.get_sf_color());
+    }
+
     void setTexture(const Texture &texture, bool resetRect = true)
     {
         texture_ = texture;

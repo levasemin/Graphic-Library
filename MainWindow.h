@@ -16,4 +16,9 @@ public:
         style_(style)
     {
     }
+    
+    void exec()
+    {
+
+    }
 };

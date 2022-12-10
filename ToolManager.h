@@ -82,7 +82,7 @@ public:
         tool_button_->set_texture(tool_palette_->get_texture());
         tool_button_->set_texture(Texture(new_tool->getTexture()));
         tool_button_->set_left_click((Command<const Event &> *) new SimpleCommand<ToolManager, const Event &>(this, &ToolManager::tool_choose));
-        
+        tool_button_->set_pressed(true);
         tool_palette_->add(tool_button_);
         
         Container *setting_palette = new Container(Vector2d(setting_field_->get_shape()), Vector2d(setting_field_->get_shape()) / 2);
@@ -108,6 +108,11 @@ public:
                 {
                     remove_active_tool(); 
                 }
+            }
+
+            else
+            {
+                ((Button *)(tool_palette_children[i]))->is_pressed_ = false;
             }
         }
     }
