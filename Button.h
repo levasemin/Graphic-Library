@@ -106,7 +106,7 @@ public:
            
     }
 
-    virtual void set_texture(const Texture &texture) override
+    void set_texture(const Texture &texture) override
     {
         Object::set_texture(texture);
         default_sprite_color_ = sprite_.getColor();

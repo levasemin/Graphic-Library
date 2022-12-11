@@ -6,25 +6,35 @@
 
 class Editor : public Label 
 {
+    Color default_sprite_color_;
     Command<std::string> *editor_command_ = nullptr;
 
 public:
     bool clicked_ = false;
     
-    Editor(Vector2d shape, Vector2d center) : Label(shape, center)
+    Editor(Vector2d shape, Vector2d center) : Label(shape, center),
+        default_sprite_color_(sprite_.getColor())
     {
         std::string string = text_.getString();
     }
 
     Editor(const Editor &source): Label(*(const Label *)&source),    
+        default_sprite_color_(source.default_sprite_color_),
         editor_command_(source.editor_command_)
     {}
     Editor &operator=(const Editor &source)
     {
         Label::operator=(*(const Label *)&source);
+        default_sprite_color_ = source.default_sprite_color_;
         editor_command_ = source.editor_command_;
 
         return *this;
+    }
+
+    void set_texture(const Texture &texture) override
+    {
+        Object::set_texture(texture);
+        default_sprite_color_ = sprite_.getColor();
     }
 
     void set_editor_command(Command<std::string> *editor_command)
@@ -109,15 +119,43 @@ public:
         }
     }
 
+    void MoveMouseEvent(const Event &event) override
+    {
+        if (point_belonging(event.Oleg_.motion.pos))
+        {
+            Color new_color = default_sprite_color_;
+        
+            new_color /= 3;
+            new_color *= 2;
+
+            sprite_.setColor(new_color);
+        }
+
+        else if (!clicked_) 
+        {
+            sprite_.setColor(default_sprite_color_);
+        }
+
+        Label::MoveMouseEvent(event);
+    }
+
     void ClickLeftEvent(const Event &event) override
     {
         if (point_belonging(event.Oleg_.mbedata.pos))
         {
+            Color new_color = default_sprite_color_;
+            new_color /= 3;
+            new_color *= 2;
+
+            sprite_.setColor(new_color);
+
             clicked_ = true;
         }
 
         else
         {
+            sprite_.setColor(default_sprite_color_);
+
             clicked_ = false;
         }
     }

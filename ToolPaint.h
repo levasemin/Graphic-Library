@@ -30,9 +30,9 @@ public:
         points_({}),
         drawing_object_(1.f)
     {
-        r_editor_.set_color_text(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
-        g_editor_.set_color_text(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
-        b_editor_.set_color_text(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
+        r_editor_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
+        g_editor_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
+        b_editor_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
 
         r_editor_.set_texture(Color(uint8_t(31), uint8_t(31), uint8_t(31)));
         g_editor_.set_texture(Color(uint8_t(31), uint8_t(31), uint8_t(31)));

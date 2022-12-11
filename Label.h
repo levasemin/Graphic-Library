@@ -71,7 +71,7 @@ public:
         redraw();
     }
 
-    void set_color_text(const Color &color)
+    void setTextColor(const Color &color)
     {
         text_.setColor(color.get_sf_color());
     }

@@ -14,7 +14,10 @@ SaveWindow create_save_window()
     save_button->setString("Save");
     
     Editor *path_editor = new Editor(Vector2d(200, 50), Vector2d(150, 125));
+    path_editor->setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
+    path_editor->set_texture(Texture(Color(uint(31), uint8_t(31), uint8_t(31))));
     path_editor->setAlignment(Label::Alignment::LeftCenter);
+    
     Button *cancel_button = new Button(Vector2d(60, 30), Vector2d(150, 215), Texture(Color::Grey));
     cancel_button->setString("Cancel");
 
@@ -29,6 +32,9 @@ OpenWindow create_open_window()
     open_button->setString("Open");
     
     Editor *path_editor = new Editor(Vector2d(200, 50), Vector2d(150, 125));
+    path_editor->setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
+    path_editor->set_texture(Texture(Color(uint(31), uint8_t(31), uint8_t(31))));
+    path_editor->set_texture(Texture(Color(uint(31), uint8_t(31), uint8_t(31))));
     path_editor->setAlignment(Label::Alignment::LeftCenter);
 
     Button *cancel_button = new Button(Vector2d(60, 30), Vector2d(150, 215), Texture(Color::Grey));

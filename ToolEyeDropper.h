@@ -40,9 +40,9 @@ public:
         label_g_.set_texture(Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
         label_b_.set_texture(Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
         
-        label_r_.set_color_text(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
-        label_g_.set_color_text(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
-        label_b_.set_color_text(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
+        label_r_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
+        label_g_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
+        label_b_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
 
         label_r_.setCharacterSize(40);
         label_g_.setCharacterSize(40);
