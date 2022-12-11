@@ -1,5 +1,8 @@
 #pragma once
+#pragma GCC diagnostic ignored "-Wswitch-enum"
+
 #include "Label.h"
+
 
 class Editor : public Label 
 {
@@ -51,6 +54,33 @@ public:
             else
             {
                 char letter = 0;
+
+                switch(event.Oleg_.kpedata.code)
+                {
+                    case Key::Comma:
+                    {
+                        letter = ',';
+                        break;
+                    }
+                
+                    case Key::Period:
+                    {
+                        letter = '.';
+                        break;
+                    }
+                    
+                    case Key::Slash:
+                    {
+                        letter = '/';
+                        break;
+                    }
+
+                    default:
+                    {
+                        break;
+                    }
+                }
+                
 
                 if (Key::A <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Z)
                 {

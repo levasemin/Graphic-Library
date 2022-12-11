@@ -15,7 +15,7 @@ public:
 
     ~Image() override {}
     
-    Image(const char *path):
+    Image(const std::string &path):
         image_()
     {
         loadFromFile(path);

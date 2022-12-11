@@ -13,8 +13,8 @@ class Window
 public:
     sf::RenderWindow window_;
     
-    Window(Vector2d shape):
-        window_(sf::VideoMode((uint32_t)shape.x_, (uint32_t)shape.y_), "Vectors")
+    Window(Vector2d shape, int style = 7):
+        window_(sf::VideoMode((uint32_t)shape.x_, (uint32_t)shape.y_), "", style)
         {
         };
         

@@ -81,12 +81,12 @@ void Button::ReleasedLeftEvent (const Event &event)
 {
     is_left_clicked_ = false;
 
-    if (release_left_click_command_ != nullptr)
+    if (left_release_command_ != nullptr)
     {
         Event new_event;
         new_event.type_ = EventType::ButtonClicked;
         new_event.Oleg_.bcedata.id = (uint64_t)this;
-        release_left_click_command_->Execute(new_event);
+        left_release_command_->Execute(new_event);
     }
 }
 
@@ -110,11 +110,11 @@ void Button::ReleasedRightEvent (const Event &event)
 {
     is_right_clicked_ = false;
 
-    if (release_right_click_command_ != nullptr)
+    if (right_release_command_ != nullptr)
     {
         Event new_event;
         new_event.type_ = EventType::ButtonClicked;
         new_event.Oleg_.bcedata.id = (uint64_t)this;
-        release_right_click_command_->Execute(new_event);
+        right_release_command_->Execute(new_event);
     }
 }

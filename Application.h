@@ -11,14 +11,14 @@
 class Application
 {
     public: 
-        Widget *main_window_ = nullptr;
+        MainWindow *main_window_ = nullptr;
         Window window_;
 
         EventManager event_manager_;
 
-        Application(Widget *window):
-            main_window_(window),
-            window_(window->get_shape()),
+        Application(MainWindow *main_window):
+            main_window_(main_window),
+            window_(main_window->get_shape(), main_window->style_),
             event_manager_()
             {};
 
@@ -38,14 +38,15 @@ class Application
         }
 
         void exec();
-        void set_main_window(Widget *main_window);
-        void show(Widget *window);
+        void close();
+        void set_main_window(MainWindow *main_window);
+        void show(MainWindow *window);
         
     
         
 };
 
-void Application::set_main_window(Widget *main_window)
+void Application::set_main_window(MainWindow *main_window)
 {
     main_window_ = main_window;
 }
@@ -65,7 +66,12 @@ void Application::exec()
     }
 }
 
-void Application::show(Widget *window)
+void Application::close()
+{
+    window_.close();
+}
+
+void Application::show(MainWindow *window)
 {
     window_.clear();
     main_window_->draw();   

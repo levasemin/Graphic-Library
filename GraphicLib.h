@@ -15,6 +15,7 @@
 #include "ToolPaint.h"
 #include "plugin_func.h"
 #include "SimpleCommand.h"
+#include "FunctorCommand.h"
 #include "Vector2d.h"
 #include "Canvas.h"
 #include "HSVpalette.h"

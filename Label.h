@@ -36,6 +36,10 @@ public:
         text_.setString(string.c_str());
         redraw();
     }
+    std::string getString()
+    {
+        return text_.getString();
+    }
 
     void set_text(const Text &text)
     {
@@ -47,7 +51,7 @@ public:
     {
         text_.setColor(color.get_sf_color());
     }
-
+    
     void redraw()
     {
         render_texture_->clear();

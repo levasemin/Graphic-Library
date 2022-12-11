@@ -194,6 +194,12 @@ public:
         reset_global_shape();
     }
 
+    void set_image(const std::string &path_image)
+    {
+        Image image(path_image);
+        set_image(image);
+    }
+
     void set_image(const Image &new_image)
     {
         remove(surface_);
@@ -208,6 +214,11 @@ public:
         surface_->set_center(new_center);
 
         add(surface_);
+    }
+
+    Image *get_image()
+    {
+        return &surface_->image_;
     }
 
     void add_tool(Tool *new_tool)

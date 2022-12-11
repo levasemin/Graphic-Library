@@ -30,9 +30,9 @@ public:
         default_sprite_color_(source.default_sprite_color_),
         text_(source.text_),
         left_click_command_         (source.left_click_command_),
-        release_left_click_command_ (source.release_left_click_command_),
+        left_release_command_ (source.left_release_command_),
         right_click_command_        (source.right_click_command_),
-        release_right_click_command_(source.release_right_click_command_)
+        right_release_command_(source.right_release_command_)
     {}
     
     Button &operator=(const Button &source)
@@ -42,9 +42,9 @@ public:
         default_sprite_color_ = source.default_sprite_color_;        
         text_ = source.text_;
         left_click_command_          = source.left_click_command_;
-        release_left_click_command_  = source.release_left_click_command_;
+        left_release_command_  = source.left_release_command_;
         right_click_command_         = source.right_click_command_;
-        release_right_click_command_ = source.release_right_click_command_;
+        right_release_command_ = source.right_release_command_;
 
         return *this;
     }
@@ -72,7 +72,7 @@ public:
     }
     void set_release_left_click   (Command<const Event &> *command)
     {
-        release_left_click_command_ = command;
+        left_release_command_ = command;
     }
     void set_right_click          (Command<const Event &> *command)
     {
@@ -80,7 +80,7 @@ public:
     }
     void set_release_right_click  (Command<const Event &> *command)
     {
-        release_right_click_command_ = command;
+        right_release_command_ = command;
     }
     
     
@@ -90,7 +90,7 @@ public:
     }
     Command<const Event &> * get_release_left_click  ()
     {
-        return release_left_click_command_;
+        return left_release_command_;
     }
     Command<const Event &> * get_right_click      ()
     {
@@ -98,7 +98,7 @@ public:
     }
     Command<const Event &> * set_release_right_click  ()
     {
-        return release_right_click_command_;
+        return right_release_command_;
     }
 
     void set_click_color(const Color &color)
@@ -147,9 +147,9 @@ public:
 
 protected:
     Command<const Event &> *left_click_command_          = nullptr;
-    Command<const Event &> *release_left_click_command_  = nullptr;
+    Command<const Event &> *left_release_command_  = nullptr;
 
     Command<const Event &> *right_click_command_         = nullptr;
-    Command<const Event &> *release_right_click_command_ = nullptr;
+    Command<const Event &> *right_release_command_ = nullptr;
 };
 
