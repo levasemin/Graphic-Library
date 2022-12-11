@@ -31,10 +31,10 @@ private:
 public:
     ToolEyeDropper():
         color_(uint8_t(0), uint8_t(0), uint8_t(0)),
-        color_box_label_(Vector2d(100, 100), Vector2d(110, 110)),
-        label_r_  (Vector2d(50, 50), Vector2d(195, 35)),
-        label_g_  (Vector2d(50, 50), Vector2d(195, 95)),
-        label_b_  (Vector2d(50, 50), Vector2d(195, 155))
+        color_box_label_(Vector2d(100, 100), Vector2d()),
+        label_r_  (Vector2d(50, 50), Vector2d()),
+        label_g_  (Vector2d(50, 50), Vector2d()),
+        label_b_  (Vector2d(50, 50), Vector2d())
     {
         label_r_.set_texture(Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
         label_g_.set_texture(Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
@@ -44,6 +44,10 @@ public:
         label_g_.set_color_text(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
         label_b_.set_color_text(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
 
+        label_r_.setCharacterSize(40);
+        label_g_.setCharacterSize(40);
+        label_b_.setCharacterSize(40);
+        
         booba::addTool(this);
         buildSetupWidget();
     }
@@ -66,14 +70,13 @@ public:
         color_box_label_.set_texture(Texture(color));
 
         fill_canvas(color_box_canvas_, color_box_label_);
-        label_r_.get_shape().print_value();
         fill_canvas(canvas_r_, label_r_);
         fill_canvas(canvas_g_, label_g_);
         fill_canvas(canvas_b_, label_b_);
     }
     
     void fill_canvas(uint64_t canvas, Label &label)
-    {
+    {        
         Image image(label.get_render_texture()->getTexture());   
 
         for (int y = 0; y < int(label.get_shape().y_); y++)
@@ -95,8 +98,8 @@ public:
     void buildSetupWidget() override
     {
         color_box_canvas_ = booba::createCanvas(110, 110, 100, 100);
-        canvas_r_         = booba::createCanvas(195, 35, 50, 50);
-        canvas_g_         = booba::createCanvas(195, 95, 50, 50);
+        canvas_r_         = booba::createCanvas(195, 35,  50, 50);
+        canvas_g_         = booba::createCanvas(195, 95,  50, 50);
         canvas_b_         = booba::createCanvas(195, 155, 50, 50);
     }
 

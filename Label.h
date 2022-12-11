@@ -59,6 +59,12 @@ public:
         return text_.getString();
     }
 
+    void setCharacterSize(int text_size)
+    {
+        text_.setCharacterSize(text_size);
+        set_text(text_);
+    }
+    
     void set_text(const Text &text)
     {
         text_ = text;
@@ -69,7 +75,7 @@ public:
     {
         text_.setColor(color.get_sf_color());
     }
-    
+
     void redraw()
     {
         render_texture_->clear();
