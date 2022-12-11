@@ -20,14 +20,9 @@ public:
         Titlebar   = sf::Style::Titlebar,
     };
 
-    MainWindow(Vector2d shape, Texture texture, int style = Style::Default):
+    MainWindow(Vector2d shape, Texture texture, int style = sf::Style::Default):
         CompositeObject(shape, Vector2d(shape.x_ / 2, shape.y_ / 2), texture),
         style_(style)
     {
-    }
-    
-    void exec()
-    {
-
     }
 };

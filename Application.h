@@ -12,13 +12,12 @@ class Application
 {
     public: 
         MainWindow *main_window_ = nullptr;
-        Window window_;
+        Window *window_ = nullptr;
 
         EventManager event_manager_;
 
         Application(MainWindow *main_window):
             main_window_(main_window),
-            window_(main_window->get_shape(), main_window->style_),
             event_manager_()
             {};
 
@@ -36,14 +35,11 @@ class Application
 
             return *this;
         }
-
+        
         void exec();
         void close();
         void set_main_window(MainWindow *main_window);
-        void show(MainWindow *window);
-        
-    
-        
+        void show(MainWindow *window);        
 };
 
 void Application::set_main_window(MainWindow *main_window)
@@ -52,12 +48,19 @@ void Application::set_main_window(MainWindow *main_window)
 }
 
 void Application::exec()
-{        
-    while(window_.isOpen())
+{    
+    if (!window_)
+    {
+        window_ = new Window (main_window_->get_shape(), main_window_->style_);
+    }
+    
+    window_->create(main_window_->get_shape(), "", main_window_->style_);
+
+    while(window_->isOpen() && window_->getVisible())
     {
         Event event;
 
-        while (window_.pollEvent(event))
+        while (window_->pollEvent(event))
         {
             event_manager_.distribute_event(main_window_, event);
         }
@@ -68,12 +71,15 @@ void Application::exec()
 
 void Application::close()
 {
-    window_.close();
+    if (window_)
+    {
+        window_->close();
+    }
 }
 
 void Application::show(MainWindow *window)
 {
-    window_.clear();
+    window_->clear();
     main_window_->draw();   
-    main_window_->display(&window_);
+    main_window_->display(window_);
 }

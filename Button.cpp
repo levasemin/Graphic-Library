@@ -18,28 +18,6 @@ void Button::MoveMouseEvent(const Event &event)
             sprite_.setColor(default_sprite_color_);
         }
     }
-
-    if (is_left_clicked_)
-    {        
-        if (left_click_command_ != nullptr)
-        {
-            Event new_event;
-            new_event.type_ = EventType::ButtonClicked;
-            new_event.Oleg_.bcedata.id = (uint64_t)this;
-            left_click_command_->Execute(new_event);
-        }
-    }
-
-    else if (is_right_clicked_)
-    {
-        if (right_click_command_ != nullptr)
-        {
-            Event new_event;
-            new_event.type_ = EventType::ButtonClicked;
-            new_event.Oleg_.bcedata.id = (uint64_t)this;
-            right_click_command_->Execute(new_event);
-        }
-    }
 }
 
 

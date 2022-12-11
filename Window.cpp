@@ -1,5 +1,10 @@
 #include "Window.h"
 
+void Window::create(Vector2d shape, std::string name, int style)
+{
+    window_.create(sf::VideoMode(shape.x_, shape.y_), name, style);
+}
+
 void Window::draw(const sf::Drawable &drawable, const sf::RenderStates &states)
 {
     window_.draw(drawable, states);
@@ -23,7 +28,16 @@ bool Window::isOpen()
     return window_.isOpen();
 }
 
+bool Window::getVisible()
+{
+    return visible_;
+}
 
+void Window::setVisible(bool visible)
+{
+    visible_ = visible;
+    window_.setVisible(visible);
+}
 
 bool Window::pollEvent(Event &event)
 {

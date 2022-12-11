@@ -32,6 +32,11 @@ public:
         text_.setCharacterSize(size);
     }
     
+    int getCharacterSize()
+    {
+        return text_.getCharacterSize();
+    }
+
     void setPosition(const Vector2d &position)
     {
         text_.setPosition(position.x_, position.y_);

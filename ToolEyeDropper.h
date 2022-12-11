@@ -66,6 +66,10 @@ public:
         color_box_label_.set_texture(Texture(color));
 
         fill_canvas(color_box_canvas_, color_box_label_);
+        label_r_.get_shape().print_value();
+        fill_canvas(canvas_r_, label_r_);
+        fill_canvas(canvas_g_, label_g_);
+        fill_canvas(canvas_b_, label_b_);
     }
     
     void fill_canvas(uint64_t canvas, Label &label)
