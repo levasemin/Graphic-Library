@@ -1,85 +1,45 @@
 #include "ToolButton.h"
 
-void ToolButton::MoveMouseEvent(const Event &event)
+void ToolButton::ToolClickLeftEvent (const Event &event)
 {
-    if (is_left_clicked_)
-    {        
-        if (left_click_command_ != nullptr)
-        {
-            Event new_event;
-            new_event.type_ = EventType::ButtonClicked;
-            new_event.Oleg_.bcedata.id = (uint64_t)this;
-            left_click_command_->Execute(convert_event(new_event));
-        }
-    }
-
-    else if (is_right_clicked_)
-    {
-        if (right_click_command_ != nullptr)
-        {
-            Event new_event;
-            new_event.type_ = EventType::ButtonClicked;
-            new_event.Oleg_.bcedata.id = (uint64_t)this;
-            right_click_command_->Execute(convert_event(new_event));
-        }
-    }
-}
-
-
-void ToolButton::ClickLeftEvent (const Event &event)
-{
-    if (point_belonging(event.Oleg_.mbedata.pos))
-    {
-        is_left_clicked_ = true;
-        
-        if (left_click_command_ != nullptr)
-        {
-            Event new_event;
-            new_event.type_ = EventType::ButtonClicked;
-            new_event.Oleg_.bcedata.id = (uint64_t)this;
-            left_click_command_->Execute(convert_event(new_event));
-        }
-    }
-}
-
-void ToolButton::ReleasedLeftEvent (const Event &event)
-{
-    is_left_clicked_ = false;
-
-    if (left_release_command_ != nullptr)
+    if (tool_left_click_command_ != nullptr)
     {
         Event new_event;
         new_event.type_ = EventType::ButtonClicked;
         new_event.Oleg_.bcedata.id = (uint64_t)this;
-        left_release_command_->Execute(convert_event(new_event));
+        tool_left_click_command_->Execute(convert_event(new_event));
     }
 }
 
-void ToolButton::ClickRightEvent (const Event &event)
+void ToolButton::ToolReleasedLeftEvent (const Event &event)
 {
-    if (point_belonging(event.Oleg_.mbedata.pos))
+    if (tool_left_release_command_ != nullptr)
     {
-        is_right_clicked_ = true;
-
-        if (right_click_command_ != nullptr)
-        {
-            Event new_event;
-            new_event.type_ = EventType::ButtonClicked;
-            new_event.Oleg_.bcedata.id = (uint64_t)this;
-            right_click_command_->Execute(convert_event(new_event));
-        }
+        Event new_event;
+        new_event.type_ = EventType::MouseReleased;
+        new_event.Oleg_.mredata.button = MouseButton::Left;
+        tool_left_release_command_->Execute(convert_event(new_event));
     }
 }
 
-void ToolButton::ReleasedRightEvent (const Event &event)
+void ToolButton::ToolClickRightEvent (const Event &event)
 {
-    is_right_clicked_ = false;
+    if (tool_right_click_command_ != nullptr)
+    {
+        Event new_event;
+        new_event.type_ = EventType::ButtonClicked;
+        new_event.Oleg_.bcedata.id = (uint64_t)this;
+        tool_right_click_command_->Execute(convert_event(new_event));
+    }
+}
 
+void ToolButton::ToolReleasedRightEvent (const Event &event)
+{
     if (right_release_command_ != nullptr)
     {
         Event new_event;
-        new_event.type_ = EventType::ButtonClicked;
-        new_event.Oleg_.bcedata.id = (uint64_t)this;
-        right_release_command_->Execute(convert_event(new_event));
+        new_event.type_ = EventType::MouseReleased;
+        new_event.Oleg_.mredata.button = MouseButton::Right;
+        tool_right_release_command_->Execute(convert_event(new_event));
     }
 }

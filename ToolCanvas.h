@@ -20,7 +20,21 @@ public:
     ToolCanvas(Vector2d shape, Vector2d center, const Image &image = Image()) : Object(shape, center, image.getTexture()),
         image_(image)
     {}
-        
+    
+    ToolCanvas(const ToolCanvas &source) : Object(*(const Object *)&source),
+        image_(source.image_),
+        command_(source.command_)
+    {}
+
+    ToolCanvas &operator=(const ToolCanvas &source)
+    {
+        Object::operator=(source);
+        image_ = source.image_;
+        command_ = source.command_;
+
+        return *this;
+    }
+
     void draw() override
     {   
         Sprite sprite(shape_, image_.getTexture());
@@ -46,7 +60,6 @@ public:
         {
             Event new_event = event;
             new_event.type_ = EventType::CanvasMPressed;
-            (event.Oleg_.mbedata.pos - get_start_field()).print_value();
             new_event.Oleg_.cedata.pos = event.Oleg_.mbedata.pos - get_start_field();
             new_event.Oleg_.cedata.id  = uint64_t(this); 
         

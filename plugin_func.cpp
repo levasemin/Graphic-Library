@@ -13,8 +13,6 @@
 
 uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* text)
 {   
-    std::cout << "booba:createButton" << std::endl;
-
     ToolManager &tool_manager = ToolManager::getInstance();
 
     ToolButton *tool_button = new ToolButton(Vector2d((float)w, (float)h), Vector2d(float(x + w / 2), float(y + h / 2)), Texture(tool_manager.init_tool_->getTexture()));
@@ -28,8 +26,6 @@ uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, co
 
 uint64_t booba::createLabel    (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* text)
 {
-    std::cout << "booba:createLabel" << std::endl;
-
     ToolManager &tool_manager = ToolManager::getInstance();
 
     Label *label = new Label(Vector2d(float(w), float(h)), Vector2d(float(x + w / 2), float(y + h / 2)));
@@ -42,13 +38,11 @@ uint64_t booba::createLabel    (int32_t x, int32_t y, uint32_t w, uint32_t h, co
 
 uint64_t booba::createScrollbar(int32_t x, int32_t y, uint32_t w, uint32_t h)
 {
-    std::cout << "booba:CreateScrollBar" << std::endl;
-
     ToolManager &tool_manager = ToolManager::getInstance();
 
     ToolHorizontalScrollBar *scroll_bar = new ToolHorizontalScrollBar(Vector2d(float(w), float(h)), Vector2d(float(x + w / 2), float(y + h / 2)));
 
-    // scroll_bar->set_scroll_command((Command <const booba::Event &> *) new ToolCommand<booba::Tool>(tool_manager.init_tool_, &Tool::apply));
+    scroll_bar->set_scroll_command((Command <const booba::Event &> *) new ToolCommand<booba::Tool>(tool_manager.init_tool_, &Tool::apply));
 
     tool_manager.setting_palettes_.back()->add(scroll_bar);
 
@@ -57,7 +51,6 @@ uint64_t booba::createScrollbar(int32_t x, int32_t y, uint32_t w, uint32_t h)
 
 uint64_t booba::createCanvas(int32_t x, int32_t y, int32_t w, int32_t h)
 {
-    std::cout << "booba:createCanvas" << std::endl;
     ToolManager &tool_manager = ToolManager::getInstance();
     
     SL::Image image = SL::Image(Vector2d(float(w), float(h)));
@@ -93,7 +86,6 @@ uint64_t booba::putSprite(uint64_t canvas, int32_t x, int32_t y, uint32_t w, uin
 
 void booba::addTool(booba::Tool* tool)
 {
-    printf("booba::AddTool\n");
     ToolManager &tool_manager = ToolManager::getInstance();
     tool_manager.add(tool);  
 }
