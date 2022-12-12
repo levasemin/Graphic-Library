@@ -24,11 +24,11 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
 
     switch (event->type)
     {
-        case booba::EventType::CanvasMPressed:
+        case booba::EventType::MousePressed:
         {
             clicked_ = true;
 
-            Vector2d new_point((float)event->Oleg.cedata.x, (float)event->Oleg.cedata.y);
+            Vector2d new_point((float)event->Oleg.mbedata.x, (float)event->Oleg.mbedata.y);
 
             points_.push_back(new_point);
             paint(image);
@@ -37,17 +37,17 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
             break;
         }
 
-        case booba::EventType::CanvasMReleased:
+        case booba::EventType::MouseReleased:
         {
             clicked_ = false;
             break;
         }
 
-        case booba::EventType::CanvasMMoved:
+        case booba::EventType::MouseMoved:
         {
             if (clicked_)
             {
-                Vector2d new_point((float)event->Oleg.cedata.x, (float)event->Oleg.cedata.y);
+                Vector2d new_point((float)event->Oleg.mbedata.x, (float)event->Oleg.mbedata.y);
 
                 if (points_.size() > 0)
                 {
@@ -83,17 +83,9 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
         }
 
         case booba::EventType::NoEvent:
-        case booba::EventType::MouseMoved:
-        {
-            clicked_ = false;
-            break;
-        }
-        case booba::EventType::MousePressed:
-        case booba::EventType::MouseReleased:
-        {
-            clicked_ = false;
-            break;
-        }
+        case booba::EventType::CanvasMMoved:
+        case booba::EventType::CanvasMPressed:
+        case booba::EventType::CanvasMReleased:
         
         default:
             break;

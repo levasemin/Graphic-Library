@@ -13,6 +13,8 @@
 #include <filesystem>
 #include <dlfcn.h>
 
+using namespace SL;
+
 class Canvas : public CompositeObject
 {
 public:
@@ -89,14 +91,13 @@ public:
 
         if (surface_->point_belonging(event.Oleg_.motion.pos))
         {
-            new_event.type_ = EventType::CanvasMMoved;
+            new_event.type_ = EventType::MouseMoved;
             
-            new_event.Oleg_.cedata.pos  = event.Oleg_.motion.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
-            new_event.Oleg_.cedata.pos /= zoom_;
-            new_event.Oleg_.cedata.id   = (uint64_t)this;
-        }
+            new_event.Oleg_.mbedata.pos  = event.Oleg_.motion.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
+            new_event.Oleg_.mbedata.pos /= zoom_;
 
-        tool_manager_.apply(surface_, &new_event);
+            tool_manager_.apply(surface_, &new_event);
+        }
     }
 
     void ClickLeftEvent(const Event &event) override
@@ -105,33 +106,27 @@ public:
 
         if (surface_->point_belonging(event.Oleg_.mbedata.pos))
         {
-            new_event.type_ = EventType::CanvasMPressed;
+            new_event.type_ = EventType::MousePressed;
             
-            new_event.Oleg_.cedata.pos  = event.Oleg_.mbedata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
-            new_event.Oleg_.cedata.pos /= zoom_;
-            new_event.Oleg_.cedata.id   = (uint64_t)this;
-        }   
+            new_event.Oleg_.mbedata.pos  = event.Oleg_.mbedata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
+            new_event.Oleg_.mbedata.pos /= zoom_;
+    
+            tool_manager_.apply(surface_, &new_event);
 
-        tool_manager_.apply(surface_, &new_event);
-
-        is_left_clicked_ = true;
-        
+            is_left_clicked_ = true;
+        }           
     }
 
     void ReleasedLeftEvent (const Event &event) override
     {
         Event new_event = event;
 
-        if (surface_->point_belonging(event.Oleg_.mredata.pos))
-        {
-            new_event.type_ = EventType::CanvasMReleased;
+        new_event.type_ = EventType::MouseReleased;
             
-            new_event.Oleg_.cedata.pos  = event.Oleg_.mredata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
-            new_event.Oleg_.cedata.pos /= zoom_;
-            new_event.Oleg_.cedata.id   = (uint64_t)this;
-        }
-
+        new_event.Oleg_.mbedata.pos  = event.Oleg_.mredata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
+        new_event.Oleg_.mbedata.pos /= zoom_;
         tool_manager_.apply(surface_, &new_event);   
+
     
         is_left_clicked_ = false;
     }

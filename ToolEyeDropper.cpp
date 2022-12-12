@@ -4,7 +4,7 @@ void ToolEyeDropper::apply(booba::Image* image, const booba::Event* event)
 {
     switch (event->type)
     {
-        case booba::EventType::CanvasMPressed:
+        case booba::EventType::MousePressed:
         {
             clicked_ = true;
             Color color = Color::convert_uint_color(image->getPixel(event->Oleg.cedata.x, event->Oleg.cedata.y));
@@ -14,7 +14,7 @@ void ToolEyeDropper::apply(booba::Image* image, const booba::Event* event)
             break;
         }
 
-        case booba::EventType::CanvasMMoved:
+        case booba::EventType::MouseMoved:
         {
             if (clicked_)
             {
@@ -33,14 +33,9 @@ void ToolEyeDropper::apply(booba::Image* image, const booba::Event* event)
         }
 
         case booba::EventType::CanvasMReleased:
-        {
-            clicked_ = false;
-            break;
-        }
-
         case booba::EventType::NoEvent:
-        case booba::EventType::MouseMoved:
-        case booba::EventType::MousePressed:
+        case booba::EventType::CanvasMMoved:
+        case booba::EventType::CanvasMPressed:
         case booba::EventType::ButtonClicked:
         case booba::EventType::ScrollbarMoved:
     default:

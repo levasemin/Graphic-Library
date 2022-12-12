@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 
-const std::string path_mountain = "/home/levce/projectsDED/event_handler2/Event_handler/source/mountain.jpg";
+const std::string path_mountain = "/home/levce/projectsDED/event_handler2/Event_handler/source/british.jpg";
 
 SaveWindow create_save_window()
 {
@@ -45,8 +45,63 @@ OpenWindow create_open_window()
     return open_window;
 }
 
+// struct HSV
+// {
+//     double h;
+//     double s;
+//     double v; 
+// };
+
+// HSV ConvertRGBToHSV(const uint32_t rgb) {
+//     double r = ((rgb & (0xFF << 24u)) >> 24u) / 255.0;
+//     double g = ((rgb & (0xFF << 16u)) >> 16u) / 255.0;
+//     double b = ((rgb & (0xFF << 8u))  >> 8u) / 255.0;
+
+//     double cmax = std::max(r, std::max(g, b)); // maximum of r, g, b
+//     double cmin = std::min(r, std::min(g, b)); // minimum of r, g, b
+//     double diff = cmax - cmin; // diff of cmax and cmin.
+//     double h = -1, s = -1;
+ 
+//     // if cmax and cmax are equal then h = 0
+//     if (cmax == cmin)
+//         h = 0;
+ 
+//     // if cmax equal r then compute h
+//     else if (cmax == r)
+//         h = fmod(60 * ((g - b) / diff) + 360, 360);
+ 
+//     // if cmax equal g then compute h
+//     else if (cmax == g)
+//         h = fmod(60 * ((b - r) / diff) + 120, 360);
+ 
+//     // if cmax equal b then compute h
+//     else if (cmax == b)
+//         h = fmod(60 * ((r - g) / diff) + 240, 360);
+ 
+//     // if cmax equal zero
+//     if (cmax == 0)
+//         s = 0;
+//     else
+//         s = (diff / cmax) * 100;
+ 
+//     // compute v
+//     double v = cmax * 100;
+//     return {h, s, v};
+// }
+
+booba::ApplicationContext* booba::APPCONTEXT = nullptr;
+
 int main()
-{          
+{   
+    // Color color(uint8_t(255), 255, 255);       
+    // uint32_t uint_color = Color::convert_color_uint(color);
+    // HSV hsv = ConvertRGBToHSV(uint_color);
+    // std::cout << hsv.h << " " << hsv.s << " " << hsv.v;
+
+    booba::APPCONTEXT = new booba::ApplicationContext();
+    booba::APPCONTEXT->fgColor = 0xFF000000;
+    booba::APPCONTEXT->bgColor = 0xFF000000;
+    
     MainWindow main_window(Vector2d(WIDTH, HEIGHT), Texture(Color::Grey));
 
     TextureManager &texture_manager = TextureManager::getInstance();

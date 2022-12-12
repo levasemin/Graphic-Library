@@ -42,7 +42,7 @@ public:
             }
             
             render_texture_ = new RenderTexture(shape);
-
+            
             sprite_.setTexture(texture);
 
             render_texture_->draw(sprite_);

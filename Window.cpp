@@ -2,7 +2,7 @@
 
 void Window::create(Vector2d shape, std::string name, int style)
 {
-    window_.create(sf::VideoMode(shape.x_, shape.y_), name, style);
+    window_.create(sf::VideoMode(int(shape.x_), int(shape.y_)), name, style);
 }
 
 void Window::draw(const sf::Drawable &drawable, const sf::RenderStates &states)

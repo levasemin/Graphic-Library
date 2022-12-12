@@ -3,6 +3,8 @@
 #include "RenderTexture.h"
 #include "Image.h"
 
+using namespace SL;
+
 class Circle : public Image
 {
 protected:

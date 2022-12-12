@@ -4,19 +4,21 @@
 #include "Widget.h"
 #include "Object.h"
 
+using namespace SL;
+
 class Surface;
 
 class Memento
 {
   public:
-    Memento(const Image &image):
+    Memento(const SL::Image &image):
         state_()
     {
         state_ = image;
     }
   private:
     friend class Surface;
-    Image state_;
+    SL::Image state_;
 };
 
 class Surface : public Object 
@@ -47,5 +49,4 @@ public:
     {
         image_ = mem->state_;
     }
-
 };

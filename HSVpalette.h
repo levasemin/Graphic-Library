@@ -4,6 +4,8 @@
 #include "Image.h"
 #include "Editor.h"
 
+using namespace SL;
+
 class HSVpalette : public Object
 {   
 public:

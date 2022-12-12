@@ -89,6 +89,8 @@ public:
         setting_palette->set_texture(setting_field_->get_texture());
         setting_palettes_.push_back(setting_palette);
         init_tool_ = new_tool;
+
+        new_tool->buildSetupWidget();
     }
     
     void tool_choose(const Event &event)

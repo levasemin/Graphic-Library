@@ -37,7 +37,7 @@ public:
         texture_(texture)
     {
     }
-    
+
     bool loadFromFile(const char *path)
     {
         return texture_.loadFromFile(path);
