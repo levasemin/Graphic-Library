@@ -22,23 +22,9 @@ public:
     SuperToolPaint() : Tool(),
         interpolator_(Interpolator::CATMULL_ROM),
         width_scroll_bar_(Vector2d(200, 20), Vector2d(150, 30)),
-        hsv_palette_(Vector2d(200, 360), Vector2d(120, 240)),
-        r_editor_(Vector2d(50, 30), Vector2d(270, 75)),
-        g_editor_(Vector2d(50, 30), Vector2d(270, 115)),
-        b_editor_(Vector2d(50, 30), Vector2d(270, 155)),
-        hsv_window_(&hsv_palette_, &r_editor_, &g_editor_, &b_editor_),
         points_({}),
         drawing_object_(1.f)
     {
-        r_editor_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
-        g_editor_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
-        b_editor_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
-
-        r_editor_.set_texture(Color(uint8_t(31), uint8_t(31), uint8_t(31)));
-        g_editor_.set_texture(Color(uint8_t(31), uint8_t(31), uint8_t(31)));
-        b_editor_.set_texture(Color(uint8_t(31), uint8_t(31), uint8_t(31)));
-
-        hsv_window_.set_command(             (Command<const Color &> *) new SimpleCommand<SuperToolPaint, const Color &>(this, &SuperToolPaint::set_color));
         width_scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<SuperToolPaint, const Event &>(this, &SuperToolPaint::set_width));
                 
         char icon_path[128] = "source/Brush.png";
@@ -51,11 +37,6 @@ public:
     SuperToolPaint(const SuperToolPaint &) = default;
     SuperToolPaint &operator=(const SuperToolPaint &) = default;
 
-    void set_color(const Color &color)
-    {
-        drawing_object_.set_color(color);
-    }
-
     void set_width(const Event & event)
     {
         drawing_object_.set_radius(int(event.Oleg_.smedata.value * 30.f));
@@ -63,6 +44,7 @@ public:
 
     void paint(booba::Image *image)
     {
+        drawing_object_.set_color(Color::convert_uint_color(booba::APPCONTEXT->fgColor));
         drawing_object_.draw_on_image(image, points_.back());
 
         if (points_.size() == 4)
@@ -153,21 +135,10 @@ public:
         ToolManager &tool_manager = ToolManager::getInstance();
 
         tool_manager.setting_palettes_.back()->add(&width_scroll_bar_);
-        tool_manager.setting_palettes_.back()->add(&hsv_palette_);
-        tool_manager.setting_palettes_.back()->add(&r_editor_);
-        tool_manager.setting_palettes_.back()->add(&g_editor_);
-        tool_manager.setting_palettes_.back()->add(&b_editor_);
     }
 
 private:
     HorizontalScrollBar width_scroll_bar_;
-
-    HSVpalette hsv_palette_;
-    Editor r_editor_;
-    Editor g_editor_;
-    Editor b_editor_;
-
-    HSVwindow hsv_window_;
 
     std::deque<Vector2d> points_;
 

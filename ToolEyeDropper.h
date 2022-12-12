@@ -58,7 +58,8 @@ public:
     void set_color(const Color &color)
     {
         color_ = color;
-
+        booba::APPCONTEXT->fgColor = Color::convert_color_uint(color);
+        
         label_r_.setString(std::to_string(int(color.get_r())));
         label_g_.setString(std::to_string(int(color.get_g())));
         label_b_.setString(std::to_string(int(color.get_b())));

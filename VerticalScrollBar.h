@@ -44,8 +44,8 @@ public:
             down_button_.  set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
             scroll_button_.set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
             
-            up_button_.  set_texture(texture_manager["UpArrow"]);
-            down_button_.set_texture(texture_manager["DownArrow"]);
+            up_button_.  set_texture(texture_manager[TextureManager::Icon::UpArrow]);
+            down_button_.set_texture(texture_manager[TextureManager::Icon::DownArrow]);
 
             add(&up_button_);
             add(&down_button_);

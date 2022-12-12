@@ -180,7 +180,10 @@ public:
     virtual void set_texture(const Texture &texture) override
     {
         texture_ = texture;
-        sprite_.setTexture(texture_);
+
+        Sprite sprite(shape_, texture_);
+        sprite_ = sprite;
+
         render_texture_->draw(sprite_);
     }
 

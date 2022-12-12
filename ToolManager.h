@@ -137,7 +137,7 @@ public:
     {
         if (active_tool_)
         {
-            if (event->type_ == EventType::CanvasMReleased)
+            if (event->type_ == EventType::MouseReleased)
             {
                 create_memento(surface);
             }

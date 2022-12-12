@@ -15,12 +15,28 @@ private:
     
 public:
 
-    std::map<std::string, Texture> textures_ = 
+    struct texture
     {
-        {"RightArrow", Texture(Color::White)}, 
-        {"LeftArrow", Texture(Color::White)},
-        {"UpArrow", Texture(Color::White)},
-        {"DownArrow", Texture(Color::White)}, 
+        std::string path;
+        Texture texture;
+    };
+
+    enum Icon
+    {
+        RightArrow,
+        LeftArrow,
+        UpArrow,
+        DownArrow,
+        Swap
+    };
+
+    std::vector<texture> textures_ = 
+    {
+        {"RightArrow.png", Texture(Color::White)}, 
+        {"LeftArrow.png", Texture(Color::White)},
+        {"UpArrow.png", Texture(Color::White)},
+        {"DownArrow.png", Texture(Color::White)},
+        {"Swap.png", Texture(Color::White)}
     };
 
     
@@ -30,9 +46,9 @@ public:
         std::stringstream skinNameStream;
         skinNameStream << path.c_str() << "/";
         
-        for (auto & name : textures_) 
+        for (size_t i = 0; i < textures_.size(); i++) 
         {
-            textures_[name.first].loadFromFile((skinNameStream.str() + name.first + ".png").c_str());
+            textures_[i].texture.loadFromFile((skinNameStream.str() + textures_[i].path).c_str());
         }
     }
     
@@ -42,8 +58,8 @@ public:
         return instance;
     }
 
-    Texture &operator[](const std::string &name)
+    Texture &operator[](int icon)
     {
-        return textures_[name];
+        return textures_[icon].texture;
     }
 };

@@ -8,7 +8,6 @@
 class MainWindow : public CompositeObject
 {
 public:
-
     int style_;
     enum Style
     {

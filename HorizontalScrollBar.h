@@ -44,8 +44,8 @@ public:
             right_button_.set_texture (Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
             scroll_button_.set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
             
-            left_button_.set_texture (texture_manager["LeftArrow"]);
-            right_button_.set_texture(texture_manager["RightArrow"]);
+            left_button_.set_texture (texture_manager[TextureManager::Icon::LeftArrow]);
+            right_button_.set_texture(texture_manager[TextureManager::Icon::RightArrow]);
 
             add(&left_button_);
             add(&right_button_);
