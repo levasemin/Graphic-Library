@@ -108,4 +108,13 @@ public:
             background_button_->set_texture(Texture(bg_color_));
         }
     }
+
+    void set_parent(Widget *parent) override
+    {
+        CompositeObject::set_parent(parent);   
+
+        parent->add(foreground_button_);
+        parent->add(background_button_);
+        parent->add(swap_button_);
+    }
 };

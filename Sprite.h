@@ -48,6 +48,7 @@ public:
         if (with_rescale)
         {
             rescale();
+            setTexture(texture_);
         }
     }
     

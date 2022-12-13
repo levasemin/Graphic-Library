@@ -154,7 +154,7 @@ public:
         
         render_texture_->clear();
         sprite_.set_shape(shape);
-
+        
         if (doublecmp(shape.x_, 0.f) && doublecmp(shape.y_, 0.f))
         {
             render_texture_->create(shape);

@@ -31,20 +31,20 @@ public:
         cancel_button_(cancel_button),
         color_(0.f, 0.f, 0.f)
         {
-            hsv_palette_->set_command    ((Command <const Color&> *) new SimpleCommand<HSVwindow, const Color&>(this, &HSVwindow::change_color));
-            r_editor_->set_editor_command((Command <std::string> *)  new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_r));
-            g_editor_->set_editor_command((Command <std::string> *)  new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_g));
-            b_editor_->set_editor_command((Command <std::string> *)  new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_b));
+            hsv_palette_->set_command    ((Command <const Color&> *)  new SimpleCommand<HSVwindow, const Color&>(this, &HSVwindow::change_color));
+            r_editor_->set_editor_command((Command <std::string> *)   new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_r));
+            g_editor_->set_editor_command((Command <std::string> *)   new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_g));
+            b_editor_->set_editor_command((Command <std::string> *)   new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_b));
 
-            cancel_button->set_left_click((Command<const Event &> *) new SimpleCommand<HSVwindow, const Event &>(this, &HSVwindow::close));
-            ok_button->set_left_click((Command<const Event &> *) new SimpleCommand<HSVwindow, const Event &>(this, &HSVwindow::close));
+            cancel_button_->set_left_click((Command<const Event &> *) new SimpleCommand<HSVwindow, const Event &>(this, &HSVwindow::close));
+            ok_button_->set_left_click((Command<const Event &> *)     new SimpleCommand<HSVwindow, const Event &>(this, &HSVwindow::close));
 
             add(hsv_palette_);
-            add(r_editor);
-            add(g_editor);
-            add(b_editor);
-            add(ok_button);
-            add(cancel_button);
+            add(r_editor_);
+            add(g_editor_);
+            add(b_editor_);
+            add(ok_button_);
+            add(cancel_button_);
         };
 
     HSVwindow(const HSVwindow &source): MainWindow(*(const MainWindow *)&source),
