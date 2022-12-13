@@ -22,7 +22,7 @@ booba::Event convert_event(const Event &event)
             booba_event.Oleg.mbedata.x = (int)event.Oleg_.mbedata.pos.x_;
             booba_event.Oleg.mbedata.y = (int)event.Oleg_.mbedata.pos.y_;
             
-            booba_event.Oleg.mbedata.button = (booba::MouseButton)event.Oleg_.mbedata.button;
+            booba_event.Oleg.mbedata.button = event.Oleg_.mbedata.button == MouseButton::Left ? booba::MouseButton::Left : booba::MouseButton::Right;
             booba_event.Oleg.mbedata.alt    = event.Oleg_.mbedata.alt;
             booba_event.Oleg.mbedata.ctrl   = event.Oleg_.mbedata.ctrl;
             booba_event.Oleg.mbedata.shift  = event.Oleg_.mbedata.shift;
@@ -53,7 +53,7 @@ booba::Event convert_event(const Event &event)
         {
             booba_event.type = booba::EventType::ScrollbarMoved;
             booba_event.Oleg.smedata.id = event.Oleg_.smedata.id;
-            booba_event.Oleg.smedata.value = event.Oleg_.smedata.value;
+            booba_event.Oleg.smedata.value = int(event.Oleg_.smedata.value);
 
             break;
         }

@@ -6,40 +6,59 @@
 #include "ToolManager.h"
 #include "Color.h"
 #include "Circle.h"
-#include "HorizontalScrollBar.h"
-#include "HSVwindow.h"
 #include "Interpolator.h"
+#include "Editor.h"
+#include "HorizontalScrollBar.h"
 #include <deque>
 
 
-class SuperToolPaint : public Tool
+class ToolPaint : public Tool
 {
 public:
     Interpolator interpolator_;
 
     bool clicked_ = false;
 
-    SuperToolPaint() : Tool(),
+    ToolPaint() : Tool(),
         interpolator_(Interpolator::CATMULL_ROM),
-        width_scroll_bar_(Vector2d(200, 20), Vector2d(150, 30)),
+        width_scroll_bar_(Vector2d(200, 20), Vector2d(120, 30)),
+        width_editor_    (Vector2d(50, 30),  Vector2d(270, 30)),
         points_({}),
         drawing_object_(1.f)
     {
-        width_scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<SuperToolPaint, const Event &>(this, &SuperToolPaint::set_width));
-                
+        width_scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<ToolPaint, const Event &>(this, &ToolPaint::set_width));
+        width_editor_.set_editor_command((Command<std::string> *) new SimpleCommand<ToolPaint, std::string>(this, &ToolPaint::set_width));
+
         char icon_path[128] = "source/Brush.png";
         std::memcpy(icon_path_, icon_path, 128);
         booba::addTool(this);
-        
-        buildSetupWidget();
     }
 
-    SuperToolPaint(const SuperToolPaint &) = default;
-    SuperToolPaint &operator=(const SuperToolPaint &) = default;
+    ToolPaint(const ToolPaint &) = default;
+    ToolPaint &operator=(const ToolPaint &) = default;
+
+    void set_width(std::string string)
+    {
+        float width = string.size() > 0 ? float(std::stoi(string)) : 0;
+        width = width <= 30 ? width : 30;
+
+        Event event;
+        event.type_ = EventType::ScrollbarMoved;
+        event.Oleg_.smedata.value = width / 30;
+        event.Oleg_.smedata.id = (uint64_t)&width_scroll_bar_;
+
+        width_scroll_bar_.scroll_bar(event);
+
+        drawing_object_.set_radius(int(width));
+    }
 
     void set_width(const Event & event)
     {
-        drawing_object_.set_radius(int(event.Oleg_.smedata.value * 30.f));
+        int width = int(event.Oleg_.smedata.value * 30.f);
+        
+        width_editor_.setString(std::to_string(width));
+
+        drawing_object_.set_radius(width);
     }
 
     void paint(booba::Image *image)
@@ -90,7 +109,7 @@ public:
             {
                 if (clicked_)
                 {
-                    Vector2d new_point((float)event->Oleg.mbedata.x, (float)event->Oleg.mbedata.y);
+                    Vector2d new_point((float)event->Oleg.motion.x, (float)event->Oleg.motion.y);
 
                     if (points_.size() > 0)
                     {
@@ -135,11 +154,12 @@ public:
         ToolManager &tool_manager = ToolManager::getInstance();
 
         tool_manager.setting_palettes_.back()->add(&width_scroll_bar_);
+        tool_manager.setting_palettes_.back()->add(&width_editor_);
     }
 
 private:
     HorizontalScrollBar width_scroll_bar_;
-
+    Editor width_editor_; 
     std::deque<Vector2d> points_;
 
     Circle drawing_object_;

@@ -95,7 +95,6 @@ namespace SL
         
         void putPixel(uint32_t x, uint32_t y, uint32_t color) override
         {        
-            // std::cout << x << " " << y << std::endl;
             setPixel(Vector2d(float(x), float(y)), convert_uint_color(color));
         }   
 

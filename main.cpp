@@ -58,7 +58,7 @@ OpenWindow *create_open_window()
     return open_window;
 }
 
-HSVwindow *create_hsv_window(const Texture &texture)
+HSVwindow *create_hsv_window()
 {
     HSVpalette *hsv_palette = new HSVpalette(Vector2d(175, 315), Vector2d(120, 178));
     Editor *r_editor        = new Editor(Vector2d(50, 30), Vector2d(270, 35));
@@ -87,7 +87,7 @@ HSVwindow *create_hsv_window(const Texture &texture)
     cancel_button->setTextColor(text_color);
     cancel_button->setCharacterSize(22);
 
-    HSVwindow *hsv_window = new HSVwindow(Vector2d(300, 400), texture, hsv_palette, r_editor, g_editor, b_editor, ok_button, cancel_button);
+    HSVwindow *hsv_window = new HSVwindow(Vector2d(300, 400), Texture(back_ground_color), hsv_palette, r_editor, g_editor, b_editor, ok_button, cancel_button);
     return hsv_window;
 }
 
@@ -136,7 +136,7 @@ ColorPicker *create_color_picker()
     booba::APPCONTEXT->fgColor = Color::convert_color_uint(Color::White);
     booba::APPCONTEXT->bgColor = Color::convert_color_uint(Color::Black);
 
-    HSVwindow *hsv_window = create_hsv_window(Texture());
+    HSVwindow *hsv_window = create_hsv_window();
 
     ColorPicker *color_picker = new ColorPicker(foreground_button, background_button, swap_button, hsv_window); 
     return color_picker;
@@ -162,7 +162,7 @@ int main()
 
     canvas.set_image(image);
     
-    SuperToolPaint super_tool_paint;
+    ToolPaint super_tool_paint;
 
     DecoratorScrollBar scroll_bar_canvas(&canvas);
     

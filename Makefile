@@ -2,11 +2,15 @@ CC = g+++
 
 BuildF = obj/
 
+paint:
+	$(CC) -shared -fPIC -Wextra ToolEraser.cpp Interpolator.cpp Color.cpp functions.cpp -o Plugins/Eraser.so
 eraser: 
 	$(CC) -shared -fPIC -Wextra ToolEraser.cpp Interpolator.cpp Color.cpp functions.cpp -o Plugins/Eraser.so
-
 eyedropper:
 	$(CC) -shared -fPIC -Wextra ToolEyeDropper.cpp Color.cpp functions.cpp -o Plugins/ToolEyeDropper.so 
+bucket:
+	$(CC) -shared -fPIC -Wextra ToolBucket.cpp Color.cpp functions.cpp -o Plugins/Bucket.so
+
 
 event_handler: clean $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o $(BuildF)ToolManager.o $(Buildf)Interpolator.o
 	$(CC) 			 $(BuildF)Window.o $(BuildF)functions.o $(BuildF)main.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)plugin_func.o $(BuildF)ToolButton.o $(BuildF)Button.o $(BuildF)Font.o $(BuildF)ToolManager.o $(Buildf)Interpolator.o -o event_handler -lsfml-graphics -lsfml-window -lsfml-system -ldl -export-dynamic

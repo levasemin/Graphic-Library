@@ -32,9 +32,9 @@ public:
     ToolEyeDropper():
         color_(uint8_t(0), uint8_t(0), uint8_t(0)),
         color_box_label_(Vector2d(100, 100), Vector2d()),
-        label_r_  (Vector2d(50, 50), Vector2d()),
-        label_g_  (Vector2d(50, 50), Vector2d()),
-        label_b_  (Vector2d(50, 50), Vector2d())
+        label_r_  (Vector2d(50, 30), Vector2d()),
+        label_g_  (Vector2d(50, 30), Vector2d()),
+        label_b_  (Vector2d(50, 30), Vector2d())
     {
         label_r_.set_texture(Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
         label_g_.set_texture(Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))));
@@ -44,9 +44,9 @@ public:
         label_g_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
         label_b_.setTextColor(Color(uint8_t(190), uint8_t(190), uint8_t(190)));
 
-        label_r_.setCharacterSize(40);
-        label_g_.setCharacterSize(40);
-        label_b_.setCharacterSize(40);
+        label_r_.setCharacterSize(30);
+        label_g_.setCharacterSize(30);
+        label_b_.setCharacterSize(30);
         
         booba::addTool(this);
         buildSetupWidget();
@@ -98,10 +98,10 @@ public:
 
     void buildSetupWidget() override
     {
-        color_box_canvas_ = booba::createCanvas(110, 110, 100, 100);
-        canvas_r_         = booba::createCanvas(195, 35,  50, 50);
-        canvas_g_         = booba::createCanvas(195, 95,  50, 50);
-        canvas_b_         = booba::createCanvas(195, 155, 50, 50);
+        color_box_canvas_ = booba::createCanvas(60,  60, 100, 100);
+        canvas_r_         = booba::createCanvas(170, 60,  50, 30);
+        canvas_g_         = booba::createCanvas(170, 95,  50, 30);
+        canvas_b_         = booba::createCanvas(170, 130, 50, 30);
     }
 
     ~ToolEyeDropper()

@@ -60,8 +60,8 @@ public:
         {
             Event new_event = event;
             new_event.type_ = EventType::CanvasMPressed;
-            new_event.Oleg_.cedata.pos = event.Oleg_.mbedata.pos - get_start_field();
             new_event.Oleg_.cedata.id  = uint64_t(this); 
+            new_event.Oleg_.cedata.pos = event.Oleg_.mbedata.pos - get_start_field();
         
             if (command_)
             {
@@ -76,8 +76,8 @@ public:
         {
             Event new_event = event;
             new_event.type_ = EventType::CanvasMMoved;
-            new_event.Oleg_.cedata.pos = event.Oleg_.motion.pos - get_start_field();
             new_event.Oleg_.cedata.id  = uint64_t(this); 
+            new_event.Oleg_.cedata.pos = event.Oleg_.motion.pos - get_start_field();
             
             if (command_)
             {
@@ -92,8 +92,8 @@ public:
         {
             Event new_event = event;
             new_event.type_ = EventType::CanvasMReleased;
-            new_event.Oleg_.cedata.pos = event.Oleg_.mredata.pos - get_start_field();
             new_event.Oleg_.cedata.id  = uint64_t(this); 
+            new_event.Oleg_.cedata.pos = event.Oleg_.mredata.pos - get_start_field();
         
             if (command_)
             {

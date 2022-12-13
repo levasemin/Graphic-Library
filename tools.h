@@ -1,4 +1,4 @@
-#pragma once
+
 
 #ifndef TOOLS_HPP
 #define TOOLS_HPP
@@ -14,8 +14,12 @@
  */
 
 #include <cstdint>
-namespace booba {
-    
+namespace booba { // boot of outstanding best api
+
+    /**
+     * @brief We require you to implement this;
+     * 
+     */
     extern "C" void init_module();
 
     enum class EventType
@@ -60,8 +64,9 @@ namespace booba {
     struct ScrollMovedEventData
     {
         uint64_t id; 
-        float value;
+        int32_t value;
     };
+
 
     struct CanvasEventData
     {
@@ -73,7 +78,6 @@ namespace booba {
     {
     public:
         EventType type;
-        
         union 
         {
             MotionEventData motion;
@@ -95,7 +99,7 @@ namespace booba {
         virtual uint32_t& operator()(uint32_t x, uint32_t y) = 0;
         virtual const uint32_t& operator()(uint32_t x, uint32_t y) const = 0;
     protected:
-        virtual ~Image() {};
+        virtual ~Image() = 0;
     };
 
     struct ApplicationContext
@@ -107,7 +111,7 @@ namespace booba {
     {
     public:
         virtual void apply(Image* image, const Event* event) = 0;
-        virtual ~Tool() {};
+        virtual ~Tool() = 0;
         virtual const char* getTexture() = 0; 
         virtual void buildSetupWidget() = 0;
     };
@@ -115,7 +119,7 @@ namespace booba {
     // This functions will be given to you;
 
     extern "C" uint64_t createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char*);
-    extern "C" uint64_t createLabel    (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* );     
+    extern "C" uint64_t createLabel    (int32_t x, int32_t y, uint32_t w, uint32_t h, const char*);
     extern "C" uint64_t createScrollbar(int32_t x, int32_t y, uint32_t w, uint32_t h);
     
     extern "C" uint64_t createCanvas(int32_t x, int32_t y, int32_t w, int32_t h);

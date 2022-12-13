@@ -47,7 +47,7 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
         {
             if (clicked_)
             {
-                Vector2d new_point((float)event->Oleg.mbedata.x, (float)event->Oleg.mbedata.y);
+                Vector2d new_point((float)event->Oleg.motion.x, (float)event->Oleg.motion.y);
 
                 if (points_.size() > 0)
                 {
@@ -91,8 +91,6 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
             break;
     }
 }
-
-
 
 void booba::init_module()
 {

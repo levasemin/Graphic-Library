@@ -23,7 +23,8 @@ public:
     ToolManager &tool_manager_;
 
     bool is_left_clicked_ = false;
-    
+    bool is_right_clicked_ = false;
+
     float zoom_ = 1;
 
     Canvas(Vector2d shape, Vector2d center, ToolPalette *tool_palette = nullptr, Container * setting_palette = nullptr) : 
@@ -93,8 +94,8 @@ public:
         {
             new_event.type_ = EventType::MouseMoved;
             
-            new_event.Oleg_.mbedata.pos  = event.Oleg_.motion.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
-            new_event.Oleg_.mbedata.pos /= zoom_;
+            new_event.Oleg_.motion.pos  = event.Oleg_.motion.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
+            new_event.Oleg_.motion.pos /= zoom_;
 
             tool_manager_.apply(surface_, &new_event);
         }
@@ -110,25 +111,60 @@ public:
             
             new_event.Oleg_.mbedata.pos  = event.Oleg_.mbedata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
             new_event.Oleg_.mbedata.pos /= zoom_;
-    
+            new_event.Oleg_.mbedata.button = MouseButton::Left;
+
             tool_manager_.apply(surface_, &new_event);
 
             is_left_clicked_ = true;
         }           
     }
 
+    void ClickRightEvent(const Event &event) override
+    {
+        Event new_event = event;
+
+        if (surface_->point_belonging(event.Oleg_.mbedata.pos))
+        {
+            new_event.type_ = EventType::MousePressed;
+            
+            new_event.Oleg_.mbedata.pos  = event.Oleg_.mbedata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
+            new_event.Oleg_.mbedata.pos /= zoom_;
+            new_event.Oleg_.mbedata.button = MouseButton::Right;
+
+            tool_manager_.apply(surface_, &new_event);
+
+            is_right_clicked_ = true;
+        }           
+    }
+    
     void ReleasedLeftEvent (const Event &event) override
     {
         Event new_event = event;
 
         new_event.type_ = EventType::MouseReleased;
             
-        new_event.Oleg_.mbedata.pos  = event.Oleg_.mredata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
-        new_event.Oleg_.mbedata.pos /= zoom_;
+        new_event.Oleg_.mredata.pos  = event.Oleg_.mredata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
+        new_event.Oleg_.mredata.pos /= zoom_;
+        new_event.Oleg_.mredata.button = MouseButton::Left;
+        tool_manager_.apply(surface_, &new_event);   
+
+
+        is_left_clicked_ = false;
+    }
+
+    void ReleasedRightEvent (const Event &event) override
+    {
+        Event new_event = event;
+
+        new_event.type_ = EventType::MouseReleased;
+            
+        new_event.Oleg_.mredata.pos  = event.Oleg_.mredata.pos - surface_->get_global_offset() - (surface_->get_center() - surface_->get_shape() / 2);
+        new_event.Oleg_.mredata.pos /= zoom_;
+        new_event.Oleg_.mredata.button = MouseButton::Right;
         tool_manager_.apply(surface_, &new_event);   
 
     
-        is_left_clicked_ = false;
+        is_right_clicked_ = false;
     }
 
     void PressKeyEvent(const Event &event) override

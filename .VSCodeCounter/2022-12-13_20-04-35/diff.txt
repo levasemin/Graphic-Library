@@ -1,0 +1,31 @@
+Date : 2022-12-13 20:04:35
+Directory : /home/levce/projectsDED/event_handler2/Event_handler
+Total : 7 files,  243 codes, 19 comments, 70 blanks, all 332 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |          7 |        243 |         19 |         70 |        332 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                  | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                     |          7 |        243 |         19 |         70 |        332 |
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                              | language | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /home/levce/projectsDED/event_handler2/Event_handler/Canvas.h         | C++      |         26 |          0 |         10 |         36 |
+| /home/levce/projectsDED/event_handler2/Event_handler/Event.cpp        | C++      |          1 |          0 |          0 |          1 |
+| /home/levce/projectsDED/event_handler2/Event_handler/message_tool.cpp | C++      |         99 |          0 |         26 |        125 |
+| /home/levce/projectsDED/event_handler2/Event_handler/message_tool.hpp | C++      |         21 |          0 |          8 |         29 |
+| /home/levce/projectsDED/event_handler2/Event_handler/plugin_func.cpp  | C++      |          2 |          0 |          0 |          2 |
+| /home/levce/projectsDED/event_handler2/Event_handler/tools.h          | C++      |         -1 |          4 |          1 |          4 |
+| /home/levce/projectsDED/event_handler2/Event_handler/tools.hpp        | C++      |         95 |         15 |         25 |        135 |
+| Total                                                                 |          |        243 |         19 |         70 |        332 |
++-----------------------------------------------------------------------+----------+------------+------------+------------+------------+
