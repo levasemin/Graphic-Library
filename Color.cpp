@@ -1,14 +1,14 @@
 #include "Color.h"
 
-const Color Color::Black  ((uint8_t)0,   (uint8_t)0,   (uint8_t)0);
-const Color Color::White  ((uint8_t)255, (uint8_t)255, (uint8_t)255);       
-const Color Color::Red    ((uint8_t)255, (uint8_t)0,   (uint8_t)0);         
-const Color Color::Green  ((uint8_t)0,   (uint8_t)255, (uint8_t)0);       
-const Color Color::Blue   ((uint8_t)0,   (uint8_t)0,   (uint8_t)255);
-const Color Color::Grey   ((uint8_t)69,  (uint8_t)69,  (uint8_t)69);        
-const Color Color::Yellow ((uint8_t)255, (uint8_t)255, (uint8_t)0);      
-const Color Color::Magenta((uint8_t)255, (uint8_t)0,   (uint8_t)255);     
-const Color Color::Cyan   ((uint8_t)0,   (uint8_t)255, (uint8_t)255);  
+const Color Color::Black  ((uint8_t)0,   (uint8_t)0,   (uint8_t)0,    uint8_t(255));
+const Color Color::White  ((uint8_t)255, (uint8_t)255, (uint8_t)255,  uint8_t(255));       
+const Color Color::Red    ((uint8_t)255, (uint8_t)0,   (uint8_t)0,    uint8_t(255));         
+const Color Color::Green  ((uint8_t)0,   (uint8_t)255, (uint8_t)0,    uint8_t(255));       
+const Color Color::Blue   ((uint8_t)0,   (uint8_t)0,   (uint8_t)255,  uint8_t(255));
+const Color Color::Grey   ((uint8_t)69,  (uint8_t)69,  (uint8_t)69,   uint8_t(255));        
+const Color Color::Yellow ((uint8_t)255, (uint8_t)255, (uint8_t)0,    uint8_t(255));      
+const Color Color::Magenta((uint8_t)255, (uint8_t)0,   (uint8_t)255,  uint8_t(255));     
+const Color Color::Cyan   ((uint8_t)0,   (uint8_t)255, (uint8_t)255,  uint8_t(255));  
 
 bool Color::operator == (const Color &color2)
 {
@@ -434,6 +434,7 @@ void Color::print_color() const
     std::cout << (int)r_ << std::endl;
     std::cout << (int)g_ << std::endl;
     std::cout << (int)b_ << std::endl;
+    std::cout << (int)a_ << std::endl;
 }
 
 void Color::convert_rgb_hsv()
@@ -520,9 +521,10 @@ void Color::convert_hsv_rgb()
 
 Color Color::convert_uint_color(uint32_t color)
 {
-    return Color((uint8_t)(color >> 24), (uint8_t)(color >> 16), (uint8_t)(color >> 8));
+    return Color((uint8_t)(color >> 24), (uint8_t)(color >> 16), (uint8_t)(color >> 8), (uint8_t)color);
 }
+
 uint32_t Color::convert_color_uint(const Color &color)
 {
-    return ((uint32_t)color.get_r() << (uint32_t)24) + ((uint32_t)color.get_g() << (uint32_t)16) + ((uint32_t)color.get_b() << (uint32_t)8);
+    return ((uint32_t)color.get_r() << (uint32_t)24) + ((uint32_t)color.get_g() << (uint32_t)16) + ((uint32_t)color.get_b() << (uint32_t)8) + (uint32_t)color.get_a();
 }

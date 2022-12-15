@@ -32,8 +32,7 @@ public:
 
                 if (pow(x - radius_, 2) + pow(y - radius_, 2) <= pow(radius_, 2))
                 {
-                    point_color = color_;
-                    
+                    point_color = color_;   
                 }
 
                 setPixel(Vector2d(float(x), float(y)), point_color);
@@ -68,7 +67,7 @@ public:
             {
                 if (getPixel(Vector2d(float(x), float(y))) == color_)
                 {
-                    image->putPixel(uint32_t((int)center.x_ + x - radius_), (uint32_t)((int)center.y_ + y - radius_), convert_color_uint(color_));
+                    image->putPixel(uint32_t((int)center.x_ + x - radius_), (uint32_t)((int)center.y_ + y - radius_), Color::convert_color_uint(color_));
                 }
             }
         }

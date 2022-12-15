@@ -72,20 +72,10 @@ namespace SL
             image_.create(uint32_t(size.x_), uint32_t(size.y_));
         }   
 
-        static Color convert_uint_color(uint32_t color)
-        {
-            return Color((uint8_t)(color >> 24), (uint8_t)(color >> 16), (uint8_t)(color >> 8), (uint8_t)color);
-        }
-
-        static uint32_t convert_color_uint(const Color &color)
-        {
-            return ((uint32_t)color.get_r() << (uint32_t)24) + ((uint32_t)color.get_g() << (uint32_t)16) + ((uint32_t)color.get_b() << (uint32_t)8) + (uint32_t)color.get_a();
-        }
-
         uint32_t getPixel(int32_t x, int32_t y) override
         {
             Color color(image_.getPixel(x, y));
-            return convert_color_uint(color);
+            return Color::convert_color_uint(color);
         }
 
         Color getPixel(Vector2d pos) const
@@ -95,7 +85,7 @@ namespace SL
         
         void putPixel(uint32_t x, uint32_t y, uint32_t color) override
         {        
-            setPixel(Vector2d(float(x), float(y)), convert_uint_color(color));
+            setPixel(Vector2d(float(x), float(y)), Color::convert_uint_color(color));
         }   
 
         void setPixel(Vector2d pos, const Color &color)
