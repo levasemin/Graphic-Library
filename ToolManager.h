@@ -7,7 +7,6 @@
 #include "Container.h"
 #include <vector>
 #include "SimpleCommand.h"
-#include "Memento.h"
 #include "Surface.h"
 #include <deque>
 
@@ -137,7 +136,7 @@ public:
     {
         if (active_tool_)
         {
-            if (event->type_ == EventType::MouseReleased)
+            if (event->type_ == EventType::MouseReleased || event->type_ == EventType::CanvasMPressed)
             {
                 create_memento(surface);
             }
@@ -159,7 +158,7 @@ public:
         numCommands_--;
     }
     
-    void static redo(Surface *surface)
+    static void redo(Surface *surface)
     {
         if (numCommands_ >= max_forward_)
         {

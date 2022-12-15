@@ -34,7 +34,7 @@ public:
     void apply(booba::Image* image, const booba::Event* event) override;
     void fill_field(booba::Image *image, Vector2d position);
     void fill_part(booba::Image *image, Vector2d position, Vector2d orientation);
-    void fill_ray(booba::Image *image, Vector2d position, int step);
+    void fill_ray(booba::Image *image, Vector2d previous_position, Vector2d current_position);
 
 
 

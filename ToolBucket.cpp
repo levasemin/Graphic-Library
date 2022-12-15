@@ -1,66 +1,113 @@
 #include "ToolBucket.h"
 
-void ToolBucket::fill_ray(booba::Image *image, Vector2d position, int step)
+void ToolBucket::fill_ray(booba::Image *image, Vector2d previous_position, Vector2d current_position)
 {
-    if (image->getPixel(int(position.x_), int(position.y_)) == booba::APPCONTEXT->fgColor)
+    for (int x = int(current_position.x_); x < int(image->getX()); x ++)
     {
-        position += Vector2d(float(step), 0);
-    }
-
-    for (int x = int(position.x_); 0 < x && x < int(image->getX()); x += step)
-    {
-        if (image->getPixel(x, int(position.y_)) == current_color_)
+        if (image->getPixel(x, int(current_position.y_)) == current_color_)
         {
-            // std::cout << int(Color::convert_uint_color(booba::APPCONTEXT->fgColor).get_sf_color().r) << std::endl;
-            // std::cout << int(Color::convert_uint_color(booba::APPCONTEXT->fgColor).get_sf_color().g) << std::endl;
-            // std::cout << int(Color::convert_uint_color(booba::APPCONTEXT->fgColor).get_sf_color().b) << std::endl;
-            // std::cout << int(Color::convert_uint_color(booba::APPCONTEXT->fgColor).get_sf_color().a) << std::endl << std::endl;
-            
-            image->putPixel(x, int(position.y_), booba::APPCONTEXT->fgColor);
+            image->putPixel(x, int(current_position.y_), booba::APPCONTEXT->fgColor);
         }
+
+        // else if (int(previous_position.x_) != -1)
+        // {
+        //     if (image->getPixel(x, int(previous_position.y_)) != booba::APPCONTEXT->fgColor)
+        //     {
+        //         break;            
+        //     }
+        // }
 
         else
         {
-            return;
+            break;
+        }
+    } 
+
+    for (int x = int(current_position.x_) - 1; x > -1; x --)
+    {
+        if (image->getPixel(x, int(current_position.y_)) == current_color_)
+        {             
+            image->putPixel(x, int(current_position.y_), booba::APPCONTEXT->fgColor);
+        }
+
+        // else if (int(previous_position.x_) != -1)
+        // {
+        //     if (image->getPixel(x, int(previous_position.y_)) != booba::APPCONTEXT->fgColor)
+        //     {
+        //         break;            
+        //     }
+        // }
+
+        else
+        {
+            break;
         }
     } 
 }
 
 void ToolBucket::fill_part(booba::Image *image, Vector2d position, Vector2d orientation)
 {
+    
+
     Vector2d next_position = position - orientation;
 
-    for (int x = int(next_position.x_); x < int(image->getX()) && image->getPixel(x, int(position.y_)) == booba::APPCONTEXT->fgColor; x++)
+    int flag = false;
+
+    for (int x = int(next_position.x_); x < int(image->getX()); x++)
     {
-        if (image->getPixel(x, int(next_position.y_)) == current_color_)
+        uint32_t pixel_color = image->getPixel(x, int(next_position.y_));
+        
+        if (pixel_color != current_color_ && image->getPixel(x, int(position.y_)) != booba::APPCONTEXT->fgColor)
+        {
+            break;
+        }
+
+        if (pixel_color == current_color_ && image->getPixel(x, int(position.y_)) == booba::APPCONTEXT->fgColor)        
         {
             next_position.x_ = float(x);
-
-            fill_field(image, next_position);
-            
-            return;
+            flag = true;
         }
     }
 
-    for (int x = int(position.x_); 0 < x && image->getPixel(x, int(position.y_)) == booba::APPCONTEXT->fgColor; x--)
+    if (flag)
     {
-        if (image->getPixel(x, int(position.y_)) == current_color_)
+        fill_ray(image, position, next_position);
+
+        fill_part(image, next_position, orientation);
+        fill_part(image, next_position, orientation * -1);
+    }
+
+    flag = false;
+
+    for (int x = int(position.x_); 0 < x; x--)
+    {
+        uint32_t pixel_color = image->getPixel(x, int(next_position.y_));
+        
+        if (pixel_color != current_color_ && image->getPixel(x, int(position.y_)) != booba::APPCONTEXT->fgColor)
+        {
+            break;
+        }
+
+        if (pixel_color == current_color_ && image->getPixel(x, int(position.y_)) == booba::APPCONTEXT->fgColor)        
         {
             next_position.x_ = float(x);
-
-            fill_field(image, next_position);
-
-            return;
+            flag = true;
         }
+    }
+
+    if (flag)
+    {
+        fill_ray(image, position, next_position);
+
+        fill_part(image, next_position, orientation);
+        fill_part(image, next_position, orientation * -1);
     }
 }
 
 
 void ToolBucket::fill_field(booba::Image *image, Vector2d position)
 {
-    fill_ray(image, position, 1);
-    fill_ray(image, position, -1);
-
+    fill_ray(image, Vector2d(-1, -1), position);
     fill_part(image, position, Vector2d(0, 1));
     fill_part(image, position, Vector2d(0, -1));
 }

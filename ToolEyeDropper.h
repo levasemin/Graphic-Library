@@ -9,6 +9,8 @@
 #include "Label.h"
 #include "Interpolator.h"
 
+extern booba::ApplicationContext* booba::APPCONTEXT;
+
 class ToolEyeDropper : booba::Tool
 {
 private:
@@ -49,7 +51,6 @@ public:
         label_b_.setCharacterSize(30);
         
         booba::addTool(this);
-        buildSetupWidget();
     }
 
     ToolEyeDropper           (const ToolEyeDropper &) = default;

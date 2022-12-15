@@ -7,7 +7,7 @@ paint:
 eraser: 
 	$(CC) -shared -fPIC -Wextra ToolEraser.cpp Interpolator.cpp Color.cpp functions.cpp -o Plugins/Eraser.so
 eyedropper:
-	$(CC) -shared -fPIC -Wextra ToolEyeDropper.cpp Color.cpp functions.cpp -o Plugins/ToolEyeDropper.so 
+	$(CC) -shared -fPIC -Wextra ToolEyeDropper.cpp Color.cpp functions.cpp Font.cpp -o Plugins/ToolEyeDropper.so 
 bucket:
 	$(CC) -shared -fPIC -Wextra ToolBucket.cpp Color.cpp functions.cpp -o Plugins/Bucket.so
 
