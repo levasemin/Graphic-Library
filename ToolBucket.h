@@ -7,7 +7,7 @@
 #include "Color.h"
 #include "Circle.h"
 #include <deque>
-
+#include <stack>
 
 class ToolBucket : public Tool
 {
@@ -33,8 +33,8 @@ public:
 
     void apply(booba::Image* image, const booba::Event* event) override;
     void fill_field(booba::Image *image, Vector2d position);
-    void fill_part(booba::Image *image, Vector2d position, Vector2d orientation);
-    void fill_ray(booba::Image *image, Vector2d previous_position, Vector2d current_position);
+    void fill_part(booba::Image *image, Vector2d position);
+    std::pair<Vector2d, Vector2d> fill_ray(booba::Image *image, Vector2d position);
 
 
 

@@ -1,127 +1,110 @@
 #include "ToolBucket.h"
 
-bool color_eq(const Color &color1, const Color &color2, int disp)
+bool color_eq(const Color &color1, const Color &color2, int disp = 0)
 {
     return abs(int(color1.get_r()) - int(color2.get_r())) <= disp &&
            abs(int(color1.get_g()) - int(color2.get_g())) <= disp &&
            abs(int(color1.get_b()) - int(color2.get_b())) <= disp;
 }
 
-void ToolBucket::fill_ray(booba::Image *image, Vector2d previous_position, Vector2d current_position)
+std::pair<Vector2d, Vector2d> ToolBucket::fill_ray(booba::Image *image, Vector2d position)
 {
-    for (int x = int(current_position.x_); x < int(image->getX()); x ++)
-    {
-        if (image->getPixel(x, int(current_position.y_)) == current_color_)
-        {
-            image->putPixel(x, int(current_position.y_), booba::APPCONTEXT->fgColor);
-        }
+    Color current_color = Color::convert_uint_color(current_color_);
 
-        else if (doublecmp(previous_position.x_, -1))
-        {
-            uint32_t prev_color = image->getPixel(x, int(previous_position.y_));
-            Color previous_color = Color::convert_uint_color(prev_color);
-            Color appcontext_color = Color::convert_uint_color(booba::APPCONTEXT->fgColor);
-            
-            if (!color_eq(appcontext_color, previous_color, 0))
-            {
-                break;            
-            }
-        }
-
-        else
-        {
-            break;
-        }
-    } 
-
-    for (int x = int(current_position.x_) - 1; x > -1; x --)
-    {
-        if (image->getPixel(x, int(current_position.y_)) == current_color_)
-        {             
-            image->putPixel(x, int(current_position.y_), booba::APPCONTEXT->fgColor);
-        }
-
-        else if (doublecmp(previous_position.x_, -1))
-        {
-            uint32_t prev_color = image->getPixel(x, int(previous_position.y_));
-            Color previous_color = Color::convert_uint_color(prev_color);
-            Color appcontext_color = Color::convert_uint_color(booba::APPCONTEXT->fgColor);
-            
-            if (!color_eq(appcontext_color, previous_color, 0))
-            {
-                break;            
-            }
-        }
-
-        else
-        {
-            break;
-        }
-    } 
-}
-
-void ToolBucket::fill_part(booba::Image *image, Vector2d position, Vector2d orientation)
-{
-    Vector2d next_position = position - orientation;
-    Vector2d left_position = next_position;
-    Vector2d right_position = next_position;
-
-    int left_flag = false;
-    int right_flag = false;
-
-    for (int x = int(right_position.x_); x < int(image->getX()); x++)
-    {
-        uint32_t pixel_color = image->getPixel(x, int(right_position.y_));
-        
-        if (pixel_color != current_color_ && image->getPixel(x, int(position.y_)) != booba::APPCONTEXT->fgColor)
-        {
-            break;
-        }
-
-        if (pixel_color == current_color_ && image->getPixel(x, int(position.y_)) == booba::APPCONTEXT->fgColor)        
-        {
-            right_position.x_ = float(x);
-            right_flag = true;
-        }
-    }
+    Vector2d left_pos = Vector2d(0, position.y_);
+    Vector2d right_pos = Vector2d(float(image->getX()) - 1, position.y_);
 
     for (int x = int(position.x_); x > -1; x--)
     {
-        uint32_t pixel_color = image->getPixel(x, int(left_position.y_));
-        
-        if (pixel_color != current_color_ && image->getPixel(x, int(position.y_)) != booba::APPCONTEXT->fgColor)
+        uint32_t im_color = image->getPixel(x, int(position.y_));
+        Color image_color = Color::convert_uint_color(im_color);
+
+        if (color_eq(image_color, current_color))
         {
+            image->putPixel(x, int(position.y_), booba::APPCONTEXT->fgColor);
+        }
+
+        else
+        {
+            left_pos.x_ = float(x + 1);
             break;
         }
+    } 
 
-        if (pixel_color == current_color_ && image->getPixel(x, int(position.y_)) == booba::APPCONTEXT->fgColor)        
+    for (int x = int(position.x_) + 1; x < int(image->getX()); x ++)
+    {
+        uint32_t im_color = image->getPixel(x, int(position.y_));
+        Color image_color = Color::convert_uint_color(im_color);
+
+        if (color_eq(image_color, current_color))
         {
-            left_position.x_ = float(x);
-            left_flag = true;
+            image->putPixel(x, int(position.y_), booba::APPCONTEXT->fgColor);
         }
-    }
 
-    if (left_flag)
-    {
-        fill_ray(image, position, next_position);
-        fill_part(image, left_position, orientation);
-        fill_part(image, left_position, orientation * -1);
-    }
+        else
+        {
+            right_pos.x_ = float(x - 1);
+            break;
+        }
+    } 
     
-    if (right_flag)
-    {
-        fill_ray(image, position, next_position);
-        fill_part(image, right_position, orientation);
-        fill_part(image, right_position, orientation * -1);
+    return {left_pos, right_pos};
+}
+
+void ToolBucket::fill_part(booba::Image *image, Vector2d position)
+{
+    Color current_color = Color::convert_uint_color(current_color_);
+
+    std::stack<Vector2d> zatr_pixels;
+    zatr_pixels.push(position);
+
+    while (!zatr_pixels.empty())
+    {        
+        position = zatr_pixels.top();
+        zatr_pixels.pop();
+
+        std::pair<Vector2d, Vector2d> result = fill_ray(image, position);
+        Vector2d left_position = result.first;
+        Vector2d right_position = result.second;
+
+        for (int x = int(left_position.x_); x <= int(right_position.x_); x++)
+        {
+            uint32_t im_color = image->getPixel(x, int(position.y_) + 1);
+            Color pixel_color = Color::convert_uint_color(im_color);
+
+        if (color_eq(pixel_color, current_color, 0))     
+            {
+                for (; color_eq(pixel_color, current_color) && x < int(image->getX()); x++)
+                {
+                    pixel_color = Color::convert_uint_color(image->getPixel(x, int(position.y_ + 1)));
+                }
+                
+                zatr_pixels.push(Vector2d(float(x - 2), position.y_ + 1));
+            }
+        }
+
+        for (int x = int(left_position.x_); x <= int(right_position.x_); x++)
+        {
+            uint32_t im_color = image->getPixel(x, int(position.y_) - 1);
+            Color pixel_color = Color::convert_uint_color(im_color);
+
+            if (color_eq(pixel_color, current_color, 0))     
+            {
+                for (; color_eq(pixel_color, current_color) && x < int(image->getX()); x++)
+                {
+                    pixel_color = Color::convert_uint_color(image->getPixel(x, int(position.y_ - 1)));
+                }
+                
+                zatr_pixels.push(Vector2d(float(x - 2), position.y_ - 1));
+            }
+        }
     }
 }
 
 
 void ToolBucket::fill_field(booba::Image *image, Vector2d position)
 {
-    fill_ray(image, Vector2d(-1, -1), position);
-    fill_part(image, position, Vector2d(0, 1));
-    fill_part(image, position, Vector2d(0, -1));
+    fill_part(image, position);
 }
 
 void ToolBucket::apply(booba::Image* image, const booba::Event* event)

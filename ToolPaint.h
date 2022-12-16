@@ -49,7 +49,7 @@ public:
 
         width_scroll_bar_.scroll_bar(event);
 
-        drawing_object_.set_radius(int(width));
+        drawing_object_.set_radius(int(width) / 2);
     }
 
     void set_width(const Event & event)
@@ -58,7 +58,7 @@ public:
         
         width_editor_.setString(std::to_string(width));
 
-        drawing_object_.set_radius(width);
+        drawing_object_.set_radius(width / 2);
     }
 
     void paint(booba::Image *image)
