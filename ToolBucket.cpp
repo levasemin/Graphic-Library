@@ -1,5 +1,12 @@
 #include "ToolBucket.h"
 
+bool color_eq(const Color &color1, const Color &color2, int disp)
+{
+    return abs(int(color1.get_r()) - int(color2.get_r())) <= disp &&
+           abs(int(color1.get_g()) - int(color2.get_g())) <= disp &&
+           abs(int(color1.get_b()) - int(color2.get_b())) <= disp;
+}
+
 void ToolBucket::fill_ray(booba::Image *image, Vector2d previous_position, Vector2d current_position)
 {
     for (int x = int(current_position.x_); x < int(image->getX()); x ++)
@@ -15,9 +22,7 @@ void ToolBucket::fill_ray(booba::Image *image, Vector2d previous_position, Vecto
             Color previous_color = Color::convert_uint_color(prev_color);
             Color appcontext_color = Color::convert_uint_color(booba::APPCONTEXT->fgColor);
             
-            if (previous_color.get_r() != appcontext_color.get_r() ||
-                previous_color.get_g() != appcontext_color.get_g() ||
-                previous_color.get_b() != appcontext_color.get_b())
+            if (!color_eq(appcontext_color, previous_color, 0))
             {
                 break;            
             }
@@ -42,9 +47,7 @@ void ToolBucket::fill_ray(booba::Image *image, Vector2d previous_position, Vecto
             Color previous_color = Color::convert_uint_color(prev_color);
             Color appcontext_color = Color::convert_uint_color(booba::APPCONTEXT->fgColor);
             
-            if (previous_color.get_r() != appcontext_color.get_r() ||
-                previous_color.get_g() != appcontext_color.get_g() ||
-                previous_color.get_b() != appcontext_color.get_b())
+            if (!color_eq(appcontext_color, previous_color, 0))
             {
                 break;            
             }
@@ -113,7 +116,7 @@ void ToolBucket::fill_part(booba::Image *image, Vector2d position, Vector2d orie
     }
 }
 
-            
+
 void ToolBucket::fill_field(booba::Image *image, Vector2d position)
 {
     fill_ray(image, Vector2d(-1, -1), position);
