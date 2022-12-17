@@ -7,7 +7,7 @@
 class Editor : public Label 
 {
     Color default_sprite_color_;
-    Command<std::string> *editor_command_ = nullptr;
+    Command<const std::string &> *editor_command_ = nullptr;
 
 public:
     bool clicked_ = false;
@@ -37,7 +37,7 @@ public:
         default_sprite_color_ = sprite_.getColor();
     }
 
-    void set_editor_command(Command<std::string> *editor_command)
+    void set_editor_command(Command<const std::string &> *editor_command)
     {
         editor_command_ = editor_command;
     }

@@ -26,7 +26,7 @@ public:
 
         save_button_  ->set_left_click((Command<const Event &> *)  new SimpleCommand<SaveWindow, const Event &>(this, &SaveWindow::save_image));
         cancel_button_->set_left_click((Command<const Event &> *) new SimpleCommand<SaveWindow, const Event &>(this, &SaveWindow::close));
-        path_editor_  ->set_editor_command((Command<std::string> *) new SimpleCommand<SaveWindow, std::string>(this, &SaveWindow::change_path));
+        path_editor_  ->set_editor_command((Command<const std::string &> *) new SimpleCommand<SaveWindow, const std::string &>(this, &SaveWindow::change_path));
 
         add(path_editor_);
         add(save_button_);
@@ -61,7 +61,7 @@ public:
         canvas_ = canvas;
     }
 
-    void change_path(std::string path)
+    void change_path(const std::string &path)
     {
         path_ = path;
     }

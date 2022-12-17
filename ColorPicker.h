@@ -38,6 +38,29 @@ public:
         hsv_window_->ok_button_->set_left_click((Command<const Event &> *) new SimpleCommand<ColorPicker, const Event&>(this, &ColorPicker::set_color));
     }
 
+    ColorPicker(const ColorPicker &source) : CompositeObject(*(const CompositeObject *) &source),
+        fg_color_(source.fg_color_),
+        bg_color_(source.bg_color_),
+        foreground_button_(source.foreground_button_),
+        background_button_(source.background_button_),
+        swap_button_(source.swap_button_),
+        hsv_window_(source.hsv_window_)
+    {}
+
+    ColorPicker &operator=(const ColorPicker &source)
+    {
+        CompositeObject::operator=(*(const CompositeObject *) &source);
+
+        fg_color_          = source.fg_color_;
+        bg_color_          = source.bg_color_;
+        foreground_button_ = source.foreground_button_;
+        background_button_ = source.background_button_;
+        swap_button_       = source.swap_button_;
+        hsv_window_        = source.hsv_window_;
+
+        return *this;
+    }
+
     void change_color(const Color &color)
     {
         if (color_type_ == FOREGROUND_COLOR)

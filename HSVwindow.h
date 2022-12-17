@@ -32,9 +32,9 @@ public:
         color_(0.f, 0.f, 0.f)
         {
             hsv_palette_->set_command    ((Command <const Color&> *)  new SimpleCommand<HSVwindow, const Color&>(this, &HSVwindow::change_color));
-            r_editor_->set_editor_command((Command <std::string> *)   new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_r));
-            g_editor_->set_editor_command((Command <std::string> *)   new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_g));
-            b_editor_->set_editor_command((Command <std::string> *)   new SimpleCommand<HSVwindow, std::string> (this, &HSVwindow::change_b));
+            r_editor_->set_editor_command((Command <const std::string &> *)   new SimpleCommand<HSVwindow, const std::string &> (this, &HSVwindow::change_r));
+            g_editor_->set_editor_command((Command <const std::string &> *)   new SimpleCommand<HSVwindow, const std::string &> (this, &HSVwindow::change_g));
+            b_editor_->set_editor_command((Command <const std::string &> *)   new SimpleCommand<HSVwindow, const std::string &> (this, &HSVwindow::change_b));
 
             cancel_button_->set_left_click((Command<const Event &> *) new SimpleCommand<HSVwindow, const Event &>(this, &HSVwindow::close));
             ok_button_->set_left_click((Command<const Event &> *)     new SimpleCommand<HSVwindow, const Event &>(this, &HSVwindow::close));
@@ -93,7 +93,7 @@ public:
         hsv_window_command_ = command;
     }
     
-    void change_r(std::string string)
+    void change_r(const std::string &string)
     {            
         int new_r = string.size() > 0 ? std::stoi(string) : 0;
         new_r = new_r < 255 ? new_r : 255;
@@ -107,7 +107,7 @@ public:
         }
     }
 
-    void change_g(std::string string)
+    void change_g(const std::string &string)
     {
         int new_g = string.size() > 0 ? std::stoi(string) : 0;
         new_g = new_g < 255 ? new_g : 255;
@@ -121,7 +121,7 @@ public:
         }
     }
 
-    void change_b(std::string string)
+    void change_b(const std::string &string)
     {
         int new_b = string.size() > 0 ? std::stoi(string) : 0;
         new_b = new_b < 255 ? new_b : 255;

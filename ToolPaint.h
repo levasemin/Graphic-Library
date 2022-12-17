@@ -27,7 +27,7 @@ public:
         drawing_object_(1.f)
     {
         width_scroll_bar_.set_scroll_command((Command<const Event &> *) new SimpleCommand<ToolPaint, const Event &>(this, &ToolPaint::set_width));
-        width_editor_.set_editor_command((Command<std::string> *) new SimpleCommand<ToolPaint, std::string>(this, &ToolPaint::set_width));
+        width_editor_.set_editor_command((Command<const std::string &> *) new SimpleCommand<ToolPaint, const std::string &>(this, &ToolPaint::set_width));
 
         char icon_path[128] = "source/Brush.png";
         std::memcpy(icon_path_, icon_path, 128);
@@ -37,7 +37,7 @@ public:
     ToolPaint(const ToolPaint &) = default;
     ToolPaint &operator=(const ToolPaint &) = default;
 
-    void set_width(std::string string)
+    void set_width(const std::string &string)
     {
         float width = string.size() > 0 ? float(std::stoi(string)) : 0;
         width = width <= 30 ? width : 30;

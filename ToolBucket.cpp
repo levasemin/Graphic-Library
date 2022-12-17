@@ -1,10 +1,10 @@
 #include "ToolBucket.h"
 
-bool color_eq(const Color &color1, const Color &color2, int disp = 0)
+bool ToolBucket::color_eq(const Color &color1, const Color &color2, int dispersion)
 {
-    return abs(int(color1.get_r()) - int(color2.get_r())) <= disp &&
-           abs(int(color1.get_g()) - int(color2.get_g())) <= disp &&
-           abs(int(color1.get_b()) - int(color2.get_b())) <= disp;
+    return abs(int(color1.get_r()) - int(color2.get_r())) <= dispersion &&
+           abs(int(color1.get_g()) - int(color2.get_g())) <= dispersion &&
+           abs(int(color1.get_b()) - int(color2.get_b())) <= dispersion;
 }
 
 std::pair<Vector2d, Vector2d> ToolBucket::fill_ray(booba::Image *image, Vector2d position)
@@ -19,7 +19,7 @@ std::pair<Vector2d, Vector2d> ToolBucket::fill_ray(booba::Image *image, Vector2d
         uint32_t im_color = image->getPixel(x, int(position.y_));
         Color image_color = Color::convert_uint_color(im_color);
 
-        if (color_eq(image_color, current_color))
+        if (color_eq(image_color, current_color, dispersion_))
         {
             image->putPixel(x, int(position.y_), booba::APPCONTEXT->fgColor);
         }
@@ -36,7 +36,7 @@ std::pair<Vector2d, Vector2d> ToolBucket::fill_ray(booba::Image *image, Vector2d
         uint32_t im_color = image->getPixel(x, int(position.y_));
         Color image_color = Color::convert_uint_color(im_color);
 
-        if (color_eq(image_color, current_color))
+        if (color_eq(image_color, current_color, dispersion_))
         {
             image->putPixel(x, int(position.y_), booba::APPCONTEXT->fgColor);
         }
@@ -72,14 +72,20 @@ void ToolBucket::fill_part(booba::Image *image, Vector2d position)
             uint32_t im_color = image->getPixel(x, int(position.y_) + 1);
             Color pixel_color = Color::convert_uint_color(im_color);
 
-        if (color_eq(pixel_color, current_color, 0))     
+            if (color_eq(pixel_color, current_color, dispersion_) && 
+               !color_eq(pixel_color, Color::convert_uint_color(booba::APPCONTEXT->fgColor), 0))    
             {
-                for (; color_eq(pixel_color, current_color) && x < int(image->getX()); x++)
+                for (; color_eq(pixel_color, current_color, dispersion_) &&
+                      !color_eq(pixel_color, Color::convert_uint_color(booba::APPCONTEXT->fgColor), 0) && 
+                       x < int(image->getX()); x++)
                 {
                     pixel_color = Color::convert_uint_color(image->getPixel(x, int(position.y_ + 1)));
                 }
                 
-                zatr_pixels.push(Vector2d(float(x - 2), position.y_ + 1));
+                if (uint32_t(position.y_) + 1 < image->getH())
+                {
+                    zatr_pixels.push(Vector2d(float(x - 2), position.y_ + 1));
+                }
             }
         }
 
@@ -88,14 +94,20 @@ void ToolBucket::fill_part(booba::Image *image, Vector2d position)
             uint32_t im_color = image->getPixel(x, int(position.y_) - 1);
             Color pixel_color = Color::convert_uint_color(im_color);
 
-            if (color_eq(pixel_color, current_color, 0))     
+            if (color_eq(pixel_color, current_color, dispersion_) &&
+               !color_eq(pixel_color, Color::convert_uint_color(booba::APPCONTEXT->fgColor), 0))     
             {
-                for (; color_eq(pixel_color, current_color) && x < int(image->getX()); x++)
+                for (; color_eq(pixel_color, current_color, dispersion_) &&
+                      !color_eq(pixel_color, Color::convert_uint_color(booba::APPCONTEXT->fgColor), 0) &&
+                       x < int(image->getX()); x++)
                 {
                     pixel_color = Color::convert_uint_color(image->getPixel(x, int(position.y_ - 1)));
                 }
                 
-                zatr_pixels.push(Vector2d(float(x - 2), position.y_ - 1));
+                if (position.y_ > 1)
+                {
+                    zatr_pixels.push(Vector2d(float(x - 2), position.y_ - 1));
+                }
             }
         }
     }

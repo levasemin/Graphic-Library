@@ -10,6 +10,8 @@
 #include "Surface.h"
 #include <deque>
 
+const int MAX_BACKUP = 32;
+
 class ToolManager
 {
 private:
@@ -120,7 +122,7 @@ public:
 
     void create_memento(Surface *surface)
     {                
-        if (numCommands_ >= max_backup_)
+        if (numCommands_ == max_backup_ - 1)
         {
             mementoList_.pop_front();
             mementoList_.push_back(nullptr);
@@ -128,6 +130,7 @@ public:
         }
 
         numCommands_++;
+
         mementoList_[numCommands_] = surface->createMemento();
         max_forward_ = numCommands_;
     }
@@ -220,7 +223,7 @@ protected:
     static std::deque<Memento *> mementoList_;
     static int numCommands_;
     static int max_forward_;
-    static const int max_backup_ = 32;
+    static const int max_backup_ = MAX_BACKUP;
 
     friend class Canvas;
 };
