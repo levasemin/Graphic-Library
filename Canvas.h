@@ -18,9 +18,11 @@ using namespace SL;
 class Canvas : public CompositeObject
 {
 public:
-    Surface *surface_ = nullptr;
-    
+    Surface *surface_ = nullptr;    
+    Surface *second_surface_ = nullptr;
+
     ToolManager &tool_manager_;
+
 
     bool is_left_clicked_ = false;
     bool is_right_clicked_ = false;
@@ -31,11 +33,14 @@ public:
         CompositeObject(shape, center, Texture(Color::Grey)),
         tool_manager_(ToolManager::getInstance())
     {   
-        surface_ = new Surface(Vector2d(1, 1), Vector2d(0, 0), Image(Texture(Color::Grey)));
+        surface_        = new Surface(Vector2d(1, 1), Vector2d(0, 0), Image(Texture(Color::Grey)));
+        second_surface_ = new Surface(Vector2d(1, 1), Vector2d(0, 0), Image());
         
         add(surface_);
+        add(second_surface_);
         
         tool_manager_.set_surface(surface_);
+        tool_manager_.set_second_surface(second_surface_);
 
         if (tool_palette)
         {
@@ -88,7 +93,8 @@ public:
     { 
         CompositeObject::operator=(*(const CompositeObject *)&source);
         surface_         = source.surface_;
-        
+        second_surface_    = source.second_surface_;
+
         return *this;
     }
 
@@ -221,13 +227,16 @@ public:
         zoom_ = value;
 
         surface_->set_shape(surface_->image_.getSize() * value);
-
+        second_surface_->set_shape(surface_->image_.getSize() * value);
+        
         Vector2d new_center = surface_->get_shape() / 2;
 
         new_center.x_ = surface_->get_shape().x_ > shape_.x_ ? new_center.x_ : shape_.x_ / 2; 
         new_center.y_ = surface_->get_shape().y_ > shape_.y_ ? new_center.y_ : shape_.y_ / 2; 
         
         surface_->set_center(new_center);
+        second_surface_->set_center(new_center);
+        
         reset_global_shape();
     }
 
@@ -240,8 +249,10 @@ public:
     void set_image(const Image &new_image)
     {
         remove(surface_);
+        remove(second_surface_);
 
         *surface_ = Surface(new_image.getSize(), new_image.getSize() / 2, new_image);
+        *second_surface_ = Surface(new_image.getSize(), new_image.getSize() / 2, Image(new_image.getSize(), Color(0, 0, 0, 0)));
 
         Vector2d new_center = surface_->get_shape() / 2;
 
@@ -249,8 +260,10 @@ public:
         new_center.y_ = surface_->get_shape().y_ > shape_.y_ ? new_center.y_ : shape_.y_ / 2; 
         
         surface_->set_center(new_center);
-
+        second_surface_->set_center(new_center);
+        
         add(surface_);
+        add(second_surface_);
     }
 
     Image *get_image()

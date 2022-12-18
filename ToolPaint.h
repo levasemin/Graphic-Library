@@ -1,4 +1,5 @@
 #pragma once
+#define ELPIDIFOR_HIDDEN_LAYER 
 
 #include "Tool.h"
 #include "Command.h"
@@ -10,7 +11,7 @@
 #include "Editor.h"
 #include "HorizontalScrollBar.h"
 #include <deque>
-
+#include "optionals.h"
 
 class ToolPaint : public Tool
 {
@@ -49,7 +50,7 @@ public:
 
         width_scroll_bar_.scroll_bar(event);
 
-        drawing_object_.set_radius(int(width) / 2);
+        drawing_object_.set_radius(int(width / 2) == 0 ? 1 : int(width / 2));
     }
 
     void set_width(const Event & event)
@@ -58,13 +59,13 @@ public:
         
         width_editor_.setString(std::to_string(width));
 
-        drawing_object_.set_radius(width / 2);
+        drawing_object_.set_radius(width / 2 == 0 ? 1 : width / 2);
     }
 
     void paint(booba::Image *image)
     {
         drawing_object_.set_color(Color::convert_uint_color(booba::APPCONTEXT->fgColor));
-        drawing_object_.draw_on_image(image, points_.back());
+        drawing_object_.draw_fill(image, points_.back());
 
         if (points_.size() == 4)
         {
@@ -72,7 +73,7 @@ public:
             {
                 Vector2d new_point = interpolator_(t, points_[0], points_[1], points_[2], points_[3]);
                 
-                drawing_object_.draw_on_image(image, new_point);
+                drawing_object_.draw_fill(image, new_point);
             }
         }
     }
@@ -107,13 +108,15 @@ public:
 
             case booba::EventType::MouseMoved:
             {
+                booba::Image *second_layer = booba::getHiddenLayerID();
+
+                Vector2d new_point((float)event->Oleg.motion.x, (float)event->Oleg.motion.y);
+
                 if (clicked_)
                 {
-                    Vector2d new_point((float)event->Oleg.motion.x, (float)event->Oleg.motion.y);
-
                     if (points_.size() > 0)
                     {
-                        if (abs(points_.back().x_ - new_point.x_) > float(image->getW()) / 100.f + 1.f || abs(points_.back().y_ - new_point.y_) > float(image->getH()) / 10.f + 1.f)
+                        if (abs(points_.back().x_ - new_point.x_) > 10 || abs(points_.back().y_ - new_point.y_) > 10)
                         {
                             points_.clear();
                         }
@@ -129,6 +132,13 @@ public:
                     paint(image);
                 }
                 
+                ToolManager::getInstance().recovery_second_layer();
+
+                drawing_object_.set_color(Color::convert_uint_color(booba::APPCONTEXT->fgColor));
+                
+                float border_width = float(drawing_object_.get_radius() / 3 != 0 ? drawing_object_.get_radius() / 3 : 1); 
+                drawing_object_.draw_frame(second_layer, new_point, border_width);
+
                 break;
             }
 
@@ -141,6 +151,17 @@ public:
             
             default:
                 break;
+        }
+    }
+
+    void recovery_second_layer(booba::Image *second_layer, booba::Image *image)
+    {
+        for (int y = 0; y < int(image->getH()); y++)
+        {
+            for (int x = 0; x < int(image->getW()); x++)
+            {
+                second_layer->setPixel(x, y, image->getPixel(x, y));
+            }
         }
     }
 

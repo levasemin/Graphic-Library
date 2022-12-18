@@ -9,6 +9,7 @@
 #include "Canvas.h"
 #include "stdint.h"
 #include "tools.h"
+#include "optionals.h"
 #include "Image.h"
 
 booba::GUID booba::getGUID()
@@ -116,7 +117,12 @@ void* booba::getLibSymbol(GUID guid, const char* name)
 }
 
 
-extern "C" bool setToolBarSize(size_t w, size_t h)
+bool booba::setToolBarSize(size_t w, size_t h)
 {
     return true;
+}
+
+booba::Image *booba::getHiddenLayerID()
+{
+    return ToolManager::getInstance().get_second_layer()->get_image();
 }

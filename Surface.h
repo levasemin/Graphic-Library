@@ -34,7 +34,7 @@ public:
     void draw() override
     {   
         Sprite sprite(shape_, image_.getTexture());
-        render_texture_->clear();
+        render_texture_->clear(Color(0, 0, 0, 0));
         render_texture_->draw(sprite);
         
         Object::draw();
@@ -48,6 +48,16 @@ public:
     void reinstateMemento(Memento *mem)
     {
         image_ = mem->state_;
+    }
+
+    void set_image(const Image &image)
+    {
+        image_ = image;
+    }
+
+    Image *get_image()
+    {
+        return &image_;
     }
 };
 

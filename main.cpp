@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-const std::string path_mountain = "/home/levce/projectsDED/event_handler2/Event_handler/source/british.jpg";
+const std::string path_mountain = "/home/levce/projectsDED/event_handler2/Event_handler/source/british.png";
 
 booba::ApplicationContext* booba::APPCONTEXT = nullptr;
 
@@ -162,8 +162,6 @@ int main()
 
     canvas.set_image(image);
     
-    // ToolPaint super_tool_paint;
-
     DecoratorScrollBar scroll_bar_canvas(&canvas);
     
     ComboBox *file_button = create_file_combobox(&canvas);

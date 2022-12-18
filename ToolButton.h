@@ -5,6 +5,7 @@
 #include "SimpleCommand.h"
 #include "Vector2d.h"
 #include "tools.h"
+#include "optionals.h"
 
 class ToolButton : public Button
 {

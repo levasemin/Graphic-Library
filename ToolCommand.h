@@ -2,6 +2,7 @@
 
 #include "Command.h"
 #include "tools.h"
+#include "optionals.h"
 #include "Event.h"
 
 template <class Receiver>

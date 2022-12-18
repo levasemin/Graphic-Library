@@ -58,9 +58,9 @@ public:
         return Vector2d(render_texture_.getSize());
     }
 
-    void clear()
+    void clear(const Color &color = Color(0, 0, 0, 255))
     {
-        render_texture_.clear();
+        render_texture_.clear(color.get_sf_color());
     }
 
     ~RenderTexture() = default;

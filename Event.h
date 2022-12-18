@@ -5,6 +5,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "tools.h"
+#include "optionals.h"
 
 enum class EventType
 {

@@ -81,7 +81,8 @@ public:
     std::vector<Container *> setting_palettes_;
     
     Surface *surface_ = nullptr;
-
+    Surface *second_surface_ = nullptr;
+    
     static ToolManager& getInstance()
     {
         static ToolManager instance;
@@ -130,6 +131,8 @@ public:
     
     void tool_choose(const Event &event)
     {        
+        recovery_second_layer();
+
         std::vector<Widget *> tool_palette_children = tool_palette_->get_children();
         
         for (size_t i = 0; i < tool_palette_children.size(); i++)
@@ -217,6 +220,21 @@ public:
     void set_surface(Surface *surface)
     {
         surface_ = surface;
+    }
+
+    void set_second_surface(Surface *second_surface)
+    {
+        second_surface_ = second_surface;
+    }
+
+    Surface *get_second_layer()
+    {
+        return second_surface_;
+    }
+    
+    void recovery_second_layer()
+    {
+        second_surface_->image_.create(second_surface_->image_.getSize(), Color(0, 0, 0, 0));
     }
 
     void set_active_tool(booba::Tool *tool)

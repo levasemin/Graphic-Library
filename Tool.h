@@ -1,10 +1,12 @@
 #pragma once
+#define ELPIDIFOR_HIDDEN_LAYER 
 
 #include "Widget.h"
 #include "ToolCommand.h"
 #include "ToolButton.h"
 
 #include "tools.h"
+#include "optionals.h"
 
 
 class Tool : public booba::Tool

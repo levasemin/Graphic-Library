@@ -1,5 +1,6 @@
 #include "HorizontalScrollBar.h"
 #include "tools.h"
+#include "optionals.h"
 
 class ToolHorizontalScrollBar : public HorizontalScrollBar
 {

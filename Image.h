@@ -3,6 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "Texture.h"
 #include "tools.h"
+#include "optionals.h"
 
 namespace SL
 {
@@ -29,10 +30,10 @@ namespace SL
             image_ = texture.texture_.copyToImage();
         }
 
-        Image (const Vector2d &shape):
+        Image (const Vector2d &shape, const Color &color = Color(uint8_t(0), uint8_t(0), uint8_t(0))):
             image_()
         {
-            image_.create(uint32_t(shape.x_), uint32_t(shape.y_));
+            image_.create(uint32_t(shape.x_), uint32_t(shape.y_), color.get_sf_color());
         }
         
         void saveToFile(const std::string &path)
@@ -71,7 +72,7 @@ namespace SL
         {
             image_.create(uint32_t(size.x_), uint32_t(size.y_));
         }   
-
+        
         uint32_t getPixel(size_t x, size_t y) override
         {
             Color color(image_.getPixel(uint32_t(x), uint32_t(y)));
@@ -91,6 +92,11 @@ namespace SL
         void setPixel(Vector2d pos, const Color &color)
         {
             image_.setPixel(uint32_t(pos.x_), uint32_t(pos.y_), color.get_sf_color());
+        }
+
+        void create(Vector2d shape, const Color &color = Color(0, 0, 0, 255))
+        {
+            image_.create(uint32_t(shape.x_), uint32_t(shape.y_), color.get_sf_color());
         }
 
         bool saveToFile(const char *filename)

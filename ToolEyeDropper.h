@@ -6,6 +6,7 @@
 #include "Color.h"
 #include "Circle.h"
 #include "tools.h"
+#include "optionals.h"
 #include "Label.h"
 #include "Interpolator.h"
 
