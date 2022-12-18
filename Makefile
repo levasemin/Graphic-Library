@@ -3,7 +3,7 @@ CC = g+++
 BuildF = obj/
 
 paint:
-	$(CC) -shared -fPIC -Wextra ToolEraser.cpp Interpolator.cpp Color.cpp functions.cpp -o Plugins/Eraser.so
+	$(CC) -shared -fPIC -Wextra ToolPaint.cpp Interpolator.cpp Color.cpp functions.cpp -o Plugins/Paint.so
 eraser: 
 	$(CC) -shared -fPIC -Wextra ToolEraser.cpp Interpolator.cpp Color.cpp functions.cpp -o Plugins/Eraser.so
 eyedropper:

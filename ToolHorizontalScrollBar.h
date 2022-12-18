@@ -4,6 +4,9 @@
 class ToolHorizontalScrollBar : public HorizontalScrollBar
 {
 public:
+    int64_t min_value_ = 0;
+    int64_t max_value_ = 0;
+
     Command<const booba::Event &> *scroll_command_ = nullptr;
     ToolHorizontalScrollBar(Vector2d shape, Vector2d center): HorizontalScrollBar(shape, center)
     {
@@ -21,7 +24,17 @@ public:
 
         return *this;
     }
+    
+    void set_min(int64_t min_value)
+    {
+        min_value_ = min_value;
+    }
 
+    void set_max(int64_t max_value)
+    {
+        max_value_ = max_value;
+    }
+    
     void scroll_bar(const Event &event) override
     {
         Event new_event = event;
@@ -43,8 +56,8 @@ public:
 
         if (scroll_command_)
         {
+            new_event.Oleg_.smedata.value = float(max_value_ - min_value_) * new_event.Oleg_.smedata.value + float(min_value_);
             booba::Event booba_event = convert_event(new_event);
-            
             scroll_command_->Execute(booba_event);
         }
     }

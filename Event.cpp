@@ -51,7 +51,7 @@ booba::Event convert_event(const Event &event)
 
         case EventType::ScrollbarMoved:
         {
-            booba_event.type = booba::EventType::ScrollbarMoved;
+            booba_event.type = booba::EventType::SliderMoved;
             booba_event.Oleg.smedata.id = event.Oleg_.smedata.id;
             booba_event.Oleg.smedata.value = int(event.Oleg_.smedata.value);
 
@@ -84,6 +84,22 @@ booba::Event convert_event(const Event &event)
             booba_event.Oleg.cedata.id = event.Oleg_.cedata.id;
             booba_event.Oleg.cedata.x = (uint32_t)event.Oleg_.cedata.pos.x_;
             booba_event.Oleg.cedata.y = (uint32_t)event.Oleg_.cedata.pos.y_;
+            break;
+        }
+
+        case EventType::CanvasMleft:
+        {
+            booba_event.type = booba::EventType::CanvasMLeft;
+            booba_event.Oleg.cedata.id = event.Oleg_.cedata.id;
+            booba_event.Oleg.cedata.x = (uint32_t)event.Oleg_.cedata.pos.x_;
+            booba_event.Oleg.cedata.y = (uint32_t)event.Oleg_.cedata.pos.y_;
+            break;
+        }
+
+        case EventType::TimerEvent:
+        {
+            booba_event.type = booba::EventType::TimerEvent;
+            booba_event.Oleg.tedata.time = event.Oleg_.tedata.time;
             break;
         }
 

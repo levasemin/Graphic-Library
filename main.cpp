@@ -162,7 +162,7 @@ int main()
 
     canvas.set_image(image);
     
-    ToolPaint super_tool_paint;
+    // ToolPaint super_tool_paint;
 
     DecoratorScrollBar scroll_bar_canvas(&canvas);
     

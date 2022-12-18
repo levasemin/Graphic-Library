@@ -8,19 +8,21 @@
 
 enum class EventType
 {
-    NoEvent        = 0,
-    MouseMoved     = 1,
-    MousePressed   = 2,
-    MouseReleased  = 3,
+    NoEvent         = 0,
+    MouseMoved      = 1,
+    MousePressed    = 2,
+    MouseReleased   = 3,
 
     ButtonClicked   = 4,
     ScrollbarMoved  = 5,
     CanvasMPressed  = 6,
     CanvasMReleased = 7,
     CanvasMMoved    = 8,
+    CanvasMleft     = 9,
 
-    KeyPressed,
-    Closed,
+    TimerEvent      = 10,
+    KeyPressed      = 11,
+    Closed          = 12,
 };
 
 enum class MouseButton
@@ -187,6 +189,11 @@ struct CanvasEventData
     Vector2d pos; 
 };
 
+struct TimerEventData
+{
+    uint64_t time;
+};
+
 class Event
 {
 public:
@@ -200,10 +207,9 @@ public:
         ScrollMovedEventData smedata;
         ScrollEventData sedata;
         CanvasEventData cedata;
+        TimerEventData tedata;
         KeyPressedEventData kpedata;
-
         ButtonClickedEventData bcedata;
-
     } Oleg_;
     
     Event ():

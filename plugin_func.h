@@ -51,12 +51,12 @@
 //     return (int64_t)canvas;
 // }
 
-// uint64_t putPixel (uint64_t canvas, int32_t x, int32_t y, uint32_t color)
+// uint64_t setPixel (uint64_t canvas, int32_t x, int32_t y, uint32_t color)
 // {
 //     if (canvas)
 //     {
 //         Canvas *my_canvas = (Canvas *)canvas;
-//         my_canvas->surface_.putPixel(x, y, color);
+//         my_canvas->surface_.setPixel(x, y, color);
 //     }
 
 //     return canvas;

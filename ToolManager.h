@@ -16,6 +16,7 @@ class ToolManager
 {
 private:
     std::vector<booba::Tool *> tools_;
+    std::map<booba::GUID, void *> plugins_;
 
     booba::Tool* active_tool_ = nullptr;
     
@@ -58,10 +59,15 @@ public:
         static ToolManager instance;
         return instance;
     }    
-
+    
     void set_tool_palette(ToolPalette *tool_palette)
     {
         tool_palette_ = tool_palette;
+    }
+
+    ToolPalette *get_tool_palette(ToolPalette *tool_palette_)
+    {
+        return tool_palette_;
     }
 
     void set_setting_field(Container *setting_palette)
@@ -217,6 +223,23 @@ public:
         return active_tool_;
     }
 
+    void add_guid(const booba::GUID &guid, void *handler)
+    {
+        if (plugins_.find(guid) == plugins_.end()) 
+        {
+            plugins_[guid] = handler;
+        }
+    }
+
+    void* get_guid_handler(const booba::GUID& guid) 
+    {
+        if (plugins_.find(guid) != plugins_.end()) {
+            return plugins_[guid];
+        }
+        
+        return nullptr;
+    }
+    
     ~ToolManager() {};
 
 protected:

@@ -37,10 +37,19 @@ void ToolEyeDropper::apply(booba::Image* image, const booba::Event* event)
         case booba::EventType::CanvasMMoved:
         case booba::EventType::CanvasMPressed:
         case booba::EventType::ButtonClicked:
-        case booba::EventType::ScrollbarMoved:
+        case booba::EventType::SliderMoved:
+        case booba::EventType::CanvasMLeft:
+        case booba::EventType::TimerEvent:
     default:
         break;
     }
+}
+
+booba::GUID booba::getGUID()
+{
+    booba::GUID myToolsGUID = {"EYEDROPER-TOOL"};
+    
+    return myToolsGUID;
 }
 
 void booba::init_module()

@@ -47,6 +47,6 @@ public:
 
     void buildSetupWidget() override
     {
-        width_scroll_bar_ = (uint64_t)booba::createScrollbar(100, 100, 200, 30);
+        width_scroll_bar_ = (uint64_t)booba::createSlider(100, 100, 200, 30, 0, 30, 0);
     }
 };

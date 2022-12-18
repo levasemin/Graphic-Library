@@ -14,9 +14,9 @@ namespace SL
         Image () : 
             image_()
         {}
-
-        ~Image() override {}
         
+        virtual ~Image() {};
+
         Image(const std::string &path):
             image_()
         {
@@ -52,14 +52,14 @@ namespace SL
             return texture;
         }
 
-        uint32_t getH() override
+        size_t getH() override
         {
-            return uint32_t(getSize().y_);
+            return size_t(getSize().y_);
         }
 
-        uint32_t getX() override
+        size_t getW() override
         {
-            return uint32_t(getSize().x_);
+            return size_t(getSize().x_);
         }
 
         Vector2d getSize() const
@@ -72,9 +72,9 @@ namespace SL
             image_.create(uint32_t(size.x_), uint32_t(size.y_));
         }   
 
-        uint32_t getPixel(int32_t x, int32_t y) override
+        uint32_t getPixel(size_t x, size_t y) override
         {
-            Color color(image_.getPixel(x, y));
+            Color color(image_.getPixel(uint32_t(x), uint32_t(y)));
             return Color::convert_color_uint(color);
         }
 
@@ -83,7 +83,7 @@ namespace SL
             return Color(image_.getPixel(uint32_t(pos.x_), uint32_t(pos.y_)));
         }
         
-        void putPixel(uint32_t x, uint32_t y, uint32_t color) override
+        void setPixel(size_t x, size_t y, uint32_t color) override
         {        
             setPixel(Vector2d(float(x), float(y)), Color::convert_uint_color(color));
         }   
@@ -91,18 +91,6 @@ namespace SL
         void setPixel(Vector2d pos, const Color &color)
         {
             image_.setPixel(uint32_t(pos.x_), uint32_t(pos.y_), color.get_sf_color());
-        }
-
-        uint32_t& operator()(uint32_t, uint32_t) override 
-        {
-            uint32_t *smth = new uint32_t;
-            return *smth;
-        }
-
-        const uint32_t& operator()(uint32_t, uint32_t) const override 
-        {
-            uint32_t *smth = new uint32_t;
-            return *smth;
         }
 
         bool saveToFile(const char *filename)

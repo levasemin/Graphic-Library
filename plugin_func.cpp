@@ -10,10 +10,14 @@
 #include "tools.h"
 #include "Image.h"
 
-booba::Image::~Image() {}
-booba::Tool::~Tool() {}
+booba::GUID booba::getGUID()
+{
+    booba::GUID myToolsGUID = {"LE-TOOLS"};
+    
+    return myToolsGUID;
+}
 
-uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* text)
+uint64_t booba::createButton   (size_t x, size_t y, size_t w, size_t h, const char* text)
 {   
     ToolManager &tool_manager = ToolManager::getInstance();
 
@@ -26,7 +30,7 @@ uint64_t booba::createButton   (int32_t x, int32_t y, uint32_t w, uint32_t h, co
     return (int64_t)tool_button;
 }
 
-uint64_t booba::createLabel    (int32_t x, int32_t y, uint32_t w, uint32_t h, const char* text)
+uint64_t booba::createLabel    (size_t x, size_t y, size_t w, size_t h, const char* text)
 {
     ToolManager &tool_manager = ToolManager::getInstance();
 
@@ -35,10 +39,10 @@ uint64_t booba::createLabel    (int32_t x, int32_t y, uint32_t w, uint32_t h, co
 
     tool_manager.setting_palettes_.back()->add(label);
 
-    return (int64_t)label;    
+    return (int64_t)label;
 }   
 
-uint64_t booba::createScrollbar(int32_t x, int32_t y, uint32_t w, uint32_t h)
+uint64_t booba::createSlider(size_t x, size_t y, size_t w, size_t h, int64_t minValue, int64_t maxValue, int64_t startValue)
 {
     ToolManager &tool_manager = ToolManager::getInstance();
 
@@ -51,7 +55,7 @@ uint64_t booba::createScrollbar(int32_t x, int32_t y, uint32_t w, uint32_t h)
     return (int64_t)scroll_bar;     
 }
 
-uint64_t booba::createCanvas(int32_t x, int32_t y, int32_t w, int32_t h)
+uint64_t booba::createCanvas(size_t x, size_t y, size_t w, size_t h)
 {
     ToolManager &tool_manager = ToolManager::getInstance();
     
@@ -64,27 +68,29 @@ uint64_t booba::createCanvas(int32_t x, int32_t y, int32_t w, int32_t h)
     return (int64_t)tool_canvas;
 }
 
-uint64_t booba::putPixel (uint64_t canvas, int32_t x, int32_t y, uint32_t color)
+void booba::setPixel (uint64_t canvas, size_t x, size_t y, uint32_t color)
 {
     if (canvas)
     {
         ToolCanvas *tool_canvas = (ToolCanvas *)canvas;
-        tool_canvas->image_.putPixel(x, y, color);
+        tool_canvas->image_.setPixel(x, y, color);
     }
-
-    return canvas;
 }
 
-uint64_t booba::putSprite(uint64_t canvas, int32_t x, int32_t y, uint32_t w, uint32_t h, const char* texture)
+void booba::putSprite(uint64_t canvas, size_t x, size_t y, size_t w, size_t h, const char* texture)
 {
     if (canvas)
     {
         ToolCanvas *tool_canvas = (ToolCanvas *)canvas;
         tool_canvas->image_.loadFromFile(texture);
     }
-    
-    return canvas;
 }
+
+void booba::cleanCanvas(uint64_t canvasId, uint32_t color)
+{
+
+}
+
 
 void booba::addTool(booba::Tool* tool)
 {
@@ -95,4 +101,19 @@ void booba::addTool(booba::Tool* tool)
 void booba::addFilter(booba::Tool* tool)
 {
 
+}
+
+void* booba::getLibSymbol(GUID guid, const char* name) 
+{
+    void* handler = nullptr;
+
+    if ((handler = ToolManager::getInstance().get_guid_handler(guid)) == nullptr) {
+        return nullptr;
+    }
+
+    return dlsym(handler, name);
+}
+extern "C" bool setToolBarSize(size_t w, size_t h)
+{
+    return true;
 }

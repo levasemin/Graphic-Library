@@ -67,7 +67,7 @@ public:
             {
                 if (getPixel(Vector2d(float(x), float(y))) == color_)
                 {
-                    image->putPixel(uint32_t((int)center.x_ + x - radius_), (uint32_t)((int)center.y_ + y - radius_), Color::convert_color_uint(color_));
+                    image->setPixel(uint32_t((int)center.x_ + x - radius_), (uint32_t)((int)center.y_ + y - radius_), Color::convert_color_uint(color_));
                 }
             }
         }

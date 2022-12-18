@@ -60,10 +60,16 @@ public:
             
             if (dlHandler) 
             {
-                void (*initFunc)()   = nullptr; 
-                *((void**)&initFunc) = dlsym(dlHandler, "init_module");
+                void (*init_func)()   = nullptr; 
+                *((void**)&init_func) = dlsym(dlHandler, "init_module");
 
-                (*initFunc)();
+                (*init_func)();
+
+                booba::GUID (*guid_func)()   = nullptr;
+                *((void**)&guid_func) = dlsym(dlHandler, "getGUID");
+
+                (*guid_func)();
+                tool_manager_.add_guid(guid_func(), dlHandler);
             }
 
             else 

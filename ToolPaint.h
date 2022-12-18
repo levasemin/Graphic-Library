@@ -113,7 +113,7 @@ public:
 
                     if (points_.size() > 0)
                     {
-                        if (abs(points_.back().x_ - new_point.x_) > float(image->getX()) / 100.f + 1.f || abs(points_.back().y_ - new_point.y_) > float(image->getH()) / 10.f + 1.f)
+                        if (abs(points_.back().x_ - new_point.x_) > float(image->getW()) / 100.f + 1.f || abs(points_.back().y_ - new_point.y_) > float(image->getH()) / 10.f + 1.f)
                         {
                             points_.clear();
                         }
@@ -133,7 +133,7 @@ public:
             }
 
             case booba::EventType::ButtonClicked:
-            case booba::EventType::ScrollbarMoved:
+            case booba::EventType::SliderMoved:
             case booba::EventType::NoEvent:
             case booba::EventType::CanvasMMoved:
             case booba::EventType::CanvasMPressed:

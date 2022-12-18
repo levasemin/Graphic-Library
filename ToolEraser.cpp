@@ -51,7 +51,7 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
 
                 if (points_.size() > 0)
                 {
-                    if (abs(points_.back().x_ - new_point.x_) > float(image->getX()) / 100.f + 1.f || abs(points_.back().y_ - new_point.y_) > float(image->getH()) / 10.f + 1.f)
+                    if (abs(points_.back().x_ - new_point.x_) > float(image->getW()) / 100.f + 1.f || abs(points_.back().y_ - new_point.y_) > float(image->getH()) / 10.f + 1.f)
                     {
                         points_.clear();
                     }
@@ -72,11 +72,11 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
 
         case booba::EventType::ButtonClicked:
 
-        case booba::EventType::ScrollbarMoved:
+        case booba::EventType::SliderMoved:
         {
             if (width_scroll_bar_ == event->Oleg.smedata.id)
             {
-                drawing_object_.set_radius(int(event->Oleg.smedata.value * 30.f));
+                drawing_object_.set_radius(int(event->Oleg.smedata.value));
             }
 
             break;
@@ -86,10 +86,18 @@ void ToolEraser::apply(booba::Image* image, const booba::Event* event)
         case booba::EventType::CanvasMMoved:
         case booba::EventType::CanvasMPressed:
         case booba::EventType::CanvasMReleased:
-        
+        case booba::EventType::CanvasMLeft:
+        case booba::EventType::TimerEvent:
         default:
             break;
     }
+}
+
+booba::GUID booba::getGUID()
+{
+    booba::GUID myToolsGUID = {"ERASER-TOOL"};
+    
+    return myToolsGUID;
 }
 
 void booba::init_module()

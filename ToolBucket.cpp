@@ -12,7 +12,7 @@ std::pair<Vector2d, Vector2d> ToolBucket::fill_ray(booba::Image *image, Vector2d
     Color current_color = Color::convert_uint_color(current_color_);
 
     Vector2d left_pos = Vector2d(0, position.y_);
-    Vector2d right_pos = Vector2d(float(image->getX()) - 1, position.y_);
+    Vector2d right_pos = Vector2d(float(image->getW()) - 1, position.y_);
 
     for (int x = int(position.x_); x > -1; x--)
     {
@@ -21,7 +21,7 @@ std::pair<Vector2d, Vector2d> ToolBucket::fill_ray(booba::Image *image, Vector2d
 
         if (color_eq(image_color, current_color, dispersion_))
         {
-            image->putPixel(x, int(position.y_), booba::APPCONTEXT->fgColor);
+            image->setPixel(x, int(position.y_), booba::APPCONTEXT->fgColor);
         }
 
         else
@@ -31,14 +31,14 @@ std::pair<Vector2d, Vector2d> ToolBucket::fill_ray(booba::Image *image, Vector2d
         }
     } 
 
-    for (int x = int(position.x_) + 1; x < int(image->getX()); x ++)
+    for (int x = int(position.x_) + 1; x < int(image->getW()); x ++)
     {
         uint32_t im_color = image->getPixel(x, int(position.y_));
         Color image_color = Color::convert_uint_color(im_color);
 
         if (color_eq(image_color, current_color, dispersion_))
         {
-            image->putPixel(x, int(position.y_), booba::APPCONTEXT->fgColor);
+            image->setPixel(x, int(position.y_), booba::APPCONTEXT->fgColor);
         }
 
         else
@@ -77,7 +77,7 @@ void ToolBucket::fill_part(booba::Image *image, Vector2d position)
             {
                 for (; color_eq(pixel_color, current_color, dispersion_) &&
                       !color_eq(pixel_color, Color::convert_uint_color(booba::APPCONTEXT->fgColor), 0) && 
-                       x < int(image->getX()); x++)
+                       x < int(image->getW()); x++)
                 {
                     pixel_color = Color::convert_uint_color(image->getPixel(x, int(position.y_ + 1)));
                 }
@@ -99,7 +99,7 @@ void ToolBucket::fill_part(booba::Image *image, Vector2d position)
             {
                 for (; color_eq(pixel_color, current_color, dispersion_) &&
                       !color_eq(pixel_color, Color::convert_uint_color(booba::APPCONTEXT->fgColor), 0) &&
-                       x < int(image->getX()); x++)
+                       x < int(image->getW()); x++)
                 {
                     pixel_color = Color::convert_uint_color(image->getPixel(x, int(position.y_ - 1)));
                 }
@@ -148,7 +148,7 @@ void ToolBucket::apply(booba::Image* image, const booba::Event* event)
 
         case booba::EventType::MouseMoved:
         case booba::EventType::ButtonClicked:
-        case booba::EventType::ScrollbarMoved:
+        case booba::EventType::SliderMoved:
         case booba::EventType::NoEvent:
         case booba::EventType::CanvasMMoved:
         case booba::EventType::CanvasMPressed:
@@ -157,6 +157,13 @@ void ToolBucket::apply(booba::Image* image, const booba::Event* event)
         default:
             break;
     }
+}
+
+booba::GUID booba::getGUID()
+{
+    booba::GUID myToolsGUID = {"BUCKET-TOOL"};
+    
+    return myToolsGUID;
 }
 
 void booba::init_module()
