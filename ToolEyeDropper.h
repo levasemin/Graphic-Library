@@ -85,7 +85,7 @@ public:
         {
             for (int x = 0; x < int(label.get_shape().x_); x++)
             {
-                booba::setPixel(canvas, x, y, image.getPixel(x, y));
+                booba::putPixel(canvas, x, y, image.getPixel(x, y));
             }
         }
     }

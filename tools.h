@@ -50,7 +50,7 @@ namespace booba { // boot of outstanding best api
         MouseReleased  = 3, // Mouse released on image. Data structure: MouseButtonEventData
 
         ButtonClicked   = 4, // Button on toolbar was clicked. Data structure: ButtonClickedEventData.
-        SliderMoved     = 5, // Slider on toolbar was moved. Data structure: SliderMovedEventData.
+        SliderMoved  = 5, // Slider on toolbar was moved. Data structure: SliderMovedEventData.
         CanvasMPressed  = 6, // Same as MousePressed, but on canvas. Data structure - CanvasEventData.
         CanvasMReleased = 7, // Same as MouseReleased, but on canvas. Data structure - CanvasEventData.
         CanvasMMoved    = 8, // Same as MouseMoved, but on canvas. Data structure - CanvasEventData.
@@ -292,7 +292,7 @@ namespace booba { // boot of outstanding best api
      * @param y - y coordinate of pixel.
      * @param color - color of pixel.
      */
-    extern "C" void setPixel (uint64_t canvas, size_t x, size_t y, uint32_t color);
+    extern "C" void putPixel (uint64_t canvas, size_t x, size_t y, uint32_t color);
     
     /**
      * @brief Blits image to canvas

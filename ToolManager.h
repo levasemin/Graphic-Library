@@ -9,24 +9,51 @@
 #include "SimpleCommand.h"
 #include "Surface.h"
 #include <deque>
+#include <unordered_map>
 
 const int MAX_BACKUP = 32;
+
+template<>
+struct std::hash<booba::GUID> {
+    std::size_t operator()(const booba::GUID& g) const {
+        std::string str(g.str);
+        std::hash<std::string> hashsa;
+
+        return hashsa(str);
+    }
+};
+
+template <>
+struct std::equal_to<booba::GUID> {
+    constexpr bool operator()( const booba::GUID& lhs, const booba::GUID& rhs ) const {
+        for (uint32_t curIdx = 0; curIdx < sizeof(lhs.str); curIdx++) {
+            if (rhs.str[curIdx] != lhs.str[curIdx]) {
+                return 0;
+            }
+        }
+
+        return 1;
+    }
+};
+
 
 class ToolManager
 {
 private:
     std::vector<booba::Tool *> tools_;
-    std::map<booba::GUID, void *> plugins_;
+    std::unordered_map<booba::GUID, void *> plugins_;
 
     booba::Tool* active_tool_ = nullptr;
     
     ToolManager(): 
         tools_({}),
+        plugins_({}),
         setting_palettes_({})
     {}
 
     ToolManager( const ToolManager &source):
         tools_(source.tools_),
+        plugins_(source.plugins_),
         active_tool_(source.active_tool_),
         tool_palette_(source.tool_palette_),
         setting_field_(source.setting_field_),
@@ -36,6 +63,7 @@ private:
     ToolManager& operator=(const ToolManager& source)
     {
         tools_            = source.tools_;
+        plugins_          = source.plugins_;
         active_tool_      = source.active_tool_;
         tool_palette_     = source.tool_palette_;
         setting_field_    = source.setting_field_;
@@ -65,7 +93,7 @@ public:
         tool_palette_ = tool_palette;
     }
 
-    ToolPalette *get_tool_palette(ToolPalette *tool_palette_)
+    ToolPalette *get_tool_palette()
     {
         return tool_palette_;
     }

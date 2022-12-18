@@ -5,6 +5,7 @@
 #include "ToolCanvas.h"
 #include "Label.h"
 #include "ToolHorizontalScrollBar.h"
+#include "ToolPalette.h"
 #include "Canvas.h"
 #include "stdint.h"
 #include "tools.h"
@@ -68,7 +69,7 @@ uint64_t booba::createCanvas(size_t x, size_t y, size_t w, size_t h)
     return (int64_t)tool_canvas;
 }
 
-void booba::setPixel (uint64_t canvas, size_t x, size_t y, uint32_t color)
+void booba::putPixel (uint64_t canvas, size_t x, size_t y, uint32_t color)
 {
     if (canvas)
     {
@@ -113,6 +114,8 @@ void* booba::getLibSymbol(GUID guid, const char* name)
 
     return dlsym(handler, name);
 }
+
+
 extern "C" bool setToolBarSize(size_t w, size_t h)
 {
     return true;

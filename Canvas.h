@@ -19,7 +19,7 @@ class Canvas : public CompositeObject
 {
 public:
     Surface *surface_ = nullptr;
-
+    
     ToolManager &tool_manager_;
 
     bool is_left_clicked_ = false;
