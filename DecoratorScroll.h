@@ -1,3 +1,5 @@
+#pragma once
+
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 #include "Decorator.h"

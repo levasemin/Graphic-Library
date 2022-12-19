@@ -1,10 +1,10 @@
 # Details
 
-Date : 2022-12-13 00:20:34
+Date : 2022-12-18 23:41:01
 
 Directory /home/levce/projectsDED/event_handler2/Event_handler
 
-Total : 79 files,  5688 codes, 223 comments, 1476 blanks, all 7387 lines
+Total : 80 files,  6165 codes, 331 comments, 1573 blanks, all 8069 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
@@ -12,13 +12,13 @@ Total : 79 files,  5688 codes, 223 comments, 1476 blanks, all 7387 lines
 | filename | language | code | comment | blank | total |
 | :--- | :--- | ---: | ---: | ---: | ---: |
 | [Application.h](/Application.h) | C++ | 67 | 0 | 18 | 85 |
-| [Button.cpp](/Button.cpp) | C++ | 67 | 8 | 16 | 91 |
+| [Button.cpp](/Button.cpp) | C++ | 75 | 0 | 16 | 91 |
 | [Button.h](/Button.h) | C++ | 125 | 0 | 31 | 156 |
-| [Canvas.h](/Canvas.h) | C++ | 167 | 0 | 56 | 223 |
-| [Circle.h](/Circle.h) | C++ | 62 | 0 | 14 | 76 |
-| [Color.cpp](/Color.cpp) | C++ | 433 | 0 | 95 | 528 |
+| [Canvas.h](/Canvas.h) | C++ | 208 | 0 | 70 | 278 |
+| [Circle.h](/Circle.h) | C++ | 59 | 0 | 13 | 72 |
+| [Color.cpp](/Color.cpp) | C++ | 434 | 0 | 96 | 530 |
 | [Color.h](/Color.h) | C++ | 84 | 0 | 23 | 107 |
-| [ColorPicker.h](/ColorPicker.h) | C++ | 59 | 0 | 11 | 70 |
+| [ColorPicker.h](/ColorPicker.h) | C++ | 120 | 0 | 23 | 143 |
 | [ComboBox.h](/ComboBox.h) | C++ | 57 | 0 | 11 | 68 |
 | [Command.h](/Command.h) | C++ | 9 | 0 | 2 | 11 |
 | [CompositeObject.h](/CompositeObject.h) | C++ | 162 | 0 | 46 | 208 |
@@ -28,49 +28,51 @@ Total : 79 files,  5688 codes, 223 comments, 1476 blanks, all 7387 lines
 | [DecoratorScrollBar.h](/DecoratorScrollBar.h) | C++ | 137 | 0 | 32 | 169 |
 | [DialogWindow.h](/DialogWindow.h) | C++ | 0 | 0 | 1 | 1 |
 | [Editor.h](/Editor.h) | C++ | 128 | 0 | 35 | 163 |
-| [Event.cpp](/Event.cpp) | C++ | 79 | 0 | 21 | 100 |
-| [Event.h](/Event.h) | C++ | 285 | 0 | 46 | 331 |
-| [EventManager.h](/EventManager.h) | C++ | 72 | 0 | 17 | 89 |
+| [Event.cpp](/Event.cpp) | C++ | 93 | 0 | 23 | 116 |
+| [Event.h](/Event.h) | C++ | 293 | 0 | 45 | 338 |
+| [EventManager.h](/EventManager.h) | C++ | 74 | 0 | 17 | 91 |
 | [Font.cpp](/Font.cpp) | C++ | 3 | 0 | 2 | 5 |
 | [Font.h](/Font.h) | C++ | 24 | 0 | 10 | 34 |
 | [FunctorCommand.h](/FunctorCommand.h) | C++ | 22 | 0 | 11 | 33 |
-| [GraphicLib.h](/GraphicLib.h) | C++ | 25 | 0 | 1 | 26 |
+| [GraphicLib.h](/GraphicLib.h) | C++ | 24 | 0 | 1 | 25 |
 | [HSVpalette.h](/HSVpalette.h) | C++ | 166 | 0 | 38 | 204 |
 | [HSVwindow.h](/HSVwindow.h) | C++ | 123 | 0 | 28 | 151 |
 | [HorizontalScrollBar.h](/HorizontalScrollBar.h) | C++ | 165 | 0 | 43 | 208 |
-| [Image.h](/Image.h) | C++ | 100 | 1 | 23 | 124 |
+| [Image.h](/Image.h) | C++ | 87 | 0 | 20 | 107 |
 | [Interpolator.cpp](/Interpolator.cpp) | C++ | 15 | 0 | 4 | 19 |
 | [Interpolator.h](/Interpolator.h) | C++ | 15 | 0 | 6 | 21 |
 | [Label.h](/Label.h) | C++ | 124 | 0 | 21 | 145 |
 | [MainWindow.h](/MainWindow.h) | C++ | 24 | 0 | 3 | 27 |
-| [Makefile](/Makefile) | Makefile | 36 | 2 | 21 | 59 |
-| [Memento.h](/Memento.h) | C++ | 0 | 109 | 11 | 120 |
+| [Makefile](/Makefile) | Makefile | 40 | 2 | 21 | 63 |
 | [MenuBar.h](/MenuBar.h) | C++ | 15 | 0 | 6 | 21 |
 | [Object.h](/Object.h) | C++ | 213 | 4 | 54 | 271 |
 | [OpenWindow.h](/OpenWindow.h) | C++ | 71 | 0 | 17 | 88 |
 | [RenderTexture.h](/RenderTexture.h) | C++ | 54 | 0 | 13 | 67 |
 | [ReplaceCommand.h](/ReplaceCommand.h) | C++ | 6 | 0 | 3 | 9 |
 | [SaveWindow.h](/SaveWindow.h) | C++ | 70 | 0 | 17 | 87 |
+| [SettingPalette.h](/SettingPalette.h) | C++ | 0 | 0 | 1 | 1 |
 | [SimpleCommand.h](/SimpleCommand.h) | C++ | 25 | 0 | 11 | 36 |
-| [Sprite.h](/Sprite.h) | C++ | 86 | 0 | 21 | 107 |
-| [Surface.h](/Surface.h) | C++ | 41 | 0 | 11 | 52 |
+| [Sprite.h](/Sprite.h) | C++ | 87 | 0 | 21 | 108 |
+| [Surface.h](/Surface.h) | C++ | 49 | 1 | 15 | 65 |
 | [Text.h](/Text.h) | C++ | 63 | 0 | 16 | 79 |
 | [Texture.h](/Texture.h) | C++ | 41 | 0 | 12 | 53 |
-| [TextureManager.h](/TextureManager.h) | C++ | 40 | 0 | 9 | 49 |
-| [Tool.h](/Tool.h) | C++ | 15 | 0 | 8 | 23 |
-| [ToolBacket.h](/ToolBacket.h) | C++ | 0 | 0 | 1 | 1 |
+| [TextureManager.h](/TextureManager.h) | C++ | 54 | 0 | 11 | 65 |
+| [Tool.h](/Tool.h) | C++ | 17 | 0 | 8 | 25 |
+| [ToolBucket.cpp](/ToolBucket.cpp) | C++ | 139 | 0 | 33 | 172 |
+| [ToolBucket.h](/ToolBucket.h) | C++ | 48 | 0 | 14 | 62 |
 | [ToolButton.cpp](/ToolButton.cpp) | C++ | 41 | 0 | 4 | 45 |
-| [ToolButton.h](/ToolButton.h) | C++ | 57 | 0 | 15 | 72 |
+| [ToolButton.h](/ToolButton.h) | C++ | 58 | 0 | 15 | 73 |
 | [ToolCanvas.h](/ToolCanvas.h) | C++ | 84 | 0 | 20 | 104 |
-| [ToolCommand.h](/ToolCommand.h) | C++ | 32 | 0 | 10 | 42 |
-| [ToolEraser.cpp](/ToolEraser.cpp) | C++ | 77 | 0 | 23 | 100 |
-| [ToolEraser.h](/ToolEraser.h) | C++ | 38 | 0 | 14 | 52 |
-| [ToolEyeDropper.cpp](/ToolEyeDropper.cpp) | C++ | 40 | 0 | 9 | 49 |
-| [ToolEyeDropper.h](/ToolEyeDropper.h) | C++ | 85 | 0 | 23 | 108 |
-| [ToolHorizontalScrollBar.h](/ToolHorizontalScrollBar.h) | C++ | 44 | 0 | 14 | 58 |
+| [ToolCommand.h](/ToolCommand.h) | C++ | 33 | 0 | 10 | 43 |
+| [ToolEraser.cpp](/ToolEraser.cpp) | C++ | 10 | 0 | 3 | 13 |
+| [ToolEraser.h](/ToolEraser.h) | C++ | 146 | 0 | 40 | 186 |
+| [ToolEyeDropper.cpp](/ToolEyeDropper.cpp) | C++ | 47 | 0 | 11 | 58 |
+| [ToolEyeDropper.h](/ToolEyeDropper.h) | C++ | 87 | 0 | 24 | 111 |
+| [ToolHorizontalScrollBar.h](/ToolHorizontalScrollBar.h) | C++ | 56 | 0 | 16 | 72 |
 | [ToolManager.cpp](/ToolManager.cpp) | C++ | 4 | 0 | 2 | 6 |
-| [ToolManager.h](/ToolManager.h) | C++ | 179 | 1 | 49 | 229 |
-| [ToolPaint.h](/ToolPaint.h) | C++ | 114 | 0 | 32 | 146 |
+| [ToolManager.h](/ToolManager.h) | C++ | 235 | 1 | 64 | 300 |
+| [ToolPaint.cpp](/ToolPaint.cpp) | C++ | 10 | 0 | 3 | 13 |
+| [ToolPaint.h](/ToolPaint.h) | C++ | 147 | 0 | 40 | 187 |
 | [ToolPalette.h](/ToolPalette.h) | C++ | 32 | 0 | 8 | 40 |
 | [ToolZoom.h](/ToolZoom.h) | C++ | 0 | 23 | 6 | 29 |
 | [Vector2d.cpp](/Vector2d.cpp) | C++ | 67 | 0 | 18 | 85 |
@@ -81,14 +83,13 @@ Total : 79 files,  5688 codes, 223 comments, 1476 blanks, all 7387 lines
 | [Window.h](/Window.h) | C++ | 37 | 0 | 9 | 46 |
 | [constants.h](/constants.h) | C++ | 11 | 0 | 4 | 15 |
 | [functions.cpp](/functions.cpp) | C++ | 34 | 0 | 9 | 43 |
-| [functions.h](/functions.h) | C++ | 6 | 0 | 2 | 8 |
-| [main-.cpp](/main-.cpp) | C++ | 61 | 0 | 29 | 90 |
-| [main.cpp](/main.cpp) | C++ | 109 | 0 | 44 | 153 |
-| [mainj.cpp](/mainj.cpp) | C++ | 33 | 0 | 17 | 50 |
+| [functions.h](/functions.h) | C++ | 6 | 0 | 3 | 9 |
+| [main.cpp](/main.cpp) | C++ | 129 | 3 | 47 | 179 |
 | [obj/Button.cpp](/obj/Button.cpp) | C++ | 232 | 0 | 0 | 232 |
-| [plugin_func.cpp](/plugin_func.cpp) | C++ | 69 | 1 | 26 | 96 |
+| [optionals.h](/optionals.h) | C++ | 14 | 39 | 8 | 61 |
+| [plugin_func.cpp](/plugin_func.cpp) | C++ | 93 | 1 | 34 | 128 |
 | [plugin_func.h](/plugin_func.h) | C++ | 0 | 63 | 22 | 85 |
 | [smth.cpp](/smth.cpp) | C++ | 6 | 0 | 1 | 7 |
-| [tools.h](/tools.h) | C++ | 96 | 11 | 24 | 131 |
+| [tools.h](/tools.h) | C++ | 112 | 194 | 44 | 350 |
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)

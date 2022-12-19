@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Texture.h"
 #include "CompositeObject.h"
 #include "Command.h"

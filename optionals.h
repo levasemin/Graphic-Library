@@ -1,3 +1,5 @@
+#pragma once 
+
 /**
  * @file optionals.hpp
  * @author @mishaglik

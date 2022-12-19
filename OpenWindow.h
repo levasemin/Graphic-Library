@@ -1,3 +1,5 @@
+#pragma once
+
 #include "MainWindow.h"
 #include "Button.h"
 #include "Editor.h"

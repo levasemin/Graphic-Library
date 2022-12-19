@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Application.h"
 #include "Button.h"
 #include "HSVwindow.h"

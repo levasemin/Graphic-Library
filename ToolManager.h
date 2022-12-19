@@ -73,6 +73,7 @@ private:
     }
     
 public:
+
     booba::Tool *init_tool_ = nullptr;
 
     ToolPalette *tool_palette_ = nullptr;
@@ -176,9 +177,11 @@ public:
     {
         if (active_tool_)
         {
-            if (event->type_ == EventType::MouseReleased || event->type_ == EventType::CanvasMPressed)
+            if ((event->type_ == EventType::MouseReleased || event->type_ == EventType::CanvasMPressed) && surface->image_.image_changed)
             {
                 create_memento(surface);
+
+                surface->image_.image_changed = false;
             }
 
             booba::Event booba_event   = convert_event(*event);
@@ -239,8 +242,6 @@ public:
 
     void set_active_tool(booba::Tool *tool)
     {
-        create_memento(surface_);
-
         size_t current_tool = -1;
 
         for (size_t i = 0; i < tools_.size(); i++)

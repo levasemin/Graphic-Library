@@ -12,6 +12,8 @@ namespace SL
     public:    
         sf::Image image_;
 
+        bool image_changed = true;
+
         Image () : 
             image_()
         {}
@@ -86,6 +88,7 @@ namespace SL
         
         void setPixel(size_t x, size_t y, uint32_t color) override
         {        
+            image_changed = true;
             setPixel(Vector2d(float(x), float(y)), Color::convert_uint_color(color));
         }   
 

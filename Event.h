@@ -1,4 +1,5 @@
 #pragma once
+
 #include <stdint.h>
 #include <cstring>
 #include "Vector2d.h"

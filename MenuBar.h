@@ -1,3 +1,5 @@
+#pragma once
+
 #include "CompositeObject.h"
 #include "Button.h"
 #include "Container.h"

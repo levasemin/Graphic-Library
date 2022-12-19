@@ -1,3 +1,5 @@
+#pragma once
+
 #include "HorizontalScrollBar.h"
 #include "tools.h"
 #include "optionals.h"
