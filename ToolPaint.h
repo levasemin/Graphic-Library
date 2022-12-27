@@ -47,6 +47,7 @@ public:
         event.type_ = EventType::ScrollbarMoved;
         event.Oleg_.smedata.value = width / 30;
         event.Oleg_.smedata.id = (uint64_t)&width_scroll_bar_;
+        std::cout << event.Oleg_.smedata.value << std::endl;
 
         width_scroll_bar_.scroll_bar(event);
 

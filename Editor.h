@@ -11,7 +11,8 @@ class Editor : public Label
 
 public:
     bool clicked_ = false;
-    
+    int current_pos_ = 0;
+
     Editor(Vector2d shape, Vector2d center) : Label(shape, center),
         default_sprite_color_(sprite_.getColor())
     {
@@ -55,9 +56,11 @@ public:
 
             if (event.Oleg_.kpedata.code == Key::Backspace)
             {
-                if (string.size() > 0)
+                if (current_pos_ > 0)
                 {
-                    string.pop_back();
+                    string.erase(string.begin() + current_pos_);
+                    string.erase(string.begin() + current_pos_ - 1);
+                    current_pos_ --;
                 }
             }
 
@@ -91,30 +94,60 @@ public:
                     }
                 }
                 
-
-                if (Key::A <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Z)
+                if (Key::Left == event.Oleg_.kpedata.code)
                 {
-                    letter = event.Oleg_.kpedata.shift ? char(event.Oleg_.kpedata.code + int('A')) : char(event.Oleg_.kpedata.code + int('a'));
+                    if (current_pos_ > 0)
+                    {
+                        string.erase(string.begin() + current_pos_);
+
+                        current_pos_ --;
+                    }
                 }
 
-                else if (Key::Num0 <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Num9)    
+                else if (Key::Right == event.Oleg_.kpedata.code)
                 {
-                    letter = char(event.Oleg_.kpedata.code - Key::Num0 + int('0'));
+                    if (current_pos_ < int(string.size() - 1))
+                    {
+                        string.erase(string.begin() + current_pos_);
+
+                        current_pos_ ++;
+                    }
                 }
 
-                else if (Key::Numpad0 <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Numpad9)
-                {
-                    letter = char(event.Oleg_.kpedata.code - Key::Numpad0 + int('0'));
-                }
+                else
+                { 
+                    if (Key::A <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Z)
+                    {
+                        letter = event.Oleg_.kpedata.shift ? char(event.Oleg_.kpedata.code + int('A')) : char(event.Oleg_.kpedata.code + int('a'));
+                    }
 
-                string.push_back(letter);
+                    else if (Key::Num0 <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Num9)    
+                    {
+                        letter = char(event.Oleg_.kpedata.code - Key::Num0 + int('0'));
+                    }
+
+                    else if (Key::Numpad0 <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Numpad9)
+                    {
+                        letter = char(event.Oleg_.kpedata.code - Key::Numpad0 + int('0'));
+                    }
+                    
+                    if (current_pos_ > 0)
+                    {
+                        string.erase(string.begin() + current_pos_);
+                    }
+                    
+                    string.insert(string.begin() + current_pos_, letter);
+                    current_pos_ ++;
+                }
             }
             
             setString(string);
 
             if (editor_command_)
             {
-                editor_command_->Execute(string);
+                std::string final_string = string;
+                
+                editor_command_->Execute(final_string);
             }
         }
     }
@@ -143,21 +176,49 @@ public:
     {
         if (point_belonging(event.Oleg_.mbedata.pos))
         {
+            clicked_ = true;
+
             Color new_color = default_sprite_color_;
             new_color /= 3;
             new_color *= 2;
 
             sprite_.setColor(new_color);
 
-            clicked_ = true;
+            std::string string = text_.getString();
+
+            setString(string);
         }
 
         else
         {
-            sprite_.setColor(default_sprite_color_);
+            if (clicked_ == true)
+            {
+                std::string string = text_.getString();
+                string.erase(string.begin() + current_pos_);
+    
+                clicked_ = false;
 
-            clicked_ = false;
+                setString(string);
+            }
+
+            sprite_.setColor(default_sprite_color_);
         }
     }
 
-};
+    void setString(const std::string &string) override
+    {
+        std::string final_string = string;
+
+        if (clicked_)
+        {
+            if (final_string.find('|') == std::string::npos)
+            {
+                final_string.insert(final_string.begin() + current_pos_, '|');
+            }
+        }
+        
+        std::cout << final_string << std::endl;
+
+        Label::setString(final_string);
+    }
+};  

@@ -49,7 +49,7 @@ public:
         alignment_ = type;
     }
 
-    void setString(const std::string &string)
+    virtual void setString(const std::string &string)
     {
         text_.setString(string.c_str());
         redraw();
