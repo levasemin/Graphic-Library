@@ -1,6 +1,7 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 #pragma once
+
 #include "Command.h"
 #include "Event.h"
 #include "Object.h"
