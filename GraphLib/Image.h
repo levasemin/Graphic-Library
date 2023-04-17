@@ -3,7 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "Texture.h"
 #include "tools.h"
-#include "optionals.h"
+// #include "optionals.h"
 
 namespace SL
 {
