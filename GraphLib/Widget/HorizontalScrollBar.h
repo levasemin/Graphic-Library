@@ -3,14 +3,13 @@
 
 #pragma once
 
-#include "Texture.h"
-#include "CompositeObject.h"
-#include "Command.h"
-#include "Button.h"
-#include "SimpleCommand.h"
-#include "Command.h"
-#include "constants.h"
-#include "TextureManager.h"
+#include "../Classes/Texture.h"
+#include "../Widget/CompositeObject.h"
+#include "../Event/Command.h"
+#include "../Widget/Button.h"
+#include "../Event/SimpleCommand.h"
+#include "../Classes/constants.h"
+#include "../Classes/TextureManager.h"
 
 class HorizontalScrollBar : public CompositeObject
 {

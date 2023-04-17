@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Texture.h"
-#include "CompositeObject.h"
-#include "Command.h"
-#include "Button.h"
-#include "SimpleCommand.h"
-#include "Command.h"
-#include "Container.h"
+#include "../Classes/Texture.h"
+#include "../Widget/CompositeObject.h"
+#include "../Event/Command.h"
+#include "../Widget/Button.h"
+#include "../Event/SimpleCommand.h"
+#include "../Widget/Container.h"
 
 class ComboBox : public Button
 {

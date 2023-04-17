@@ -1,11 +1,11 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 #pragma once
-
-#include "Color.h"
 #include <SFML/Graphics.hpp>
-#include "Sprite.h"
-#include "Event.h"
+
+#include "../Classes/Color.h"
+#include "../Classes/Sprite.h"
+#include "../Event/Event.h"
 
 class Window
 {

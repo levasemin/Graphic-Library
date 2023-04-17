@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Texture.h"
-#include "Vector2d.h"
-#include "CompositeObject.h"
-#include "Widget.h"
+#include "../Classes/Texture.h"
+#include "../Classes/Vector2d.h"
+#include "../Widget/CompositeObject.h"
+#include "../Widget/Widget.h"
 
 class MainWindow : public CompositeObject
 {

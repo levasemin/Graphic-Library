@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include "Window.h"
-#include "Texture.h"
-#include "RenderTexture.h"
-#include "Sprite.h"
-#include "Vector2d.h"
-#include "Widget.h"
-#include "functions.h"
+#include "../Application/Window.h"
+#include "../Classes/Texture.h"
+#include "../Classes/RenderTexture.h"
+#include "../Classes/Sprite.h"
+#include "../Classes/Vector2d.h"
+#include "../Widget/Widget.h"
+#include "../functions/functions.h"
 
 class Object : public Widget
 {

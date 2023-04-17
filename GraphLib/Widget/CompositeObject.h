@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Object.h"
-#include "Widget.h"
+#include "../Widget/Widget.h"
 
 class CompositeObject : public Object
 {

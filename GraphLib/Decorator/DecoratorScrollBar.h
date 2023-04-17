@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Decorator.h"
-#include "RenderTexture.h"
-#include "VerticalScrollBar.h"
-#include "HorizontalScrollBar.h"
+#include "../Classes/RenderTexture.h"
+#include "../Widget/VerticalScrollBar.h"
+#include "../Widget/HorizontalScrollBar.h"
 
 class DecoratorScrollBar : public Decorator
 {

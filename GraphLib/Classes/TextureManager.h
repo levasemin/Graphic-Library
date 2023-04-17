@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Texture.h"
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <map>
+
+#include "../Classes/Texture.h"
 
 class TextureManager
 {

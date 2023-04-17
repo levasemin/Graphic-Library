@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "functions.h"
+#include "../functions/functions.h"
 #include <stdint.h>
 #include <algorithm>
 

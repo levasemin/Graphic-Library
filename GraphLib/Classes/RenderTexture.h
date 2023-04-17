@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Text.h"
-#include "Vector2d.h"
+#include "../Classes/Vector2d.h"
 #include "Sprite.h"
 
 class RenderTexture

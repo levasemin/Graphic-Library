@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Window.h"
-#include "Texture.h"
-#include "RenderTexture.h"
-#include "Vector2d.h"
-#include "Event.h"
+#include "../Application/Window.h"
+#include "../Classes/Texture.h"
+#include "../Classes/RenderTexture.h"
+#include "../Classes/Vector2d.h"
+#include "../Event/Event.h"
 
 class Widget
 {

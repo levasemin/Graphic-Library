@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Window.h"
-#include "Widget.h"
+#include "../Application/Window.h"
+#include "../Widget/Widget.h"
 #include "Event.h"
 
 class EventManager

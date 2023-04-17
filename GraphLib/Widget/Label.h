@@ -1,8 +1,8 @@
 #pragma once
-#include "Command.h"
-#include "Event.h"
-#include "Object.h"
-#include "Text.h"
+#include "../Event/Command.h"
+#include "../Event/Event.h"
+#include "../Widget/Object.h"
+#include "../Classes/Text.h"
 
 class Label : public Object
 {

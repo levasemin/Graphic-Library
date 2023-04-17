@@ -4,9 +4,9 @@
 
 #include <vector>
 #include <iostream>
-#include "Widget.h"
-#include "EventManager.h"
-#include "MainWindow.h"
+#include "../Widget/Widget.h"
+#include "../Event/EventManager.h"
+#include "../Application/MainWindow.h"
 
 class Application
 {

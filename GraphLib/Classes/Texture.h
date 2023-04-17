@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Vector2d.h"
-#include "Color.h"
 #include <SFML/Graphics.hpp>
+
+#include "../Classes/Vector2d.h"
+#include "Color.h"
 
 class Texture
 {
