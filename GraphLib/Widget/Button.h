@@ -147,10 +147,10 @@ public:
     }
 
 protected:
-    Command<const Event &> *left_click_command_          = nullptr;
+    Command<const Event &> *left_click_command_    = nullptr;
     Command<const Event &> *left_release_command_  = nullptr;
 
-    Command<const Event &> *right_click_command_         = nullptr;
+    Command<const Event &> *right_click_command_   = nullptr;
     Command<const Event &> *right_release_command_ = nullptr;
 };
 
