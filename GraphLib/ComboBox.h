@@ -15,8 +15,8 @@ class ComboBox : public Button
 
 public:
 
-    ComboBox(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Blue)) : Button(shape, center, texture),
-        item_box_(Vector2d(shape.x_ * 2, shape.y_ * 10), center + shape / 2 + Vector2d(0, shape.y_ * 5))
+    ComboBox(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::Blue)) : Button(shape, position, texture),
+        item_box_(Vector2d(shape.x_ * 2, shape.y_ * 10), position + Vector2d(0, shape.y_))
     {
     }
 
@@ -60,7 +60,6 @@ public:
     void set_box_shape(const Vector2d &shape)
     {
         item_box_.set_shape(shape);
-        item_box_.set_center(center_ + shape_ / 2 + Vector2d(0, shape.y_ / 2));
     }
     
     void set_box_texture(const Texture &texture)

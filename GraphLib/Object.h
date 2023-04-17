@@ -15,7 +15,7 @@ class Object : public Widget
     
 protected:
     Vector2d shape_;
-    Vector2d center_;
+    Vector2d position_;
     Texture texture_;
     Sprite sprite_;
     Vector2d local_offset_;
@@ -28,17 +28,17 @@ protected:
 
 public:
 
-    Object(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::White)): Widget(),
+    Object(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::White)): Widget(),
         shape_(shape),
-        center_(center),    
+        position_(position),    
         texture_(texture),
         sprite_(shape, texture, 0),
         local_offset_(0, 0),
         global_offset_(0, 0)
         {
-            if (!doublecmp(center.x_, -1.f) && !doublecmp(center.y_, -1))
+            if (!doublecmp(position_.x_, -1.f) && !doublecmp(position_.y_, -1))
             {
-                center_ = shape_ / 2;
+                position_ = Vector2d(0, 0);
             }
             
             render_texture_ = new RenderTexture(shape);
@@ -50,7 +50,7 @@ public:
 
     Object(const Object& source):
         shape_(source.shape_),
-        center_(source.center_),    
+        position_(source.position_),    
         texture_(source.texture_),
         sprite_(source.sprite_),
         local_offset_(source.local_offset_),
@@ -63,7 +63,7 @@ public:
     Object &operator=(const Object& source)
     {
         shape_         = source.shape_;
-        center_        = source.center_;    
+        position_      = source.position_;    
         texture_       = source.texture_;
         sprite_        = source.sprite_;
         local_offset_  = source.local_offset_;
@@ -108,7 +108,7 @@ public:
 
         if (parent_)
         {
-            sprite_.setPosition(parent_->get_local_offset() * has_local_offset_ + center_ - shape_ / 2);
+            sprite_.setPosition(parent_->get_local_offset() * has_local_offset_ + position_);
             parent_->get_render_texture()->draw(sprite_);
         }
     }
@@ -134,13 +134,13 @@ public:
     }
 
 
-    Vector2d get_center() const override
+    Vector2d get_position() const override
     {
-        return center_; 
+        return position_; 
     }
-    void set_center(Vector2d center) override
+    void set_position(Vector2d position) override
     {
-        center_ = center; 
+        position_ = position; 
     }
 
     Vector2d get_shape() const override
@@ -197,6 +197,7 @@ public:
     }
 
     Vector2d get_indent() const override { return Vector2d(0, 0); }
+    
     void set_indent(Vector2d indent) override {}
 
     Vector2d get_global_shape() const override
@@ -237,8 +238,8 @@ public:
     
     Vector2d get_start_field() const override
     {
-        Vector2d start_field = center_ - shape_ / 2 + global_offset_;
-        Vector2d down_limit  = parent_ != nullptr ? parent_->get_start_field() : center_ - shape_ / 2;
+        Vector2d start_field = position_ + global_offset_;
+        Vector2d down_limit  = parent_ != nullptr ? parent_->get_start_field() : position_;
 
         start_field.x_ = start_field.x_ < down_limit.x_ ? down_limit.x_ : start_field.x_;
         start_field.y_ = start_field.y_ < down_limit.y_ ? down_limit.y_ : start_field.y_;
@@ -248,8 +249,8 @@ public:
     
     Vector2d get_end_field() const override
     {
-        Vector2d end_field = center_ + shape_ / 2 + global_offset_;
-        Vector2d hight_limit = parent_ != nullptr ? parent_->get_end_field()   : center_ + shape_ / 2;
+        Vector2d end_field = position_ + shape_ + global_offset_;
+        Vector2d hight_limit = parent_ != nullptr ? parent_->get_end_field()   : position_ + shape_;
 
         end_field.x_ = end_field.x_ > hight_limit.x_ ? hight_limit.x_ : end_field.x_;
         end_field.y_ = end_field.y_ > hight_limit.y_ ? hight_limit.y_ : end_field.y_;

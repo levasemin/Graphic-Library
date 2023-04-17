@@ -9,7 +9,7 @@ class Container : public CompositeObject
 {
 public:
 
-    Container(Vector2d shape, Vector2d center): 
-        CompositeObject(shape, center)
+    Container(Vector2d shape, Vector2d position): 
+        CompositeObject(shape, position)
         {}
 };

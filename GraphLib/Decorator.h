@@ -79,13 +79,13 @@ public:
     }
 
 
-    Vector2d get_center() const override
+    Vector2d get_position() const override
     {
-        return widget_->get_center();
+        return widget_->get_position();
     }
-    void set_center(Vector2d center) override
+    void set_position(Vector2d position) override
     {
-        widget_->set_center(center);
+        widget_->set_position(position);
     }
 
     Vector2d get_shape() const override

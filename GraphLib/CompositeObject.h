@@ -16,7 +16,7 @@ public:
 
     Vector2d indent_; 
 
-    CompositeObject(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::Red)): Object(shape, center, texture),
+    CompositeObject(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::Red)): Object(shape, position, texture),
         global_shape_(0, 0),
         children_({}),
         indent_(0, 0)
@@ -99,7 +99,7 @@ public:
 
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->set_global_offset(offset + center_ - shape_ / 2 + local_offset_);
+            children_[i]->set_global_offset(offset + position_ + local_offset_);
         }
     }
 
@@ -127,17 +127,17 @@ public:
         
         for (size_t i = 0; i < children_.size(); i++)
         {
-            global_start_field.x_ = children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 < global_start_field.x_ ? 
-                                    children_[i]->get_center().x_ -  children_[i]->get_shape().x_ / 2 : global_start_field.x_;
+            global_start_field.x_ = children_[i]->get_position().x_ < global_start_field.x_ ? 
+                                    children_[i]->get_position().x_ : global_start_field.x_;
         
-            global_start_field.y_ = children_[i]->get_center().y_ - children_[i]->get_shape().y_ / 2 < global_start_field.y_ ? 
-                                    children_[i]->get_center().y_ - children_[i]->get_shape().y_ / 2 : global_start_field.y_;
+            global_start_field.y_ = children_[i]->get_position().y_ < global_start_field.y_ ? 
+                                    children_[i]->get_position().y_ : global_start_field.y_;
 
-            global_end_field.x_   = children_[i]->get_center().x_ +  children_[i]->get_shape().x_ / 2 > global_end_field.x_ ? 
-                                    children_[i]->get_center().x_ +  children_[i]->get_shape().x_ / 2 : global_end_field.x_;
+            global_end_field.x_   = children_[i]->get_position().x_ +  children_[i]->get_shape().x_ > global_end_field.x_ ? 
+                                    children_[i]->get_position().x_ +  children_[i]->get_shape().x_ : global_end_field.x_;
         
-            global_end_field.y_   = children_[i]->get_center().y_ + children_[i]->get_shape().y_ / 2 > global_end_field.y_ ? 
-                                    children_[i]->get_center().y_ + children_[i]->get_shape().y_ / 2 : global_end_field.y_;
+            global_end_field.y_   = children_[i]->get_position().y_ + children_[i]->get_shape().y_ > global_end_field.y_ ? 
+                                    children_[i]->get_position().y_ + children_[i]->get_shape().y_ : global_end_field.y_;
 
             global_shape_ = global_end_field - global_start_field;
         }
@@ -172,7 +172,7 @@ public:
         }
 
         widget->set_parent(this);
-        widget->set_global_offset(global_offset_ + center_ - shape_ / 2 + local_offset_);
+        widget->set_global_offset(global_offset_ + position_ + local_offset_);
 
         children_.push_back(widget);
         

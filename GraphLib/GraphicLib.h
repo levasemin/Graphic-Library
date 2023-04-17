@@ -17,5 +17,6 @@
 #include "Vector2d.h"
 #include "Font.h"
 #include "Text.h"
+#include "Image.h"
 #include "Editor.h"
 #include "ComboBox.h"

@@ -20,7 +20,7 @@ public:
     Color default_sprite_color_;
     Text text_;
     
-    Button(Vector2d shape, Vector2d center, const Texture &texture = Texture(Color::White)) : Object(shape, center, texture), 
+    Button(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::White)) : Object(shape, position, texture), 
         default_sprite_color_(sprite_.getColor()),
         text_()
     {

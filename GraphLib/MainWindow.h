@@ -20,7 +20,7 @@ public:
     };
 
     MainWindow(Vector2d shape, Texture texture, int style = sf::Style::Default):
-        CompositeObject(shape, Vector2d(shape.x_ / 2, shape.y_ / 2), texture),
+        CompositeObject(shape, Vector2d(0, 0), texture),
         style_(style)
     {
     }

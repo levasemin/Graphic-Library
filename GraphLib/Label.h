@@ -25,7 +25,7 @@ public:
         RightDown
     };
 
-    Label(Vector2d shape, Vector2d center) : Object(shape, center), text_()
+    Label(Vector2d shape, Vector2d position) : Object(shape, position), text_()
     {
         text_.setFont(Font::Times_new_roman);
         text_.setColor(Color::Black);

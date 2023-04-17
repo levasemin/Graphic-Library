@@ -37,8 +37,8 @@ public:
     virtual void display(Window *window)                           = 0;
 
 
-    virtual Vector2d get_center() const                            = 0;
-    virtual void set_center(Vector2d center)                       = 0;
+    virtual Vector2d get_position() const                            = 0;
+    virtual void set_position(Vector2d position)                       = 0;
 
     virtual Vector2d get_shape() const                             = 0;
     virtual void set_shape(Vector2d shape)                         = 0;

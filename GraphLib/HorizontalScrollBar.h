@@ -27,24 +27,23 @@ public:
     
     Vector2d click_place_;
     
-    HorizontalScrollBar(Vector2d shape, Vector2d center):
-        CompositeObject  (shape, center),
-        left_button_    (Vector2d(shape.y_, shape.y_), Vector2d(shape.y_ / 2, shape.y_ / 2)),
-        right_button_  (Vector2d(shape.y_, shape.y_), Vector2d(shape.x_   - shape.y_ / 2, shape.y_ / 2)),
-        scroll_button_(Vector2d((shape.x_ - shape.y_ * 2) * SCROLL_COEFF, shape.y_),
-                       Vector2d(left_button_.get_shape().x_ + shape.x_ * SCROLL_COEFF  / 2, shape.y_ / 2)),
-        scroll_field_shape(shape.x_ - left_button_.get_shape().x_ - right_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape.y_),
+    HorizontalScrollBar(Vector2d shape, Vector2d position):
+        CompositeObject  (shape, position),
+        left_button_   (Vector2d(shape.y_, shape.y_), Vector2d(0, 0)),
+        right_button_  (Vector2d(shape.y_, shape.y_), Vector2d(shape.x_   - shape.y_, 0)),
+        scroll_button_ (Vector2d((shape.x_ - shape.y_ * 2) * SCROLL_COEFF, shape.y_), Vector2d(left_button_.get_shape().x_, 0)),
+        scroll_field_shape(shape.x_ - left_button_.get_shape().x_ * 2 - scroll_button_.get_shape().x_, shape.y_),
         click_place_(0.f, 0.f)
         {
             set_texture(Texture(Color((uint8_t)92, (uint8_t)92, (uint8_t)92)));
             
             TextureManager &texture_manager = TextureManager::getInstance();
 
-            left_button_.set_texture  (Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
-            right_button_.set_texture (Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
+            left_button_.  set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
+            right_button_. set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
             scroll_button_.set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
             
-            left_button_.set_texture (texture_manager[TextureManager::Icon::LeftArrow]);
+            left_button_. set_texture (texture_manager[TextureManager::Icon::LeftArrow]);
             right_button_.set_texture(texture_manager[TextureManager::Icon::RightArrow]);
 
             add(&left_button_);
@@ -54,8 +53,8 @@ public:
             right_button_.set_has_local_offset(false);
             left_button_.set_has_local_offset(false);
             
-            left_button_.set_left_click    ((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::scroll_up));
-            right_button_.set_left_click  ((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::scroll_down));
+            left_button_.set_left_click  ((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::scroll_up));
+            right_button_.set_left_click ((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::scroll_down));
             scroll_button_.set_left_click((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::clicked_scroll_button));
         };
 
@@ -99,7 +98,7 @@ public:
         void set_scroll_button_shape(const Vector2d &shape)
         {
             scroll_button_.set_shape(shape);
-            scroll_button_.set_center(Vector2d(left_button_.get_shape().x_ + scroll_button_.get_shape().x_  / 2, scroll_button_.get_shape().y_ / 2));
+            scroll_button_.set_position(Vector2d(left_button_.get_shape().x_, 0));
             scroll_field_shape = Vector2d(shape_.x_ - left_button_.get_shape().x_ - right_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape_.y_);
             scroll_coeff_ = scroll_button_.get_shape().x_ / (shape_.x_ - right_button_.get_shape().x_ * 2);
         }
@@ -109,7 +108,7 @@ public:
             left_button_.set_shape(shape);
             right_button_.set_shape(shape);
             
-            scroll_button_.set_center(Vector2d(shape_.y_ / 2, left_button_.get_shape().x_ + shape_.x_ * SCROLL_COEFF  / 2));
+            scroll_button_.set_position(Vector2d(0, shape.y_ + shape_.x_));
             scroll_field_shape = Vector2d(shape_.x_ - left_button_.get_shape().x_ - right_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape_.y_);
         }
 

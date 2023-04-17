@@ -13,7 +13,7 @@ public:
     bool clicked_ = false;
     int current_pos_ = 0;
 
-    Editor(Vector2d shape, Vector2d center) : Label(shape, center),
+    Editor(Vector2d shape, Vector2d position) : Label(shape, position),
         default_sprite_color_(sprite_.getColor())
     {
         std::string string = text_.getString();

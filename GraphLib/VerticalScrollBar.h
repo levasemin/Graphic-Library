@@ -26,14 +26,14 @@ public:
 
     Command<const Event&> *scroll_command_ = nullptr;
     
-    VerticalScrollBar(Vector2d shape, Vector2d center):
-        CompositeObject  (shape, center),
+    VerticalScrollBar(Vector2d shape, Vector2d position):
+        CompositeObject  (shape, position),
         scroll_coeff_(SCROLL_COEFF),
         click_place_(0, 0),
-        up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape.x_ / 2)),
-        down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(shape.x_ / 2, shape_.y_   - shape.x_ / 2)),
+        up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(0, 0)),
+        down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(0, shape_.y_  - shape.x_)),
         scroll_button_(Vector2d(shape.x_, (shape.y_ - shape.x_ * 2) * SCROLL_COEFF),
-                       Vector2d(shape.x_ / 2, shape.x_ + shape_.y_ * SCROLL_COEFF  / 2)),
+                       Vector2d(0, shape.x_)),
         scroll_field_shape(shape_.x_, shape_.y_ - shape_.x_ * 2 - scroll_button_.get_shape().y_)
         {
             set_texture(Texture(Color((uint8_t)92, (uint8_t)92, (uint8_t)92)));
@@ -107,14 +107,14 @@ public:
             up_button_.set_shape(new_shape);
             down_button_.set_shape(new_shape);
             
-            scroll_button_.set_center(Vector2d(scroll_button_.get_shape().x_ / 2, up_button_.get_shape().y_ + scroll_button_.get_shape().y_  / 2));
+            scroll_button_.set_position(Vector2d(0, up_button_.get_shape().y_));
             scroll_field_shape.y_ = shape_.y_ - down_button_.get_shape().x_ * 2 - scroll_button_.get_shape().y_;
         }
 
         void set_scroll_button_size(const Vector2d &shape)
         {
             scroll_button_.set_shape(shape);
-            scroll_button_.set_center(Vector2d(scroll_button_.get_shape().x_ / 2, up_button_.get_shape().y_ + scroll_button_.get_shape().y_  / 2));
+            scroll_button_.set_position(Vector2d(0, up_button_.get_shape().y_));
             scroll_field_shape.y_ = shape_.y_ - down_button_.get_shape().x_ * 2 - scroll_button_.get_shape().y_;
             scroll_coeff_ = scroll_button_.get_shape().y_ / (shape_.y_ - down_button_.get_shape().y_ * 2);
         }
