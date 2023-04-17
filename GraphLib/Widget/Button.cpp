@@ -22,16 +22,9 @@ void Button::MoveMouseEvent(const Event &event)
 
 
 void Button::ClickLeftEvent (const Event &event)
-{
-    std::cout << "!!!!!!!!!\n";
-    Vector2d(event.Oleg_.mbedata.pos).print_value();
-    get_global_offset().print_value();
-    get_position().print_value();
-
-    
+{   
     if (point_belonging(Vector2d(event.Oleg_.mbedata.pos)))
     {
-        std::cout << "HUI\n";
         is_left_clicked_ = true;
         is_pressed_ = !is_pressed_;
 
@@ -60,8 +53,6 @@ void Button::ClickLeftEvent (const Event &event)
             left_click_command_->Execute(new_event);
         }
     }
-
-    std::cout << "!!!!!!!!!\n\n";
 }
 
 void Button::ReleasedLeftEvent (const Event &event)
