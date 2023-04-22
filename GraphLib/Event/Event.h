@@ -291,7 +291,6 @@ public:
                 {
                     type_ = EventType::TextEvent;
                     Oleg_.textedata.letter = static_cast<char>(sfEvent.text.unicode);
-                    std::cout << "!" << "event text " << sfEvent.text.unicode << "!" << std::endl;   
                 }
                 break;
             }

@@ -109,7 +109,6 @@ public:
     
     void TextEvent(const Event &event) override
     {
-        std::cout << "TEXT!!!\n";
         if (clicked_)
         {
             std::string string = text_.getString();
@@ -120,7 +119,7 @@ public:
             }
 
             char letter = event.Oleg_.textedata.letter;
-            std::cout << letter << std::endl;
+
             string.insert(string.begin() + current_pos_, letter);
             current_pos_ ++;
             setString(string);
