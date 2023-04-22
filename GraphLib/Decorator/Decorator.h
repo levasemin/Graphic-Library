@@ -47,6 +47,11 @@ public:
         widget_->PressKeyEvent(event);
     }
 
+    void TextEvent (const Event &event) override
+    {
+        widget_->TextEvent(event);
+    }
+    
     void ScrollEvent (const Event &event) override
     {
         widget_->ScrollEvent(event);

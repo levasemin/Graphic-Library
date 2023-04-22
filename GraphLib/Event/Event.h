@@ -24,6 +24,8 @@ enum class EventType
     TimerEvent      = 10,
     KeyPressed      = 11,
     Closed          = 12,
+
+    TextEvent       = 13
 };
 
 enum class MouseButton
@@ -165,6 +167,11 @@ struct KeyPressedEventData
     bool shift, alt, ctrl;
 };
 
+struct TextEventData
+{
+    char letter;
+};
+
 struct ButtonClickedEventData
 {
     uint64_t id; 
@@ -210,6 +217,7 @@ public:
         CanvasEventData cedata;
         TimerEventData tedata;
         KeyPressedEventData kpedata;
+        TextEventData textedata;
         ButtonClickedEventData bcedata;
     } Oleg_;
     
@@ -277,6 +285,17 @@ public:
                 break;
             }
 
+            case sf::Event::TextEntered:
+            {
+                if (31 < sfEvent.text.unicode && sfEvent.text.unicode < 128)
+                {
+                    type_ = EventType::TextEvent;
+                    Oleg_.textedata.letter = static_cast<char>(sfEvent.text.unicode);
+                    std::cout << "!" << "event text " << sfEvent.text.unicode << "!" << std::endl;   
+                }
+                break;
+            }
+
             case sf::Event::KeyPressed:
             {
                 type_ = EventType::KeyPressed;
@@ -313,7 +332,6 @@ public:
             case sf::Event::Resized:
             case sf::Event::LostFocus:
             case sf::Event::GainedFocus:
-            case sf::Event::TextEntered:
             case sf::Event::KeyReleased:
             case sf::Event::MouseWheelMoved:
             case sf::Event::MouseEntered:

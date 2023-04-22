@@ -84,7 +84,7 @@ public:
     virtual void MoveMouseEvent      (const Event &event) override {}
 
     virtual void PressKeyEvent       (const Event &event) override {}
-
+    virtual void TextEvent           (const Event &event) override {}
     virtual void ScrollEvent         (const Event &event) override {}
 
     ~Object () override 

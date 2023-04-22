@@ -54,47 +54,21 @@ public:
         {
             std::string string = text_.getString();
 
-            if (event.Oleg_.kpedata.code == Key::Backspace)
+            switch (event.Oleg_.kpedata.code)
             {
-                if (current_pos_ > 0)
+                case Key::Backspace:
                 {
-                    string.erase(string.begin() + current_pos_);
-                    string.erase(string.begin() + current_pos_ - 1);
-                    current_pos_ --;
+                    if (current_pos_ > 0)
+                    {
+                        string.erase(string.begin() + current_pos_);
+                        string.erase(string.begin() + current_pos_ - 1);
+                        current_pos_ --;
+                    }
+
+                    break;
                 }
-            }
 
-            else
-            {
-                char letter = 0;
-
-                switch(event.Oleg_.kpedata.code)
-                {
-                    case Key::Comma:
-                    {
-                        letter = ',';
-                        break;
-                    }
-                
-                    case Key::Period:
-                    {
-                        letter = '.';
-                        break;
-                    }
-                    
-                    case Key::Slash:
-                    {
-                        letter = '/';
-                        break;
-                    }
-
-                    default:
-                    {
-                        break;
-                    }
-                }
-                
-                if (Key::Left == event.Oleg_.kpedata.code)
+                case Key::Left:
                 {
                     if (current_pos_ > 0)
                     {
@@ -102,9 +76,11 @@ public:
 
                         current_pos_ --;
                     }
+
+                    break;
                 }
 
-                else if (Key::Right == event.Oleg_.kpedata.code)
+                case Key::Right:
                 {
                     if (current_pos_ < int(string.size() - 1))
                     {
@@ -112,35 +88,41 @@ public:
 
                         current_pos_ ++;
                     }
+
+                    break;
                 }
 
-                else
-                { 
-                    if (Key::A <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Z)
-                    {
-                        letter = event.Oleg_.kpedata.shift ? char(event.Oleg_.kpedata.code + int('A')) : char(event.Oleg_.kpedata.code + int('a'));
-                    }
-
-                    else if (Key::Num0 <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Num9)    
-                    {
-                        letter = char(event.Oleg_.kpedata.code - Key::Num0 + int('0'));
-                    }
-
-                    else if (Key::Numpad0 <= event.Oleg_.kpedata.code && event.Oleg_.kpedata.code <= Key::Numpad9)
-                    {
-                        letter = char(event.Oleg_.kpedata.code - Key::Numpad0 + int('0'));
-                    }
-                    
-                    if (current_pos_ > 0)
-                    {
-                        string.erase(string.begin() + current_pos_);
-                    }
-                    
-                    string.insert(string.begin() + current_pos_, letter);
-                    current_pos_ ++;
-                }
-            }
+                default:
+                {}
+            };
             
+            setString(string);
+
+            if (editor_command_)
+            {
+                std::string final_string = string;
+                
+                editor_command_->Execute(final_string);
+            }
+        }
+    }
+    
+    void TextEvent(const Event &event) override
+    {
+        std::cout << "TEXT!!!\n";
+        if (clicked_)
+        {
+            std::string string = text_.getString();
+
+            if (current_pos_ > 0)
+            {
+                string.erase(string.begin() + current_pos_);
+            }
+
+            char letter = event.Oleg_.textedata.letter;
+            std::cout << letter << std::endl;
+            string.insert(string.begin() + current_pos_, letter);
+            current_pos_ ++;
             setString(string);
 
             if (editor_command_)
@@ -217,8 +199,6 @@ public:
             }
         }
         
-        std::cout << final_string << std::endl;
-
         Label::setString(final_string);
     }
 };  

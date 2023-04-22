@@ -77,6 +77,14 @@ public:
         }
     }
     
+    void TextEvent           (const Event &event) override
+    {
+        for (size_t i = 0; i < children_.size(); i++)
+        {
+            children_[i]->TextEvent(event);
+        }
+    }
+
     void PressKeyEvent       (const Event &event) override
     {
         for (size_t i = 0; i < children_.size(); i++)

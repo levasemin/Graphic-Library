@@ -105,6 +105,7 @@ booba::Event convert_event(const Event &event)
 
         case EventType::KeyPressed:
         case EventType::Closed:
+        case EventType::TextEvent:
 
         default:
         {

@@ -27,7 +27,13 @@ void EventManager::distribute_event(Widget *window, const Event &event)
 
             break;
         }
+        case EventType::TextEvent:
+        {
+            std::cout << "Event manager text\n";
+            window->TextEvent(event);
 
+            break;
+        }
         case EventType::ScrollbarMoved:
         {            
             window->ScrollEvent(event);

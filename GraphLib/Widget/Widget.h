@@ -25,6 +25,7 @@ public:
 
     virtual void ScrollEvent         (const Event &event)          = 0;
     
+    virtual void TextEvent           (const Event &event)          = 0;
 
     virtual bool point_belonging(Vector2d point) const             = 0;
 
