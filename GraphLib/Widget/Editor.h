@@ -6,14 +6,15 @@
 
 class Editor : public Label 
 {
+protected:
     Color default_sprite_color_;
-    Command<const std::string &> *editor_command_ = nullptr;
+    Command<const Event &> *editor_command_ = nullptr;
 
 public:
     bool clicked_ = false;
     int current_pos_ = 0;
 
-    Editor(Vector2d shape, Vector2d position) : Label(shape, position),
+    Editor(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::White)) : Label(shape, position, texture),
         default_sprite_color_(sprite_.getColor())
     {
         std::string string = text_.getString();
@@ -38,7 +39,7 @@ public:
         default_sprite_color_ = sprite_.getColor();
     }
 
-    void set_editor_command(Command<const std::string &> *editor_command)
+    void set_editor_command(Command<const Event &> *editor_command)
     {
         editor_command_ = editor_command;
     }
@@ -46,6 +47,14 @@ public:
     void setFont(const Font &font)
     {
         text_.setFont(font);
+    }
+
+    std::string get_text()
+    {
+        std::string text = text_.getString();
+        text.erase(text.begin() + current_pos_);
+
+        return text;
     }
 
     void PressKeyEvent (const Event &event) override
@@ -102,7 +111,9 @@ public:
             {
                 std::string final_string = string;
                 
-                editor_command_->Execute(final_string);
+                Event new_event = event;
+                new_event.Oleg_.textedata.text = final_string.c_str();
+                editor_command_->Execute(new_event);
             }
         }
     }
@@ -127,8 +138,9 @@ public:
             if (editor_command_)
             {
                 std::string final_string = string;
-                
-                editor_command_->Execute(final_string);
+                Event new_event = event;
+                new_event.Oleg_.textedata.text = final_string.c_str();
+                editor_command_->Execute(new_event);
             }
         }
     }

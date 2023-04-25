@@ -169,7 +169,9 @@ struct KeyPressedEventData
 
 struct TextEventData
 {
+    uint64_t id;
     char letter;
+    const char *text;
 };
 
 struct ButtonClickedEventData

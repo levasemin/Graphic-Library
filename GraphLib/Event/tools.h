@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Event.h"
 #ifndef TOOLS_HPP
 #define TOOLS_HPP
 /**
@@ -59,6 +60,7 @@ namespace booba { // boot of outstanding best api
         CanvasMLeft     = 9, // Mouse left canvas.
 
         TimerEvent      = 10, // Timer event. Data structure - TimerEventData.
+        TextEvent       = 11
     };
 
     enum class MouseButton
@@ -92,6 +94,12 @@ namespace booba { // boot of outstanding best api
          * @brief Id of button.
          */
         uint64_t id; 
+    };
+
+    struct TextEventData
+    {
+        uint64_t id;
+        const char *text;
     };
 
     struct SliderMovedEventData
@@ -130,12 +138,13 @@ namespace booba { // boot of outstanding best api
         EventType type;
         union 
         {
-            MotionEventData motion;
-            MouseButtonEventData mbedata;
+            MotionEventData        motion;
+            MouseButtonEventData   mbedata;
             ButtonClickedEventData bcedata;
-            SliderMovedEventData smedata;
-            CanvasEventData cedata;
-            TimerEventData tedata;
+            SliderMovedEventData   smedata;
+            CanvasEventData        cedata;
+            TimerEventData         tedata;
+            TextEventData          textdata; 
         } Oleg; //Object loading event group.
     };
 
@@ -263,6 +272,18 @@ namespace booba { // boot of outstanding best api
     extern "C" uint64_t createLabel    (size_t x, size_t y, size_t w, size_t h, const char* text);
     
     /**
+     * @brief Creates editor on some given toolbar.
+     * This function can only be called during buildSetupWidget();
+     * Emits event with it's id when clicked.
+     * @param x - x coordinate of new editor
+     * @param y - y coordinate of new editor
+     * @param w - width of new editor
+     * @param h - height of new editor
+     * @return unique identifier. 0 if unsuccess.
+     */
+    extern "C" uint64_t createEditor   (size_t x, size_t y, size_t w, size_t h);
+
+    /**
      * @brief Creates slider on some given toolbar.
      * This function can only be called during buildSetupWidget();
      * Emits event with it's id when value changed.
@@ -287,6 +308,9 @@ namespace booba { // boot of outstanding best api
      */
     extern "C" uint64_t createCanvas(size_t x, size_t y, size_t w, size_t h);
     
+    extern "C" uint64_t setTextEditor(uint64_t editor, const char *text);
+    
+    extern "C" uint64_t setValueSlider(uint64_t slider, int value);
     /**
      * @brief Puts pixel to canvas with given id
      * @param canvas - id of canvas, returned by createCanvas
@@ -327,7 +351,6 @@ namespace booba { // boot of outstanding best api
      * @param tool - tool pointer. App will delete it on exit itself.
      */
     extern "C" void addFilter(Tool* tool);
-
 
     /**
      * @brief Attempts to get symbol with name from plugin with given guid. 

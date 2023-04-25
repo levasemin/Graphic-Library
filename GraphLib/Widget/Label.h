@@ -25,7 +25,7 @@ public:
         RightDown
     };
 
-    Label(Vector2d shape, Vector2d position) : Object(shape, position), text_()
+    Label(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::White)) : Object(shape, position, texture), text_()
     {
         text_.setFont(Font::Times_new_roman);
         text_.setColor(Color::Black);

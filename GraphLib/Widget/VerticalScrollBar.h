@@ -131,8 +131,8 @@ public:
                 scroll_bar(new_event);
             }
         }
-
-        void scroll_bar(const Event &event)
+    
+        void scroll_bar(int value)
         {
             Event new_event = event;
             new_event.Oleg_.smedata.value = new_event.Oleg_.smedata.value < 0 ? 0 : new_event.Oleg_.smedata.value;

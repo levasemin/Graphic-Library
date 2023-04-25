@@ -57,6 +57,15 @@ booba::Event convert_event(const Event &event)
 
             break;
         }
+        
+        case EventType::TextEvent:
+        {
+            booba_event.type = booba::EventType::TextEvent;
+            booba_event.Oleg.textdata.id = event.Oleg_.textedata.id;
+            booba_event.Oleg.textdata.text = event.Oleg_.textedata.text;
+            
+            break;
+        }
 
         case EventType::CanvasMPressed:
         {
@@ -105,7 +114,6 @@ booba::Event convert_event(const Event &event)
 
         case EventType::KeyPressed:
         case EventType::Closed:
-        case EventType::TextEvent:
 
         default:
         {
