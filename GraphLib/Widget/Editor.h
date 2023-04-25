@@ -12,7 +12,7 @@ protected:
 
 public:
     bool clicked_ = false;
-    int current_pos_ = 0;
+    size_t current_pos_ = 0;
 
     Editor(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::White)) : Label(shape, position, texture),
         default_sprite_color_(sprite_.getColor())
@@ -91,7 +91,7 @@ public:
 
                 case Key::Right:
                 {
-                    if (current_pos_ < int(string.size() - 1))
+                    if (current_pos_ + 1 < string.size())
                     {
                         string.erase(string.begin() + current_pos_);
 
@@ -108,11 +108,9 @@ public:
             setString(string);
 
             if (editor_command_)
-            {
-                std::string final_string = string;
-                
+            {                
                 Event new_event = event;
-                new_event.Oleg_.textedata.text = final_string.c_str();
+                new_event.Oleg_.textedata.text = get_text().c_str();
                 editor_command_->Execute(new_event);
             }
         }
@@ -179,6 +177,7 @@ public:
 
             std::string string = text_.getString();
 
+            current_pos_ = string.size();
             setString(string);
         }
 
@@ -205,7 +204,7 @@ public:
         {
             if (final_string.find('|') == std::string::npos)
             {
-                current_pos_ = current_pos_ < static_cast<int>(final_string.size()) ? current_pos_ : static_cast<int>(final_string.size());
+                current_pos_ = current_pos_ < final_string.size() ? current_pos_ : final_string.size();
                 final_string.insert(final_string.begin() + current_pos_, '|');
             }
         }
