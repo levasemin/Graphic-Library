@@ -201,11 +201,11 @@ public:
     void setString(const std::string &string) override
     {
         std::string final_string = string;
-
         if (clicked_)
         {
             if (final_string.find('|') == std::string::npos)
             {
+                current_pos_ = current_pos_ < static_cast<int>(final_string.size()) ? current_pos_ : static_cast<int>(final_string.size());
                 final_string.insert(final_string.begin() + current_pos_, '|');
             }
         }

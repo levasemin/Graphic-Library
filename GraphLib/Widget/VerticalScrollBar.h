@@ -124,22 +124,22 @@ public:
         {            
             if (point_belonging(event.Oleg_.sedata.pos))
             {
-                Event new_event;
-                new_event.type_ = EventType::ScrollbarMoved;
-                new_event.Oleg_.smedata.value = (-event.Oleg_.sedata.value + local_offset_.y_) / scroll_field_shape.y_;
-                new_event.Oleg_.smedata.id    = (int64_t)&down_button_;
-                scroll_bar(new_event);
+                float value = (-event.Oleg_.sedata.value + local_offset_.y_) / scroll_field_shape.y_;
+            
+                scroll_bar(value);
             }
         }
     
-        void scroll_bar(int value)
+        void scroll_bar(float value)
         {
-            Event new_event = event;
-            new_event.Oleg_.smedata.value = new_event.Oleg_.smedata.value < 0 ? 0 : new_event.Oleg_.smedata.value;
-            new_event.Oleg_.smedata.value = new_event.Oleg_.smedata.value > 1 ? 1 : new_event.Oleg_.smedata.value;
+            Event new_event;
+            new_event.type_ = EventType::ScrollbarMoved;
+            new_event.Oleg_.smedata.id = (uint64_t)this; 
+            new_event.Oleg_.smedata.value = value < 0 ? 0 : value;
+            new_event.Oleg_.smedata.value = value > 1 ? 1 : value;
             
             Vector2d offset = Vector2d(0, scroll_field_shape.y_);
-            offset *= event.Oleg_.smedata.value;
+            offset *= value;
 
             offset.x_ = offset.x_ >= 0 ? offset.x_ : 0;
             offset.y_ = offset.y_ >= 0 ? offset.y_ : 0;
@@ -160,13 +160,9 @@ public:
         {
             if (scroll_button_.is_left_clicked_)
             {   
-                Event new_event;
-
-                new_event.type_ = EventType::ScrollbarMoved;
-                new_event.Oleg_.smedata.value = (event.Oleg_.motion.pos.y_ - click_place_.y_) / scroll_field_shape.y_ + local_offset_.y_ / scroll_field_shape.y_;
-                new_event.Oleg_.smedata.id = (int64_t)&scroll_button_;
+                float value = (event.Oleg_.motion.pos.y_ - click_place_.y_) / scroll_field_shape.y_ + local_offset_.y_ / scroll_field_shape.y_;
                 
-                scroll_bar(new_event);
+                scroll_bar(value);
                 
                 click_place_ = event.Oleg_.motion.pos;
             }
@@ -174,20 +170,14 @@ public:
 
         void scroll_up(const Event &event)
         {
-            Event new_event;
-            new_event.type_ = EventType::ScrollbarMoved;
-            new_event.Oleg_.smedata.value = -scroll_coeff_ + local_offset_.y_ / scroll_field_shape.y_;
-            new_event.Oleg_.smedata.id    = (int64_t)&up_button_;
-            scroll_bar(new_event);
+            float value = -scroll_coeff_ + local_offset_.y_ / scroll_field_shape.y_;
+            scroll_bar(value);
         }    
 
         void scroll_down(const Event &event)
         {
-            Event new_event;
-            new_event.type_ = EventType::ScrollbarMoved;
-            new_event.Oleg_.smedata.value = scroll_coeff_ + local_offset_.y_ / scroll_field_shape.y_;
-            new_event.Oleg_.smedata.id    = (int64_t)&down_button_;
-            scroll_bar(new_event);
+            float value = scroll_coeff_ + local_offset_.y_ / scroll_field_shape.y_;
+            scroll_bar(value);
         }
         
         void ClickLeftEvent(const Event &event) override
@@ -197,13 +187,9 @@ public:
                !up_button_.point_belonging(event.Oleg_.mbedata.pos) &&
                !down_button_.point_belonging(event.Oleg_.mbedata.pos))
             {                
-                Event new_event;
-
-                new_event.type_ = EventType::ScrollbarMoved;
-                new_event.Oleg_.smedata.value = (event.Oleg_.motion.pos.y_ - get_start_field().y_ - up_button_.get_shape().y_) / scroll_field_shape.y_ - scroll_coeff_ / 2;
-                new_event.Oleg_.smedata.id = (int64_t)&scroll_button_;
+                float value = (event.Oleg_.motion.pos.y_ - get_start_field().y_ - up_button_.get_shape().y_) / scroll_field_shape.y_ - scroll_coeff_ / 2;
                 
-                scroll_bar(new_event);
+                scroll_bar(value);
                 
                 click_place_ = event.Oleg_.motion.pos;
             }

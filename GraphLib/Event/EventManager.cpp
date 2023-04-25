@@ -29,7 +29,6 @@ void EventManager::distribute_event(Widget *window, const Event &event)
         }
         case EventType::TextEvent:
         {
-            std::cout << "Event manager text\n";
             window->TextEvent(event);
 
             break;

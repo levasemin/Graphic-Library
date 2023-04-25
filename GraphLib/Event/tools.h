@@ -310,7 +310,7 @@ namespace booba { // boot of outstanding best api
     
     extern "C" uint64_t setTextEditor(uint64_t editor, const char *text);
     
-    extern "C" uint64_t setValueSlider(uint64_t slider, int value);
+    extern "C" uint64_t setValueSlider(uint64_t slider, float value);
     /**
      * @brief Puts pixel to canvas with given id
      * @param canvas - id of canvas, returned by createCanvas

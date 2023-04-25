@@ -111,15 +111,16 @@ public:
             scroll_field_shape = Vector2d(shape_.x_ - left_button_.get_shape().x_ - right_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape_.y_);
         }
 
-        virtual void scroll_bar(const Event &event)
+        virtual void scroll_bar(float value)
         {
-            Event new_event = event;
+            Event new_event;
+            new_event.type_ = EventType::ScrollbarMoved;
             new_event.Oleg_.smedata.id = uint64_t(this);
-            new_event.Oleg_.smedata.value = new_event.Oleg_.smedata.value < 0 ? 0 : new_event.Oleg_.smedata.value;
-            new_event.Oleg_.smedata.value = new_event.Oleg_.smedata.value > 1 ? 1 : new_event.Oleg_.smedata.value;
+            new_event.Oleg_.smedata.value = value < 0 ? 0 : value;
+            new_event.Oleg_.smedata.value = value > 1 ? 1 : value;
             
             Vector2d offset = Vector2d(scroll_field_shape.x_, 0);
-            offset *= event.Oleg_.smedata.value;
+            offset *= value;
 
             offset.x_ = offset.x_ >= 0 ? offset.x_ : 0;
             offset.y_ = offset.y_ >= 0 ? offset.y_ : 0;
@@ -142,12 +143,9 @@ public:
             {   
                 Event new_event;
 
-                new_event.type_ = EventType::ScrollbarMoved;
-                new_event.Oleg_.smedata.id = (uint64_t)this;
-                new_event.Oleg_.smedata.value = (event.Oleg_.motion.pos.x_ - click_place_.x_) / scroll_field_shape.x_ + local_offset_.x_ / scroll_field_shape.x_;
-                new_event.Oleg_.smedata.id = (int64_t)&scroll_button_;
+                float value = (event.Oleg_.motion.pos.x_ - click_place_.x_) / scroll_field_shape.x_ + local_offset_.x_ / scroll_field_shape.x_;
                 
-                scroll_bar(new_event);
+                scroll_bar(value);
                 
                 click_place_ = event.Oleg_.motion.pos;
             }
@@ -155,20 +153,14 @@ public:
 
         void scroll_up(const Event &event)
         {
-            Event new_event;
-            new_event.type_ = EventType::ScrollbarMoved;
-            new_event.Oleg_.smedata.value = -scroll_coeff_ + local_offset_.x_ / scroll_field_shape.x_;
-            new_event.Oleg_.smedata.id    = (int64_t)&left_button_;
-            scroll_bar(new_event);
+            float value = -scroll_coeff_ + local_offset_.x_ / scroll_field_shape.x_;
+            scroll_bar(value);
         }    
 
         void scroll_down(const Event &event)
         {
-            Event new_event;
-            new_event.type_ = EventType::ScrollbarMoved;
-            new_event.Oleg_.smedata.value = scroll_coeff_ + local_offset_.x_ / scroll_field_shape.x_;
-            new_event.Oleg_.smedata.id    = (int64_t)&right_button_;
-            scroll_bar(new_event);
+            float value = scroll_coeff_ + local_offset_.x_ / scroll_field_shape.x_;
+            scroll_bar(value);
         }
         
         void ClickLeftEvent(const Event &event) override
@@ -178,13 +170,9 @@ public:
                !left_button_.point_belonging(event.Oleg_.mbedata.pos) &&
                !right_button_.point_belonging(event.Oleg_.mbedata.pos))
             {                
-                Event new_event;
-
-                new_event.type_ = EventType::ScrollbarMoved;
-                new_event.Oleg_.smedata.id = (int64_t)&scroll_button_;
-                new_event.Oleg_.smedata.value = (event.Oleg_.motion.pos.x_ - get_start_field().x_ - left_button_.get_shape().x_) / scroll_field_shape.x_ - scroll_coeff_ / 2;
+                float value = (event.Oleg_.motion.pos.x_ - get_start_field().x_ - left_button_.get_shape().x_) / scroll_field_shape.x_ - scroll_coeff_ / 2;
                 
-                scroll_bar(new_event);
+                scroll_bar(value);
                 
                 click_place_ = event.Oleg_.motion.pos;
             }
