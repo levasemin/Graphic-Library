@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Event.h"
+#include <assert.h>
+
 #ifndef TOOLS_HPP
 #define TOOLS_HPP
 /**
@@ -148,6 +150,7 @@ namespace booba { // boot of outstanding best api
         } Oleg; //Object loading event group.
     };
 
+    class Picture;
 
     class Image
     {
@@ -184,8 +187,161 @@ namespace booba { // boot of outstanding best api
          */
         virtual void setPixel(size_t x, size_t y, uint32_t color) = 0;     
         
+         /**
+         * @brief Get picture - a rectangular pixel array.
+         *
+         * @note the rectangular must be in the images boundaries.
+         *
+         * @param x - x coord of left down corner
+         * @param y - y coord of left down corner
+         * @param h - height of the rectangular
+         * @param w - width of the rectangular
+         */
+        virtual Picture getPicture(size_t x, size_t y, size_t h, size_t w) = 0;
+
+        /**
+         * @brief Set picture - a rectangular pixel array.
+         *
+         * @note the rectangular must be in the images boundaries.
+         *
+         * @param pic - the picture to set, move-only
+         */
+        virtual void setPicture(Picture &&pic) = 0;
+
     protected:
         ~Image() {}
+    };
+
+    class Picture {
+    
+    size_t x_, y_;
+    size_t w_, h_;
+    uint32_t *data = nullptr;
+    
+    public:
+        Picture(size_t x, size_t y, size_t w, size_t h, uint32_t *image, size_t image_w, size_t image_h)
+            : x_(x), y_(y), w_(w), h_(h)
+        {
+            assert(x + w <= image_w and y + h <= image_h);
+
+            size_t size = w * h;
+            data = new uint32_t[size];
+            for (size_t i = 0; i < h; ++i)
+                std::copy(image + (i + y) * image_w + x,
+                          image + (i + y) * image_w + x + w,
+                          data + i * w);
+
+        }
+
+        Picture(size_t x, size_t y, size_t w, size_t h, Image *image)
+            : x_(x), y_(y), w_(w), h_(h)
+        {
+            size_t image_w = image->getW();
+            size_t image_h = image->getH();
+            assert(x + w <= image_w and y + h <= image_h);
+
+            size_t size = w * h;
+            data = new uint32_t[size];
+            for (size_t i = 0; i < w; ++i)
+                for (size_t j = 0; j < h; ++j)
+                    data[j * w + i] = image->getPixel(i + x, j + y);
+        }
+
+
+        Picture(const Picture &other) = delete;
+
+        Picture(Picture &&other)
+            : x_(other.x_), y_(other.y_), w_(other.w_), h_(other.h_), data(other.data)
+        {
+            other.x_ = other.y_ = -1;
+            other.w_ = other.h_ = -1;
+            other.data = nullptr;
+        }
+
+        void operator=(const Picture &other) = delete;
+
+        Picture &operator=(Picture &&other)
+        {
+            if (data != nullptr)
+                delete[] data;
+
+            data = other.data;
+            x_ = other.x_;
+            y_ = other.y_;
+            w_ = other.w_;
+            h_ = other.h_;
+
+            other.x_ = other.y_ = -1;
+            other.w_ = other.h_ = -1;
+            other.data = nullptr;
+
+            return *this;
+        }
+
+        ~Picture()
+        {
+            if (data != nullptr)
+                delete[] data;
+
+            x_ = y_ = -1;
+            w_ = h_ = -1;
+            data = nullptr;
+        }
+
+        uint32_t& operator()(size_t x, size_t y)
+        {
+            assert(x < w_ and y < h_);
+            return data[y * w_ + x];
+        }
+
+        const uint32_t& operator()(size_t x, size_t y) const
+        {
+            assert(x < w_ and y < h_);
+            return data[y * w_ + x];
+        }
+
+        void reshape(size_t new_x, size_t new_y, size_t new_w, size_t new_h)
+        {
+            // if (new_x == -1)
+            //     new_x = x_;
+            // if (new_y == -1)
+            //     new_y = y_;
+            // if (new_w == -1)
+            //     new_w = w_;
+            // if (new_h == -1)
+            //     new_h = h_;
+
+            assert(new_w * new_h == w_ * h_);
+            x_ = new_x;
+            y_ = new_y;
+            w_ = new_w;
+            h_ = new_h;
+        }
+
+        uint32_t* getData() const
+        {
+            return data;
+        }
+
+        size_t getH() const
+        {
+            return h_;
+        }
+
+        size_t getW() const
+        {
+            return w_;
+        }
+
+        size_t getX() const
+        {
+            return x_;
+        }
+
+        size_t getY() const
+        {
+            return y_;
+        }
     };
 
     /**
@@ -309,6 +465,8 @@ namespace booba { // boot of outstanding best api
     extern "C" uint64_t createCanvas(size_t x, size_t y, size_t w, size_t h);
     
     extern "C" uint64_t setTextEditor(uint64_t editor, const char *text);
+    
+    extern "C" uint64_t gettextEditor(uint64_t editor, const char *text);
     
     extern "C" uint64_t setValueSlider(uint64_t slider, float value);
     /**
