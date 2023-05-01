@@ -422,7 +422,7 @@ Color::Color (float h, float s, float v): h_(h), s_(s), v_(v)
     g_rel_ = g_ / 255.f;
     b_rel_ = b_ / 255.f;
     this->claim();
-};
+}
 
 sf::Color Color::get_sf_color() const
 {

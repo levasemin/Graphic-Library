@@ -105,38 +105,24 @@ namespace SL
 
         void setPicture(booba::Picture &&pic) override
         {
-            sf::Image image;
-            image.create(pic.getW(), pic.getH(), sf::Color(0, 0, 255, 255));
+            // sf::Image image;
+            // image.create(pic.getW(), pic.getH(), sf::Color(0, 0, 255, 255));
+        
+            // RenderTexture render_texture(Vector2d(image_.getSize().x, image_.getSize().y));
+            // Sprite main_sprite(Vector2d(image_.getSize().x, image_.getSize().y), getTexture());
             
-            
-            const unsigned numPixels = 6;
-            sf::Uint8 pixels[4 * numPixels] = {
-                0,   0,   0,   255, // black
-                255, 0,   0,   255, // red
-                0,   255, 0,   255, // green
-                0,   0,   255, 255, // blue
-                255, 255, 255, 255, // white
-                128, 128, 128, 255, // gray
-            };
-            sf::Image image2;
-            image2.create(3, 2, pixels);
-            image2.saveToFile("kok.png");
-            
-            RenderTexture render_texture(Vector2d(image_.getSize().x, image_.getSize().y));
-            Sprite main_sprite(Vector2d(image_.getSize().x, image_.getSize().y), getTexture());
-            
-            Texture texture;
-            texture.texture_.loadFromImage(image);
+            // Texture texture;
+            // texture.texture_.loadFromImage(image);
 
-            Sprite pic_sprite(Vector2d(pic.getW(), pic.getH()), texture);
-            pic_sprite.setPosition(Vector2d(pic.getX(), pic.getY()));
+            // Sprite pic_sprite(Vector2d(pic.getW(), pic.getH()), texture);
+            // pic_sprite.setPosition(Vector2d(pic.getX(), pic.getY()));
             
-            render_texture.clear();
-            render_texture.draw(main_sprite);
-            render_texture.draw(pic_sprite);
-            render_texture.display();
+            // render_texture.clear();
+            // render_texture.draw(main_sprite);
+            // render_texture.draw(pic_sprite);
+            // render_texture.display();
             
-            image_ = render_texture.render_texture_.getTexture().copyToImage();
+            // image_ = render_texture.render_texture_.getTexture().copyToImage();
         }
 
         void create(Vector2d shape, const Color &color = Color(0, 0, 0, 255))

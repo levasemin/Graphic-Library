@@ -110,7 +110,8 @@ public:
             if (editor_command_)
             {                
                 Event new_event = event;
-                new_event.Oleg_.textedata.text = get_text().c_str();
+                std::string final_string = get_text();
+                new_event.Oleg_.textedata.text = final_string.c_str();
                 editor_command_->Execute(new_event);
             }
         }
@@ -135,7 +136,7 @@ public:
 
             if (editor_command_)
             {
-                std::string final_string = string;
+                std::string final_string = get_text();
                 Event new_event = event;
                 new_event.Oleg_.textedata.text = final_string.c_str();
                 editor_command_->Execute(new_event);

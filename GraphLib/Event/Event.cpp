@@ -96,15 +96,6 @@ booba::Event convert_event(const Event &event)
             break;
         }
 
-        case EventType::CanvasMleft:
-        {
-            booba_event.type = booba::EventType::CanvasMLeft;
-            booba_event.Oleg.cedata.id = event.Oleg_.cedata.id;
-            booba_event.Oleg.cedata.x = (uint32_t)event.Oleg_.cedata.pos.x_;
-            booba_event.Oleg.cedata.y = (uint32_t)event.Oleg_.cedata.pos.y_;
-            break;
-        }
-
         case EventType::TimerEvent:
         {
             booba_event.type = booba::EventType::TimerEvent;

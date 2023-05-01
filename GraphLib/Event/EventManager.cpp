@@ -69,7 +69,6 @@ void EventManager::distribute_event(Widget *window, const Event &event)
         case EventType::CanvasMPressed:
         case EventType::CanvasMReleased:
         case EventType::CanvasMMoved:
-        case EventType::CanvasMleft:
         case EventType::TimerEvent:
         case EventType::Closed:
         default:

@@ -19,7 +19,6 @@ enum class EventType
     CanvasMPressed  = 6,
     CanvasMReleased = 7,
     CanvasMMoved    = 8,
-    CanvasMleft     = 9,
 
     TimerEvent      = 10,
     KeyPressed      = 11,
