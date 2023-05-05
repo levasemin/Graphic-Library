@@ -5,18 +5,21 @@
 #include "Container.h"
 #include "ComboBox.h"
 
-class MenuBar : public CompositeObject
+namespace SL
 {
-public:
-
-    MenuBar(Vector2d shape, Vector2d position, Texture texture = Texture(Color::White)) : 
-        CompositeObject(shape, position, texture)
-        {
-
-        }
-
-    void add(Widget *) override
+    class MenuBar : public CompositeObject
     {
-        
-    }
-};
+    public:
+
+        MenuBar(Vector2d shape, Vector2d position, Texture texture = Texture(Color::White)) : 
+            CompositeObject(shape, position, texture)
+            {
+
+            }
+
+        void add(Widget *) override
+        {
+            
+        }
+    };
+}

@@ -55,7 +55,7 @@ namespace booba { // boot of outstanding best api
         MouseReleased  = 3, // Mouse released on image. Data structure: MouseButtonEventData
 
         ButtonClicked   = 4, // Button on toolbar was clicked. Data structure: ButtonClickedEventData.
-        SliderMoved     = 5, // Slider on toolbar was moved. Data structure: SliderMovedEventData.
+        SliderMoved  = 5, // Slider on toolbar was moved. Data structure: SliderMovedEventData.
         CanvasMPressed  = 6, // Same as MousePressed, but on canvas. Data structure - CanvasEventData.
         CanvasMReleased = 7, // Same as MouseReleased, but on canvas. Data structure - CanvasEventData.
         CanvasMMoved    = 8, // Same as MouseMoved, but on canvas. Data structure - CanvasEventData.
@@ -221,7 +221,7 @@ namespace booba { // boot of outstanding best api
      *        from image on construction. It is move-only to stop unintentional
      *        copy.
      */
-    class Picture {
+    class   Picture {
     public:
         Picture(size_t x, size_t y, size_t w, size_t h, uint32_t *image, size_t image_w, size_t image_h)
             : x(x), y(y), w(w), h(h)

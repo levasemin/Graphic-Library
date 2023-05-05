@@ -5,11 +5,14 @@
 #include "../Widget/Widget.h"
 #include "../Classes/Vector2d.h"
 
-class Container : public CompositeObject
+namespace SL
 {
-public:
+    class Container : public CompositeObject
+    {
+    public:
 
-    Container(Vector2d shape, Vector2d position): 
-        CompositeObject(shape, position)
-        {}
-};
+        Container(Vector2d shape, Vector2d position): 
+            CompositeObject(shape, position)
+            {}
+    };
+}

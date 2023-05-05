@@ -1,5 +1,8 @@
 #include "functions.h"
 
+namespace SL
+{
+
 float get_determinant(float *array, int n)
 {
     return array[0] * (array[n + 1] * array[n * 2 + 2] - array[n + 2] * array[n * 2 + 1])
@@ -16,7 +19,7 @@ std::pair<float, float> solve_quadtratic(float a, float b, float c)
 {
     float D = pow(b, 2.f) - 4.f * a * c;
         
-    if(doublecmp(D, 0.f) < 0)
+    if(SL::doublecmp(D, 0.f) < 0)
     {
         return {NAN, NAN};
     } 
@@ -25,7 +28,7 @@ std::pair<float, float> solve_quadtratic(float a, float b, float c)
     {
         D = sqrt(D);
         
-        if (doublecmp(D, 0.f) == 0)
+        if (SL::doublecmp(D, 0.f) == 0)
         {
             float coeff = (-b + D) / 2.f / a;
 
@@ -40,4 +43,5 @@ std::pair<float, float> solve_quadtratic(float a, float b, float c)
             return {coeff_1, coeff_2};
         }
     }
+}
 }

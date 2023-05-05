@@ -8,36 +8,39 @@
 #include "../Event/EventManager.h"
 #include "../Application/MainWindow.h"
 
-class Application
+namespace SL
 {
-    public: 
-        MainWindow *main_window_ = nullptr;
-        Window *window_ = nullptr;
+    class Application
+    {
+        public: 
+            MainWindow *main_window_ = nullptr;
+            Window *window_ = nullptr;
 
-        EventManager event_manager_;
+            EventManager event_manager_;
 
-        Application(MainWindow *main_window):
-            main_window_(main_window),
-            event_manager_()
-            {};
+            Application(MainWindow *main_window):
+                main_window_(main_window),
+                event_manager_()
+                {};
 
-        Application (const Application &source):
-            main_window_(source.main_window_),
-            window_(source.window_),
-            event_manager_(source.event_manager_)
-        {}
-        
-        Application &operator=(const Application &source)
-        {
-            main_window_   = source.main_window_;
-            window_        = source.window_;
-            event_manager_ = source.event_manager_;
+            Application (const Application &source):
+                main_window_(source.main_window_),
+                window_(source.window_),
+                event_manager_(source.event_manager_)
+            {}
+            
+            Application &operator=(const Application &source)
+            {
+                main_window_   = source.main_window_;
+                window_        = source.window_;
+                event_manager_ = source.event_manager_;
 
-            return *this;
-        }
-        
-        void exec();
-        void close();
-        void set_main_window(MainWindow *main_window);
-        void show(MainWindow *window);        
-};
+                return *this;
+            }
+            
+            void exec();
+            void close();
+            void set_main_window(MainWindow *main_window);
+            void show(MainWindow *window);        
+    };
+}

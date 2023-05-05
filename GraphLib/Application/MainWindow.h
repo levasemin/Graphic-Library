@@ -5,23 +5,26 @@
 #include "../Widget/CompositeObject.h"
 #include "../Widget/Widget.h"
 
-class MainWindow : public CompositeObject
+namespace SL
 {
-public:
-    int style_;
-    enum Style
+    class MainWindow : public CompositeObject
     {
-        Close      = sf::Style::Close,
-        Default    = sf::Style::Default,
-        Fullscreen = sf::Style::Fullscreen,
-        None       = sf::Style::None,
-        Resize     =  sf::Style::Resize,
-        Titlebar   = sf::Style::Titlebar,
-    };
+    public:
+        int style_;
+        enum Style
+        {
+            Close      = sf::Style::Close,
+            Default    = sf::Style::Default,
+            Fullscreen = sf::Style::Fullscreen,
+            None       = sf::Style::None,
+            Resize     =  sf::Style::Resize,
+            Titlebar   = sf::Style::Titlebar,
+        };
 
-    MainWindow(Vector2d shape, Texture texture, int style = sf::Style::Default):
-        CompositeObject(shape, Vector2d(0, 0), texture),
-        style_(style)
-    {
-    }
-};
+        MainWindow(Vector2d shape, Texture texture, int style = sf::Style::Default):
+            CompositeObject(shape, Vector2d(0, 0), texture),
+            style_(style)
+        {
+        }
+    };
+}

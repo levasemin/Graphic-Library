@@ -1,5 +1,7 @@
 #include "Event.h"
 
+using namespace SL;
+
 booba::Event convert_event(const Event &event)
 {
     booba::Event booba_event;

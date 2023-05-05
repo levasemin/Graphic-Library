@@ -3,8 +3,8 @@
 #include "SFML/Graphics.hpp"
 #include "Texture.h"
 #include "../Event/tools.h"
-// #include "optionals.h"
 #include "RenderTexture.h"
+#include <SFML/Config.hpp>
 
 namespace SL
 {
@@ -105,24 +105,25 @@ namespace SL
 
         void setPicture(booba::Picture &&pic) override
         {
-            // sf::Image image;
-            // image.create(pic.getW(), pic.getH(), sf::Color(0, 0, 255, 255));
-        
-            // RenderTexture render_texture(Vector2d(image_.getSize().x, image_.getSize().y));
-            // Sprite main_sprite(Vector2d(image_.getSize().x, image_.getSize().y), getTexture());
+            sf::Image image;
+            image.create(pic.getW(), pic.getH(), (sf::Uint8*)pic.getData());
+                    
+            RenderTexture render_texture(Vector2d(image_.getSize().x, image_.getSize().y));
+            Sprite main_sprite(Vector2d(image_.getSize().x, image_.getSize().y), getTexture());
             
-            // Texture texture;
-            // texture.texture_.loadFromImage(image);
+            Texture texture;
+            texture.texture_.loadFromImage(image);
 
-            // Sprite pic_sprite(Vector2d(pic.getW(), pic.getH()), texture);
-            // pic_sprite.setPosition(Vector2d(pic.getX(), pic.getY()));
+            Sprite pic_sprite(Vector2d(pic.getW(), pic.getH()), texture);
+            pic_sprite.setPosition(Vector2d(pic.getX(), pic.getY()));
             
-            // render_texture.clear();
-            // render_texture.draw(main_sprite);
-            // render_texture.draw(pic_sprite);
-            // render_texture.display();
+            render_texture.clear();
+            render_texture.draw(main_sprite);
+            render_texture.draw(pic_sprite);
+            render_texture.display();
             
-            // image_ = render_texture.render_texture_.getTexture().copyToImage();
+            image_ = render_texture.render_texture_.getTexture().copyToImage();
+            image_.saveToFile("KIIIIt.png");
         }
 
         void create(Vector2d shape, const Color &color = Color(0, 0, 0, 255))
