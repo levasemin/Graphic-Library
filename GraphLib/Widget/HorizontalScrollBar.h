@@ -33,12 +33,12 @@ namespace SL
         HorizontalScrollBar(Vector2d shape, Vector2d position, float min_value, float max_value):
             CompositeObject  (shape, position),
             left_button_   (Vector2d(shape.y_, shape.y_), Vector2d(0, 0)),
-            right_button_  (Vector2d(shape.y_, shape.y_), Vector2d(shape.x_   - shape.y_, 0)),
-            scroll_button_ (Vector2d((shape.x_ - shape.y_ * 2) * SCROLL_COEFF, shape.y_), Vector2d(left_button_.get_shape().x_, 0)),
+            right_button_  (Vector2d(shape.y_, shape.y_), Vector2d(shape.x_   - shape.y_, 0.f)),
+            scroll_button_ (Vector2d((shape.x_ - shape.y_ * 2) * SCROLL_COEFF, shape.y_), Vector2d(left_button_.get_shape().x_, 0.f)),
             scroll_field_shape(shape.x_ - left_button_.get_shape().x_ * 2 - scroll_button_.get_shape().x_, shape.y_),
-            click_place_(0.f, 0.f),
             min_value_(min_value),
-            max_value_(max_value)
+            max_value_(max_value),
+            click_place_(0.f, 0.f)
             {
                 set_texture(Texture(Color((uint8_t)92, (uint8_t)92, (uint8_t)92)));
                 
@@ -68,16 +68,20 @@ namespace SL
                 right_button_(source.right_button_),
                 scroll_button_(source.scroll_button_),
                 scroll_field_shape(source.scroll_field_shape),
+                min_value_(source.min_value_),
+                max_value_(source.max_value_),
                 click_place_(0.f, 0.f)
             {}
 
             HorizontalScrollBar &operator=(const HorizontalScrollBar &source)
             {
                 CompositeObject::operator=(*(const CompositeObject *)&source);
-                left_button_         = source.left_button_;
-                right_button_       = source.right_button_;
+                left_button_       = source.left_button_;
+                right_button_      = source.right_button_;
                 scroll_button_     = source.scroll_button_;
                 scroll_field_shape = source.scroll_field_shape;
+                min_value_         = source.min_value_;
+                max_value_         = source.max_value_; 
                 click_place_ = Vector2d(0.f, 0.f);
 
                 return *this;
@@ -103,7 +107,7 @@ namespace SL
             void set_scroll_button_shape(const Vector2d &shape)
             {
                 scroll_button_.set_shape(shape);
-                scroll_button_.set_position(Vector2d(left_button_.get_shape().x_, 0));
+                scroll_button_.set_position(Vector2d(left_button_.get_shape().x_, 0.f));
                 scroll_field_shape = Vector2d(shape_.x_ - left_button_.get_shape().x_ - right_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape_.y_);
                 scroll_coeff_ = scroll_button_.get_shape().x_ / (shape_.x_ - right_button_.get_shape().x_ * 2);
             }
@@ -113,7 +117,7 @@ namespace SL
                 left_button_.set_shape(shape);
                 right_button_.set_shape(shape);
                 
-                scroll_button_.set_position(Vector2d(0, shape.y_ + shape_.x_));
+                scroll_button_.set_position(Vector2d(0.f, shape.y_ + shape_.x_));
                 scroll_field_shape = Vector2d(shape_.x_ - left_button_.get_shape().x_ - right_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape_.y_);
             }
 
@@ -126,13 +130,13 @@ namespace SL
                 new_event.Oleg_.smedata.value = value_ < min_value_ ? min_value_ : value_;
                 new_event.Oleg_.smedata.value = value_ > max_value_ ? max_value_ : value_;
                 
-                Vector2d offset = Vector2d(scroll_field_shape.x_, 0);
+                Vector2d offset = Vector2d(scroll_field_shape.x_, 0.f);
                 offset *= value;
 
                 offset.x_ = offset.x_ >= 0 ? offset.x_ : 0;
                 offset.y_ = offset.y_ >= 0 ? offset.y_ : 0;
                 
-                Vector2d max_offset = Vector2d(shape_.x_ - left_button_.get_shape().x_ * 2 - scroll_button_.get_shape().x_, 0);
+                Vector2d max_offset = Vector2d(shape_.x_ - left_button_.get_shape().x_ * 2 - scroll_button_.get_shape().x_, 0.f);
                 offset.x_ = offset.x_ <= max_offset.x_ ? offset.x_ : max_offset.x_;
                 offset.y_ = offset.y_ <= max_offset.y_ ? offset.y_ : max_offset.y_;
                 

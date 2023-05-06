@@ -17,7 +17,7 @@ namespace SL
         {
             if (point_belonging(event.Oleg_.sedata.pos))
             {
-                set_local_offset(Vector2d(0, get_local_offset().y_ + event.Oleg_.sedata.value * 10.f));   
+                set_local_offset(Vector2d(0.f, get_local_offset().y_ + event.Oleg_.sedata.value * 10.f));   
             }
         }
 

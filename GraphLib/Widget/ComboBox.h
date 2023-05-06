@@ -17,7 +17,7 @@ namespace SL
     public:
 
         ComboBox(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::Blue)) : Button(shape, position, texture),
-            item_box_(Vector2d(shape.x_ * 2, shape.y_ * 10), position + Vector2d(0, shape.y_))
+            item_box_(Vector2d(shape.x_ * 2, shape.y_ * 10), position + Vector2d(0.f, shape.y_))
         {
         }
 

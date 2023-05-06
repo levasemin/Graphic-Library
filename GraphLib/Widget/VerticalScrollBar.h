@@ -25,8 +25,8 @@ namespace SL
         Button down_button_;    
         Button scroll_button_;
         Vector2d scroll_field_shape;
-        float min_value_;
-        float max_value_;
+        float min_value_ = 0;
+        float max_value_ = 1;
 
         Command<const Event&> *scroll_command_ = nullptr;
         
@@ -35,9 +35,9 @@ namespace SL
             scroll_coeff_(SCROLL_COEFF),
             click_place_(0, 0),
             up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(0, 0)),
-            down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(0, shape_.y_  - shape.x_)),
+            down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(0.f, shape_.y_  - shape.x_)),
             scroll_button_(Vector2d(shape.x_, (shape.y_ - shape.x_ * 2) * SCROLL_COEFF),
-                        Vector2d(0, shape.x_)),
+                        Vector2d(0.f, shape.x_)),
             scroll_field_shape(shape_.x_, shape_.y_ - shape_.x_ * 2 - scroll_button_.get_shape().y_),
             min_value_(min_value),
             max_value_(max_value)
@@ -113,14 +113,14 @@ namespace SL
                 up_button_.set_shape(new_shape);
                 down_button_.set_shape(new_shape);
                 
-                scroll_button_.set_position(Vector2d(0, up_button_.get_shape().y_));
+                scroll_button_.set_position(Vector2d(0.f, up_button_.get_shape().y_));
                 scroll_field_shape.y_ = shape_.y_ - down_button_.get_shape().x_ * 2 - scroll_button_.get_shape().y_;
             }
 
             void set_scroll_button_size(const Vector2d &shape)
             {
                 scroll_button_.set_shape(shape);
-                scroll_button_.set_position(Vector2d(0, up_button_.get_shape().y_));
+                scroll_button_.set_position(Vector2d(0.f, up_button_.get_shape().y_));
                 scroll_field_shape.y_ = shape_.y_ - down_button_.get_shape().x_ * 2 - scroll_button_.get_shape().y_;
                 scroll_coeff_ = scroll_button_.get_shape().y_ / (shape_.y_ - down_button_.get_shape().y_ * 2);
             }
@@ -146,13 +146,13 @@ namespace SL
                 new_event.Oleg_.smedata.value = value_ < min_value_ ? min_value_ : value_;
                 new_event.Oleg_.smedata.value = value_ > max_value_ ? max_value_ : value_;
                 
-                Vector2d offset = Vector2d(0, scroll_field_shape.y_);
+                Vector2d offset = Vector2d(0.f, scroll_field_shape.y_);
                 offset *= value;
 
                 offset.x_ = offset.x_ >= 0 ? offset.x_ : 0;
                 offset.y_ = offset.y_ >= 0 ? offset.y_ : 0;
                 
-                Vector2d max_offset = Vector2d(0, shape_.y_ - up_button_.get_shape().y_ * 2 - scroll_button_.get_shape().y_);
+                Vector2d max_offset = Vector2d(0.f, shape_.y_ - up_button_.get_shape().y_ * 2 - scroll_button_.get_shape().y_);
                 offset.x_ = offset.x_ <= max_offset.x_ ? offset.x_ : max_offset.x_;
                 offset.y_ = offset.y_ <= max_offset.y_ ? offset.y_ : max_offset.y_;
                 

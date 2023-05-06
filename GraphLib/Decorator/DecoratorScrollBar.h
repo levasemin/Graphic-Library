@@ -17,8 +17,8 @@ namespace SL
         bool scroll_bar_vertical_able_   = true;
 
         DecoratorScrollBar(Widget *widget) : Decorator(widget),
-            scroll_bar_vertical_  (Vector2d(20, widget->get_shape().y_), Vector2d(widget->get_position().x_ + widget->get_shape().x_ + 10, widget->get_position().y_), 0.f, 1.f),
-            scroll_bar_horizontal_(Vector2d(widget->get_shape().x_, 20), Vector2d(widget->get_position().x_, widget->get_position().y_ + widget->get_shape().y_ + 10), 0.f, 1.f)
+            scroll_bar_vertical_  (Vector2d(20.f, widget->get_shape().y_), Vector2d(widget->get_position().x_ + widget->get_shape().x_ + 10, widget->get_position().y_), 0.f, 1.f),
+            scroll_bar_horizontal_(Vector2d(widget->get_shape().x_, 20.f), Vector2d(widget->get_position().x_, widget->get_position().y_ + widget->get_shape().y_ + 10), 0.f, 1.f)
         {   
             scroll_bar_vertical_.set_scroll_command   ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollVerticalWidget));
             scroll_bar_horizontal_.set_scroll_command ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollHorizontalWidget));        

@@ -14,7 +14,22 @@ namespace SL
             x_(x),
             y_(y)
             {};
+
+        Vector2d(int x, int y): 
+            x_(float(x)),
+            y_(float(y))
+            {};
         
+        Vector2d(uint32_t x, uint32_t y): 
+            x_(float(x)),
+            y_(float(y))
+            {};
+
+        Vector2d(size_t x, size_t y): 
+            x_(float(x)),
+            y_(float(y))
+            {};
+
         Vector2d(sf::Vector2u sf_vector):
             x_((float)sf_vector.x),
             y_((float)sf_vector.y)

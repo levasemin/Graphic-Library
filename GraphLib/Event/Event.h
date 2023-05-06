@@ -5,7 +5,6 @@
 #include "../Classes/Vector2d.h"
 
 #include "SFML/Graphics.hpp"
-#include "tools.h"
 
 
 namespace SL
@@ -354,5 +353,3 @@ namespace SL
         }
     };   
 };
-
-booba::Event convert_event(const SL::Event &event);

@@ -2,8 +2,8 @@ CC = g+++
 
 BuildF = obj/
 
-event_handler: clean         $(BuildF)EventManager.o $(BuildF)Application.o $(BuildF)Window.o $(BuildF)functions.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)Button.o $(BuildF)Font.o 
-	 		ld -relocatable	 $(BuildF)EventManager.o $(BuildF)Application.o $(BuildF)Window.o $(BuildF)functions.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Event.o $(BuildF)Button.o $(BuildF)Font.o -o event_handler.o
+event_handler: clean         $(BuildF)EventManager.o $(BuildF)Application.o $(BuildF)Window.o $(BuildF)functions.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Button.o $(BuildF)Font.o 
+	 		ld -relocatable	 $(BuildF)EventManager.o $(BuildF)Application.o $(BuildF)Window.o $(BuildF)functions.o $(BuildF)Color.o $(BuildF)Vector2d.o $(BuildF)Button.o $(BuildF)Font.o -o event_handler.o
 
 $(BuildF)Application.o:
 	$(CC) -c Application/Application.cpp -o $(BuildF)Application.o 
@@ -22,9 +22,6 @@ $(BuildF)Color.o:
 
 $(BuildF)Vector2d.o:
 	$(CC) -c Classes/Vector2d.cpp -o $(BuildF)Vector2d.o
-
-$(BuildF)Event.o:
-	$(CC) -c Event/Event.cpp -o $(BuildF)Event.o
 
 $(BuildF)Button.o:
 	$(CC) -c Widget/Button.cpp -o $(BuildF)Button.o
