@@ -4,6 +4,7 @@
 #include "../Application/Window.h"
 #include "../Widget/Widget.h"
 #include "../Classes/Vector2d.h"
+#include "CompositeObject.h"
 
 namespace SL
 {
@@ -11,8 +12,8 @@ namespace SL
     {
     public:
 
-        Container(Vector2d shape, Vector2d position): 
-            CompositeObject(shape, position)
+        Container(Vector2d shape, Vector2d position,  const Texture &texture = Texture(Color::Red)):
+            CompositeObject(shape, position, texture)
             {}
     };
 }
