@@ -11,3 +11,9 @@ file(GLOB glib_INC "./*/")
 
 add_library(glib ${glib_SRC})
 target_include_directories(glib PUBLIC .)
+
+find_package(SFML 2.5 COMPONENTS network audio graphics window system REQUIRED)
+if(SFML_FOUND)
+  include_directories(${SFML_INCLUDE_DIR})
+  target_link_libraries(glib PUBLIC sfml-network sfml-audio sfml-graphics sfml-window sfml-system)
+endif()
