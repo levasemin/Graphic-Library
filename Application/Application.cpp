@@ -4,6 +4,8 @@
 
 namespace SL
 {
+    Application *Application::current_ = nullptr;
+    
     void Application::set_main_window(MainWindow *main_window)
     {
         main_window_ = main_window;
