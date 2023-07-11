@@ -77,7 +77,7 @@ namespace SL
         render_texture_.display();
     }
 
-    void RenderTexture::clear(const Color &color = Color(0, 0, 0, 255))
+    void RenderTexture::clear(const Color &color)
     {
         render_texture_.clear(color.get_sf_color());
     }

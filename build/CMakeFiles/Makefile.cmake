@@ -8,8 +8,6 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "/home/leveophan/MyProjects/Graphic-Library/CMakeLists.txt"
-  "/home/leveophan/MyProjects/Graphic-Library/Library/CMakeLists.txt"
-  "/home/leveophan/MyProjects/Graphic-Library/TestStand/CMakeLists.txt"
   "CMakeFiles/3.25.1/CMakeCCompiler.cmake"
   "CMakeFiles/3.25.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.25.1/CMakeSystem.cmake"
@@ -46,12 +44,9 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
-  "TestStand/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "Library/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "TestStand/CMakeFiles/main.dir/DependInfo.cmake"
-  "Library/CMakeFiles/glib.dir/DependInfo.cmake"
+  "CMakeFiles/glib.dir/DependInfo.cmake"
   )

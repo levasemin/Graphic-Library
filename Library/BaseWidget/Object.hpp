@@ -85,10 +85,7 @@ namespace SL
         virtual void TextEvent           (const Event &event) override {}
         virtual void ScrollEvent         (const Event &event) override {}
 
-        ~Object () override 
-        {
-            delete render_texture_;
-        }
+        ~Object () override = default;
 
         bool point_belonging(Vector2d point) const override
         {
@@ -185,11 +182,12 @@ namespace SL
             render_texture_.draw(sprite_);
         }
 
-        RenderTexture *get_render_texture() const override
+        RenderTexture *get_render_texture() override
         {
-            return render_texture_; 
+            return &render_texture_; 
         }
-        void set_render_texture(RenderTexture *render_texture) override
+
+        void set_render_texture(RenderTexture render_texture) override
         {
             render_texture_ = render_texture;
         }

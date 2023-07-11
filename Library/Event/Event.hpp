@@ -22,9 +22,9 @@ namespace SL
 
         ButtonClicked   = 4,  ///<
         ScrollbarMoved  = 5,  ///<
-        // CanvasMPressed  = 6,  ///<
-        // CanvasMReleased = 7,  ///<
-        // CanvasMMoved    = 8,  ///<
+        CanvasMPressed  = 6,  ///<
+        CanvasMReleased = 7,  ///<
+        CanvasMMoved    = 8,  ///<
 
         TimerEvent      = 10, ///<
         KeyPressed      = 11, ///<

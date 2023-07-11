@@ -1,3 +1,0 @@
-/home/leveophan/MyProjects/Graphic-Library/TestStand/build/CMakeFiles/main.dir
-/home/leveophan/MyProjects/Graphic-Library/TestStand/build/CMakeFiles/edit_cache.dir
-/home/leveophan/MyProjects/Graphic-Library/TestStand/build/CMakeFiles/rebuild_cache.dir

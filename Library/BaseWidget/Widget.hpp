@@ -141,8 +141,8 @@ namespace SL
         virtual Texture get_texture() const                            = 0;
         virtual void set_texture(const Texture &texture)               = 0;
 
-        virtual RenderTexture *get_render_texture() const              = 0;
-        virtual void set_render_texture(RenderTexture *render_texture) = 0;
+        virtual RenderTexture *get_render_texture()                   = 0;
+        virtual void set_render_texture(RenderTexture render_texture) = 0;
 
         virtual Vector2d get_indent() const                            = 0;
         virtual void set_indent(Vector2d)                              = 0;

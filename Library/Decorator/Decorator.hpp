@@ -126,7 +126,7 @@ namespace SL
         {
             return widget_->get_render_texture();   
         }
-        void set_render_texture(RenderTexture *render_texture) override
+        void set_render_texture(RenderTexture render_texture) override
         {
             widget_->set_render_texture(render_texture);
         }

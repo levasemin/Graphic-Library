@@ -63,101 +63,42 @@ CMAKE_BINARY_DIR = /home/leveophan/MyProjects/Graphic-Library/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: TestStand/all
-all: Library/all
+all: CMakeFiles/glib.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: TestStand/preinstall
-preinstall: Library/preinstall
+preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: TestStand/clean
-clean: Library/clean
+clean: CMakeFiles/glib.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory Library
-
-# Recursive "all" directory target.
-Library/all: Library/CMakeFiles/glib.dir/all
-.PHONY : Library/all
-
-# Recursive "preinstall" directory target.
-Library/preinstall:
-.PHONY : Library/preinstall
-
-# Recursive "clean" directory target.
-Library/clean: Library/CMakeFiles/glib.dir/clean
-.PHONY : Library/clean
-
-#=============================================================================
-# Directory level rules for directory TestStand
-
-# Recursive "all" directory target.
-TestStand/all: TestStand/CMakeFiles/main.dir/all
-.PHONY : TestStand/all
-
-# Recursive "preinstall" directory target.
-TestStand/preinstall:
-.PHONY : TestStand/preinstall
-
-# Recursive "clean" directory target.
-TestStand/clean: TestStand/CMakeFiles/main.dir/clean
-.PHONY : TestStand/clean
-
-#=============================================================================
-# Target rules for target TestStand/CMakeFiles/main.dir
+# Target rules for target CMakeFiles/glib.dir
 
 # All Build rule for target.
-TestStand/CMakeFiles/main.dir/all: Library/CMakeFiles/glib.dir/all
-	$(MAKE) $(MAKESILENT) -f TestStand/CMakeFiles/main.dir/build.make TestStand/CMakeFiles/main.dir/depend
-	$(MAKE) $(MAKESILENT) -f TestStand/CMakeFiles/main.dir/build.make TestStand/CMakeFiles/main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=11,12 "Built target main"
-.PHONY : TestStand/CMakeFiles/main.dir/all
-
-# Build rule for subdir invocation for target.
-TestStand/CMakeFiles/main.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles 12
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 TestStand/CMakeFiles/main.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles 0
-.PHONY : TestStand/CMakeFiles/main.dir/rule
-
-# Convenience name for target.
-main: TestStand/CMakeFiles/main.dir/rule
-.PHONY : main
-
-# clean rule for target.
-TestStand/CMakeFiles/main.dir/clean:
-	$(MAKE) $(MAKESILENT) -f TestStand/CMakeFiles/main.dir/build.make TestStand/CMakeFiles/main.dir/clean
-.PHONY : TestStand/CMakeFiles/main.dir/clean
-
-#=============================================================================
-# Target rules for target Library/CMakeFiles/glib.dir
-
-# All Build rule for target.
-Library/CMakeFiles/glib.dir/all:
-	$(MAKE) $(MAKESILENT) -f Library/CMakeFiles/glib.dir/build.make Library/CMakeFiles/glib.dir/depend
-	$(MAKE) $(MAKESILENT) -f Library/CMakeFiles/glib.dir/build.make Library/CMakeFiles/glib.dir/build
+CMakeFiles/glib.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target glib"
-.PHONY : Library/CMakeFiles/glib.dir/all
+.PHONY : CMakeFiles/glib.dir/all
 
 # Build rule for subdir invocation for target.
-Library/CMakeFiles/glib.dir/rule: cmake_check_build_system
+CMakeFiles/glib.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles 10
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Library/CMakeFiles/glib.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/glib.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles 0
-.PHONY : Library/CMakeFiles/glib.dir/rule
+.PHONY : CMakeFiles/glib.dir/rule
 
 # Convenience name for target.
-glib: Library/CMakeFiles/glib.dir/rule
+glib: CMakeFiles/glib.dir/rule
 .PHONY : glib
 
 # clean rule for target.
-Library/CMakeFiles/glib.dir/clean:
-	$(MAKE) $(MAKESILENT) -f Library/CMakeFiles/glib.dir/build.make Library/CMakeFiles/glib.dir/clean
-.PHONY : Library/CMakeFiles/glib.dir/clean
+CMakeFiles/glib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/clean
+.PHONY : CMakeFiles/glib.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

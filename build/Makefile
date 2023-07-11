@@ -117,19 +117,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named main
-
-# Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main
-.PHONY : main
-
-# fast build rule for target.
-main/fast:
-	$(MAKE) $(MAKESILENT) -f TestStand/CMakeFiles/main.dir/build.make TestStand/CMakeFiles/main.dir/build
-.PHONY : main/fast
-
-#=============================================================================
 # Target rules for targets named glib
 
 # Build rule for target.
@@ -139,8 +126,224 @@ glib: cmake_check_build_system
 
 # fast build rule for target.
 glib/fast:
-	$(MAKE) $(MAKESILENT) -f Library/CMakeFiles/glib.dir/build.make Library/CMakeFiles/glib.dir/build
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/build
 .PHONY : glib/fast
+
+Library/Application/Application.o: Library/Application/Application.cpp.o
+.PHONY : Library/Application/Application.o
+
+# target to build an object file
+Library/Application/Application.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Application/Application.cpp.o
+.PHONY : Library/Application/Application.cpp.o
+
+Library/Application/Application.i: Library/Application/Application.cpp.i
+.PHONY : Library/Application/Application.i
+
+# target to preprocess a source file
+Library/Application/Application.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Application/Application.cpp.i
+.PHONY : Library/Application/Application.cpp.i
+
+Library/Application/Application.s: Library/Application/Application.cpp.s
+.PHONY : Library/Application/Application.s
+
+# target to generate assembly for a file
+Library/Application/Application.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Application/Application.cpp.s
+.PHONY : Library/Application/Application.cpp.s
+
+Library/Application/Window.o: Library/Application/Window.cpp.o
+.PHONY : Library/Application/Window.o
+
+# target to build an object file
+Library/Application/Window.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Application/Window.cpp.o
+.PHONY : Library/Application/Window.cpp.o
+
+Library/Application/Window.i: Library/Application/Window.cpp.i
+.PHONY : Library/Application/Window.i
+
+# target to preprocess a source file
+Library/Application/Window.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Application/Window.cpp.i
+.PHONY : Library/Application/Window.cpp.i
+
+Library/Application/Window.s: Library/Application/Window.cpp.s
+.PHONY : Library/Application/Window.s
+
+# target to generate assembly for a file
+Library/Application/Window.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Application/Window.cpp.s
+.PHONY : Library/Application/Window.cpp.s
+
+Library/Classes/Color.o: Library/Classes/Color.cpp.o
+.PHONY : Library/Classes/Color.o
+
+# target to build an object file
+Library/Classes/Color.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/Color.cpp.o
+.PHONY : Library/Classes/Color.cpp.o
+
+Library/Classes/Color.i: Library/Classes/Color.cpp.i
+.PHONY : Library/Classes/Color.i
+
+# target to preprocess a source file
+Library/Classes/Color.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/Color.cpp.i
+.PHONY : Library/Classes/Color.cpp.i
+
+Library/Classes/Color.s: Library/Classes/Color.cpp.s
+.PHONY : Library/Classes/Color.s
+
+# target to generate assembly for a file
+Library/Classes/Color.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/Color.cpp.s
+.PHONY : Library/Classes/Color.cpp.s
+
+Library/Classes/Font.o: Library/Classes/Font.cpp.o
+.PHONY : Library/Classes/Font.o
+
+# target to build an object file
+Library/Classes/Font.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/Font.cpp.o
+.PHONY : Library/Classes/Font.cpp.o
+
+Library/Classes/Font.i: Library/Classes/Font.cpp.i
+.PHONY : Library/Classes/Font.i
+
+# target to preprocess a source file
+Library/Classes/Font.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/Font.cpp.i
+.PHONY : Library/Classes/Font.cpp.i
+
+Library/Classes/Font.s: Library/Classes/Font.cpp.s
+.PHONY : Library/Classes/Font.s
+
+# target to generate assembly for a file
+Library/Classes/Font.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/Font.cpp.s
+.PHONY : Library/Classes/Font.cpp.s
+
+Library/Classes/RenderTexture.o: Library/Classes/RenderTexture.cpp.o
+.PHONY : Library/Classes/RenderTexture.o
+
+# target to build an object file
+Library/Classes/RenderTexture.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/RenderTexture.cpp.o
+.PHONY : Library/Classes/RenderTexture.cpp.o
+
+Library/Classes/RenderTexture.i: Library/Classes/RenderTexture.cpp.i
+.PHONY : Library/Classes/RenderTexture.i
+
+# target to preprocess a source file
+Library/Classes/RenderTexture.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/RenderTexture.cpp.i
+.PHONY : Library/Classes/RenderTexture.cpp.i
+
+Library/Classes/RenderTexture.s: Library/Classes/RenderTexture.cpp.s
+.PHONY : Library/Classes/RenderTexture.s
+
+# target to generate assembly for a file
+Library/Classes/RenderTexture.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/RenderTexture.cpp.s
+.PHONY : Library/Classes/RenderTexture.cpp.s
+
+Library/Classes/Vector2d.o: Library/Classes/Vector2d.cpp.o
+.PHONY : Library/Classes/Vector2d.o
+
+# target to build an object file
+Library/Classes/Vector2d.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/Vector2d.cpp.o
+.PHONY : Library/Classes/Vector2d.cpp.o
+
+Library/Classes/Vector2d.i: Library/Classes/Vector2d.cpp.i
+.PHONY : Library/Classes/Vector2d.i
+
+# target to preprocess a source file
+Library/Classes/Vector2d.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/Vector2d.cpp.i
+.PHONY : Library/Classes/Vector2d.cpp.i
+
+Library/Classes/Vector2d.s: Library/Classes/Vector2d.cpp.s
+.PHONY : Library/Classes/Vector2d.s
+
+# target to generate assembly for a file
+Library/Classes/Vector2d.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Classes/Vector2d.cpp.s
+.PHONY : Library/Classes/Vector2d.cpp.s
+
+Library/Event/EventManager.o: Library/Event/EventManager.cpp.o
+.PHONY : Library/Event/EventManager.o
+
+# target to build an object file
+Library/Event/EventManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Event/EventManager.cpp.o
+.PHONY : Library/Event/EventManager.cpp.o
+
+Library/Event/EventManager.i: Library/Event/EventManager.cpp.i
+.PHONY : Library/Event/EventManager.i
+
+# target to preprocess a source file
+Library/Event/EventManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Event/EventManager.cpp.i
+.PHONY : Library/Event/EventManager.cpp.i
+
+Library/Event/EventManager.s: Library/Event/EventManager.cpp.s
+.PHONY : Library/Event/EventManager.s
+
+# target to generate assembly for a file
+Library/Event/EventManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Event/EventManager.cpp.s
+.PHONY : Library/Event/EventManager.cpp.s
+
+Library/Widget/Button.o: Library/Widget/Button.cpp.o
+.PHONY : Library/Widget/Button.o
+
+# target to build an object file
+Library/Widget/Button.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Widget/Button.cpp.o
+.PHONY : Library/Widget/Button.cpp.o
+
+Library/Widget/Button.i: Library/Widget/Button.cpp.i
+.PHONY : Library/Widget/Button.i
+
+# target to preprocess a source file
+Library/Widget/Button.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Widget/Button.cpp.i
+.PHONY : Library/Widget/Button.cpp.i
+
+Library/Widget/Button.s: Library/Widget/Button.cpp.s
+.PHONY : Library/Widget/Button.s
+
+# target to generate assembly for a file
+Library/Widget/Button.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/Widget/Button.cpp.s
+.PHONY : Library/Widget/Button.cpp.s
+
+Library/functions/functions.o: Library/functions/functions.cpp.o
+.PHONY : Library/functions/functions.o
+
+# target to build an object file
+Library/functions/functions.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/functions/functions.cpp.o
+.PHONY : Library/functions/functions.cpp.o
+
+Library/functions/functions.i: Library/functions/functions.cpp.i
+.PHONY : Library/functions/functions.i
+
+# target to preprocess a source file
+Library/functions/functions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/functions/functions.cpp.i
+.PHONY : Library/functions/functions.cpp.i
+
+Library/functions/functions.s: Library/functions/functions.cpp.s
+.PHONY : Library/functions/functions.s
+
+# target to generate assembly for a file
+Library/functions/functions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glib.dir/build.make CMakeFiles/glib.dir/Library/functions/functions.cpp.s
+.PHONY : Library/functions/functions.cpp.s
 
 # Help Target
 help:
@@ -151,7 +354,33 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... glib"
-	@echo "... main"
+	@echo "... Library/Application/Application.o"
+	@echo "... Library/Application/Application.i"
+	@echo "... Library/Application/Application.s"
+	@echo "... Library/Application/Window.o"
+	@echo "... Library/Application/Window.i"
+	@echo "... Library/Application/Window.s"
+	@echo "... Library/Classes/Color.o"
+	@echo "... Library/Classes/Color.i"
+	@echo "... Library/Classes/Color.s"
+	@echo "... Library/Classes/Font.o"
+	@echo "... Library/Classes/Font.i"
+	@echo "... Library/Classes/Font.s"
+	@echo "... Library/Classes/RenderTexture.o"
+	@echo "... Library/Classes/RenderTexture.i"
+	@echo "... Library/Classes/RenderTexture.s"
+	@echo "... Library/Classes/Vector2d.o"
+	@echo "... Library/Classes/Vector2d.i"
+	@echo "... Library/Classes/Vector2d.s"
+	@echo "... Library/Event/EventManager.o"
+	@echo "... Library/Event/EventManager.i"
+	@echo "... Library/Event/EventManager.s"
+	@echo "... Library/Widget/Button.o"
+	@echo "... Library/Widget/Button.i"
+	@echo "... Library/Widget/Button.s"
+	@echo "... Library/functions/functions.o"
+	@echo "... Library/functions/functions.i"
+	@echo "... Library/functions/functions.s"
 .PHONY : help
 
 
