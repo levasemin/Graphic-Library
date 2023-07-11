@@ -115,11 +115,11 @@ namespace SL
 
         void draw() override
         {
-            render_texture_->clear();
+            render_texture_.clear();
             
             sprite_.setTexture(texture_);
             sprite_.setPosition(Vector2d(0, 0));
-            render_texture_->draw(sprite_);
+            render_texture_.draw(sprite_);
             
             for (size_t i = 0; i < children_.size(); i++)
             {

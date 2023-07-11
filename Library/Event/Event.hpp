@@ -9,24 +9,28 @@
 
 namespace SL
 {
+    /**
+     * @brief 
+     * 
+     */
     enum class EventType
     {
-        NoEvent         = 0,
-        MouseMoved      = 1,
-        MousePressed    = 2,
-        MouseReleased   = 3,
+        NoEvent         = 0,  ///<
+        MouseMoved      = 1,  ///<
+        MousePressed    = 2,  ///<
+        MouseReleased   = 3,  ///<
 
-        ButtonClicked   = 4,
-        ScrollbarMoved  = 5,
-        CanvasMPressed  = 6,
-        CanvasMReleased = 7,
-        CanvasMMoved    = 8,
+        ButtonClicked   = 4,  ///<
+        ScrollbarMoved  = 5,  ///<
+        // CanvasMPressed  = 6,  ///<
+        // CanvasMReleased = 7,  ///<
+        // CanvasMMoved    = 8,  ///<
 
-        TimerEvent      = 10,
-        KeyPressed      = 11,
-        Closed          = 12,
+        TimerEvent      = 10, ///<
+        KeyPressed      = 11, ///<
+        Closed          = 12, ///<
 
-        TextEvent       = 13
+        TextEvent       = 13  ///<
     };
 
     enum class MouseButton

@@ -1,3 +1,14 @@
+/**
+ * @file RenderTexture.hpp
+ * @author Semin Lev (you@domain.com)
+ * @brief declaration class RenderTexture
+ * @version 0.1
+ * @date 2023-07-11
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #pragma once
 
 #include "Text.hpp"
@@ -6,65 +17,87 @@
 
 namespace SL
 {
+    /**
+     * @brief class RenderTexture is wrapper of sf::RenderTexture  
+     * 
+     * @details class is augmented with functions of copy and move semantic
+     */
     class RenderTexture
     {
     public:
-        Vector2d shape_;
-        sf::RenderTexture render_texture_;
-        
-        RenderTexture(Vector2d shape):
-            shape_(shape),
-            render_texture_()
-        {
-            create(shape);
-        };
-        
-        RenderTexture(const RenderTexture &) = default;
-        RenderTexture& operator=(const RenderTexture &source)
-        {
-            shape_ = source.shape_;
-            render_texture_.create(source.render_texture_.getSize().x, source.render_texture_.getSize().y);
-            sf::Sprite sprite(source.render_texture_.getTexture());
-            render_texture_.draw(sprite);
 
-            return *this;
-        }
+        /**
+         * @brief Construct a new render texture object
+         * 
+         * @param size size of render texture
+         */
+        RenderTexture(Vector2d size);
 
-        void create(const Vector2d &shape)
-        {
-            render_texture_.create((uint32_t)shape.x_, (uint32_t)shape.y_);      
-        }
-    
-        void draw(const Sprite &sprite)
-        {
-            render_texture_.draw(sprite.sprite_);
-        }
-
-        void draw(const Text &text)
-        {
-            render_texture_.draw(text.text_);
-        }
-        
-        void display()
-        {
-            render_texture_.display();
-        }
-
-        Texture getTexture()
-        {
-            return Texture(render_texture_.getTexture());
-        }
-
-        Vector2d getSize()
-        {
-            return Vector2d(render_texture_.getSize());
-        }
-
-        void clear(const Color &color = Color(0, 0, 0, 255))
-        {
-            render_texture_.clear(color.get_sf_color());
-        }
+        RenderTexture(const RenderTexture &source);            
+        RenderTexture& operator= (const RenderTexture &source);
+        RenderTexture(RenderTexture &&source);                 
+        RenderTexture& operator= (RenderTexture &&source);     
 
         ~RenderTexture() = default;
+        
+        /**
+         * @brief Get the texture, that is drawn on Render Texture
+         * 
+         * @return Texture 
+         */
+        Texture getTexture() const;
+
+        /**
+         * @brief Get the size of render texture
+         * 
+         * @return Vector2d
+         */
+        Vector2d getSize() const;
+
+        /**
+         * @brief Set new size
+         * 
+         * @param size new size
+         */
+        void setSize(Vector2d size);
+
+        /**
+         * @brief reset render texture with new size
+         * 
+         * @param size new size
+         */
+        void create(const Vector2d &size);
+        
+        /**
+         * @brief draw sprite on render texture
+         * 
+         * @param sprite drawing sprite
+         */
+        void draw(const Sprite &sprite);
+
+        /**
+         * @brief draw text on render texture
+         * 
+         * @param text drawing text
+         */
+        void draw(const Text &text);
+        
+        /**
+         * @brief update the contents of the render texture.
+         * @details You need to call this function at the end of rendering. 
+         * Not calling it may leave the texture in an undefined state.
+         */
+        void display();
+
+        /**
+         * @brief clear render texture by color
+         * 
+         * @param color color for clearing
+         */
+        void clear(const Color &color = Color(0, 0, 0, 255));
+    
+    private:
+        sf::RenderTexture render_texture_;  /// heart of class
+        
     };
 }

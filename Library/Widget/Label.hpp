@@ -77,9 +77,9 @@ namespace SL
 
         void redraw()
         {
-            render_texture_->clear();
-            Sprite sprite(render_texture_->getSize(), texture_);
-            render_texture_->draw(sprite);
+            render_texture_.clear();
+            Sprite sprite(render_texture_.getSize(), texture_);
+            render_texture_.draw(sprite);
 
             Vector2d text_position(0, 0);
 
@@ -137,9 +137,9 @@ namespace SL
             
             text_.setPosition(text_position);
             
-            render_texture_->draw(text_); 
+            render_texture_.draw(text_); 
 
-            render_texture_->display();
+            render_texture_.display();
         }
     };
 }

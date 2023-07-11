@@ -226,6 +226,30 @@ Classes/Font.cpp.s:
 	cd /home/leveophan/MyProjects/Graphic-Library/build && $(MAKE) $(MAKESILENT) -f Library/CMakeFiles/glib.dir/build.make Library/CMakeFiles/glib.dir/Classes/Font.cpp.s
 .PHONY : Classes/Font.cpp.s
 
+Classes/RenderTexture.o: Classes/RenderTexture.cpp.o
+.PHONY : Classes/RenderTexture.o
+
+# target to build an object file
+Classes/RenderTexture.cpp.o:
+	cd /home/leveophan/MyProjects/Graphic-Library/build && $(MAKE) $(MAKESILENT) -f Library/CMakeFiles/glib.dir/build.make Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o
+.PHONY : Classes/RenderTexture.cpp.o
+
+Classes/RenderTexture.i: Classes/RenderTexture.cpp.i
+.PHONY : Classes/RenderTexture.i
+
+# target to preprocess a source file
+Classes/RenderTexture.cpp.i:
+	cd /home/leveophan/MyProjects/Graphic-Library/build && $(MAKE) $(MAKESILENT) -f Library/CMakeFiles/glib.dir/build.make Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.i
+.PHONY : Classes/RenderTexture.cpp.i
+
+Classes/RenderTexture.s: Classes/RenderTexture.cpp.s
+.PHONY : Classes/RenderTexture.s
+
+# target to generate assembly for a file
+Classes/RenderTexture.cpp.s:
+	cd /home/leveophan/MyProjects/Graphic-Library/build && $(MAKE) $(MAKESILENT) -f Library/CMakeFiles/glib.dir/build.make Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.s
+.PHONY : Classes/RenderTexture.cpp.s
+
 Classes/Vector2d.o: Classes/Vector2d.cpp.o
 .PHONY : Classes/Vector2d.o
 
@@ -343,6 +367,9 @@ help:
 	@echo "... Classes/Font.o"
 	@echo "... Classes/Font.i"
 	@echo "... Classes/Font.s"
+	@echo "... Classes/RenderTexture.o"
+	@echo "... Classes/RenderTexture.i"
+	@echo "... Classes/RenderTexture.s"
 	@echo "... Classes/Vector2d.o"
 	@echo "... Classes/Vector2d.i"
 	@echo "... Classes/Vector2d.s"

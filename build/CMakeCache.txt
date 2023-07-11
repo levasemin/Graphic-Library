@@ -43,7 +43,7 @@ CMAKE_CXX_COMPILER_AR:FILEPATH=/usr/bin/gcc-ar-12
 CMAKE_CXX_COMPILER_RANLIB:FILEPATH=/usr/bin/gcc-ranlib-12
 
 //Comment
-CMAKE_CXX_FLAGS:STRING= -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17
+CMAKE_CXX_FLAGS:STRING= -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17
 
 //Flags used by the CXX compiler during DEBUG builds.
 CMAKE_CXX_FLAGS_DEBUG:STRING=-g
@@ -52,13 +52,13 @@ CMAKE_CXX_FLAGS_DEBUG:STRING=-g
 CMAKE_CXX_FLAGS_MINSIZEREL:STRING=-Os -DNDEBUG
 
 //Comment
-CMAKE_CXX_FLAGS_RELEASE:STRING= -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -D NDEBUG
+CMAKE_CXX_FLAGS_RELEASE:STRING= -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -D NDEBUG
 
 //Flags used by the CXX compiler during RELWITHDEBINFO builds.
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //Comment
-CMAKE_CXX_FLAGS_SANITIZER:STRING= -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -Wall -Wextra -Wformat=2 -fsanitize=address,undefined -g
+CMAKE_CXX_FLAGS_SANITIZER:STRING= -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -std=c++17 -Wall -Wextra -Wformat=2 -fsanitize=address,undefined -g
 
 //C compiler
 CMAKE_C_COMPILER:FILEPATH=/usr/bin/cc

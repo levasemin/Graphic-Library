@@ -125,10 +125,24 @@ Library/CMakeFiles/glib.dir/Classes/Font.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glib.dir/Classes/Font.cpp.s"
 	cd /home/leveophan/MyProjects/Graphic-Library/build/Library && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leveophan/MyProjects/Graphic-Library/Library/Classes/Font.cpp -o CMakeFiles/glib.dir/Classes/Font.cpp.s
 
+Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o: Library/CMakeFiles/glib.dir/flags.make
+Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o: /home/leveophan/MyProjects/Graphic-Library/Library/Classes/RenderTexture.cpp
+Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o: Library/CMakeFiles/glib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o"
+	cd /home/leveophan/MyProjects/Graphic-Library/build/Library && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o -MF CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o.d -o CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o -c /home/leveophan/MyProjects/Graphic-Library/Library/Classes/RenderTexture.cpp
+
+Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/glib.dir/Classes/RenderTexture.cpp.i"
+	cd /home/leveophan/MyProjects/Graphic-Library/build/Library && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leveophan/MyProjects/Graphic-Library/Library/Classes/RenderTexture.cpp > CMakeFiles/glib.dir/Classes/RenderTexture.cpp.i
+
+Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glib.dir/Classes/RenderTexture.cpp.s"
+	cd /home/leveophan/MyProjects/Graphic-Library/build/Library && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leveophan/MyProjects/Graphic-Library/Library/Classes/RenderTexture.cpp -o CMakeFiles/glib.dir/Classes/RenderTexture.cpp.s
+
 Library/CMakeFiles/glib.dir/Classes/Vector2d.cpp.o: Library/CMakeFiles/glib.dir/flags.make
 Library/CMakeFiles/glib.dir/Classes/Vector2d.cpp.o: /home/leveophan/MyProjects/Graphic-Library/Library/Classes/Vector2d.cpp
 Library/CMakeFiles/glib.dir/Classes/Vector2d.cpp.o: Library/CMakeFiles/glib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object Library/CMakeFiles/glib.dir/Classes/Vector2d.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object Library/CMakeFiles/glib.dir/Classes/Vector2d.cpp.o"
 	cd /home/leveophan/MyProjects/Graphic-Library/build/Library && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Library/CMakeFiles/glib.dir/Classes/Vector2d.cpp.o -MF CMakeFiles/glib.dir/Classes/Vector2d.cpp.o.d -o CMakeFiles/glib.dir/Classes/Vector2d.cpp.o -c /home/leveophan/MyProjects/Graphic-Library/Library/Classes/Vector2d.cpp
 
 Library/CMakeFiles/glib.dir/Classes/Vector2d.cpp.i: cmake_force
@@ -142,7 +156,7 @@ Library/CMakeFiles/glib.dir/Classes/Vector2d.cpp.s: cmake_force
 Library/CMakeFiles/glib.dir/Event/EventManager.cpp.o: Library/CMakeFiles/glib.dir/flags.make
 Library/CMakeFiles/glib.dir/Event/EventManager.cpp.o: /home/leveophan/MyProjects/Graphic-Library/Library/Event/EventManager.cpp
 Library/CMakeFiles/glib.dir/Event/EventManager.cpp.o: Library/CMakeFiles/glib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object Library/CMakeFiles/glib.dir/Event/EventManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object Library/CMakeFiles/glib.dir/Event/EventManager.cpp.o"
 	cd /home/leveophan/MyProjects/Graphic-Library/build/Library && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Library/CMakeFiles/glib.dir/Event/EventManager.cpp.o -MF CMakeFiles/glib.dir/Event/EventManager.cpp.o.d -o CMakeFiles/glib.dir/Event/EventManager.cpp.o -c /home/leveophan/MyProjects/Graphic-Library/Library/Event/EventManager.cpp
 
 Library/CMakeFiles/glib.dir/Event/EventManager.cpp.i: cmake_force
@@ -156,7 +170,7 @@ Library/CMakeFiles/glib.dir/Event/EventManager.cpp.s: cmake_force
 Library/CMakeFiles/glib.dir/Widget/Button.cpp.o: Library/CMakeFiles/glib.dir/flags.make
 Library/CMakeFiles/glib.dir/Widget/Button.cpp.o: /home/leveophan/MyProjects/Graphic-Library/Library/Widget/Button.cpp
 Library/CMakeFiles/glib.dir/Widget/Button.cpp.o: Library/CMakeFiles/glib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object Library/CMakeFiles/glib.dir/Widget/Button.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object Library/CMakeFiles/glib.dir/Widget/Button.cpp.o"
 	cd /home/leveophan/MyProjects/Graphic-Library/build/Library && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Library/CMakeFiles/glib.dir/Widget/Button.cpp.o -MF CMakeFiles/glib.dir/Widget/Button.cpp.o.d -o CMakeFiles/glib.dir/Widget/Button.cpp.o -c /home/leveophan/MyProjects/Graphic-Library/Library/Widget/Button.cpp
 
 Library/CMakeFiles/glib.dir/Widget/Button.cpp.i: cmake_force
@@ -170,7 +184,7 @@ Library/CMakeFiles/glib.dir/Widget/Button.cpp.s: cmake_force
 Library/CMakeFiles/glib.dir/functions/functions.cpp.o: Library/CMakeFiles/glib.dir/flags.make
 Library/CMakeFiles/glib.dir/functions/functions.cpp.o: /home/leveophan/MyProjects/Graphic-Library/Library/functions/functions.cpp
 Library/CMakeFiles/glib.dir/functions/functions.cpp.o: Library/CMakeFiles/glib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object Library/CMakeFiles/glib.dir/functions/functions.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object Library/CMakeFiles/glib.dir/functions/functions.cpp.o"
 	cd /home/leveophan/MyProjects/Graphic-Library/build/Library && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Library/CMakeFiles/glib.dir/functions/functions.cpp.o -MF CMakeFiles/glib.dir/functions/functions.cpp.o.d -o CMakeFiles/glib.dir/functions/functions.cpp.o -c /home/leveophan/MyProjects/Graphic-Library/Library/functions/functions.cpp
 
 Library/CMakeFiles/glib.dir/functions/functions.cpp.i: cmake_force
@@ -187,6 +201,7 @@ glib_OBJECTS = \
 "CMakeFiles/glib.dir/Application/Window.cpp.o" \
 "CMakeFiles/glib.dir/Classes/Color.cpp.o" \
 "CMakeFiles/glib.dir/Classes/Font.cpp.o" \
+"CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o" \
 "CMakeFiles/glib.dir/Classes/Vector2d.cpp.o" \
 "CMakeFiles/glib.dir/Event/EventManager.cpp.o" \
 "CMakeFiles/glib.dir/Widget/Button.cpp.o" \
@@ -199,13 +214,14 @@ Library/libglib.a: Library/CMakeFiles/glib.dir/Application/Application.cpp.o
 Library/libglib.a: Library/CMakeFiles/glib.dir/Application/Window.cpp.o
 Library/libglib.a: Library/CMakeFiles/glib.dir/Classes/Color.cpp.o
 Library/libglib.a: Library/CMakeFiles/glib.dir/Classes/Font.cpp.o
+Library/libglib.a: Library/CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o
 Library/libglib.a: Library/CMakeFiles/glib.dir/Classes/Vector2d.cpp.o
 Library/libglib.a: Library/CMakeFiles/glib.dir/Event/EventManager.cpp.o
 Library/libglib.a: Library/CMakeFiles/glib.dir/Widget/Button.cpp.o
 Library/libglib.a: Library/CMakeFiles/glib.dir/functions/functions.cpp.o
 Library/libglib.a: Library/CMakeFiles/glib.dir/build.make
 Library/libglib.a: Library/CMakeFiles/glib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX static library libglib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/leveophan/MyProjects/Graphic-Library/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX static library libglib.a"
 	cd /home/leveophan/MyProjects/Graphic-Library/build/Library && $(CMAKE_COMMAND) -P CMakeFiles/glib.dir/cmake_clean_target.cmake
 	cd /home/leveophan/MyProjects/Graphic-Library/build/Library && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/glib.dir/link.txt --verbose=$(VERBOSE)
 

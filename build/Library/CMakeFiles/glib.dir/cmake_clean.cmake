@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/glib.dir/Classes/Color.cpp.o.d"
   "CMakeFiles/glib.dir/Classes/Font.cpp.o"
   "CMakeFiles/glib.dir/Classes/Font.cpp.o.d"
+  "CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o"
+  "CMakeFiles/glib.dir/Classes/RenderTexture.cpp.o.d"
   "CMakeFiles/glib.dir/Classes/Vector2d.cpp.o"
   "CMakeFiles/glib.dir/Classes/Vector2d.cpp.o.d"
   "CMakeFiles/glib.dir/Event/EventManager.cpp.o"

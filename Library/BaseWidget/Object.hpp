@@ -23,7 +23,7 @@ namespace SL
         Vector2d local_offset_;
         Vector2d global_offset_;
         
-        RenderTexture *render_texture_ = nullptr;
+        RenderTexture render_texture_;
         Widget *parent_ = nullptr;
 
         bool has_local_offset_ = true;
@@ -35,18 +35,17 @@ namespace SL
             texture_(texture),
             sprite_(shape, texture, 0),
             local_offset_(0, 0),
-            global_offset_(0, 0)
+            global_offset_(0, 0),
+            render_texture_(shape)
             {
                 if (!doublecmp(position_.x_, -1.f) && !doublecmp(position_.y_, -1))
                 {
                     position_ = Vector2d(0, 0);
                 }
-                
-                render_texture_ = new RenderTexture(shape);
-                
+                                
                 sprite_.setTexture(texture);
 
-                render_texture_->draw(sprite_);
+                render_texture_.draw(sprite_);
             };
 
         Object(const Object& source):
@@ -55,10 +54,9 @@ namespace SL
             texture_(source.texture_),
             sprite_(source.sprite_),
             local_offset_(source.local_offset_),
-            global_offset_(source.global_offset_)
+            global_offset_(source.global_offset_),
+            render_texture_(source.render_texture_)
         {
-            render_texture_ = new RenderTexture(shape_);
-            *render_texture_ = *source.render_texture_;
         }
 
         Object &operator=(const Object& source)
@@ -70,8 +68,7 @@ namespace SL
             local_offset_  = source.local_offset_;
             global_offset_ = source.global_offset_;
 
-            render_texture_ = new RenderTexture(shape_);
-            *render_texture_ = *source.render_texture_;
+            render_texture_ = RenderTexture(shape_);
             
             return *this;
         }
@@ -104,8 +101,8 @@ namespace SL
 
         void draw() override
         {   
-            render_texture_->display();
-            sprite_.setTexture(render_texture_->getTexture());
+            render_texture_.display();
+            sprite_.setTexture(render_texture_.getTexture());
 
             if (parent_)
             {
@@ -128,7 +125,7 @@ namespace SL
 
         void display(Window *window) override
         {
-            render_texture_->display();
+            render_texture_.display();
             window->draw(sprite_);
             window->display();
             window->clear();
@@ -153,15 +150,15 @@ namespace SL
         {
             shape_  = shape; 
             
-            render_texture_->clear();
+            render_texture_.clear();
             sprite_.set_shape(shape);
             
             if (doublecmp(shape.x_, 0.f) && doublecmp(shape.y_, 0.f))
             {
-                render_texture_->create(shape);
+                render_texture_.create(shape);
             }
 
-            render_texture_->draw(sprite_);
+            render_texture_.draw(sprite_);
         }
 
         Widget  *get_parent() const override
@@ -185,7 +182,7 @@ namespace SL
             Sprite sprite(shape_, texture_);
             sprite_ = sprite;
 
-            render_texture_->draw(sprite_);
+            render_texture_.draw(sprite_);
         }
 
         RenderTexture *get_render_texture() const override

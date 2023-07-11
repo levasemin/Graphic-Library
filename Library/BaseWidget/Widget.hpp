@@ -1,3 +1,14 @@
+/**
+ * @file Widget.hpp
+ * @author Semin Lev (you@domain.com)
+ * @brief declaration class Widget
+ * @version 0.1
+ * @date 2023-07-11
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #pragma once
 
 #include "Window.hpp"
@@ -8,38 +19,117 @@
 
 namespace SL
 {
+    /**
+     * @brief Virtual class Widget, skeleton of every object.
+     * @details Widget is parent of every library's object. It  has list of virtual functions, that must be defined in every class
+     * for working in system of rendering and event spreading. 
+     */
     class Widget
     {
     public:
 
         Widget() {}
-
+        /**
+         * @brief handle left mouse click
+         * 
+         * @param event 
+         */
         virtual void ClickLeftEvent      (const Event &event)          = 0;
+        /**
+         * @brief 
+         * 
+         * @param event 
+         */
         virtual void ReleasedLeftEvent   (const Event &event)          = 0;              
 
+        /**
+         * @brief 
+         * 
+         * @param event 
+         */
         virtual void ClickRightEvent     (const Event &event)          = 0;
+        /**
+         * @brief 
+         * 
+         * @param event 
+         */
         virtual void ReleasedRightEvent  (const Event &event)          = 0;              
         
+        /**
+         * @brief 
+         * 
+         * @param event 
+         */
         virtual void MoveMouseEvent      (const Event &event)          = 0;
 
+        /**
+         * @brief 
+         * 
+         * @param event 
+         */
         virtual void PressKeyEvent       (const Event &event)          = 0;
 
+        /**
+         * @brief 
+         * 
+         * @param event 
+         */
         virtual void ScrollEvent         (const Event &event)          = 0;
         
+        /**
+         * @brief 
+         * 
+         * @param event 
+         */
         virtual void TextEvent           (const Event &event)          = 0;
 
+        /**
+         * @brief 
+         * 
+         * @param point 
+         * @return true 
+         * @return false 
+         */
         virtual bool point_belonging(Vector2d point) const             = 0;
 
+        /**
+         * @brief 
+         * 
+         */
         virtual void draw()                                            = 0; 
 
+        /**
+         * @brief 
+         * 
+         * @param window 
+         */
         virtual void remove(Widget *window)                            = 0;
 
+        /**
+         * @brief 
+         * 
+         * @param window 
+         */
         virtual void add(Widget *window)                               = 0;
 
+        /**
+         * @brief 
+         * 
+         * @param window 
+         */
         virtual void display(Window *window)                           = 0;
 
-
+        /**
+         * @brief Get the position object
+         * 
+         * @return Vector2d 
+         */
         virtual Vector2d get_position() const                          = 0;
+        /**
+         * @brief Set the position object
+         * 
+         * @param position 
+         */
         virtual void set_position(Vector2d position)                   = 0;
 
         virtual Vector2d get_shape() const                             = 0;
