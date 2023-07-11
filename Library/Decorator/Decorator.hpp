@@ -122,7 +122,7 @@ namespace SL
             return widget_->set_texture(texture);
         }
 
-        RenderTexture *get_render_texture() const override
+        RenderTexture *get_render_texture() override
         {
             return widget_->get_render_texture();   
         }

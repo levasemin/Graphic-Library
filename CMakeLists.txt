@@ -7,6 +7,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -D NDEBUG" CACHE STRING "Comment
 set(CMAKE_CXX_FLAGS_SANITIZER "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wformat=2 -fsanitize=address,undefined -g" CACHE STRING "Comment" FORCE)
 
 file(GLOB glib_SRC "Library/*/*.cpp")
+file(GLOB glib_LIB "Library/*/*.hpp")
 
 file(GLOB children "Library/*")
 set(dirlist "")
@@ -16,8 +17,8 @@ foreach(child ${children})
   endif()
 endforeach()
 
-add_library(glib ${glib_SRC})
-target_include_directories(glib PUBLIC ${dirlist} .)
+add_library(glib ${glib_SRC} ${glib_HPP})
+target_include_directories(glib PUBLIC ${dirlist} Library/)
 
 find_package(SFML 2.5 COMPONENTS network audio graphics window system REQUIRED)
 if(SFML_FOUND)
