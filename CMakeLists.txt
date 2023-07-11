@@ -6,10 +6,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" CACHE STRING "Comment" FORCE
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -D NDEBUG" CACHE STRING "Comment" FORCE)
 set(CMAKE_CXX_FLAGS_SANITIZER "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wformat=2 -fsanitize=address,undefined -g" CACHE STRING "Comment" FORCE)
 
-file(GLOB glib_SRC "Library/*/*.cpp")
-file(GLOB glib_LIB "Library/*/*.hpp")
+file(GLOB glib_SRC "Library/src/*/*.cpp")
+file(GLOB glib_LIB "Library/src/*/*.hpp")
 
-file(GLOB children "Library/*")
+file(GLOB children "Library/src/*")
 set(dirlist "")
 foreach(child ${children})
   if(IS_DIRECTORY ${curdir}/${child})

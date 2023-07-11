@@ -1,2 +1,0 @@
-/usr/bin/ar qc libglib.a CMakeFiles/glib.dir/Application/Application.cpp.o CMakeFiles/glib.dir/Application/Window.cpp.o CMakeFiles/glib.dir/Classes/Color.cpp.o CMakeFiles/glib.dir/Classes/Font.cpp.o CMakeFiles/glib.dir/Classes/Vector2d.cpp.o CMakeFiles/glib.dir/Event/EventManager.cpp.o CMakeFiles/glib.dir/Widget/Button.cpp.o CMakeFiles/glib.dir/functions/functions.cpp.o
-/usr/bin/ranlib libglib.a
