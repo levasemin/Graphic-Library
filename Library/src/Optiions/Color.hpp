@@ -6,6 +6,12 @@
 #include <stdint.h>
 #include <algorithm>
 
+class Color2
+{
+public:
+    int x;
+};
+
 namespace SL
 {
     class Color

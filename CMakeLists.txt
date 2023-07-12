@@ -18,10 +18,10 @@ foreach(child ${children})
 endforeach()
 
 add_library(glib ${glib_SRC} ${glib_HPP})
-target_include_directories(glib PUBLIC ${dirlist} Library/)
+target_include_directories(glib PRIVATE ${dirlist} Library/)
 
 find_package(SFML 2.5 COMPONENTS network audio graphics window system REQUIRED)
 if(SFML_FOUND)
   include_directories(${SFML_INCLUDE_DIR})
-  target_link_libraries(glib PUBLIC sfml-network sfml-audio sfml-graphics sfml-window sfml-system)
+  target_link_libraries(glib PRIVATE sfml-network sfml-audio sfml-graphics sfml-window sfml-system)
 endif()
