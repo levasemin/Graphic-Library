@@ -1,7 +1,8 @@
 #include "Texture.hpp"
+#include "Image.hpp"
 
 namespace SL
-{    
+{        
     Texture::Texture(const char *path):
         texture_()
     {
@@ -29,5 +30,10 @@ namespace SL
     Vector2d Texture::getSize() const
     {
         return Vector2d(texture_.getSize());
+    }
+
+    Image Texture::copyToImage()
+    {
+        return Image(texture_.copyToImage());
     }    
 }

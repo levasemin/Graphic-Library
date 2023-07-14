@@ -1,12 +1,13 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "Texture.hpp"
 #include "RenderTexture.hpp"
 #include <SFML/Config.hpp>
 
 namespace SL
 {
+    class Texture;
+    
     class Image
     {
     private:
@@ -22,7 +23,9 @@ namespace SL
         Image(const Texture &texture);
 
         Image (const Vector2d &shape, const Color &color);
-        
+
+        Image(const sf::Image &image);
+                
         void saveToFile(const std::string &path);
 
         void loadFromFile(const std::string &path);

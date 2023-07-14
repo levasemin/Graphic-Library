@@ -7,6 +7,8 @@
 
 namespace SL
 {
+    class Image;
+
     class Texture
     {
         
@@ -27,6 +29,8 @@ namespace SL
         bool loadFromFile(const char *path);
 
         Vector2d getSize() const;
+
+        Image copyToImage();
 
     private:
         friend class Sprite;

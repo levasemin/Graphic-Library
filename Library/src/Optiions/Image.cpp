@@ -1,4 +1,5 @@
 #include "Image.hpp"
+#include "Texture.hpp"
 
 namespace SL
 {
@@ -24,6 +25,9 @@ namespace SL
         image_.create(uint32_t(shape.x_), uint32_t(shape.y_), color.get_sf_color());
     }
     
+    Image::Image(const sf::Image &image): image_(image)
+    {}
+
     void Image::saveToFile(const std::string &path)
     {
         image_.saveToFile(path);
