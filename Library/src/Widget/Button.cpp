@@ -2,6 +2,118 @@
 
 namespace SL
 {
+    Button::Button(Vector2d shape, Vector2d position, const Texture &texture) : Object(shape, position, texture), 
+        default_sprite_color_(sprite_.getColor()),
+        text_()
+    {
+        text_.setFont(Font::Times_new_roman);
+    };
+
+    Button::Button(const Button& source) : Object(*(const Object *)&source),
+        default_sprite_color_ (source.default_sprite_color_),
+        text_                 (source.text_),
+        left_click_command_   (source.left_click_command_),
+        left_release_command_ (source.left_release_command_),
+        right_click_command_  (source.right_click_command_),
+        right_release_command_(source.right_release_command_)
+    {}
+
+    Button &Button::operator=(const Button &source)
+    {
+        Object::operator=(*(const Object *)&source);
+
+        default_sprite_color_  = source.default_sprite_color_;        
+        text_                  = source.text_;
+        left_click_command_    = source.left_click_command_;
+        left_release_command_  = source.left_release_command_;
+        right_click_command_   = source.right_click_command_;
+        right_release_command_ = source.right_release_command_;
+
+        return *this;
+    }
+
+    void Button::setTextColor(const Color &color)
+    {
+        text_.setColor(color);
+        set_text(text_);
+    }
+
+    void Button::setCharacterSize(int text_size)
+    {
+        text_.setCharacterSize(text_size);
+        set_text(text_);
+    }
+
+    void Button::set_pressed(bool is_press_button)
+    {
+        is_press_button_ = is_press_button;
+    }
+
+    void Button::set_left_click           (Command<const Event &> *command)
+    {
+        left_click_command_ = command;
+    }
+    void Button::set_release_left_click   (Command<const Event &> *command)
+    {
+        left_release_command_ = command;
+    }
+    void Button::set_right_click          (Command<const Event &> *command)
+    {
+        right_click_command_ = command;
+    }
+    void Button::set_release_right_click  (Command<const Event &> *command)
+    {
+        right_release_command_ = command;
+    }
+
+    Command<const Event &> * Button::get_left_click       ()
+    {
+        return left_click_command_;
+    }
+    Command<const Event &> * Button::get_release_left_click  ()
+    {
+        return left_release_command_;
+    }
+    Command<const Event &> * Button::get_right_click      ()
+    {
+        return right_click_command_;
+    }
+    Command<const Event &> * Button::set_release_right_click  ()
+    {
+        return right_release_command_;
+    }
+
+    void Button::set_click_color(const Color &color)
+    {
+        
+    }
+
+    void Button::set_texture(const Texture &texture)
+    {
+        Object::set_texture(texture);
+        default_sprite_color_ = sprite_.getColor();
+    }
+    
+    void Button::setString(const std::string &text)
+    {
+        text_.setString(text);
+        set_text(text_);
+    }
+
+    void Button::set_text(const Text &text)
+    {
+        text_ = text;
+        sprite_.setTexture(texture_);
+        render_texture_.draw(sprite_);
+
+        Vector2d text_position(0, 0);
+        text_position.x_ = shape_.x_ / 2 - text_.getGlobalBounds().x_ / 2;
+        text_position.y_ = shape_.y_ / 2 - text_.getGlobalBounds().y_; 
+        text_.setPosition(text_position);
+
+        render_texture_.draw(text_); 
+    }
+
     void Button::MoveMouseEvent(const Event &event)
     {
         if ((!is_press_button_ || !is_pressed_))

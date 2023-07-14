@@ -2,6 +2,20 @@
 
 namespace SL
 {
+    Window::Window (Vector2d shape, int style):
+        window_(sf::VideoMode((uint32_t)shape.x_, (uint32_t)shape.y_), "", style)
+    {}
+    
+    Window::Window (const Window &source):
+        window_(sf::VideoMode(source.window_.getSize().x, source.window_.getSize().y), "")
+    {}
+
+    Window &Window::operator =(const Window &source)
+    {
+        window_.create(sf::VideoMode(source.window_.getSize().x, source.window_.getSize().y), "");
+        return *this;
+    }
+
     void Window::create(Vector2d shape, std::string name, int style)
     {
         window_.create(sf::VideoMode(int(shape.x_), int(shape.y_)), name, style);
