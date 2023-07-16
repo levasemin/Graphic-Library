@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Vector2d.hpp"
-#include "Color.hpp"
+#include "../Classes/Vector2d.hpp"
+#include "../Options/Color.hpp"
 
 namespace SL
 {

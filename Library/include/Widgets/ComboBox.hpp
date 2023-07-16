@@ -1,10 +1,9 @@
 #pragma once
 
-#include "Texture.hpp"
-#include "CompositeObject.hpp"
-#include "Command.hpp"
+#include "../Rendering/Texture.hpp"
+#include "../BaseWidget/CompositeObject.hpp"
+#include "../Event/Event.hpp"
 #include "Button.hpp"
-#include "SimpleCommand.hpp"
 #include "Container.hpp"
 
 namespace SL

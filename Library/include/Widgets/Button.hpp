@@ -2,10 +2,9 @@
 
 #pragma once
 
-#include "Command.hpp"
-#include "Event.hpp"
-#include "Object.hpp"
-#include "Text.hpp"
+#include "../Event/Ev.hpp"
+#include "../BaseWidget/Object.hpp"
+#include "../Options/Text.hpp"
 
 namespace SL
 {

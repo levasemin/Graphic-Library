@@ -1,9 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Window.hpp"
-#include "Widget.hpp"
-#include "Event.hpp"
+#include "../Application/Window.hpp"
+#include "../BaseWidget/Widget.hpp"
+#include "../Event/Event.hpp"
 
 namespace SL
 {

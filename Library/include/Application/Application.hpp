@@ -4,8 +4,6 @@
 
 #include <vector>
 #include <iostream>
-#include "Widget.hpp"
-#include "EventManager.hpp"
 #include "MainWindow.hpp"
 
 namespace SL

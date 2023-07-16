@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Texture.hpp"
-#include "CompositeObject.hpp"
+#include "../Rendering/Texture.hpp"
+#include "../BaseWidget/CompositeObject.hpp"
 
 namespace SL
 {

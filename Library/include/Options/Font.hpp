@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "Texture.hpp"
+#include "../Rendering/Texture.hpp"
 
 namespace SL
 {

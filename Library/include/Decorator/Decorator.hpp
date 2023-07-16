@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Widget.hpp"
+#include "../BaseWidget/BaseWidget.hpp"
 
 namespace SL
 {

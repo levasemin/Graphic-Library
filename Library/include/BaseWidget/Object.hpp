@@ -2,12 +2,10 @@
 
 #pragma once
 
-#include "Window.hpp"
-#include "Texture.hpp"
-#include "RenderTexture.hpp"
-#include "Sprite.hpp"
-#include "Vector2d.hpp"
-#include "Widget.hpp"
+#include "../Application/Window.hpp"
+#include "../Rendering/Rendering.hpp"
+#include "../Classes/Vector2d.hpp"
+#include "../BaseWidget/Widget.hpp"
 
 namespace SL
 {

@@ -11,9 +11,10 @@
 
 #pragma once
 
-#include "Text.hpp"
-#include "Vector2d.hpp"
+#include "../Options/Text.hpp"
+#include "../Classes/Vector2d.hpp"
 #include "Sprite.hpp"
+#include "Texture.hpp"
 
 namespace SL
 {
