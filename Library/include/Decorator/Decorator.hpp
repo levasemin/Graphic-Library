@@ -20,22 +20,22 @@ namespace SL
         Decorator &operator=(Decorator &&source) = default;
         virtual ~Decorator() = default;
 
-        void ClickLeftEvent      (const Event &event) override;
-        void ReleasedLeftEvent   (const Event &event) override;
+        void clickLeftEvent      (const Event &event) override;
+        void releaseLeftEvent   (const Event &event) override;
 
-        void ClickRightEvent (const Event &event) override;
-        void ReleasedRightEvent (const Event &event) override;
+        void clickRightEvent (const Event &event) override;
+        void releaseRightEvent (const Event &event) override;
 
-        void MoveMouseEvent (const Event &event) override;
+        void moveMouseEvent (const Event &event) override;
 
-        void PressKeyEvent (const Event &event) override;
+        void pressKeyEvent (const Event &event) override;
 
-        void TextEvent (const Event &event) override;
+        void textEvent (const Event &event) override;
         
-        void ScrollEvent (const Event &event) override;
+        void scrollEvent (const Event &event) override;
         
 
-        bool point_belonging(Vector2d point) const override;
+        bool pointBelong(Vector2d point) const override;
 
         void draw() override;
         
@@ -46,40 +46,40 @@ namespace SL
         void display(Window *window) override;
 
 
-        Vector2d get_position() const override;
-        void set_position(Vector2d position) override;
+        Vector2d getPosition() const override;
+        void setPosition(Vector2d position) override;
 
-        Vector2d get_shape() const override;
-        void set_shape(Vector2d shape) override;
+        Vector2d getShape() const override;
+        void setShape(Vector2d shape) override;
 
-        Widget *get_parent() const override;
-        void set_parent(Widget *parent) override;
+        Widget *getParent() const override;
+        void setParent(Widget *parent) override;
 
-        virtual Texture get_texture() const override;
-        virtual void set_texture(const Texture &texture) override;
+        virtual Texture getTexture() const override;
+        virtual void setTexture(const Texture &texture) override;
 
-        RenderTexture *get_render_texture() override;
-        void set_render_texture(RenderTexture render_texture) override;
+        RenderTexture *getRenderTexture() override;
+        void setRenderTexture(RenderTexture render_texture) override;
 
-        Vector2d get_indent() const override;
-        void set_indent(Vector2d indent) override;
+        Vector2d getIndent() const override;
+        void setIndent(Vector2d indent) override;
 
-        Vector2d get_global_shape() const override;
-        void set_global_offset(Vector2d offset) override;
+        Vector2d getGlobalShape() const override;
+        void setGlobalOffset(Vector2d offset) override;
 
-        Vector2d get_global_offset() const override;
-        void set_global_shape(Vector2d global_shape) override;
+        Vector2d getGlobalOffset() const override;
+        void setGlobalShape(Vector2d global_shape) override;
     
-        Vector2d get_local_offset() const override;
-        void set_local_offset(Vector2d offset) override;
+        Vector2d getLocalOffset() const override;
+        void setLocalOffset(Vector2d offset) override;
 
-        bool get_has_local_offset() const override;
-        void set_has_local_offset(bool has) override;
+        bool getHasLocalOffset() const override;
+        void setHasLocalOffset(bool has) override;
 
-        Vector2d get_start_field() const override;
-        Vector2d get_end_field() const override;
+        Vector2d getStartField() const override;
+        Vector2d getEndField() const override;
 
-        std::vector<Widget *> get_children() const override;
-        void set_children(std::vector<Widget *> children) override;
+        std::vector<Widget *> getChildren() const override;
+        void setChildren(std::vector<Widget *> children) override;
     };
 }

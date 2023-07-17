@@ -30,7 +30,7 @@ namespace SL
         KeyPressed      = 11, ///<
         Closed          = 12, ///<
 
-        TextEvent       = 13  ///<
+        textEvent       = 13  ///<
     };
 
     enum class MouseButton
@@ -172,7 +172,7 @@ namespace SL
         bool shift, alt, ctrl;
     };
 
-    struct TextEventData
+    struct textEventData
     {
         uint64_t id;
         char letter;
@@ -190,7 +190,7 @@ namespace SL
         float value;
     };
 
-    struct ScrollEventData
+    struct scrollEventData
     {
         uint64_t id;
         float value;
@@ -219,11 +219,11 @@ namespace SL
             MouseButtonEventData mbedata;
             MouseReleasedEventData mredata;
             ScrollMovedEventData smedata;
-            ScrollEventData sedata;
+            scrollEventData sedata;
             CanvasEventData cedata;
             TimerEventData tedata;
             KeyPressedEventData kpedata;
-            TextEventData textedata;
+            textEventData textedata;
             ButtonClickedEventData bcedata;
         } Oleg_;
         

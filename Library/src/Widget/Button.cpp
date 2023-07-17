@@ -88,9 +88,9 @@ namespace SL
         
     }
 
-    void Button::set_texture(const Texture &texture)
+    void Button::setTexture(const Texture &texture)
     {
-        Object::set_texture(texture);
+        Object::setTexture(texture);
         default_sprite_color_ = sprite_.getColor();
     }
     
@@ -114,11 +114,11 @@ namespace SL
         render_texture_.draw(text_); 
     }
 
-    void Button::MoveMouseEvent(const Event &event)
+    void Button::moveMouseEvent(const Event &event)
     {
         if ((!is_press_button_ || !is_pressed_))
         {
-            if (point_belonging(event.Oleg_.motion.pos))
+            if (pointBelong(event.Oleg_.motion.pos))
             {
                 Color new_color = default_sprite_color_;
             
@@ -135,9 +135,9 @@ namespace SL
     }
 
 
-    void Button::ClickLeftEvent (const Event &event)
+    void Button::clickLeftEvent (const Event &event)
     {   
-        if (point_belonging(Vector2d(event.Oleg_.mbedata.pos)))
+        if (pointBelong(Vector2d(event.Oleg_.mbedata.pos)))
         {
             is_left_clicked_ = true;
             is_pressed_ = !is_pressed_;
@@ -169,7 +169,7 @@ namespace SL
         }
     }
 
-    void Button::ReleasedLeftEvent (const Event &event)
+    void Button::releaseLeftEvent (const Event &event)
     {
         if (left_release_command_ != nullptr)
         {
@@ -179,9 +179,9 @@ namespace SL
         is_left_clicked_ = false;
     }
 
-    void Button::ClickRightEvent (const Event &event)
+    void Button::clickRightEvent (const Event &event)
     {
-        if (point_belonging(event.Oleg_.mbedata.pos))
+        if (pointBelong(event.Oleg_.mbedata.pos))
         {
             is_right_clicked_ = true;
 
@@ -194,7 +194,7 @@ namespace SL
             }
         }
     }
-    void Button::ReleasedRightEvent (const Event &event)
+    void Button::releaseRightEvent (const Event &event)
     {
         if (right_release_command_ != nullptr)
         {

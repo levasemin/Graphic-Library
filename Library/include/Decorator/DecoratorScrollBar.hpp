@@ -18,7 +18,7 @@ namespace SL
     public:
         DecoratorScrollBar(Widget *widget);
 
-        void ScrollEvent(const Event &event) override;
+        void scrollEvent(const Event &event) override;
 
         void ScrollVerticalWidget(const Event &event);
 
@@ -26,16 +26,16 @@ namespace SL
 
         void draw() override;
 
-        void ClickLeftEvent (const Event &event) override;
+        void clickLeftEvent (const Event &event) override;
 
-        void ReleasedLeftEvent (const Event &event) override;           
+        void releaseLeftEvent (const Event &event) override;           
         
-        void MoveMouseEvent (const Event &event) override;
+        void moveMouseEvent (const Event &event) override;
 
-        void set_global_offset(Vector2d offset) override;
+        void setGlobalOffset(Vector2d offset) override;
 
         void display(Window *window) override;
 
-        void set_parent(Widget *parent_widget) override;
+        void setParent(Widget *parent_widget) override;
     };
 }

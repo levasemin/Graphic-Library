@@ -11,13 +11,13 @@ namespace SL
                 if (event.Oleg_.mbedata.button == MouseButton::Left)
                 {
                     is_left_button_clicked_ = true; 
-                    window->ClickLeftEvent(event);
+                    window->clickLeftEvent(event);
                 }
 
                 else if (event.Oleg_.mbedata.button == MouseButton::Right)
                 {         
                     is_right_button_clicked_ = true;
-                    window->ClickRightEvent(event);
+                    window->clickRightEvent(event);
                 }
 
                 break;
@@ -25,26 +25,26 @@ namespace SL
 
             case EventType::KeyPressed:
             {
-                window->PressKeyEvent(event);
+                window->pressKeyEvent(event);
 
                 break;
             }
-            case EventType::TextEvent:
+            case EventType::textEvent:
             {
-                window->TextEvent(event);
+                window->textEvent(event);
 
                 break;
             }
             case EventType::ScrollbarMoved:
             {            
-                window->ScrollEvent(event);
+                window->scrollEvent(event);
                 
                 break;
             }
             
             case EventType::MouseMoved:
             {            
-                window->MoveMouseEvent(event);
+                window->moveMouseEvent(event);
 
                 break;
             }
@@ -54,13 +54,13 @@ namespace SL
                 if (event.Oleg_.mredata.button == MouseButton::Left)
                 {
                     is_left_button_clicked_ = false;
-                    window->ReleasedLeftEvent(event);
+                    window->releaseLeftEvent(event);
                 }
 
                 else if (event.Oleg_.mredata.button == MouseButton::Right)
                 {
                     is_right_button_clicked_ = false;
-                    window->ReleasedRightEvent(event);            
+                    window->releaseRightEvent(event);            
                 }
 
                 break;

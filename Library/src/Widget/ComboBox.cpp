@@ -8,9 +8,9 @@ namespace SL
     {
     }
 
-    void ComboBox::ClickLeftEvent(const Event &event)
+    void ComboBox::clickLeftEvent(const Event &event)
     {
-        if (point_belonging(event.Oleg_.mbedata.pos))
+        if (pointBelong(event.Oleg_.mbedata.pos))
         {
             if (is_showed_)
             {
@@ -27,7 +27,7 @@ namespace SL
 
         else if (is_showed_)
         {
-            if (!item_box_.point_belonging(event.Oleg_.mbedata.pos) && !point_belonging(event.Oleg_.mbedata.pos))
+            if (!item_box_.pointBelong(event.Oleg_.mbedata.pos) && !pointBelong(event.Oleg_.mbedata.pos))
             {
                 parent_->remove(&item_box_);
                 is_showed_ = false;
@@ -42,16 +42,16 @@ namespace SL
 
     Vector2d ComboBox::get_box_shape()
     {
-        return item_box_.get_shape();
+        return item_box_.getShape();
     }
 
     void ComboBox::set_box_shape(const Vector2d &shape)
     {
-        item_box_.set_shape(shape);
+        item_box_.setShape(shape);
     }
 
     void ComboBox::set_box_texture(const Texture &texture)
     {
-        item_box_.set_texture(texture);
+        item_box_.setTexture(texture);
     }
 }

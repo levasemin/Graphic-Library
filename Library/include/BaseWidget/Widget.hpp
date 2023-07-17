@@ -29,142 +29,245 @@ namespace SL
 
         Widget() {}
         /**
-         * @brief handle left mouse click
+         * @brief handle left mouse clicking
          * 
          * @param event 
          */
-        virtual void ClickLeftEvent      (const Event &event)          = 0;
-        /**
-         * @brief 
-         * 
-         * @param event 
-         */
-        virtual void ReleasedLeftEvent   (const Event &event)          = 0;              
-
-        /**
-         * @brief 
-         * 
-         * @param event 
-         */
-        virtual void ClickRightEvent     (const Event &event)          = 0;
-        /**
-         * @brief 
-         * 
-         * @param event 
-         */
-        virtual void ReleasedRightEvent  (const Event &event)          = 0;              
+        virtual void clickLeftEvent      (const Event &event)          = 0;
         
         /**
-         * @brief 
+         * @brief handle left mouse releasing
          * 
          * @param event 
          */
-        virtual void MoveMouseEvent      (const Event &event)          = 0;
+        virtual void releaseLeftEvent   (const Event &event)          = 0;              
 
         /**
-         * @brief 
+         * @brief handle right mouse clicking
          * 
          * @param event 
          */
-        virtual void PressKeyEvent       (const Event &event)          = 0;
-
-        /**
-         * @brief 
-         * 
-         * @param event 
-         */
-        virtual void ScrollEvent         (const Event &event)          = 0;
+        virtual void clickRightEvent     (const Event &event)          = 0;
         
         /**
-         * @brief 
+         * @brief handle right mouse releasing
          * 
          * @param event 
          */
-        virtual void TextEvent           (const Event &event)          = 0;
+        virtual void releaseRightEvent  (const Event &event)          = 0;              
+        
+        /**
+         * @brief handle mouse moving
+         * 
+         * @param event 
+         */
+        virtual void moveMouseEvent      (const Event &event)          = 0;
 
         /**
-         * @brief 
+         * @brief handle key pressing
+         * 
+         * @param event 
+         */
+        virtual void pressKeyEvent       (const Event &event)          = 0;
+                    
+        /**
+         * @brief handle mouse scrolling
+         * 
+         * @param event 
+         */
+        virtual void scrollEvent         (const Event &event)          = 0;
+        
+        /**
+         * @brief handle text entering
+         * 
+         * @param event 
+         */
+        virtual void textEvent           (const Event &event)          = 0;
+
+        /**
+         * @brief check belonging point to object
          * 
          * @param point 
-         * @return true 
-         * @return false 
+         * @return true belonging
+         * @return false not belonging
          */
-        virtual bool point_belonging(Vector2d point) const             = 0;
+        virtual bool pointBelong(Vector2d point) const             = 0;
 
         /**
-         * @brief 
+         * @brief draw object on parent, if it exists
          * 
          */
         virtual void draw()                                            = 0; 
 
         /**
-         * @brief 
+         * @brief add child widget
          * 
-         * @param window 
+         * @param child 
          */
-        virtual void remove(Widget *window)                            = 0;
+        virtual void add(Widget *child)                               = 0;
 
+        /**
+         * @brief remove child widget
+         * 
+         * @param child 
+         */
+        virtual void remove(Widget *child)                            = 0;
+
+        /**
+         * @brief Get the position object
+         * 
+         * @return Vector2d current position
+         */
+        virtual Vector2d getPosition() const                          = 0;
+        /**
+         * @brief Set the position object
+         * 
+         * @param position new position
+         */
+        virtual void setPosition(Vector2d position)                   = 0;
+        
+        /**
+         * @brief get current shape of widget
+         * 
+         * @return Vector2d 
+         */
+        virtual Vector2d getShape() const                             = 0;
+        /**
+         * @brief Set new shape for widget
+         * 
+         * @param shape new shape
+         */
+        virtual void setShape(Vector2d shape)                         = 0;
+
+        /**
+         * @brief get pointer on parent of widget
+         * 
+         * @return Widget* 
+         */
+        virtual Widget *getParent() const                             = 0;
+        /**
+         * @brief set new parent for widget
+         * 
+         * @param parent 
+         */
+        virtual void setParent(Widget *parent)                        = 0;
+
+        /**
+         * @brief get Texture of widget
+         * 
+         * @return Texture 
+         */
+        virtual Texture getTexture() const                            = 0;
+        /**
+         * @brief set new Texture for widget 
+         * 
+         * @param texture new Texture
+         */
+        virtual void setTexture(const Texture &texture)               = 0;
+
+        /**
+         * @brief Get the Children object
+         * 
+         * @return std::vector<Widget *> 
+         */
+        virtual std::vector<Widget *> getChildren() const             = 0;
+        /**
+         * @brief Set the Children object
+         * 
+         * @param children 
+         */
+        virtual void setChildren(std::vector<Widget *> children)      = 0;
+
+    public:
         /**
          * @brief 
          * 
-         * @param window 
+         * @param widget 
+         * @return Widget& 
          */
-        virtual void add(Widget *window)                               = 0;
+        virtual Widget &operator=(const Widget &widget) = default;
+        virtual Widget &operator=(const Widget &&widget);
+        virtual ~Widget() = default;
 
         /**
-         * @brief 
+         * @brief display all drawing changes on object
          * 
          * @param window 
          */
         virtual void display(Window *window)                           = 0;
 
         /**
-         * @brief Get the position object
+         * @brief get pointer on current RenderTexture
+         * 
+         * @return RenderTexture* 
+         */
+        virtual RenderTexture *getRenderTexture()                   = 0;
+
+        /**
+         * @brief set new RenderTexture
+         * 
+         * @param render_texture 
+         */
+        virtual void setRenderTexture(RenderTexture render_texture) = 0;
+
+        /**
+         * @brief Get the Global Shape object
          * 
          * @return Vector2d 
          */
-        virtual Vector2d get_position() const                          = 0;
+        virtual Vector2d getGlobalShape() const                      = 0;
+
         /**
-         * @brief Set the position object
+         * @brief Get the Global Offset object
          * 
-         * @param position 
+         * @return Vector2d 
          */
-        virtual void set_position(Vector2d position)                   = 0;
+        virtual Vector2d getGlobalOffset() const                     = 0;
+        /**
+         * @brief Set the Global Offset object
+         * 
+         * @param diff_offset 
+         */
+        virtual void setGlobalOffset(Vector2d diff_offset)           = 0;
 
-        virtual Vector2d get_shape() const                             = 0;
-        virtual void set_shape(Vector2d shape)                         = 0;
+        /**
+         * @brief Get the Local Offset object
+         * 
+         * @return Vector2d 
+         */
+        virtual Vector2d getLocalOffset() const                      = 0;
+        /**
+         * @brief Set the Local Offset object
+         * 
+         * @param diff_offset 
+         */
+        virtual void setLocalOffset(Vector2d diff_offset)            = 0;
 
-        virtual Widget *get_parent() const                             = 0;
-        virtual void set_parent(Widget *parent)                        = 0;
-
-        virtual Texture get_texture() const                            = 0;
-        virtual void set_texture(const Texture &texture)               = 0;
-
-        virtual RenderTexture *get_render_texture()                   = 0;
-        virtual void set_render_texture(RenderTexture render_texture) = 0;
-
-        virtual Vector2d get_indent() const                            = 0;
-        virtual void set_indent(Vector2d)                              = 0;
-
-        virtual Vector2d get_global_shape() const                      = 0;
-        virtual void set_global_shape(Vector2d global_shape)           = 0;
-
-        virtual Vector2d get_global_offset() const                     = 0;
-        virtual void set_global_offset(Vector2d diff_offset)           = 0;
-
-        virtual Vector2d get_local_offset() const                      = 0;
-        virtual void set_local_offset(Vector2d diff_offset)            = 0;
-
-        virtual bool get_has_local_offset()  const                     = 0;
-        virtual void set_has_local_offset(bool has)                    = 0;
-
-        virtual Vector2d get_start_field() const                       = 0; 
-        virtual Vector2d get_end_field()   const                       = 0;
+        /**
+         * @brief Get the Has Local Offset object
+         * 
+         * @return true 
+         * @return false 
+         */
+        virtual bool getHasLocalOffset()  const                     = 0;
+        /**
+         * @brief Set the Has Local Offset object
+         * 
+         * @param has 
+         */
+        virtual void setHasLocalOffset(bool has)                    = 0;
         
-        virtual std::vector<Widget *> get_children() const             = 0;
-        virtual void set_children(std::vector<Widget *> children)      = 0;
-
-    protected:
-        virtual ~Widget() = default;
+        /**
+         * @brief Get the Start Field object
+         * 
+         * @return Vector2d 
+         */
+        virtual Vector2d getStartField() const                       = 0; 
+        /**
+         * @brief Get the End Field object
+         * 
+         * @return Vector2d 
+         */
+        virtual Vector2d getEndField()   const                       = 0;
     };
 };

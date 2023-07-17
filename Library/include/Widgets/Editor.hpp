@@ -19,19 +19,19 @@ namespace SL
         Editor(const Editor &source);
         Editor &operator=(const Editor &source);
 
-        void set_texture(const Texture &texture) override;
+        void setTexture(const Texture &texture) override;
         void set_editor_command(Command<const Event &> *editor_command);
         void setFont(const Font &font);
 
         std::string get_text();
 
-        void PressKeyEvent (const Event &event) override;
+        void pressKeyEvent (const Event &event) override;
         
-        void TextEvent(const Event &event) override;
+        void textEvent(const Event &event) override;
 
-        void MoveMouseEvent(const Event &event) override;
+        void moveMouseEvent(const Event &event) override;
 
-        void ClickLeftEvent(const Event &event) override;
+        void clickLeftEvent(const Event &event) override;
 
         void setString(const std::string &string) override;
     };  

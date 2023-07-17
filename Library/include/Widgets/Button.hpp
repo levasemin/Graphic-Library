@@ -45,19 +45,19 @@ namespace SL
 
         void set_click_color(const Color &color);
 
-        void set_texture(const Texture &texture) override;
+        void setTexture(const Texture &texture) override;
         
         void setString(const std::string &text);
 
         void set_text(const Text &text);
 
-        void ClickLeftEvent     (const Event &event) override;
-        void ReleasedLeftEvent  (const Event &event) override;
+        void clickLeftEvent     (const Event &event) override;
+        void releaseLeftEvent  (const Event &event) override;
 
-        void ClickRightEvent    (const Event &event) override;
-        void ReleasedRightEvent (const Event &event) override;
+        void clickRightEvent    (const Event &event) override;
+        void releaseRightEvent (const Event &event) override;
         
-        void MoveMouseEvent     (const Event &event) override;
+        void moveMouseEvent     (const Event &event) override;
 
     protected:
         Command<const Event &> *left_click_command_    = nullptr;

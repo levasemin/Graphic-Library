@@ -42,13 +42,13 @@ namespace SL
 
         virtual void scroll_bar(float value_);   
 
-        void MoveMouseEvent (const Event &event) override;
+        void moveMouseEvent (const Event &event) override;
 
         void scroll_up(const Event &event);   
 
         void scroll_down(const Event &event);
         
-        void ClickLeftEvent(const Event &event) override;
+        void clickLeftEvent(const Event &event) override;
 
         void clicked_scroll_button(const Event &event);
 

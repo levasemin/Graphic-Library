@@ -21,9 +21,9 @@ namespace SL
         return *this;
     }
 
-    void Editor::set_texture(const Texture &texture)
+    void Editor::setTexture(const Texture &texture)
     {
-        Object::set_texture(texture);
+        Object::setTexture(texture);
         default_sprite_color_ = sprite_.getColor();
     }
 
@@ -45,7 +45,7 @@ namespace SL
         return text;
     }
 
-    void Editor::PressKeyEvent (const Event &event)
+    void Editor::pressKeyEvent (const Event &event)
     {
         if (clicked_)
         {
@@ -105,7 +105,7 @@ namespace SL
         }
     }
     
-    void Editor::TextEvent(const Event &event)
+    void Editor::textEvent(const Event &event)
     {
         if (clicked_)
         {
@@ -132,9 +132,9 @@ namespace SL
         }
     }
 
-    void Editor::MoveMouseEvent(const Event &event)
+    void Editor::moveMouseEvent(const Event &event)
     {
-        if (point_belonging(event.Oleg_.motion.pos))
+        if (pointBelong(event.Oleg_.motion.pos))
         {
             Color new_color = default_sprite_color_;
         
@@ -149,12 +149,12 @@ namespace SL
             sprite_.setColor(default_sprite_color_);
         }
 
-        Label::MoveMouseEvent(event);
+        Label::moveMouseEvent(event);
     }
 
-    void Editor::ClickLeftEvent(const Event &event)
+    void Editor::clickLeftEvent(const Event &event)
     {
-        if (point_belonging(event.Oleg_.mbedata.pos))
+        if (pointBelong(event.Oleg_.mbedata.pos))
         {
             clicked_ = true;
 

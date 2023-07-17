@@ -39,12 +39,12 @@ namespace SL
             {
                 if (event.Oleg_.mbedata.button == MouseButton::Left)
                 {
-                    main_window_->ClickLeftEvent(event);
+                    main_window_->clickLeftEvent(event);
                 }
 
                 else if (event.Oleg_.mbedata.button == MouseButton::Right)
                 {         
-                    main_window_->ClickRightEvent(event);
+                    main_window_->clickRightEvent(event);
                 }
 
                 break;
@@ -52,26 +52,26 @@ namespace SL
 
             case EventType::KeyPressed:
             {
-                main_window_->PressKeyEvent(event);
+                main_window_->pressKeyEvent(event);
 
                 break;
             }
-            case EventType::TextEvent:
+            case EventType::textEvent:
             {
-                main_window_->TextEvent(event);
+                main_window_->textEvent(event);
 
                 break;
             }
             case EventType::ScrollbarMoved:
             {            
-                main_window_->ScrollEvent(event);
+                main_window_->scrollEvent(event);
                 
                 break;
             }
             
             case EventType::MouseMoved:
             {            
-                main_window_->MoveMouseEvent(event);
+                main_window_->moveMouseEvent(event);
 
                 break;
             }
@@ -80,12 +80,12 @@ namespace SL
             {
                 if (event.Oleg_.mredata.button == MouseButton::Left)
                 {
-                    main_window_->ReleasedLeftEvent(event);
+                    main_window_->releaseLeftEvent(event);
                 }
 
                 else if (event.Oleg_.mredata.button == MouseButton::Right)
                 {
-                    main_window_->ReleasedRightEvent(event);            
+                    main_window_->releaseRightEvent(event);            
                 }
 
                 break;
@@ -108,10 +108,10 @@ namespace SL
     {    
         if (!window_)
         {
-            window_ = new Window (main_window_->get_shape(), main_window_->style_);
+            window_ = new Window (main_window_->getShape(), main_window_->style_);
         }
         
-        window_->create(main_window_->get_shape(), "", main_window_->style_);
+        window_->create(main_window_->getShape(), "", main_window_->style_);
 
         while(window_->isOpen() && window_->getVisible())
         {

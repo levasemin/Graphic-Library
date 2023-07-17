@@ -24,40 +24,34 @@ namespace SL
 
         CompositeObject &operator=(const CompositeObject &source);
 
-        void ClickLeftEvent      (const Event &event) override;
-        void ReleasedLeftEvent    (const Event &event) override;
+        void clickLeftEvent      (const Event &event) override;
+        void releaseLeftEvent    (const Event &event) override;
 
-        void ClickRightEvent     (const Event &event) override;
-        void ReleasedRightEvent  (const Event &event) override;
+        void clickRightEvent     (const Event &event) override;
+        void releaseRightEvent   (const Event &event) override;
         
-        void MoveMouseEvent      (const Event &event) override;
+        void moveMouseEvent      (const Event &event) override;
         
-        void TextEvent           (const Event &event) override;
+        void textEvent           (const Event &event) override;
 
-        void PressKeyEvent       (const Event &event) override;
+        void pressKeyEvent       (const Event &event) override;
         
-        void ScrollEvent         (const Event &event) override;
+        void scrollEvent         (const Event &event) override;
 
-        void set_global_offset(Vector2d offset) override;
+        void setGlobalOffset(Vector2d offset) override;
 
         void draw() override;
         
-        void reset_global_shape();
-
         void remove(Widget *widget);
 
         void add(Widget *widget);
         
-        std::vector<Widget *> get_children() const override;
-        void set_children(std::vector<Widget *> children) override;
+        std::vector<Widget *> getChildren() const override;
+        void setChildren(std::vector<Widget *> children) override;
 
-        Vector2d get_indent() const override;
-        void set_indent(Vector2d indent) override;
+        Vector2d getGlobalShape() const override;
 
-        Vector2d get_global_shape() const override;
-        void set_global_shape(Vector2d global_shape) override;
-
-        Vector2d get_local_offset() const;
-        void set_local_offset(Vector2d offset);
+        Vector2d getLocalOffset() const;
+        void setLocalOffset(Vector2d offset);
     };
 }

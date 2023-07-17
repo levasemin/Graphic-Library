@@ -5,20 +5,20 @@ namespace SL
     DecoratorScroll::DecoratorScroll(Widget *widget) : Decorator(widget)
     {}
 
-    void DecoratorScroll::ScrollEvent (const Event &event)
+    void DecoratorScroll::scrollEvent (const Event &event)
     {
-        if (point_belonging(event.Oleg_.sedata.pos))
+        if (pointBelong(event.Oleg_.sedata.pos))
         {
-            set_local_offset(Vector2d(0.f, get_local_offset().y_ + event.Oleg_.sedata.value * 10.f));   
+            setLocalOffset(Vector2d(0.f, getLocalOffset().y_ + event.Oleg_.sedata.value * 10.f));   
         }
     }
 
-    void DecoratorScroll::set_local_offset(Vector2d offset)
+    void DecoratorScroll::setLocalOffset(Vector2d offset)
     {       
         offset.x_ = offset.x_ <= 0 ? offset.x_ : 0;
         offset.y_ = offset.y_ <= 0 ? offset.y_ : 0;
         
-        Vector2d max_offset = get_shape() - get_global_shape();
+        Vector2d max_offset = getShape() - getGlobalShape();
         
         if (max_offset.x_ < 0)
         {
@@ -30,7 +30,7 @@ namespace SL
             offset.y_ = offset.y_ >= max_offset.y_ ? offset.y_ : max_offset.y_;
         }
         
-        Decorator::set_local_offset(offset);
+        Decorator::setLocalOffset(offset);
     }
 
     void DecoratorScroll::add(Widget *widget)

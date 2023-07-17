@@ -14,7 +14,7 @@ namespace SL
 
         ComboBox(Vector2d shape, Vector2d position, const Texture &texture);
 
-        void ClickLeftEvent(const Event &event) override;
+        void clickLeftEvent(const Event &event) override;
 
         void add(Widget *widget) override;
         

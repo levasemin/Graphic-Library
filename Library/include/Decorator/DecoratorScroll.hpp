@@ -12,9 +12,9 @@ namespace SL
     public :
         DecoratorScroll(Widget *widget);
 
-        void ScrollEvent (const Event &event) override;
+        void scrollEvent (const Event &event) override;
 
-        void set_local_offset(Vector2d offset) override;
+        void setLocalOffset(Vector2d offset) override;
 
         void add(Widget *widget) override;
     };

@@ -6,29 +6,29 @@ namespace SL
         CompositeObject  (shape, position),
         left_button_   (Vector2d(shape.y_, shape.y_), Vector2d(0, 0)),
         right_button_  (Vector2d(shape.y_, shape.y_), Vector2d(shape.x_   - shape.y_, 0.f)),
-        scroll_button_ (Vector2d((shape.x_ - shape.y_ * 2) * SCROLL_COEFF, shape.y_), Vector2d(left_button_.get_shape().x_, 0.f)),
-        scroll_field_shape(shape.x_ - left_button_.get_shape().x_ * 2 - scroll_button_.get_shape().x_, shape.y_),
+        scroll_button_ (Vector2d((shape.x_ - shape.y_ * 2) * SCROLL_COEFF, shape.y_), Vector2d(left_button_.getShape().x_, 0.f)),
+        scroll_field_shape(shape.x_ - left_button_.getShape().x_ * 2 - scroll_button_.getShape().x_, shape.y_),
         min_value_(min_value),
         max_value_(max_value),
         click_place_(0.f, 0.f)
         {
-            set_texture(Texture(Color((uint8_t)92, (uint8_t)92, (uint8_t)92)));
+            setTexture(Texture(Color((uint8_t)92, (uint8_t)92, (uint8_t)92)));
             
             TextureManager &texture_manager = TextureManager::getInstance();
 
-            left_button_.  set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
-            right_button_. set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
-            scroll_button_.set_texture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
+            left_button_.  setTexture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
+            right_button_. setTexture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
+            scroll_button_.setTexture(Texture(Color((uint8_t)48, (uint8_t)48, (uint8_t)48)));
             
-            left_button_. set_texture (texture_manager[TextureManager::Icon::LeftArrow]);
-            right_button_.set_texture(texture_manager[TextureManager::Icon::RightArrow]);
+            left_button_. setTexture (texture_manager[TextureManager::Icon::LeftArrow]);
+            right_button_.setTexture(texture_manager[TextureManager::Icon::RightArrow]);
 
             add(&left_button_);
             add(&right_button_);
             add(&scroll_button_);
             
-            right_button_.set_has_local_offset(false);
-            left_button_.set_has_local_offset(false);
+            right_button_.setHasLocalOffset(false);
+            left_button_.setHasLocalOffset(false);
             
             left_button_.set_left_click  ((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::scroll_up));
             right_button_.set_left_click ((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::scroll_down));
@@ -61,7 +61,7 @@ namespace SL
 
     void HorizontalScrollBar::set_button(bool able)
     {
-        Vector2d new_shape = left_button_.get_shape();
+        Vector2d new_shape = left_button_.getShape();
         
         if (!able)
         {
@@ -78,19 +78,19 @@ namespace SL
 
     void HorizontalScrollBar::set_scroll_button_shape(const Vector2d &shape)
     {
-        scroll_button_.set_shape(shape);
-        scroll_button_.set_position(Vector2d(left_button_.get_shape().x_, 0.f));
-        scroll_field_shape = Vector2d(shape_.x_ - left_button_.get_shape().x_ - right_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape_.y_);
-        scroll_coeff_ = scroll_button_.get_shape().x_ / (shape_.x_ - right_button_.get_shape().x_ * 2);
+        scroll_button_.setShape(shape);
+        scroll_button_.setPosition(Vector2d(left_button_.getShape().x_, 0.f));
+        scroll_field_shape = Vector2d(shape_.x_ - left_button_.getShape().x_ - right_button_.getShape().x_ - scroll_button_.getShape().x_, shape_.y_);
+        scroll_coeff_ = scroll_button_.getShape().x_ / (shape_.x_ - right_button_.getShape().x_ * 2);
     }
 
     void HorizontalScrollBar::set_up_right_button_shape(const Vector2d &shape)
     {
-        left_button_.set_shape(shape);
-        right_button_.set_shape(shape);
+        left_button_.setShape(shape);
+        right_button_.setShape(shape);
         
-        scroll_button_.set_position(Vector2d(0.f, shape.y_ + shape_.x_));
-        scroll_field_shape = Vector2d(shape_.x_ - left_button_.get_shape().x_ - right_button_.get_shape().x_ - scroll_button_.get_shape().x_, shape_.y_);
+        scroll_button_.setPosition(Vector2d(0.f, shape.y_ + shape_.x_));
+        scroll_field_shape = Vector2d(shape_.x_ - left_button_.getShape().x_ - right_button_.getShape().x_ - scroll_button_.getShape().x_, shape_.y_);
     }
 
     void HorizontalScrollBar::scroll_bar(float value_)
@@ -108,11 +108,11 @@ namespace SL
         offset.x_ = offset.x_ >= 0 ? offset.x_ : 0;
         offset.y_ = offset.y_ >= 0 ? offset.y_ : 0;
         
-        Vector2d max_offset = Vector2d(shape_.x_ - left_button_.get_shape().x_ * 2 - scroll_button_.get_shape().x_, 0.f);
+        Vector2d max_offset = Vector2d(shape_.x_ - left_button_.getShape().x_ * 2 - scroll_button_.getShape().x_, 0.f);
         offset.x_ = offset.x_ <= max_offset.x_ ? offset.x_ : max_offset.x_;
         offset.y_ = offset.y_ <= max_offset.y_ ? offset.y_ : max_offset.y_;
         
-        set_local_offset(offset);
+        setLocalOffset(offset);
         
         if (scroll_command_)
         {
@@ -120,7 +120,7 @@ namespace SL
         }
     }   
 
-    void HorizontalScrollBar::MoveMouseEvent (const Event &event)
+    void HorizontalScrollBar::moveMouseEvent (const Event &event)
     {
         if (scroll_button_.is_left_clicked_)
         {   
@@ -152,14 +152,14 @@ namespace SL
         scroll_bar(value);
     }
     
-    void HorizontalScrollBar::ClickLeftEvent(const Event &event)
+    void HorizontalScrollBar::clickLeftEvent(const Event &event)
     {
-        if (point_belonging(event.Oleg_.mbedata.pos) &&
-        !scroll_button_.point_belonging(event.Oleg_.mbedata.pos) &&
-        !left_button_.point_belonging(event.Oleg_.mbedata.pos) &&
-        !right_button_.point_belonging(event.Oleg_.mbedata.pos))
+        if (pointBelong(event.Oleg_.mbedata.pos) &&
+        !scroll_button_.pointBelong(event.Oleg_.mbedata.pos) &&
+        !left_button_.pointBelong(event.Oleg_.mbedata.pos) &&
+        !right_button_.pointBelong(event.Oleg_.mbedata.pos))
         {                
-            float value = (event.Oleg_.motion.pos.x_ - get_start_field().x_ - left_button_.get_shape().x_) / scroll_field_shape.x_ - scroll_coeff_ / 2;
+            float value = (event.Oleg_.motion.pos.x_ - getStartField().x_ - left_button_.getShape().x_) / scroll_field_shape.x_ - scroll_coeff_ / 2;
             value *= max_value_ - min_value_;
             value += min_value_;
             scroll_bar(value);
@@ -167,12 +167,12 @@ namespace SL
             click_place_ = event.Oleg_.motion.pos;
         }
         
-        CompositeObject::ClickLeftEvent(event);
+        CompositeObject::clickLeftEvent(event);
     }
 
     void HorizontalScrollBar::clicked_scroll_button(const Event &event)
     {
-        click_place_ = Vector2d((scroll_button_.get_start_field() + scroll_button_.get_end_field()) / 2);
+        click_place_ = Vector2d((scroll_button_.getStartField() + scroll_button_.getEndField()) / 2);
     }
 
     void HorizontalScrollBar::set_scroll_command(Command<const Event &> *new_command)

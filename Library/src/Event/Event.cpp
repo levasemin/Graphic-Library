@@ -70,7 +70,7 @@ namespace SL
             {
                 if (31 < sfEvent.text.unicode && sfEvent.text.unicode < 128)
                 {
-                    type_ = EventType::TextEvent;
+                    type_ = EventType::textEvent;
                     Oleg_.textedata.letter = static_cast<char>(sfEvent.text.unicode);
                 }
                 break;

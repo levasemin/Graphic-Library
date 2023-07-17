@@ -24,77 +24,77 @@ namespace SL
         return *this;
     }
 
-    void CompositeObject::ClickLeftEvent      (const Event &event) 
+    void CompositeObject::clickLeftEvent      (const Event &event) 
     {   
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->ClickLeftEvent(event);
+            children_[i]->clickLeftEvent(event);
         }
     }
 
-    void CompositeObject::ReleasedLeftEvent   (const Event &event) 
+    void CompositeObject::releaseLeftEvent   (const Event &event) 
     {
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->ReleasedLeftEvent(event);
+            children_[i]->releaseLeftEvent(event);
         }
     }             
     
-    void CompositeObject::ClickRightEvent     (const Event &event) 
+    void CompositeObject::clickRightEvent     (const Event &event) 
     {
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->ClickRightEvent(event);
+            children_[i]->clickRightEvent(event);
         }
     }
 
-    void CompositeObject::ReleasedRightEvent  (const Event &event) 
+    void CompositeObject::releaseRightEvent  (const Event &event) 
     {
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->ReleasedLeftEvent(event);
+            children_[i]->releaseLeftEvent(event);
         }
     }            
     
-    void CompositeObject::MoveMouseEvent      (const Event &event) 
+    void CompositeObject::moveMouseEvent      (const Event &event) 
     {
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->MoveMouseEvent(event);
+            children_[i]->moveMouseEvent(event);
         }
     }
     
-    void CompositeObject::TextEvent           (const Event &event) 
+    void CompositeObject::textEvent           (const Event &event) 
     {
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->TextEvent(event);
+            children_[i]->textEvent(event);
         }
     }
 
-    void CompositeObject::PressKeyEvent       (const Event &event) 
+    void CompositeObject::pressKeyEvent       (const Event &event) 
     {
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->PressKeyEvent(event);
+            children_[i]->pressKeyEvent(event);
         }
     }
     
-    void CompositeObject::ScrollEvent         (const Event &event) 
+    void CompositeObject::scrollEvent         (const Event &event) 
     {
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->ScrollEvent(event);
+            children_[i]->scrollEvent(event);
         }
     }  
 
-    void CompositeObject::set_global_offset(Vector2d offset) 
+    void CompositeObject::setGlobalOffset(Vector2d offset) 
     {
-        Object::set_global_offset(offset);
+        Object::setGlobalOffset(offset);
 
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->set_global_offset(offset + position_ + local_offset_);
+            children_[i]->setGlobalOffset(offset + position_ + local_offset_);
         }
     }
 
@@ -113,107 +113,86 @@ namespace SL
 
         Object::draw();
     }
-    
-    void CompositeObject::reset_global_shape()
+
+    void CompositeObject::remove(Widget *child) 
     {
-        Vector2d global_end_field  (-10000000.f, -10000000.f);
-        Vector2d global_start_field( 0.f,  0.f);
-        
+        child->setParent(nullptr);
+
         for (size_t i = 0; i < children_.size(); i++)
         {
-            global_start_field.x_ = children_[i]->get_position().x_ < global_start_field.x_ ? 
-                                    children_[i]->get_position().x_ : global_start_field.x_;
-        
-            global_start_field.y_ = children_[i]->get_position().y_ < global_start_field.y_ ? 
-                                    children_[i]->get_position().y_ : global_start_field.y_;
+            if (child == children_[i])
+            {
+                children_.erase(children_.begin() + i);
+            }
+        }
 
-            global_end_field.x_   = children_[i]->get_position().x_ +  children_[i]->get_shape().x_ > global_end_field.x_ ? 
-                                    children_[i]->get_position().x_ +  children_[i]->get_shape().x_ : global_end_field.x_;
+        child->setGlobalOffset(Vector2d(0, 0));
+    }
+
+    void CompositeObject::add(Widget *child) 
+    {
+        if (child->getParent() == this)
+        {
+            return;
+        }
+
+        child->setParent(this);
+        child->setGlobalOffset(global_offset_ + position_ + local_offset_);
+
+        children_.push_back(child);
+    }
+    
+    std::vector<Widget *> CompositeObject::getChildren() const         
+    {
+        return children_; 
+    }
+    
+    void CompositeObject::setChildren(std::vector<Widget *> children)  
+    { 
+        children_ = children; 
+    }
+
+    Vector2d CompositeObject::getGlobalShape() const             
+    {
+        Vector2d global_end_field  (INT32_MIN, INT32_MIN);
+        Vector2d global_start_field(0, 0);
+        Vector2d global_shape_     (0, 0);
+
+        for (size_t i = 0; i < children_.size(); i++)
+        {
+            global_start_field.x_ = children_[i]->getPosition().x_ < global_start_field.x_ ? 
+                                    children_[i]->getPosition().x_ : global_start_field.x_;
         
-            global_end_field.y_   = children_[i]->get_position().y_ + children_[i]->get_shape().y_ > global_end_field.y_ ? 
-                                    children_[i]->get_position().y_ + children_[i]->get_shape().y_ : global_end_field.y_;
+            global_start_field.y_ = children_[i]->getPosition().y_ < global_start_field.y_ ? 
+                                    children_[i]->getPosition().y_ : global_start_field.y_;
+
+            global_end_field.x_   = children_[i]->getPosition().x_ +  children_[i]->getShape().x_ > global_end_field.x_ ? 
+                                    children_[i]->getPosition().x_ +  children_[i]->getShape().x_ : global_end_field.x_;
+        
+            global_end_field.y_   = children_[i]->getPosition().y_ + children_[i]->getShape().y_ > global_end_field.y_ ? 
+                                    children_[i]->getPosition().y_ + children_[i]->getShape().y_ : global_end_field.y_;
 
             global_shape_ = global_end_field - global_start_field;
         }
 
         global_shape_.x_ = global_shape_.x_ > shape_.x_ ? global_shape_.x_ : shape_.x_;
         global_shape_.y_ = global_shape_.y_ > shape_.y_ ? global_shape_.y_ : shape_.y_;
-    }
 
-    void CompositeObject::remove(Widget *widget) 
-    {
-        widget->set_parent(nullptr);
-
-        for (size_t i = 0; i < children_.size(); i++)
-        {
-            if (widget == children_[i])
-            {
-                children_.erase(children_.begin() + i);
-            }
-        }
-
-        widget->set_global_offset(Vector2d(0, 0));
-
-        reset_global_shape();
-    }
-
-    void CompositeObject::add(Widget *widget) 
-    {
-        if (widget->get_parent() == this)
-        {
-            return;
-        }
-
-        widget->set_parent(this);
-        widget->set_global_offset(global_offset_ + position_ + local_offset_);
-
-        children_.push_back(widget);
-        
-        reset_global_shape();
-    }
-    
-    std::vector<Widget *> CompositeObject::get_children() const         
-    {
-        return children_; 
-    }
-    
-    void CompositeObject::set_children(std::vector<Widget *> children)  
-    { 
-        children_ = children; 
-    }
-
-    Vector2d CompositeObject::get_indent() const       
-    {
-        return indent_; 
-    }
-
-    void CompositeObject::set_indent(Vector2d indent)  
-    { 
-        indent_ = indent; 
-    }
-
-    Vector2d CompositeObject::get_global_shape() const             
-    {
         return global_shape_; 
     }
 
-    void CompositeObject::set_global_shape(Vector2d global_shape)  
-    {
-        global_shape_ = global_shape; 
-    }
-
-    Vector2d CompositeObject::get_local_offset() const 
+    Vector2d CompositeObject::getLocalOffset() const 
     {
         return local_offset_; 
     }
 
-    void CompositeObject::set_local_offset(Vector2d offset) 
+    void CompositeObject::setLocalOffset(Vector2d offset) 
     { 
-        std::vector <Widget *> children = get_children();
+        std::vector <Widget *> children = getChildren();
 
         for (size_t i = 0; i < children.size(); i++)
         {
-            children[i]->set_global_offset(children[i]->get_global_offset() + (offset - local_offset_) * children[i]->get_has_local_offset());
+            children[i]->setGlobalOffset(children[i]->getGlobalOffset() + (offset - local_offset_) * children[i]->getHasLocalOffset());
         }
 
         local_offset_ = offset; 

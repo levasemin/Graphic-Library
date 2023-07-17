@@ -3,27 +3,27 @@
 namespace SL
 {
     DecoratorScrollBar::DecoratorScrollBar(Widget *widget) : Decorator(widget),
-        scroll_bar_vertical_  (Vector2d(20.f, widget->get_shape().y_), Vector2d(widget->get_position().x_ + widget->get_shape().x_ + 10, widget->get_position().y_), 0.f, 1.f),
-        scroll_bar_horizontal_(Vector2d(widget->get_shape().x_, 20.f), Vector2d(widget->get_position().x_, widget->get_position().y_ + widget->get_shape().y_ + 10), 0.f, 1.f)
+        scroll_bar_vertical_  (Vector2d(20.f, widget->getShape().y_), Vector2d(widget->getPosition().x_ + widget->getShape().x_ + 10, widget->getPosition().y_), 0.f, 1.f),
+        scroll_bar_horizontal_(Vector2d(widget->getShape().x_, 20.f), Vector2d(widget->getPosition().x_, widget->getPosition().y_ + widget->getShape().y_ + 10), 0.f, 1.f)
     {   
         scroll_bar_vertical_.set_scroll_command   ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollVerticalWidget));
         scroll_bar_horizontal_.set_scroll_command ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollHorizontalWidget));        
     }
 
 
-    void DecoratorScrollBar::ScrollEvent(const Event &event) 
+    void DecoratorScrollBar::scrollEvent(const Event &event) 
     {
         if (scroll_bar_vertical_able_)
         {
-            scroll_bar_vertical_.ScrollEvent(event);
+            scroll_bar_vertical_.scrollEvent(event);
         }
 
-        if (point_belonging(event.Oleg_.sedata.pos))
+        if (pointBelong(event.Oleg_.sedata.pos))
         {               
-            if (doublecmp(widget_->get_global_shape().y_, widget_->get_shape().y_))
+            if (doublecmp(widget_->getGlobalShape().y_, widget_->getShape().y_))
             {
-                float value = (float)( event.Oleg_.sedata.value * 2 / (widget_->get_global_shape().y_ - widget_->get_shape().y_) +
-                                            widget_->get_local_offset().y_ / (widget_->get_global_shape().y_ - widget_->get_shape().y_));
+                float value = (float)( event.Oleg_.sedata.value * 2 / (widget_->getGlobalShape().y_ - widget_->getShape().y_) +
+                                            widget_->getLocalOffset().y_ / (widget_->getGlobalShape().y_ - widget_->getShape().y_));
                 value *= -1;
                 
                 if (scroll_bar_vertical_able_)
@@ -36,16 +36,16 @@ namespace SL
 
     void DecoratorScrollBar::ScrollVerticalWidget(const Event &event)
     {
-        Vector2d offset = get_local_offset();
-        offset.y_ = - event.Oleg_.smedata.value * (widget_->get_global_shape().y_ - widget_->get_shape().y_);
-        widget_->set_local_offset(offset);
+        Vector2d offset = getLocalOffset();
+        offset.y_ = - event.Oleg_.smedata.value * (widget_->getGlobalShape().y_ - widget_->getShape().y_);
+        widget_->setLocalOffset(offset);
     }
 
     void DecoratorScrollBar::ScrollHorizontalWidget(const Event &event)
     {
-        Vector2d offset = get_local_offset();
-        offset.x_ = - event.Oleg_.smedata.value * (widget_->get_global_shape().x_ - widget_->get_shape().x_);
-        widget_->set_local_offset(offset);
+        Vector2d offset = getLocalOffset();
+        offset.x_ = - event.Oleg_.smedata.value * (widget_->getGlobalShape().x_ - widget_->getShape().x_);
+        widget_->setLocalOffset(offset);
     }
 
     void DecoratorScrollBar::draw() 
@@ -63,64 +63,64 @@ namespace SL
         widget_->draw();
     }
 
-    void DecoratorScrollBar::ClickLeftEvent (const Event &event) 
+    void DecoratorScrollBar::clickLeftEvent (const Event &event) 
     {
         if (scroll_bar_horizontal_able_)
         {
-            scroll_bar_horizontal_.ClickLeftEvent(event);
+            scroll_bar_horizontal_.clickLeftEvent(event);
         }
         
         if (scroll_bar_vertical_able_)
         {
-            scroll_bar_vertical_.ClickLeftEvent(event);
+            scroll_bar_vertical_.clickLeftEvent(event);
         }
 
-        widget_->ClickLeftEvent(event);
+        widget_->clickLeftEvent(event);
     }
 
-    void DecoratorScrollBar::ReleasedLeftEvent (const Event &event) 
+    void DecoratorScrollBar::releaseLeftEvent (const Event &event) 
     {
         if (scroll_bar_horizontal_able_)
         {
-            scroll_bar_horizontal_.ReleasedLeftEvent(event);
+            scroll_bar_horizontal_.releaseLeftEvent(event);
         }
         
         if (scroll_bar_vertical_able_)
         {
-            scroll_bar_vertical_.ReleasedLeftEvent(event);
+            scroll_bar_vertical_.releaseLeftEvent(event);
         }
 
-        widget_->ReleasedLeftEvent(event);
+        widget_->releaseLeftEvent(event);
     }            
     
-    void DecoratorScrollBar::MoveMouseEvent (const Event &event) 
+    void DecoratorScrollBar::moveMouseEvent (const Event &event) 
     {
         if (scroll_bar_horizontal_able_)
         {
-            scroll_bar_horizontal_.MoveMouseEvent(event);
+            scroll_bar_horizontal_.moveMouseEvent(event);
         }
         
         if (scroll_bar_vertical_able_)
         {
-            scroll_bar_vertical_.MoveMouseEvent(event);
+            scroll_bar_vertical_.moveMouseEvent(event);
         }
 
-        widget_->MoveMouseEvent(event);
+        widget_->moveMouseEvent(event);
     }
 
-    void DecoratorScrollBar::set_global_offset(Vector2d offset) 
+    void DecoratorScrollBar::setGlobalOffset(Vector2d offset) 
     {
         if (scroll_bar_horizontal_able_)
         {
-            scroll_bar_horizontal_.set_global_offset(offset);
+            scroll_bar_horizontal_.setGlobalOffset(offset);
         }
         
         if (scroll_bar_vertical_able_)
         {
-            scroll_bar_vertical_.set_global_offset(offset);
+            scroll_bar_vertical_.setGlobalOffset(offset);
         }
 
-        widget_->set_global_offset(offset);
+        widget_->setGlobalOffset(offset);
     }
 
     void DecoratorScrollBar::display(Window *window) 
@@ -138,18 +138,18 @@ namespace SL
         widget_->display(window);
     }
 
-    void DecoratorScrollBar::set_parent(Widget *parent_widget) 
+    void DecoratorScrollBar::setParent(Widget *parent_widget) 
     {
         if (scroll_bar_horizontal_able_)
         {
-            scroll_bar_horizontal_.set_parent(parent_widget);
+            scroll_bar_horizontal_.setParent(parent_widget);
         }
         
         if (scroll_bar_vertical_able_)
         {
-            scroll_bar_vertical_.set_parent(parent_widget);
+            scroll_bar_vertical_.setParent(parent_widget);
         }
 
-        widget_->set_parent(parent_widget);
+        widget_->setParent(parent_widget);
     }
 }

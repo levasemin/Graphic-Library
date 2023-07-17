@@ -7,49 +7,49 @@ namespace SL
     {
     }
 
-    void Decorator::ClickLeftEvent      (const Event &event) 
+    void Decorator::clickLeftEvent      (const Event &event) 
     {
-        widget_->ClickLeftEvent(event);
+        widget_->clickLeftEvent(event);
     }
-    void Decorator::ReleasedLeftEvent   (const Event &event) 
+    void Decorator::releaseLeftEvent   (const Event &event) 
     {
-        widget_->ReleasedLeftEvent(event);
+        widget_->releaseLeftEvent(event);
     }              
 
-    void Decorator::ClickRightEvent (const Event &event) 
+    void Decorator::clickRightEvent (const Event &event) 
     {
-        widget_->ClickRightEvent(event);
+        widget_->clickRightEvent(event);
     }
             
-    void Decorator::ReleasedRightEvent (const Event &event) 
+    void Decorator::releaseRightEvent (const Event &event) 
     {
-        widget_->ReleasedRightEvent(event);
+        widget_->releaseRightEvent(event);
     }              
     
-    void Decorator::MoveMouseEvent (const Event &event) 
+    void Decorator::moveMouseEvent (const Event &event) 
     {
-        widget_->MoveMouseEvent(event);
+        widget_->moveMouseEvent(event);
     }
 
-    void Decorator::PressKeyEvent (const Event &event) 
+    void Decorator::pressKeyEvent (const Event &event) 
     {
-        widget_->PressKeyEvent(event);
+        widget_->pressKeyEvent(event);
     }
 
-    void Decorator::TextEvent (const Event &event) 
+    void Decorator::textEvent (const Event &event) 
     {
-        widget_->TextEvent(event);
+        widget_->textEvent(event);
     }
     
-    void Decorator::ScrollEvent (const Event &event) 
+    void Decorator::scrollEvent (const Event &event) 
     {
-        widget_->ScrollEvent(event);
+        widget_->scrollEvent(event);
     }
     
 
-    bool Decorator::point_belonging(Vector2d point) const 
+    bool Decorator::pointBelong(Vector2d point) const 
     {
-        return widget_->point_belonging(point);
+        return widget_->pointBelong(point);
     }
 
     void Decorator::draw() 
@@ -73,113 +73,113 @@ namespace SL
     }
 
 
-    Vector2d Decorator::get_position() const 
+    Vector2d Decorator::getPosition() const 
     {
-        return widget_->get_position();
+        return widget_->getPosition();
     }
-    void Decorator::set_position(Vector2d position) 
+    void Decorator::setPosition(Vector2d position) 
     {
-        widget_->set_position(position);
-    }
-
-    Vector2d Decorator::get_shape() const 
-    {
-        return widget_->get_shape();
-    }
-    void Decorator::set_shape(Vector2d shape) 
-    {
-        widget_->set_shape(shape);
+        widget_->setPosition(position);
     }
 
-    Widget *Decorator::get_parent() const 
+    Vector2d Decorator::getShape() const 
     {
-        return widget_->get_parent();
+        return widget_->getShape();
     }
-    void Decorator::set_parent(Widget *parent) 
+    void Decorator::setShape(Vector2d shape) 
     {
-        widget_->set_parent(parent);
-    }
-
-    Texture Decorator::get_texture() const 
-    {
-        return widget_->get_texture();
-    }
-    void Decorator::set_texture(const Texture &texture) 
-    {
-        return widget_->set_texture(texture);
+        widget_->setShape(shape);
     }
 
-    RenderTexture *Decorator::get_render_texture() 
+    Widget *Decorator::getParent() const 
     {
-        return widget_->get_render_texture();   
+        return widget_->getParent();
     }
-    void Decorator::set_render_texture(RenderTexture render_texture) 
+    void Decorator::setParent(Widget *parent) 
     {
-        widget_->set_render_texture(render_texture);
-    }
-
-    Vector2d Decorator::get_indent() const      
-    {
-        return widget_->get_indent();
-    }
-    void Decorator::set_indent(Vector2d indent) 
-    {
-        widget_->set_indent(indent);
+        widget_->setParent(parent);
     }
 
-    Vector2d Decorator::get_global_shape() const 
+    Texture Decorator::getTexture() const 
     {
-        return widget_->get_global_shape();
+        return widget_->getTexture();
     }
-    void Decorator::set_global_offset(Vector2d offset) 
+    void Decorator::setTexture(const Texture &texture) 
     {
-        widget_->set_global_offset(offset);
-    }
-
-    Vector2d Decorator::get_global_offset() const 
-    {
-        return widget_->get_global_offset();
-    }
-    void Decorator::set_global_shape(Vector2d global_shape) 
-    {
-        widget_->set_global_shape(global_shape);
+        return widget_->setTexture(texture);
     }
 
-    Vector2d Decorator::get_local_offset() const 
+    RenderTexture *Decorator::getRenderTexture() 
     {
-        return widget_->get_local_offset();
+        return widget_->getRenderTexture();   
+    }
+    void Decorator::setRenderTexture(RenderTexture render_texture) 
+    {
+        widget_->setRenderTexture(render_texture);
     }
 
-    void Decorator::set_local_offset(Vector2d offset) 
+    Vector2d Decorator::getIndent() const      
     {
-        widget_->set_local_offset(offset);
+        return widget_->getIndent();
+    }
+    void Decorator::setIndent(Vector2d indent) 
+    {
+        widget_->setIndent(indent);
     }
 
-    bool Decorator::get_has_local_offset() const 
+    Vector2d Decorator::getGlobalShape() const 
     {
-        return widget_->get_has_local_offset();
+        return widget_->getGlobalShape();
+    }
+    void Decorator::setGlobalOffset(Vector2d offset) 
+    {
+        widget_->setGlobalOffset(offset);
+    }
+
+    Vector2d Decorator::getGlobalOffset() const 
+    {
+        return widget_->getGlobalOffset();
+    }
+    void Decorator::setGlobalShape(Vector2d global_shape) 
+    {
+        widget_->setGlobalShape(global_shape);
+    }
+
+    Vector2d Decorator::getLocalOffset() const 
+    {
+        return widget_->getLocalOffset();
+    }
+
+    void Decorator::setLocalOffset(Vector2d offset) 
+    {
+        widget_->setLocalOffset(offset);
+    }
+
+    bool Decorator::getHasLocalOffset() const 
+    {
+        return widget_->getHasLocalOffset();
     }    
-    void Decorator::set_has_local_offset(bool has) 
+    void Decorator::setHasLocalOffset(bool has) 
     {
-        widget_->set_has_local_offset(has);
+        widget_->setHasLocalOffset(has);
     }
 
-    Vector2d Decorator::get_start_field() const           
+    Vector2d Decorator::getStartField() const           
     {
-        return widget_->get_start_field(); 
+        return widget_->getStartField(); 
     }
-    Vector2d Decorator::get_end_field() const           
+    Vector2d Decorator::getEndField() const           
     {
-        return widget_->get_end_field(); 
-    }
-
-    std::vector<Widget *> Decorator::get_children() const 
-    {
-        return widget_->get_children();
+        return widget_->getEndField(); 
     }
 
-    void Decorator::set_children(std::vector<Widget *> children) 
+    std::vector<Widget *> Decorator::getChildren() const 
     {
-        widget_->set_children(children);
+        return widget_->getChildren();
+    }
+
+    void Decorator::setChildren(std::vector<Widget *> children) 
+    {
+        widget_->setChildren(children);
     }
 }
