@@ -29,12 +29,12 @@ namespace SL
             scroll_button_.setLeftClick((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::clickedScrollButton));
         };
 
-    HorizontalScrollBar::~HorizontalScrollBar()
-    {
-        delete left_button_.  getLeftClick();
-        delete right_button_. getLeftClick();
-        delete scroll_button_.getLeftClick();
-    }
+    // HorizontalScrollBar::~HorizontalScrollBar()
+    // {
+    //     delete left_button_.  getLeftClick();
+    //     delete right_button_. getLeftClick();
+    //     delete scroll_button_.getLeftClick();
+    // }
 
     Command<const Event &> *HorizontalScrollBar::getScrollCommand()
     {
@@ -68,7 +68,7 @@ namespace SL
 
         offset = offset >= 0 ? offset : 0;
         
-        float max_offset = shape_.x_ - left_button_.getShape().x_ * 2 - scroll_button_.getShape().x_;
+        float max_offset = getShape().x_ - left_button_.getShape().x_ * 2 - scroll_button_.getShape().x_;
         offset = offset <= max_offset ? offset : max_offset;
         
         scroll_button_.setPosition(Vector2d(left_button_.getShape().x_ + offset, scroll_button_.getPosition().y_));
@@ -105,7 +105,7 @@ namespace SL
         
         if (able)
         {
-            scroll_field_shape_ = Vector2d(shape_.x_ - left_button_.getShape().x_ * 2 - scroll_button_.getShape().x_, shape_.y_);
+            scroll_field_shape_ = Vector2d(getShape().x_ - left_button_.getShape().x_ * 2 - scroll_button_.getShape().x_, getShape().y_);
             add(&left_button_);
             add(&right_button_);
         }
@@ -115,8 +115,8 @@ namespace SL
             remove(&left_button_);
             remove(&right_button_);
 
-            scroll_button_.setPosition(Vector2d(0.f, shape_.y_ + shape_.x_));
-            scroll_field_shape_ = Vector2d(shape_.x_ - left_button_.getShape().x_ - right_button_.getShape().x_ - scroll_button_.getShape().x_, shape_.y_);
+            scroll_button_.setPosition(Vector2d(0.f, getShape().y_ + getShape().x_));
+            scroll_field_shape_ = Vector2d(getShape().x_ - left_button_.getShape().x_ - right_button_.getShape().x_ - scroll_button_.getShape().x_, getShape().y_);
         }
     }
 
@@ -124,8 +124,8 @@ namespace SL
     {
         scroll_button_.setShape(shape);
         scroll_button_.setPosition(Vector2d(left_button_.getShape().x_, 0.f));
-        scroll_field_shape_ = Vector2d(shape_.x_ - left_button_.getShape().x_ - right_button_.getShape().x_ - scroll_button_.getShape().x_, shape_.y_);
-        scroll_coeff_ = scroll_button_.getShape().x_ / (shape_.x_ - right_button_.getShape().x_ * 2);
+        scroll_field_shape_ = Vector2d(getShape().x_ - left_button_.getShape().x_ - right_button_.getShape().x_ - scroll_button_.getShape().x_, getShape().y_);
+        scroll_coeff_ = scroll_button_.getShape().x_ / (getShape().x_ - right_button_.getShape().x_ * 2);
     }   
 
 

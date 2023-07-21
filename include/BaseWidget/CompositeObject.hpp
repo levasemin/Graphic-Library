@@ -34,8 +34,6 @@ namespace SL
 
         void add(Widget *widget);
         
-        Vector2d getVirtualShape() const;
-
         std::vector<Widget *> getChildren() const override;
         void setChildren(std::vector<Widget *> children) override;
     

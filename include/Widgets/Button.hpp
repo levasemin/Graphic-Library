@@ -50,6 +50,8 @@ namespace SL
         void releaseRightEvent (const Event &event) override;
         
         void moveMouseEvent    (const Event &event) override;
+        
+        void scrollEvent        (const Event &event) override;
 
         bool isLeftClicked();
         bool isRightClicked();

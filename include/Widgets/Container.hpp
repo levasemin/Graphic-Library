@@ -10,6 +10,6 @@ namespace SL
     class Container : public CompositeObject
     {
     public:
-        Container(Vector2d shape, Vector2d virtual_shape, Vector2d position, const Texture &texture = Texture(Color::Red));
+        Container(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::Red));
     };
 }

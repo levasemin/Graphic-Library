@@ -47,10 +47,6 @@ namespace SL
         void setPosition(Vector2d position) override;
 
         std::pair<Vector2d, Vector2d> getField() const override;
-
-        Vector2d getGlobalShape() const override;        
-
-        Vector2d getVirtualShape() const override;
         
         Widget  *getParent() const override;
         void setParent(Widget *parent) override;
@@ -69,11 +65,14 @@ namespace SL
         Vector2d position_;
         Texture texture_;
         Sprite sprite_;
-
-        Vector2d real_position_;
         
         RenderTexture render_texture_;
         Widget *parent_ = nullptr;
 
+        Vector2d max_start_;
+        Vector2d max_end_;
+    
+    private:
+        std::pair<Vector2d, Vector2d> getFieldLimits(const Widget *current, std::pair<Vector2d, Vector2d> curr_limit) const;
     };
 }

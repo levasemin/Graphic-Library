@@ -6,10 +6,10 @@ namespace SL
     VerticalScrollBar::VerticalScrollBar(Vector2d shape, Vector2d position, float min_value, float max_value, const Texture &texture):
         CompositeObject  (shape, position, texture),
         up_button_    (Vector2d(shape.x_, shape.x_), Vector2d(0, 0)),
-        down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(0.f, shape_.y_  - shape.x_)),
+        down_button_  (Vector2d(shape.x_, shape.x_), Vector2d(0.f, shape.y_  - shape.x_)),
         scroll_button_(Vector2d(shape.x_, (shape.y_ - shape.x_ * 2) * SCROLL_COEFF),
                        Vector2d(0.f, shape.x_)),
-        scroll_field_shape_(shape_.x_, shape_.y_ - shape_.x_ * 2 - scroll_button_.getShape().y_),
+        scroll_field_shape_(shape.x_, shape.y_ - shape.x_ * 2 - scroll_button_.getShape().y_),
         min_value_(min_value),
         max_value_(max_value),
 

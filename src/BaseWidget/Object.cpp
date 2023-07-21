@@ -7,7 +7,6 @@ namespace SL
             position_(position),    
             texture_(texture),
             sprite_(shape, texture, 0),
-            real_position_(position),
             render_texture_(shape)
             {                   
                 sprite_.setTexture(texture);
@@ -44,7 +43,7 @@ namespace SL
 
             if (parent_)
             {
-                sprite_.setPosition(real_position_);
+                sprite_.setPosition(position_);
                 parent_->getRenderTexture()->draw(sprite_);
             }
         }
@@ -96,47 +95,49 @@ namespace SL
 
         void Object::setPosition(Vector2d position) 
         {
-            real_position_ += position - position_;
             position_ = position; 
+        }
+        
+        std::pair<Vector2d, Vector2d> Object::getFieldLimits(const Widget *current, std::pair<Vector2d, Vector2d> curr_limit) const
+        {
+            if (current->getParent() == nullptr)
+            {
+                return {current->getPosition(), current->getPosition() + current->getShape()};
+            }
+
+            auto parent_limit = getFieldLimits(current->getParent(), curr_limit);
+
+            curr_limit.first.x_ = curr_limit.first.x_ > parent_limit.first.x_  ? curr_limit.first.x_ : parent_limit.first.x_;
+            curr_limit.first.x_ = curr_limit.first.x_ < parent_limit.second.x_ ? curr_limit.first.x_ : parent_limit.second.x_;
+            curr_limit.first.y_ = curr_limit.first.y_ > parent_limit.first.y_  ? curr_limit.first.y_ : parent_limit.first.y_;
+            curr_limit.first.y_ = curr_limit.first.y_ < parent_limit.second.y_ ? curr_limit.first.y_ : parent_limit.second.y_;
+
+            curr_limit.second.x_ = curr_limit.second.x_ > parent_limit.first.x_  ? curr_limit.second.x_ : parent_limit.first.x_;
+            curr_limit.second.x_ = curr_limit.second.x_ < parent_limit.second.x_ ? curr_limit.second.x_ : parent_limit.second.x_;
+            curr_limit.second.y_ = curr_limit.second.y_ > parent_limit.first.y_  ? curr_limit.second.y_ : parent_limit.first.y_;
+            curr_limit.second.y_ = curr_limit.second.y_ < parent_limit.second.y_ ? curr_limit.second.y_ : parent_limit.second.y_;
+
+            return curr_limit;
         }
 
         std::pair<Vector2d, Vector2d> Object::getField() const 
         {
-            if (parent_ != nullptr)
-            {   
-                auto parent_field = parent_->getField();
-                Vector2d parent_start_field = parent_field.first;
-                Vector2d parent_end_field   = parent_field.second;
+            const Widget *curr_widget = this;
+            
+            Vector2d start_field = position_;
+            Vector2d end_field   = position_ + shape_;
 
-                Vector2d start_field = parent_start_field + real_position_;
-                Vector2d end_field   = parent_start_field + real_position_ + shape_;
-
-                start_field.x_ = start_field.x_ > parent_start_field.x_ ? start_field.x_ : parent_start_field.x_;
-                start_field.x_ = start_field.x_ < parent_end_field.x_   ? start_field.x_ : parent_end_field.x_;
-                start_field.y_ = start_field.y_ > parent_start_field.y_ ? start_field.y_ : parent_start_field.y_;
-                start_field.y_ = start_field.y_ < parent_end_field.y_   ? start_field.y_ : parent_end_field.y_;
-
-                end_field.x_ = end_field.x_ > parent_start_field.x_ ? end_field.x_ : parent_start_field.x_;
-                end_field.x_ = end_field.x_ < parent_end_field.x_   ? end_field.x_ : parent_end_field.x_;
-                end_field.y_ = end_field.y_ > parent_start_field.y_ ? end_field.y_ : parent_start_field.y_;
-                end_field.y_ = end_field.y_ < parent_end_field.y_   ? end_field.y_ : parent_end_field.y_;
-
-                return {start_field, end_field};
+            while (curr_widget->getParent())
+            {
+                curr_widget = curr_widget->getParent();
+                
+                start_field += curr_widget->getPosition();
+                end_field   += curr_widget->getPosition();
             }
 
-            return {real_position_, real_position_ + shape_};
-        }
+            auto limits = getFieldLimits(curr_widget, {start_field, end_field});
 
-        Vector2d Object::getGlobalShape() const 
-        {
-            auto field = getField();
-
-            return field.second - field.first;
-        }
-
-        Vector2d Object::getVirtualShape() const
-        {
-            return shape_;
+            return {start_field, end_field};
         }
         
         Widget *Object::getParent() const 

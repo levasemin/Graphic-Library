@@ -16,9 +16,9 @@ namespace SL
     public:
         HorizontalScrollBar(Vector2d shape, Vector2d position, float min_value, float max_value, const Texture &texture = Texture(Color::White));
 
-        HorizontalScrollBar(const HorizontalScrollBar &source);
+        HorizontalScrollBar(const HorizontalScrollBar &source) = default;
         HorizontalScrollBar &operator=(const HorizontalScrollBar &source)  = default; 
-        ~HorizontalScrollBar() override;
+        ~HorizontalScrollBar() override = default;
 
         Command<const Event &> *getScrollCommand();
         void setScrollCommand (Command<const Event &> *new_command);
@@ -54,7 +54,7 @@ namespace SL
 
         Command<const Event&> *scroll_command_ = nullptr;
 
-        const Texture scroll_button_texture_;
+        Texture scroll_button_texture_;
 
         void scrollUp (const Event &event);   
 

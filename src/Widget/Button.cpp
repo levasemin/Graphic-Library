@@ -136,7 +136,7 @@ namespace SL
     }
 
     void Button::moveMouseEvent(const Event &event)
-    {
+    {        
         if (pointBelong(event.Oleg_.motion.pos))
         {
             Color new_color = default_sprite_color_;
@@ -149,8 +149,24 @@ namespace SL
         else
         {
             sprite_.setColor(default_sprite_color_);
-        }
+        }   
+    }
+
+    void Button::scrollEvent(const Event &event)
+    {
+        if (pointBelong(event.Oleg_.sedata.pos))
+        {
+            Color new_color = default_sprite_color_;
         
+            new_color.set_a(uint8_t(new_color.get_a() / 3 * 2));
+
+            sprite_.setColor(new_color);
+        }
+
+        else
+        {
+            sprite_.setColor(default_sprite_color_);
+        }
     }
 
     bool Button::isLeftClicked()

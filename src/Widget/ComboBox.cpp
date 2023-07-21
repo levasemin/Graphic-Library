@@ -14,12 +14,12 @@ namespace SL
         {
             if (is_showed_)
             {
-                parent_->remove(&item_box_);
+                getParent()->remove(&item_box_);
             }
 
             else
             {
-                parent_->add(&item_box_);
+                getParent()->add(&item_box_);
             }
 
             is_showed_ = !is_showed_;
@@ -29,7 +29,7 @@ namespace SL
         {
             if (!item_box_.pointBelong(event.Oleg_.mbedata.pos) && !pointBelong(event.Oleg_.mbedata.pos))
             {
-                parent_->remove(&item_box_);
+                getParent()->remove(&item_box_);
                 is_showed_ = false;
             }
         }
