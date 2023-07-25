@@ -98,46 +98,41 @@ namespace SL
             position_ = position; 
         }
         
-        std::pair<Vector2d, Vector2d> Object::getFieldLimits(const Widget *current, std::pair<Vector2d, Vector2d> curr_limit) const
+        Vector2d Object::getFieldLimits(const Widget *current, std::pair<Vector2d, Vector2d> *curr_value) const
         {
-            if (current->getParent() == nullptr)
-            {
-                return {current->getPosition(), current->getPosition() + current->getShape()};
+            Vector2d curr_start = current->getPosition();
+            Vector2d curr_end   = current->getPosition() + current->getShape();
+            
+            curr_value->first  += curr_start;
+            curr_value->second += curr_end;
+                        
+            if (current->getParent() != nullptr)
+            {                
+                auto parent_start = getFieldLimits(current->getParent(), curr_value);
+                curr_start += parent_start;
+                curr_end   += parent_start; 
             }
+            
+            curr_value->first.x_ = curr_value->first.x_ > curr_start.x_  ? curr_value->first.x_ : curr_start.x_;
+            curr_value->first.x_ = curr_value->first.x_ < curr_end.x_    ? curr_value->first.x_ : curr_end.x_;
+            curr_value->first.y_ = curr_value->first.y_ > curr_start.y_  ? curr_value->first.y_ : curr_start.y_;
+            curr_value->first.y_ = curr_value->first.y_ < curr_end.y_    ? curr_value->first.y_ : curr_end.y_;
 
-            auto parent_limit = getFieldLimits(current->getParent(), curr_limit);
+            curr_value->second.x_ = curr_value->second.x_ > curr_start.x_  ? curr_value->second.x_ : curr_start.x_;
+            curr_value->second.x_ = curr_value->second.x_ < curr_end.x_    ? curr_value->second.x_ : curr_end.x_;
+            curr_value->second.y_ = curr_value->second.y_ > curr_start.y_  ? curr_value->second.y_ : curr_start.y_;
+            curr_value->second.y_ = curr_value->second.y_ < curr_end.y_    ? curr_value->second.y_ : curr_end.y_;
 
-            curr_limit.first.x_ = curr_limit.first.x_ > parent_limit.first.x_  ? curr_limit.first.x_ : parent_limit.first.x_;
-            curr_limit.first.x_ = curr_limit.first.x_ < parent_limit.second.x_ ? curr_limit.first.x_ : parent_limit.second.x_;
-            curr_limit.first.y_ = curr_limit.first.y_ > parent_limit.first.y_  ? curr_limit.first.y_ : parent_limit.first.y_;
-            curr_limit.first.y_ = curr_limit.first.y_ < parent_limit.second.y_ ? curr_limit.first.y_ : parent_limit.second.y_;
-
-            curr_limit.second.x_ = curr_limit.second.x_ > parent_limit.first.x_  ? curr_limit.second.x_ : parent_limit.first.x_;
-            curr_limit.second.x_ = curr_limit.second.x_ < parent_limit.second.x_ ? curr_limit.second.x_ : parent_limit.second.x_;
-            curr_limit.second.y_ = curr_limit.second.y_ > parent_limit.first.y_  ? curr_limit.second.y_ : parent_limit.first.y_;
-            curr_limit.second.y_ = curr_limit.second.y_ < parent_limit.second.y_ ? curr_limit.second.y_ : parent_limit.second.y_;
-
-            return curr_limit;
+            return curr_start;
         }
-
+        
         std::pair<Vector2d, Vector2d> Object::getField() const 
         {
-            const Widget *curr_widget = this;
-            
-            Vector2d start_field = position_;
-            Vector2d end_field   = position_ + shape_;
+            std::pair<Vector2d, Vector2d> field = {Vector2d(0, 0), Vector2d(0, 0)};
 
-            while (curr_widget->getParent())
-            {
-                curr_widget = curr_widget->getParent();
-                
-                start_field += curr_widget->getPosition();
-                end_field   += curr_widget->getPosition();
-            }
+            getFieldLimits(this, &field);
 
-            auto limits = getFieldLimits(curr_widget, {start_field, end_field});
-
-            return {start_field, end_field};
+            return field;
         }
         
         Widget *Object::getParent() const 
@@ -165,7 +160,17 @@ namespace SL
             render_texture_.draw(sprite_);
         }
 
-       RenderTexture *Object::getRenderTexture() 
+        Color Object::getColor() const
+        {
+            return sprite_.getColor();
+        }
+
+        void Object::setColor(Color color)
+        {
+            sprite_.setColor(color);
+        }
+
+        RenderTexture *Object::getRenderTexture() 
         {
             return &render_texture_; 
         }

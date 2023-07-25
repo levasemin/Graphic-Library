@@ -17,6 +17,19 @@ namespace SL
         Button &operator= (const Button &source) = default;
         ~Button () = default; 
 
+        
+        void setText(const std::string &text);
+        void setText(const Text &text);
+
+        void setTextColor(const Color &color);
+
+        void setCharacterSize(int text_size);
+
+        void setTexture(const Texture &texture) override;
+        
+        bool isLeftClicked();
+        bool isRightClicked();
+        
         Command<const Event &> * getLeftClick ();
         void setLeftClick (Command<const Event &> *command);
 
@@ -29,32 +42,17 @@ namespace SL
         Command<const Event &> * getReleaseRightClick ();
         void setReleaseRightClick (Command<const Event &> *command);
 
-        void setText(const std::string &text);
 
-        void setTextColor(const Color &color);
-
-        void setCharacterSize(int text_size);
-
-
-        void setText(const Text &text);
-
-        void setClickTexture(const Texture &texture);
-
-        void setTexture(const Texture &texture) override;
-    
+    protected:
+        void moveMouseEvent    (const Event &event) override;
 
         void clickLeftEvent    (const Event &event) override;
         void releaseLeftEvent  (const Event &event) override;
 
         void clickRightEvent   (const Event &event) override;
-        void releaseRightEvent (const Event &event) override;
-        
-        void moveMouseEvent    (const Event &event) override;
+        void releaseRightEvent (const Event &event) override;        
         
         void scrollEvent        (const Event &event) override;
-
-        bool isLeftClicked();
-        bool isRightClicked();
 
     private:
         bool is_left_clicked_  = false;

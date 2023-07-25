@@ -11,11 +11,7 @@ namespace SL
 {
     class Text
     {
-    private:
-        sf::Text text_;
-    
     public:
-    
         Text ();
         
         Text (const Font &font);
@@ -40,8 +36,10 @@ namespace SL
 
         Font getFont();
 
-    private:
         friend class Label;
         friend class RenderTexture;
+    
+    private:
+        sf::Text text_;    
     };
 }

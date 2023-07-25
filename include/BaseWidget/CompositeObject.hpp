@@ -16,28 +16,30 @@ namespace SL
         CompositeObject &operator=(const CompositeObject &source) = default;
         ~CompositeObject() = default;
 
+        void add(Widget *widget) override;
+        void remove(Widget *widget) override;
+    
+    protected:
+        void draw() override;
+
+        std::vector<Widget *> getChildren() const override;
+        void setChildren(std::vector<Widget *> children) override;
+
+        void moveMouseEvent      (const Event &event) override;
+
         void clickLeftEvent      (const Event &event) override;
         void releaseLeftEvent    (const Event &event) override;
 
         void clickRightEvent     (const Event &event) override;
         void releaseRightEvent   (const Event &event) override;
         
-        void moveMouseEvent      (const Event &event) override;
-
-        void pressKeyEvent       (const Event &event) override;
-        void textEvent           (const Event &event) override;
         void scrollEvent         (const Event &event) override;
 
-        void draw() override;
-        
-        void remove(Widget *widget);
+        void pressKeyEvent       (const Event &event) override;
 
-        void add(Widget *widget);
-        
-        std::vector<Widget *> getChildren() const override;
-        void setChildren(std::vector<Widget *> children) override;
+        void textEvent           (const Event &event) override;
     
-    protected:
+    private:
         std::vector<Widget *> children_;
     };
 }

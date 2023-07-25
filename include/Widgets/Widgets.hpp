@@ -6,5 +6,4 @@
 #include "Editor.hpp"
 #include "HorizontalScrollBar.hpp"
 #include "Label.hpp"
-#include "MenuBar.hpp"
 #include "VerticalScrollBar.hpp"

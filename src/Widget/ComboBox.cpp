@@ -27,11 +27,11 @@ namespace SL
 
         else if (is_showed_)
         {
-            if (!item_box_.pointBelong(event.Oleg_.mbedata.pos) && !pointBelong(event.Oleg_.mbedata.pos))
-            {
-                getParent()->remove(&item_box_);
-                is_showed_ = false;
-            }
+            // if (!item_box_.pointBelong(event.Oleg_.mbedata.pos) && !pointBelong(event.Oleg_.mbedata.pos))
+            // {
+            //     getParent()->remove(&item_box_);
+            //     is_showed_ = false;
+            // }
         }
     }
 

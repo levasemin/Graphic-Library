@@ -3,14 +3,14 @@
 namespace SL
 {
     Editor::Editor(Vector2d shape, Vector2d position, const Texture &texture) : Label(shape, position, texture),
-            default_sprite_color_(sprite_.getColor())
+            default_sprite_color_(getColor())
     {
     }
 
     void Editor::setTexture(const Texture &texture)
     {
         Object::setTexture(texture);
-        default_sprite_color_ = sprite_.getColor();
+        default_sprite_color_ = getColor();
     }
 
     void Editor::setEditorCommand(Command<const Event &> *editor_command)
@@ -18,9 +18,14 @@ namespace SL
         editor_command_ = editor_command;
     }
 
+    Command<const Event &> *Editor::getEditorCommand()
+    {
+        return editor_command_;
+    }
+    
     std::string Editor::getText()
     {
-        std::string text = text_.getString();
+        std::string text = Label::getText();
         
         if (clicked_)
         {
@@ -34,7 +39,7 @@ namespace SL
     {
         if (clicked_)
         {
-            std::string string = text_.getString();
+            std::string string = Label::getText();
 
             string.erase(string.begin() + cursor_pos_);
 
@@ -92,7 +97,7 @@ namespace SL
     {
         if (clicked_)
         {
-            std::string string = text_.getString();
+            std::string string = Label::getText();
 
             if (cursor_pos_ > 0)
             {
@@ -120,15 +125,13 @@ namespace SL
         if (pointBelong(event.Oleg_.motion.pos))
         {
             Color new_color = default_sprite_color_;
-        
-            new_color *= 2.f / 3.f;
-
-            sprite_.setColor(new_color);
+            new_color.set_h(new_color.get_h() / 3.f * 2.f);
+            setColor(new_color);
         }
 
         else if (!clicked_) 
         {
-            sprite_.setColor(default_sprite_color_);
+            setColor(default_sprite_color_);
         }
 
         Label::moveMouseEvent(event);
@@ -141,11 +144,10 @@ namespace SL
             clicked_ = true;
 
             Color new_color = default_sprite_color_;
-            new_color *= 2.f / 3.f;
+            new_color.set_h(new_color.get_h() / 3.f * 2.f);
+            setColor(new_color);
 
-            sprite_.setColor(new_color);
-
-            std::string string = text_.getString();
+            std::string string = Label::getText();
 
             cursor_pos_ = string.size();
             setText(string);
@@ -155,13 +157,13 @@ namespace SL
         {
             if (clicked_ == true)
             {
-                std::string string = text_.getString();
+                std::string string = Label::getText();
                 string.erase(string.begin() + cursor_pos_);
     
                 clicked_ = false;
             }
 
-            sprite_.setColor(default_sprite_color_);
+            setColor(default_sprite_color_);
         }
     }
 

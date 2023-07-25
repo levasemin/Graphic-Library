@@ -11,5 +11,9 @@ namespace SL
     {
     public:
         Container(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::Red));
+
+        Container(const Container &source) = default;
+        Container &operator=(const Container &source) = default;
+        ~Container() = default;
     };
 }

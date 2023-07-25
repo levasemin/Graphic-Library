@@ -17,14 +17,15 @@ namespace SL
         void setText(const std::string &string);
 
         void setText(const Text &text);
-
+        
         std::string getText();
 
+        Command<const Event &> * getEditorCommand();
         void setEditorCommand(Command<const Event &> *editor_command);
 
-    
         void setTexture(const Texture &texture) override;
 
+    protected:
         void moveMouseEvent(const Event &event) override;
 
         void clickLeftEvent(const Event &event) override;

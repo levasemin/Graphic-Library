@@ -25,7 +25,7 @@ namespace SL
         sprite_.setTextureRect(sf::IntRect((int)start.x_, (int)start.y_, (int)end.x_, (int)end.y_));
     }
     
-    Vector2d Sprite::getShape()
+    Vector2d Sprite::getShape() const
     {
         return shape_;
     }
@@ -41,12 +41,12 @@ namespace SL
         }
     }
     
-    Texture Sprite::getTexture()
+    Texture Sprite::getTexture() const
     {
         return texture_;
     }
 
-    Color Sprite::getColor()
+    Color Sprite::getColor() const
     {
         return Color(sprite_.getColor());
     }
@@ -90,7 +90,7 @@ namespace SL
         sprite_.setScale(scale_x, scale_y);
     }
 
-    Vector2d Sprite::getScale()
+    Vector2d Sprite::getScale() const
     {
         return Vector2d(sprite_.getScale());
     }

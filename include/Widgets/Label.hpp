@@ -29,16 +29,15 @@ namespace SL
         void setText(const Text &text);
         void setText(const std::string &string);
 
+        std::string getText();
+        
         void setAlignment(Alignment type);
 
         void setCharacterSize(int text_size);
 
         void setTextColor(const Color &color);
 
-    protected:
-        bool is_left_clicked_  = false;
-        bool is_right_clicked_ = false;
-        
+    private:        
         Text text_;
         Alignment alignment_ = Alignment::CenterCenter;
 

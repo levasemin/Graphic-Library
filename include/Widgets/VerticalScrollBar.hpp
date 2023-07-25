@@ -16,13 +16,10 @@ namespace SL
         
         VerticalScrollBar(Vector2d shape, Vector2d position, float min_value, float max_value, const Texture &texture = Texture(Color::White));
 
-        VerticalScrollBar(const VerticalScrollBar &source) = default;
-        VerticalScrollBar &operator =(const VerticalScrollBar &source) = default;
+        VerticalScrollBar(const VerticalScrollBar &source);
+        VerticalScrollBar &operator =(const VerticalScrollBar &source);
         ~VerticalScrollBar();
 
-        Command<const Event &> *getScrollCommand();
-        void setScrollCommand(Command<const Event &> *new_command);
-        
         float getValue ();
         void  setValue (float value);
         
@@ -35,7 +32,11 @@ namespace SL
         void setSideButton(bool able);
 
         void setScrollButtonShape(const Vector2d &shape);
+
+        Command<const Event &> *getScrollCommand();
+        void setScrollCommand(Command<const Event &> *new_command);
     
+    protected:
         void moveMouseEvent (const Event &event) override;
 
         void clickLeftEvent(const Event &event) override;
@@ -54,9 +55,11 @@ namespace SL
         float max_value_;
         float scroll_coeff_ = SCROLL_COEFF;
     
+        bool is_scroll_surface_click_ = true;
+
         Command<const Event&> *scroll_command_ = nullptr;
 
-        const Texture scroll_button_texture_;
+        Texture scroll_button_texture_;
 
         void scrollUp(const Event &event);
 

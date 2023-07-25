@@ -29,12 +29,47 @@ namespace SL
             scroll_button_.setLeftClick((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::clickedScrollButton));
         };
 
-    // HorizontalScrollBar::~HorizontalScrollBar()
-    // {
-    //     delete left_button_.  getLeftClick();
-    //     delete right_button_. getLeftClick();
-    //     delete scroll_button_.getLeftClick();
-    // }
+    HorizontalScrollBar::HorizontalScrollBar(const HorizontalScrollBar &source): SL::CompositeObject(*(SL::CompositeObject *)&source),
+        left_button_(source.left_button_),
+        right_button_(source.right_button_),
+        scroll_button_(source.scroll_button_),
+        click_place_(Vector2d(0, 0)),
+        scroll_field_shape_(source.scroll_field_shape_),
+        min_value_(source.min_value_),
+        max_value_(source.max_value_),
+        scroll_button_texture_(source.scroll_button_texture_)
+    {
+        left_button_.  setLeftClick((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::scrollUp));
+        right_button_. setLeftClick((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::scrollDown));
+        scroll_button_.setLeftClick((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::clickedScrollButton));
+    }
+
+    HorizontalScrollBar &HorizontalScrollBar::operator=(const HorizontalScrollBar &source)
+    {
+        SL::CompositeObject::operator=(*(SL::CompositeObject *)&source);
+        left_button_ = source.left_button_;
+        right_button_ = source.right_button_;
+        scroll_button_ = source.scroll_button_;
+        click_place_ = Vector2d(0, 0);
+        scroll_field_shape_ = source.scroll_field_shape_;
+        min_value_ = source.min_value_;
+        max_value_ = source.max_value_;
+        scroll_button_texture_ = source.scroll_button_texture_;
+
+        left_button_.  setLeftClick((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::scrollUp));
+        right_button_. setLeftClick((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::scrollDown));
+        scroll_button_.setLeftClick((Command<const Event &> *) new SimpleCommand<HorizontalScrollBar, const Event &>(this, &HorizontalScrollBar::clickedScrollButton));
+        
+        return *this;
+    }
+
+    HorizontalScrollBar::~HorizontalScrollBar()
+    {
+        delete scroll_command_;
+        delete left_button_.  getLeftClick();
+        delete right_button_. getLeftClick();
+        delete scroll_button_.getLeftClick();
+    }
 
     Command<const Event &> *HorizontalScrollBar::getScrollCommand()
     {
@@ -145,11 +180,10 @@ namespace SL
 
     void HorizontalScrollBar::clickLeftEvent(const Event &event)
     {        
-        if (pointBelong(event.Oleg_.mbedata.pos) &&
-            !scroll_button_.pointBelong(event.Oleg_.mbedata.pos) &&
-            !left_button_.  pointBelong(event.Oleg_.mbedata.pos) &&
-            !right_button_. pointBelong(event.Oleg_.mbedata.pos))
-        {                
+        CompositeObject::clickLeftEvent(event);
+
+        if (pointBelong(event.Oleg_.mbedata.pos) && is_scroll_surface_click_)
+        {
             float value = (event.Oleg_.motion.pos.x_ - getField().first.x_ - left_button_.getShape().x_) / scroll_field_shape_.x_ - scroll_coeff_ / 2;
             value *= max_value_ - min_value_;
             value += min_value_;
@@ -158,12 +192,14 @@ namespace SL
             click_place_ = event.Oleg_.motion.pos;
         }
 
-        CompositeObject::clickLeftEvent(event);
+        is_scroll_surface_click_ = true;
     }
 
 //private:
     void HorizontalScrollBar::scrollUp(const Event &event)
     {
+        is_scroll_surface_click_ = false;
+
         float value = -scroll_coeff_ + (scroll_button_.getPosition().x_ - left_button_.getShape().x_) / scroll_field_shape_.x_;
         value *= max_value_ - min_value_;
         value += min_value_;
@@ -173,6 +209,8 @@ namespace SL
 
     void HorizontalScrollBar::scrollDown(const Event &event)
     {
+        is_scroll_surface_click_ = false;
+
         float value = scroll_coeff_ + (scroll_button_.getPosition().x_ - left_button_.getShape().x_)  / scroll_field_shape_.x_;
         value *= max_value_ - min_value_;
         value += min_value_;
@@ -182,6 +220,7 @@ namespace SL
 
     void HorizontalScrollBar::clickedScrollButton(const Event &event)
     {
-        click_place_ = scroll_button_.getField().first + scroll_button_.getShape() / 2;
+        is_scroll_surface_click_ = false;
+        click_place_ = getField().first + scroll_button_.getPosition() + scroll_button_.getShape() / 2;
     }
 }

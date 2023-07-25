@@ -45,7 +45,10 @@ namespace SL
         void print_value () const;
 
         friend Vector2d operator + (const Vector2d &first, const Vector2d &second);
+        friend Vector2d operator + (float num, const Vector2d &first);
+        friend Vector2d operator + (const Vector2d &first, float num);
         friend Vector2d operator - (const Vector2d &first, const Vector2d &second);
+        friend Vector2d operator - (const Vector2d &first, float num);
         friend Vector2d operator * (const Vector2d &first, float num);
         friend Vector2d operator * (float num, const Vector2d &first);
         friend Vector2d operator / (const Vector2d &first, float num);

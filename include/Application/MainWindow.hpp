@@ -20,5 +20,11 @@ namespace SL
         };
 
         MainWindow(Vector2d shape, Texture texture = Texture(Color::White), int style = sf::Style::Default);
+
+        MainWindow(const MainWindow &source) = default;
+        MainWindow &operator=(const MainWindow &source) = default;
+        ~MainWindow() = default;
+        
+        friend class Application;
     };
 }

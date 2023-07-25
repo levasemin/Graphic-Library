@@ -65,27 +65,7 @@ namespace SL
         offset_ = 0;
         scroll_shape_ = widget_->getShape().y_ + widget_->getPosition().y_;
     }
-
-    Vector2d DecoratorScroll::getDecoratorShape() const
-    {
-        return CompositeObject::getShape();
-    }
-
-    void DecoratorScroll::setDecoratorShape (Vector2d shape)
-    {
-        CompositeObject::setShape(shape);
-    }
-
-    Vector2d DecoratorScroll::getDecoratorPosition() const
-    {
-        return CompositeObject::getPosition();
-    }
-
-    void DecoratorScroll::setDecoratorPosition(Vector2d position)
-    {
-        CompositeObject::setPosition(position);
-    }
-
+    
     void DecoratorScroll::add(Widget *window)
     {
         widget_->add(window);
@@ -95,36 +75,7 @@ namespace SL
     {
         widget_->remove(window);
     }
-    
-    Vector2d DecoratorScroll::getPosition() const
-    {
-        return widget_->getPosition();
-    }
 
-    void DecoratorScroll::setPosition(Vector2d position)
-    {
-        widget_->setPosition(position);
-    }
-
-    Vector2d DecoratorScroll::getShape() const
-    {
-        return widget_->getShape();
-    }
-
-    void DecoratorScroll::setShape (Vector2d shape)
-    {
-        widget_->setShape(shape);
-    }
-
-    Texture DecoratorScroll::getTexture () const
-    {
-        return widget_->getTexture();
-    }
-
-    void DecoratorScroll::setTexture (const Texture &texture)
-    {
-        widget_->setTexture(texture);
-    }
     
 //protected
     void DecoratorScroll::scrollEvent (const Event &event)
@@ -138,7 +89,7 @@ namespace SL
                 return;
             }
             
-            if (offset_ + offset < shape_.y_ - scroll_shape_)
+            if (offset_ + offset < getShape().y_ - scroll_shape_)
             {
                 return;
             }

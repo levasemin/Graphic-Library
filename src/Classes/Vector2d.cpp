@@ -26,10 +26,34 @@ namespace SL
         return new_vector;
     }
 
+    Vector2d operator + (const Vector2d &first, float num)
+    {
+        Vector2d new_vector = first;
+        new_vector.x_ += num;
+        new_vector.y_ += num;
+        return new_vector;
+    }
+
+    Vector2d operator + (float num, const Vector2d &first)
+    {
+        Vector2d new_vector = first;
+        new_vector.x_ += num;
+        new_vector.y_ += num;
+        return new_vector;
+    }
+
     Vector2d operator - (const Vector2d &first, const Vector2d &second)
     {
         Vector2d new_vector = first;
         new_vector -= second;
+        return new_vector;
+    }
+
+    Vector2d operator - (const Vector2d &first, float num)
+    {
+        Vector2d new_vector = first;
+        new_vector.x_ -= num;
+        new_vector.y_ -= num;
         return new_vector;
     }
 

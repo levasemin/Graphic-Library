@@ -16,15 +16,11 @@ namespace SL
 {
     class Color
     { 
-        uint8_t r_ = 0, g_ = 0, b_ = 0, a_ = 255;
-        float   h_ = 0, s_ = 0, v_ = 0;
     public:
         Color(float h, float s, float v);
         Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255); 
         Color(sf::Color color);
         Color(){};
-
-        sf::Color get_sf_color() const;
 
         static const Color Black;
         static const Color White;       
@@ -35,6 +31,8 @@ namespace SL
         static const Color Yellow;      
         static const Color Magenta;     
         static const Color Cyan;        
+
+        sf::Color get_sf_color() const;
 
         void print_color() const;
 
@@ -112,5 +110,7 @@ namespace SL
 
     private:
         float r_rel_ = 0, g_rel_ = 0, b_rel_ = 0;   
+        uint8_t r_ = 0, g_ = 0, b_ = 0, a_ = 255;
+        float   h_ = 0, s_ = 0, v_ = 0;
     };
 }

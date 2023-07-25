@@ -9,10 +9,7 @@ namespace SL
     class Texture;
     
     class Image
-    {
-    private:
-        sf::Image image_;
-        
+    {   
     public:    
 
         Image ();
@@ -43,5 +40,8 @@ namespace SL
         void create(Vector2d shape, const Color &color);
 
         bool saveToFile(const char *filename);
+    
+    private:
+        sf::Image image_;
     };
 }

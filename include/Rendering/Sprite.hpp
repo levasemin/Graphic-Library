@@ -25,18 +25,18 @@ namespace SL
         
         void setTextureRect(Vector2d start, Vector2d end);
 
-        Vector2d getShape();
+        Vector2d getShape() const;
         void setShape(Vector2d shape, bool with_rescale = true);
 
-        Color getColor();
+        Color getColor() const;
         void setColor(const Color &color);
 
-        Texture getTexture();
+        Texture getTexture() const;
         void setTexture(const Texture &texture, bool resetRect = true);
 
         void setPosition(Vector2d position);
 
-        Vector2d getScale();
+        Vector2d getScale() const;
 
         void rescale();
 

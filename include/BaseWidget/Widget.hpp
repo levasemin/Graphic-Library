@@ -28,26 +28,24 @@ namespace SL
     public:
         friend class Object;
         friend class CompositeObject;
-
-        Widget() {}
-        
-        virtual Widget &operator= (const Widget &widget)             = default;
-        
-        virtual ~Widget ()                                           = default;
+                
+        virtual ~Widget () = default;
 
         virtual void add (Widget *child)                             = 0;
-
         virtual void remove (Widget *child)                          = 0;
-
-        virtual Vector2d getPosition () const                        = 0;
-        virtual void setPosition (Vector2d position)                 = 0;
 
         virtual Vector2d getShape () const                           = 0;
         virtual void setShape (Vector2d shape)                       = 0;
 
+        virtual Vector2d getPosition () const                        = 0;
+        virtual void setPosition (Vector2d position)                 = 0;
+        
         virtual Texture getTexture () const                          = 0;
         virtual void setTexture (const Texture &texture)             = 0;
 
+        virtual Color getColor() const                               = 0;
+        virtual void setColor(Color color)                           = 0;
+        
     protected:
         virtual void draw()                                          = 0; 
         virtual void display (Window *window)                        = 0;
@@ -61,24 +59,22 @@ namespace SL
         virtual RenderTexture *getRenderTexture ()                   = 0;
         virtual void setRenderTexture (RenderTexture render_texture) = 0;
 
-        virtual void clickLeftEvent      (const Event &event)        = 0;
-    
-        virtual void releaseLeftEvent    (const Event &event)        = 0;
-
-        virtual void clickRightEvent     (const Event &event)        = 0;
-
-        virtual void releaseRightEvent   (const Event &event)        = 0;              
-        
-        virtual void moveMouseEvent      (const Event &event)        = 0;
-
-        virtual void pressKeyEvent       (const Event &event)        = 0;
-                    
-        virtual void scrollEvent         (const Event &event)        = 0;
-
-        virtual void textEvent           (const Event &event)        = 0;
+        virtual std::pair<Vector2d, Vector2d> getField () const      = 0;
 
         virtual bool pointBelong (Vector2d point) const              = 0;
 
-        virtual std::pair<Vector2d, Vector2d> getField () const      = 0;
+        virtual void moveMouseEvent      (const Event &event)        = 0;
+
+        virtual void clickLeftEvent      (const Event &event)        = 0;
+        virtual void releaseLeftEvent    (const Event &event)        = 0;
+
+        virtual void clickRightEvent     (const Event &event)        = 0;
+        virtual void releaseRightEvent   (const Event &event)        = 0;              
+        
+        virtual void scrollEvent         (const Event &event)        = 0;
+
+        virtual void pressKeyEvent       (const Event &event)        = 0;            
+
+        virtual void textEvent           (const Event &event)        = 0;
     };        
 };

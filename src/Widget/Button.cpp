@@ -3,7 +3,7 @@
 namespace SL
 {
     Button::Button(Vector2d shape, Vector2d position, const Texture &texture) : Object(shape, position, texture), 
-        default_sprite_color_(sprite_.getColor()),
+        default_sprite_color_(getColor()),
         text_()
     {
         text_.setFont(Font::Times_new_roman);
@@ -65,22 +65,23 @@ namespace SL
 
     void Button::setText(const Text &text)
     {
-        text_ = text;
-        sprite_.setTexture(texture_);
-        render_texture_.draw(sprite_);
+        //TODO
+        // text_ = text;
+        // sprite_.setTexture(texture_);
+        // render_texture_.draw(sprite_);
 
-        Vector2d text_position(0, 0);
-        text_position.x_ = shape_.x_ / 2 - text_.getGlobalBounds().x_ / 2;
-        text_position.y_ = shape_.y_ / 2 - text_.getGlobalBounds().y_; 
-        text_.setPosition(text_position);
+        // Vector2d text_position(0, 0);
+        // text_position.x_ = shape_.x_ / 2 - text_.getGlobalBounds().x_ / 2;
+        // text_position.y_ = shape_.y_ / 2 - text_.getGlobalBounds().y_; 
+        // text_.setPosition(text_position);
 
-        render_texture_.draw(text_); 
+        // render_texture_.draw(text_); 
     }
 
     void Button::setTexture(const Texture &texture)
     {
         Object::setTexture(texture);
-        default_sprite_color_ = sprite_.getColor();
+        default_sprite_color_ = getColor();
     }
 
     void Button::clickLeftEvent (const Event &event)
@@ -141,14 +142,14 @@ namespace SL
         {
             Color new_color = default_sprite_color_;
         
-            new_color.set_a(uint8_t(new_color.get_a() / 3 * 2));
+            new_color.set_v(new_color.get_v() / 3 * 2);
 
-            sprite_.setColor(new_color);
+            setColor(new_color);
         }
 
         else
         {
-            sprite_.setColor(default_sprite_color_);
+            setColor(default_sprite_color_);
         }   
     }
 
@@ -158,14 +159,14 @@ namespace SL
         {
             Color new_color = default_sprite_color_;
         
-            new_color.set_a(uint8_t(new_color.get_a() / 3 * 2));
+            new_color.set_v(new_color.get_v() / 3 * 2);
 
-            sprite_.setColor(new_color);
+            setColor(new_color);
         }
 
         else
         {
-            sprite_.setColor(default_sprite_color_);
+            setColor(default_sprite_color_);
         }
     }
 
