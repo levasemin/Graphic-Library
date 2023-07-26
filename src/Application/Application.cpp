@@ -37,12 +37,12 @@ namespace SL
 
             case EventType::MousePressed:
             {
-                if (event.Oleg_.mbedata.button == MouseButton::Left)
+                if (event.Oleg_.mpedata.button == MouseButton::Left)
                 {
                     main_window_->clickLeftEvent(event);
                 }
 
-                else if (event.Oleg_.mbedata.button == MouseButton::Right)
+                else if (event.Oleg_.mpedata.button == MouseButton::Right)
                 {         
                     main_window_->clickRightEvent(event);
                 }
@@ -62,7 +62,7 @@ namespace SL
 
                 break;
             }
-            case EventType::ScrollbarMoved:
+            case EventType::MouseWheelScrolled:
             {            
                 main_window_->scrollEvent(event);
                 
@@ -92,11 +92,6 @@ namespace SL
             }
 
             case EventType::NoEvent:
-            case EventType::ButtonClicked:
-            case EventType::CanvasMPressed:
-            case EventType::CanvasMReleased:
-            case EventType::CanvasMMoved:
-            case EventType::TimerEvent:
             default:
             {
                 break;

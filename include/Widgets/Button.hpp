@@ -30,17 +30,17 @@ namespace SL
         bool isLeftClicked();
         bool isRightClicked();
         
-        Command<const Event &> * getLeftClick ();
-        void setLeftClick (Command<const Event &> *command);
+        Command<> * getLeftClick ();
+        void setLeftClick (Command<> *command);
 
-        Command<const Event &> * getReleaseLeftClick ();
-        void setReleaseLeftClick (Command<const Event &> *command);
+        Command<> * getReleaseLeftClick ();
+        void setReleaseLeftClick (Command<> *command);
 
-        Command<const Event &> * getRightClick ();
-        void setRightClick (Command<const Event &> *command);
+        Command<> * getRightClick ();
+        void setRightClick (Command<> *command);
 
-        Command<const Event &> * getReleaseRightClick ();
-        void setReleaseRightClick (Command<const Event &> *command);
+        Command<> * getReleaseRightClick ();
+        void setReleaseRightClick (Command<> *command);
 
 
     protected:
@@ -61,10 +61,10 @@ namespace SL
         Color default_sprite_color_;
         Text text_;
 
-        Command<const Event &> *left_click_command_    = nullptr;
-        Command<const Event &> *left_release_command_  = nullptr;
+        Command<> *left_click_command_    = nullptr;
+        Command<> *left_release_command_  = nullptr;
 
-        Command<const Event &> *right_click_command_   = nullptr;
-        Command<const Event &> *right_release_command_ = nullptr;
+        Command<> *right_click_command_   = nullptr;
+        Command<> *right_release_command_ = nullptr;
     };
 }

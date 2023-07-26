@@ -80,9 +80,9 @@ namespace SL
 //protected
     void DecoratorScroll::scrollEvent (const Event &event)
     {
-        if (pointBelong(event.Oleg_.sedata.pos))
+        if (pointBelong(event.Oleg_.mwsedata.pos))
         {
-            float offset = event.Oleg_.sedata.value * 10.f;
+            float offset = event.Oleg_.mwsedata.value * 10.f;
 
             if (offset_ + offset > 0)
             {

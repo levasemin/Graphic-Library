@@ -15,22 +15,17 @@ namespace SL
      */
     enum class EventType
     {
-        NoEvent         = 0,  ///<
-        MouseMoved      = 1,  ///<
-        MousePressed    = 2,  ///<
-        MouseReleased   = 3,  ///<
+        NoEvent            = 0,  ///<
+        MouseMoved         = 1,  ///<
+        MousePressed       = 2,  ///<
+        MouseReleased      = 3,  ///<
+        
+        MouseWheelScrolled = 4,
+        TimerEvent         = 5, ///<
+        KeyPressed         = 6, ///<
+        Closed             = 7, ///<
 
-        ButtonClicked   = 4,  ///<
-        ScrollbarMoved  = 5,  ///<
-        CanvasMPressed  = 6,  ///<
-        CanvasMReleased = 7,  ///<
-        CanvasMMoved    = 8,  ///<
-
-        TimerEvent      = 10, ///<
-        KeyPressed      = 11, ///<
-        Closed          = 12, ///<
-
-        textEvent       = 13  ///<
+        textEvent          = 8  ///<
     };
 
     enum class MouseButton
@@ -45,7 +40,7 @@ namespace SL
         int32_t rel_x, rel_y;
     };
 
-    struct MouseButtonEventData
+    struct MousePressedEventData
     {
         Vector2d pos;
         MouseButton button; 
@@ -172,35 +167,17 @@ namespace SL
         bool shift, alt, ctrl;
     };
 
-    struct textEventData
+    struct TextEventData
     {
         uint64_t id;
         char letter;
-        const char *text;
     };
 
-    struct ButtonClickedEventData
-    {
-        uint64_t id; 
-    };
-
-    struct ScrollMovedEventData
-    {
-        uint64_t id; 
-        float value;
-    };
-
-    struct scrollEventData
+    struct MouseWheelScrolledEventData
     {
         uint64_t id;
         float value;
         Vector2d pos;
-    };
-
-    struct CanvasEventData
-    {
-        uint64_t id;
-        Vector2d pos; 
     };
 
     struct TimerEventData
@@ -215,16 +192,12 @@ namespace SL
 
         union 
         {
-            MotionEventData motion;
-            MouseButtonEventData mbedata;
+            MotionEventData metion;
+            MousePressedEventData mpedata;
             MouseReleasedEventData mredata;
-            ScrollMovedEventData smedata;
-            scrollEventData sedata;
-            CanvasEventData cedata;
-            TimerEventData tedata;
+            MouseWheelScrolledEventData mwsedata;
             KeyPressedEventData kpedata;
-            textEventData textedata;
-            ButtonClickedEventData bcedata;
+            TextEventData tedata;
         } Oleg_;
         
         Event ();

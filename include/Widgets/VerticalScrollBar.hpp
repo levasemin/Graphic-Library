@@ -33,8 +33,8 @@ namespace SL
 
         void setScrollButtonShape(const Vector2d &shape);
 
-        Command<const Event &> *getScrollCommand();
-        void setScrollCommand(Command<const Event &> *new_command);
+        Command<float> *getScrollCommand();
+        void setScrollCommand(Command<float> *new_command);
     
     protected:
         void moveMouseEvent (const Event &event) override;
@@ -57,14 +57,14 @@ namespace SL
     
         bool is_scroll_surface_click_ = true;
 
-        Command<const Event&> *scroll_command_ = nullptr;
+        Command<float> *scroll_command_ = nullptr;
 
         Texture scroll_button_texture_;
 
-        void scrollUp(const Event &event);
+        void scrollUp();
 
-        void scrollDown(const Event &event);
+        void scrollDown();
 
-        void clickedScrollButton(const Event &event);
+        void clickedScrollButton();
     };
 }

@@ -38,7 +38,7 @@ namespace SL
         HorizontalScrollBar scroll_bar_horizontal_;
         Container scroll_container_;
 
-        void ScrollVerticalWidget(const Event &event);
-        void ScrollHorizontalWidget(const Event &event);
+        void ScrollVerticalWidget(float value);
+        void ScrollHorizontalWidget(float value);
     };
 }

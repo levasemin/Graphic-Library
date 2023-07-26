@@ -13,12 +13,12 @@ namespace SL
         default_sprite_color_ = getColor();
     }
 
-    void Editor::setEditorCommand(Command<const Event &> *editor_command)
+    void Editor::setEditorCommand(Command<std::string> *editor_command)
     {
         editor_command_ = editor_command;
     }
 
-    Command<const Event &> *Editor::getEditorCommand()
+    Command<std::string> *Editor::getEditorCommand()
     {
         return editor_command_;
     }
@@ -85,10 +85,7 @@ namespace SL
 
             if (editor_command_)
             {                
-                Event new_event = event;
-                std::string final_string = getText();
-                new_event.Oleg_.textedata.text = final_string.c_str();
-                editor_command_->Execute(new_event);
+                editor_command_->Execute(getText());
             }
         }
     }
@@ -104,7 +101,7 @@ namespace SL
                 string.erase(string.begin() + cursor_pos_);
             }
 
-            char letter = event.Oleg_.textedata.letter;
+            char letter = event.Oleg_.tedata.letter;
 
             string.insert(string.begin() + cursor_pos_, letter);
             cursor_pos_ ++;
@@ -112,17 +109,14 @@ namespace SL
 
             if (editor_command_)
             {
-                std::string final_string = getText();
-                Event new_event = event;
-                new_event.Oleg_.textedata.text = final_string.c_str();
-                editor_command_->Execute(new_event);
+                editor_command_->Execute(getText());
             }
         }
     }
 
     void Editor::moveMouseEvent(const Event &event)
     {
-        if (pointBelong(event.Oleg_.motion.pos))
+        if (pointBelong(event.Oleg_.metion.pos))
         {
             Color new_color = default_sprite_color_;
             new_color.set_h(new_color.get_h() / 3.f * 2.f);
@@ -139,7 +133,7 @@ namespace SL
 
     void Editor::clickLeftEvent(const Event &event)
     {
-        if (pointBelong(event.Oleg_.mbedata.pos))
+        if (pointBelong(event.Oleg_.mpedata.pos))
         {
             clicked_ = true;
 

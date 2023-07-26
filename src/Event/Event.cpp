@@ -23,7 +23,7 @@ namespace SL
             case sf::Event::MouseMoved:
             {
                 type_ = EventType::MouseMoved;
-                Oleg_.motion.pos = Vector2d((float)sfEvent.mouseMove.x, (float)sfEvent.mouseMove.y);
+                Oleg_.metion.pos = Vector2d((float)sfEvent.mouseMove.x, (float)sfEvent.mouseMove.y);
 
                 break;
             }
@@ -34,15 +34,15 @@ namespace SL
 
                 if (sfEvent.mouseButton.button == sf::Mouse::Button::Left)
                 {
-                    Oleg_.mbedata.button = MouseButton::Left;
+                    Oleg_.mpedata.button = MouseButton::Left;
                 }
 
                 else if (sfEvent.mouseButton.button == sf::Mouse::Button::Right)
                 {
-                    Oleg_.mbedata.button = MouseButton::Right;
+                    Oleg_.mpedata.button = MouseButton::Right;
                 }
 
-                Oleg_.mbedata.pos = Vector2d((float)sfEvent.mouseButton.x, (float)sfEvent.mouseButton.y);
+                Oleg_.mpedata.pos = Vector2d((float)sfEvent.mouseButton.x, (float)sfEvent.mouseButton.y);
 
                 break; 
             }
@@ -71,7 +71,7 @@ namespace SL
                 if (31 < sfEvent.text.unicode && sfEvent.text.unicode < 128)
                 {
                     type_ = EventType::textEvent;
-                    Oleg_.textedata.letter = static_cast<char>(sfEvent.text.unicode);
+                    Oleg_.tedata.letter = static_cast<char>(sfEvent.text.unicode);
                 }
                 break;
             }
@@ -102,9 +102,9 @@ namespace SL
 
             case sf::Event::MouseWheelScrolled:
             {
-                type_ = EventType::ScrollbarMoved;
-                Oleg_.sedata.value = sfEvent.mouseWheelScroll.delta;
-                Oleg_.sedata.pos = Vector2d((float)sfEvent.mouseWheelScroll.x, (float)sfEvent.mouseWheelScroll.y);
+                type_ = EventType::MouseWheelScrolled;
+                Oleg_.mwsedata.value = sfEvent.mouseWheelScroll.delta;
+                Oleg_.mwsedata.pos = Vector2d((float)sfEvent.mouseWheelScroll.x, (float)sfEvent.mouseWheelScroll.y);
                 break;
             }
 

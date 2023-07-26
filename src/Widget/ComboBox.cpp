@@ -10,7 +10,7 @@ namespace SL
 
     void ComboBox::clickLeftEvent(const Event &event)
     {
-        if (pointBelong(event.Oleg_.mbedata.pos))
+        if (pointBelong(event.Oleg_.mpedata.pos))
         {
             if (is_showed_)
             {
@@ -27,7 +27,7 @@ namespace SL
 
         else if (is_showed_)
         {
-            // if (!item_box_.pointBelong(event.Oleg_.mbedata.pos) && !pointBelong(event.Oleg_.mbedata.pos))
+            // if (!item_box_.pointBelong(event.Oleg_.mpedata.pos) && !pointBelong(event.Oleg_.mpedata.pos))
             // {
             //     getParent()->remove(&item_box_);
             //     is_showed_ = false;

@@ -20,8 +20,8 @@ namespace SL
         
         std::string getText();
 
-        Command<const Event &> * getEditorCommand();
-        void setEditorCommand(Command<const Event &> *editor_command);
+        Command<std::string> * getEditorCommand();
+        void setEditorCommand(Command<std::string> *editor_command);
 
         void setTexture(const Texture &texture) override;
 
@@ -40,6 +40,6 @@ namespace SL
         
         Color default_sprite_color_;
 
-        Command<const Event &> *editor_command_ = nullptr;
+        Command<std::string> *editor_command_ = nullptr;
     };
 }

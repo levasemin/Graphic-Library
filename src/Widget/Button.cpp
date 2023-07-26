@@ -9,38 +9,38 @@ namespace SL
         text_.setFont(Font::Times_new_roman);
     };
 
-    Command<const Event &>* Button::getLeftClick ()
+    Command<>* Button::getLeftClick ()
     {
         return left_click_command_;
     }
-    void Button::setLeftClick (Command<const Event &>* command)
+    void Button::setLeftClick (Command<>* command)
     {
         left_click_command_ = command;
     }
     
-    Command<const Event &>* Button::getReleaseLeftClick ()
+    Command<>* Button::getReleaseLeftClick ()
     {
         return left_release_command_;
     }
-    void Button::setReleaseLeftClick (Command<const Event &>* command)
+    void Button::setReleaseLeftClick (Command<>* command)
     {
         left_release_command_ = command;
     }
     
-    Command<const Event &>* Button::getRightClick ()
+    Command<>* Button::getRightClick ()
     {
         return right_click_command_;
     }
-    void Button::setRightClick (Command<const Event &>* command)
+    void Button::setRightClick (Command<>* command)
     {
         right_click_command_ = command;
     }
     
-    Command<const Event &>* Button::getReleaseRightClick ()
+    Command<>* Button::getReleaseRightClick ()
     {
         return right_release_command_;
     }
-    void Button::setReleaseRightClick (Command<const Event &>* command)
+    void Button::setReleaseRightClick (Command<>* command)
     {
         right_release_command_ = command;
     }
@@ -86,16 +86,13 @@ namespace SL
 
     void Button::clickLeftEvent (const Event &event)
     {   
-        if (pointBelong(Vector2d(event.Oleg_.mbedata.pos)))
+        if (pointBelong(Vector2d(event.Oleg_.mpedata.pos)))
         {
             is_left_clicked_ = true;
 
             if (left_click_command_ != nullptr)
             {
-                Event new_event;
-                new_event.type_ = EventType::ButtonClicked;
-                new_event.Oleg_.bcedata.id = (uint64_t)this;
-                left_click_command_->Execute(new_event);
+                left_click_command_->Execute();
             }
         }
     }
@@ -104,7 +101,7 @@ namespace SL
     {
         if (left_release_command_ != nullptr)
         {
-            left_release_command_->Execute(event);
+            left_release_command_->Execute();
         }
 
         is_left_clicked_ = false;
@@ -112,16 +109,13 @@ namespace SL
 
     void Button::clickRightEvent (const Event &event)
     {
-        if (pointBelong(event.Oleg_.mbedata.pos))
+        if (pointBelong(event.Oleg_.mpedata.pos))
         {
             is_right_clicked_ = true;
 
             if (right_click_command_ != nullptr)
             {
-                Event new_event;
-                new_event.type_ = EventType::ButtonClicked;
-                new_event.Oleg_.bcedata.id = (uint64_t)this;
-                right_click_command_->Execute(new_event);
+                right_click_command_->Execute();
             }
         }
     }
@@ -130,7 +124,7 @@ namespace SL
     {
         if (right_release_command_ != nullptr)
         {
-            right_release_command_->Execute(event);
+            right_release_command_->Execute();
         }
 
         is_right_clicked_ = false;
@@ -138,7 +132,7 @@ namespace SL
 
     void Button::moveMouseEvent(const Event &event)
     {        
-        if (pointBelong(event.Oleg_.motion.pos))
+        if (pointBelong(event.Oleg_.metion.pos))
         {
             Color new_color = default_sprite_color_;
         
@@ -155,7 +149,7 @@ namespace SL
 
     void Button::scrollEvent(const Event &event)
     {
-        if (pointBelong(event.Oleg_.sedata.pos))
+        if (pointBelong(event.Oleg_.mwsedata.pos))
         {
             Color new_color = default_sprite_color_;
         

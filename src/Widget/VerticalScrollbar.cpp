@@ -27,11 +27,9 @@ namespace SL
         add(&down_button_);
         add(&scroll_button_);
 
-        up_button_.    setLeftClick((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::scrollUp));
-        down_button_.  setLeftClick((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::scrollDown));
-        scroll_button_.setLeftClick((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::clickedScrollButton));
-
-        // scroll_button_.getField().first.print_value();
+        up_button_.    setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollUp));
+        down_button_.  setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollDown));
+        scroll_button_.setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::clickedScrollButton));
     }
 
     VerticalScrollBar::VerticalScrollBar(const VerticalScrollBar &source): SL::CompositeObject(*(SL::CompositeObject *)&source),
@@ -44,9 +42,9 @@ namespace SL
         max_value_(source.max_value_),
         scroll_button_texture_(source.scroll_button_texture_)
     {
-        up_button_.    setLeftClick((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::scrollUp));
-        down_button_.  setLeftClick((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::scrollDown));
-        scroll_button_.setLeftClick((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::clickedScrollButton));
+        up_button_.    setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollUp));
+        down_button_.  setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollDown));
+        scroll_button_.setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::clickedScrollButton));
     }
 
     VerticalScrollBar &VerticalScrollBar::operator=(const VerticalScrollBar &source)
@@ -62,9 +60,9 @@ namespace SL
         max_value_ = source.max_value_;
         scroll_button_texture_ = source.scroll_button_texture_;
 
-        up_button_.    setLeftClick((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::scrollUp));
-        down_button_.  setLeftClick((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::scrollDown));
-        scroll_button_.setLeftClick((Command<const Event &> *) new SimpleCommand<VerticalScrollBar, const Event &>(this, &VerticalScrollBar::clickedScrollButton));
+        up_button_.    setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollUp));
+        down_button_.  setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollDown));
+        scroll_button_.setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::clickedScrollButton));
 
         return *this;
     }
@@ -77,12 +75,12 @@ namespace SL
         delete scroll_button_.getLeftClick();
     }
 
-    Command<const Event &> *VerticalScrollBar::getScrollCommand()
+    Command<float> *VerticalScrollBar::getScrollCommand()
     {
         return scroll_command_;
     }
     
-    void VerticalScrollBar::setScrollCommand(Command<const Event &> *new_command)
+    void VerticalScrollBar::setScrollCommand(Command<float> *new_command)
     {
         scroll_command_ = new_command;
     }
@@ -101,20 +99,14 @@ namespace SL
         value_ = value_ < max_value_ ? value_ : max_value_;
         value_ = value_ > min_value_ ? value_ : min_value_;
         float value = (value_ - min_value_) / (max_value_ - min_value_);
-        
-        Event new_event;
-        new_event.type_ = EventType::ScrollbarMoved;
-        new_event.Oleg_.smedata.id = uint64_t(this);
-        new_event.Oleg_.smedata.value = value_ < min_value_ ? min_value_ : value_;
-        new_event.Oleg_.smedata.value = value_ > max_value_ ? max_value_ : value_;
-        
+                
         float offset = scroll_field_shape_.y_ * value;
         
         scroll_button_.setPosition(Vector2d(scroll_button_.getPosition().x_, up_button_.getShape().y_ + offset));
         
         if (scroll_command_)
         {
-            scroll_command_->Execute(new_event);
+            scroll_command_->Execute(value_);
         }
     }   
 
@@ -172,13 +164,13 @@ namespace SL
     {
         if (scroll_button_.isLeftClicked())
         {   
-            float value = (event.Oleg_.motion.pos.y_ - click_place_.y_ + scroll_button_.getPosition().y_ - up_button_.getShape().y_) / scroll_field_shape_.y_;
+            float value = (event.Oleg_.metion.pos.y_ - click_place_.y_ + scroll_button_.getPosition().y_ - up_button_.getShape().y_) / scroll_field_shape_.y_;
             value *= max_value_ - min_value_;
             value += min_value_;
        
             setValue(value);
             
-            click_place_ = event.Oleg_.motion.pos;
+            click_place_ = event.Oleg_.metion.pos;
         }
     };
 
@@ -187,15 +179,15 @@ namespace SL
 //TODO
         CompositeObject::clickLeftEvent(event);
 
-        if (pointBelong(event.Oleg_.mbedata.pos) && is_scroll_surface_click_)
+        if (pointBelong(event.Oleg_.mpedata.pos) && is_scroll_surface_click_)
         {
-            float value = (event.Oleg_.motion.pos.y_ - getField().first.y_ - up_button_.getShape().y_) / scroll_field_shape_.y_ - scroll_coeff_ / 2;
+            float value = (event.Oleg_.metion.pos.y_ - getField().first.y_ - up_button_.getShape().y_) / scroll_field_shape_.y_ - scroll_coeff_ / 2;
             value *= max_value_ - min_value_;
             value += min_value_;
             
             setValue(value);
             
-            click_place_ = event.Oleg_.motion.pos;
+            click_place_ = event.Oleg_.metion.pos;
         }
 
         is_scroll_surface_click_ = true;
@@ -203,9 +195,9 @@ namespace SL
 
     void VerticalScrollBar::scrollEvent(const Event &event)
     {            
-        if (pointBelong(event.Oleg_.sedata.pos))
+        if (pointBelong(event.Oleg_.mwsedata.pos))
         {
-            float value = (-event.Oleg_.sedata.value + scroll_button_.getPosition().y_ - up_button_.getShape().y_) / scroll_field_shape_.y_;
+            float value = (-event.Oleg_.mwsedata.value + scroll_button_.getPosition().y_ - up_button_.getShape().y_) / scroll_field_shape_.y_;
             value *= max_value_ - min_value_;
             value += min_value_;
             setValue(value);
@@ -213,7 +205,7 @@ namespace SL
     }
 
 //private:
-    void VerticalScrollBar::scrollUp(const Event &event)
+    void VerticalScrollBar::scrollUp()
     {
         is_scroll_surface_click_ = false;
 
@@ -223,7 +215,7 @@ namespace SL
         setValue(value);
     }    
 
-    void VerticalScrollBar::scrollDown(const Event &event)
+    void VerticalScrollBar::scrollDown()
     {
         is_scroll_surface_click_ = false;
 
@@ -233,7 +225,7 @@ namespace SL
         setValue(value);
     }
 
-    void VerticalScrollBar::clickedScrollButton(const Event &event)
+    void VerticalScrollBar::clickedScrollButton()
     {
         is_scroll_surface_click_ = false;
         click_place_ = getField().first + scroll_button_.getPosition() + scroll_button_.getShape() / 2;

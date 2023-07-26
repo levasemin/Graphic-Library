@@ -18,8 +18,11 @@ namespace SL
         CompositeObject::add(&scroll_bar_vertical_);
 
         
-        scroll_bar_vertical_.  setScrollCommand ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollVerticalWidget));
-        scroll_bar_horizontal_.setScrollCommand ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollHorizontalWidget));        
+        scroll_bar_vertical_.  setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollVerticalWidget));
+        scroll_bar_horizontal_.setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollHorizontalWidget));        
+    
+        SL::Editor editor(SL::Vector2d(100, 30), SL::Vector2d(10, 10));
+        SL::Label label(SL::Vector2d(100, 30), SL::Vector2d(120, 10));
     }
 
     DecoratorScrollBar::DecoratorScrollBar(const DecoratorScrollBar &source) : CompositeObject(*(CompositeObject *)&source),
@@ -33,8 +36,8 @@ namespace SL
         scroll_bar_vertical_(source.scroll_bar_vertical_),
         scroll_bar_horizontal_(source.scroll_bar_horizontal_)
     {
-        scroll_bar_vertical_.  setScrollCommand ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollVerticalWidget));
-        scroll_bar_horizontal_.setScrollCommand ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollHorizontalWidget)); 
+        scroll_bar_vertical_.  setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollVerticalWidget));
+        scroll_bar_horizontal_.setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollHorizontalWidget)); 
     }
 
     DecoratorScrollBar &DecoratorScrollBar::operator=(const DecoratorScrollBar &source)
@@ -51,8 +54,8 @@ namespace SL
         // scroll_bar_vertical_ = source.scroll_bar_vertical_;
         // scroll_bar_horizontal_ = source.scroll_bar_horizontal_;
 
-        scroll_bar_vertical_.  setScrollCommand ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollVerticalWidget));
-        scroll_bar_horizontal_.setScrollCommand ((Command<const Event &> *) new SimpleCommand<DecoratorScrollBar, const Event &> (this, &DecoratorScrollBar::ScrollHorizontalWidget)); 
+        scroll_bar_vertical_.  setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollVerticalWidget));
+        scroll_bar_horizontal_.setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollHorizontalWidget)); 
 
         return *this;
     }
@@ -91,11 +94,11 @@ namespace SL
 
     void DecoratorScrollBar::scrollEvent(const Event &event) 
     {
-        if (pointBelong(event.Oleg_.sedata.pos))
+        if (pointBelong(event.Oleg_.mwsedata.pos))
         {
-            Vector2d offset(0.f, event.Oleg_.sedata.value * 10.f);
+            Vector2d offset(0.f, event.Oleg_.mwsedata.value * 10.f);
             
-            float value = scroll_bar_vertical_.getValue() - event.Oleg_.sedata.value * 10.f / scroll_shape_.y_;
+            float value = scroll_bar_vertical_.getValue() - event.Oleg_.mwsedata.value * 10.f / scroll_shape_.y_;
             
             if (scroll_bar_vertical_able_)
             {
@@ -109,20 +112,20 @@ namespace SL
 
     
 //private
-    void DecoratorScrollBar::ScrollVerticalWidget(const Event &event)
+    void DecoratorScrollBar::ScrollVerticalWidget(float value_)
     {
-        float value = (current_value_.y_ - event.Oleg_.smedata.value) * (scroll_shape_.y_ - scroll_container_.getShape().y_);
+        float value = (current_value_.y_ - value_) * (scroll_shape_.y_ - scroll_container_.getShape().y_);
         
-        current_value_.y_ = event.Oleg_.smedata.value;
+        current_value_.y_ = value_;
         
         widget_->setPosition(Vector2d(widget_->getPosition().x_, widget_->getPosition().y_ + value));
     }
 
-    void DecoratorScrollBar::ScrollHorizontalWidget(const Event &event)
+    void DecoratorScrollBar::ScrollHorizontalWidget(float value_)
     {
-        float value = (current_value_.x_ - event.Oleg_.smedata.value) * (scroll_shape_.x_ - scroll_container_.getShape().x_);
+        float value = (current_value_.x_ - value_) * (scroll_shape_.x_ - scroll_container_.getShape().x_);
         
-        current_value_.x_ = event.Oleg_.smedata.value;
+        current_value_.x_ = value_;
             
         widget_->setPosition(Vector2d(widget_->getPosition().x_ + value, widget_->getPosition().y_));
     }
