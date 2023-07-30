@@ -1,8 +1,9 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
-#include "../Rendering/RenderTexture.hpp"
 #include <SFML/Config.hpp>
+#include <SFML/Graphics.hpp>
+
+#include "RenderTexture.hpp"
 
 namespace SL
 {

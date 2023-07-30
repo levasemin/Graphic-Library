@@ -20,9 +20,6 @@ namespace SL
         
         scroll_bar_vertical_.  setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollVerticalWidget));
         scroll_bar_horizontal_.setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollHorizontalWidget));        
-    
-        SL::Editor editor(SL::Vector2d(100, 30), SL::Vector2d(10, 10));
-        SL::Label label(SL::Vector2d(100, 30), SL::Vector2d(120, 10));
     }
 
     DecoratorScrollBar::DecoratorScrollBar(const DecoratorScrollBar &source) : CompositeObject(*(CompositeObject *)&source),

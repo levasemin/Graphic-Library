@@ -19,7 +19,7 @@ endforeach()
 
 add_library(glib ${glib_SRC} ${glib_HPP})
 
-target_include_directories(glib PRIVATE ${dirlist})
+target_include_directories(glib PUBLIC ${dirlist})
 target_include_directories(glib PUBLIC include/)
 
 find_package(SFML 2.5 COMPONENTS network audio graphics window system REQUIRED)

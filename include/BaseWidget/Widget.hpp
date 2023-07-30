@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include "../Application/Window.hpp"
-#include "../Rendering/Rendering.hpp"
-#include "../Classes/Vector2d.hpp"
-#include "../Event/Event.hpp"
+#include "RenderTexture.hpp"
+#include "Window.hpp"
+#include "Vector2d.hpp"
+#include "Event.hpp"
 
 namespace SL
 {

@@ -69,7 +69,6 @@ namespace SL
 
     VerticalScrollBar::~VerticalScrollBar()
     {
-        delete scroll_command_;
         delete up_button_.    getLeftClick();
         delete down_button_  .getLeftClick();
         delete scroll_button_.getLeftClick();

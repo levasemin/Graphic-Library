@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <math.h>
+
 namespace SL
 {
     float get_determinant(float *array, int n);

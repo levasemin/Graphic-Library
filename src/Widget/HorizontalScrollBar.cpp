@@ -65,7 +65,6 @@ namespace SL
 
     HorizontalScrollBar::~HorizontalScrollBar()
     {
-        delete scroll_command_;
         delete left_button_.  getLeftClick();
         delete right_button_. getLeftClick();
         delete scroll_button_.getLeftClick();

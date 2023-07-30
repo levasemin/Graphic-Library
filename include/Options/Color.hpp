@@ -2,9 +2,10 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "../functions/functions.hpp"
 #include <stdint.h>
 #include <algorithm>
+
+#include "functions.hpp"
 
 class Color2
 {

@@ -2,7 +2,7 @@
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
-#include "../BaseWidget/CompositeObject.hpp"
+#include "CompositeObject.hpp"
 
 namespace SL
 {

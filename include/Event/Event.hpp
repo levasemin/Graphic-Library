@@ -2,9 +2,10 @@
 
 #include <stdint.h>
 #include <cstring>
-#include "../Classes/Vector2d.hpp"
+#include <SFML/Graphics.hpp>
 
-#include "SFML/Graphics.hpp"
+#include "Vector2d.hpp"
+
 
 
 namespace SL

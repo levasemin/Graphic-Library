@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../BaseWidget/CompositeObject.hpp"
+#include "CompositeObject.hpp"
 #include "Button.hpp"
 #include "Container.hpp"
 #include "ComboBox.hpp"

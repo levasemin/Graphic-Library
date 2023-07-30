@@ -3,11 +3,13 @@
 
 #pragma once
 
-#include "../Rendering/Rendering.hpp"
-#include "../BaseWidget/BaseWidget.hpp"
-#include "../Event/Ev.hpp"
-#include "../Classes/Classes.hpp"
+#include "CompositeObject.hpp"
+#include "Event.hpp"
+#include "SimpleCommand.hpp"
 #include "Button.hpp"
+#include "constants.hpp"
+#include "TextureManager.hpp"
+
 
 namespace SL
 {

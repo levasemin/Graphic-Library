@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Decorator.hpp"
-#include "../Rendering/Rendering.hpp"
-#include "../Widgets/Widgets.hpp"
+#include "CompositeObject.hpp"
+#include "VerticalScrollBar.hpp"
+#include "HorizontalScrollBar.hpp"
+#include "Container.hpp"
 
 namespace SL
 {

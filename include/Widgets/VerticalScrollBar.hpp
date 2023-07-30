@@ -2,11 +2,12 @@
 
 #pragma once
 
-#include "../Rendering/Rendering.hpp"
-#include "../BaseWidget/BaseWidget.hpp"
-#include "../Event/Ev.hpp"
+#include "CompositeObject.hpp"
+#include "Event.hpp"
+#include "SimpleCommand.hpp"
+#include "TextureManager.hpp"
 #include "Button.hpp"
-#include "../Classes/constants.hpp"
+#include "constants.hpp"
 
 namespace SL
 {

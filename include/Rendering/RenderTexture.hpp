@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "../Options/Text.hpp"
-#include "../Classes/Vector2d.hpp"
+#include "Text.hpp"
+#include "Vector2d.hpp"
 #include "Sprite.hpp"
 #include "Texture.hpp"
 

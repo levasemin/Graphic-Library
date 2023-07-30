@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../Rendering/Texture.hpp"
-#include "../Application/Window.hpp"
-#include "../BaseWidget/BaseWidget.hpp"
-#include "../Classes/Vector2d.hpp"
+#include "Texture.hpp"
+#include "Window.hpp"
+#include "CompositeObject.hpp"
+#include "Vector2d.hpp"
 
 namespace SL
 {

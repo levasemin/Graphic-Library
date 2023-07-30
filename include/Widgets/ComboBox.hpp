@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../Rendering/Texture.hpp"
-#include "../BaseWidget/CompositeObject.hpp"
-#include "../Event/Event.hpp"
+#include "Texture.hpp"
+#include "CompositeObject.hpp"
+#include "Event.hpp"
 #include "Button.hpp"
 #include "Container.hpp"
 

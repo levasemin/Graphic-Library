@@ -2,10 +2,11 @@
 
 #pragma once
 
+#include <string>
 #include <SFML/Graphics.hpp>
+
 #include "Color.hpp"
 #include "Font.hpp"
-#include <string>
 
 namespace SL
 {

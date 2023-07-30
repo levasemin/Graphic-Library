@@ -3,9 +3,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "../Options/Color.hpp"
-#include "../Rendering/Sprite.hpp"
-#include "../Event/Event.hpp"
+#include "Color.hpp"
+#include "Sprite.hpp"
+#include "Event.hpp"
 
 namespace SL
 {
