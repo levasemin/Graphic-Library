@@ -2,11 +2,9 @@
 
 namespace SL
 {
-    Button::Button(Vector2d shape, Vector2d position, const Texture &texture) : Object(shape, position, texture), 
-        default_sprite_color_(getColor()),
-        text_()
+    Button::Button(Vector2d shape, Vector2d position, const Texture &texture) : Label(shape, position, texture), 
+        default_sprite_color_(getColor())
     {
-        text_.setFont(Font::Times_new_roman);
     };
 
     Command<>* Button::getLeftClick ()
@@ -43,39 +41,6 @@ namespace SL
     void Button::setReleaseRightClick (Command<>* command)
     {
         right_release_command_ = command;
-    }
-
-    void Button::setText(const std::string &text)
-    {
-        text_.setString(text);
-        setText(text_);
-    }
-
-    void Button::setTextColor(const Color &color)
-    {
-        text_.setColor(color);
-        setText(text_);
-    }
-
-    void Button::setCharacterSize(int text_size)
-    {
-        text_.setCharacterSize(text_size);
-        setText(text_);
-    }
-
-    void Button::setText(const Text &text)
-    {
-        //TODO
-        // text_ = text;
-        // sprite_.setTexture(texture_);
-        // render_texture_.draw(sprite_);
-
-        // Vector2d text_position(0, 0);
-        // text_position.x_ = shape_.x_ / 2 - text_.getGlobalBounds().x_ / 2;
-        // text_position.y_ = shape_.y_ / 2 - text_.getGlobalBounds().y_; 
-        // text_.setPosition(text_position);
-
-        // render_texture_.draw(text_); 
     }
 
     void Button::setTexture(const Texture &texture)

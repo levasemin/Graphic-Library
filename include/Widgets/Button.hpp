@@ -2,14 +2,14 @@
 
 #pragma once
 
-#include "Object.hpp"
+#include "Label.hpp"
 #include "Command.hpp"
 #include "Event.hpp"
 #include "Text.hpp"
 
 namespace SL
 {
-    class Button : public Object
+    class Button : public Label
     {
     public:
         Button(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::White));
@@ -17,16 +17,6 @@ namespace SL
         Button (const Button& source) = default;
         Button &operator= (const Button &source) = default;
         ~Button () = default; 
-
-        
-        void setText(const std::string &text);
-        void setText(const Text &text);
-
-        void setTextColor(const Color &color);
-
-        void setCharacterSize(int text_size);
-
-        void setTexture(const Texture &texture) override;
         
         bool isLeftClicked();
         bool isRightClicked();
@@ -43,6 +33,7 @@ namespace SL
         Command<> * getReleaseRightClick ();
         void setReleaseRightClick (Command<> *command);
 
+        void setTexture(const Texture &texture);
 
     protected:
         void moveMouseEvent    (const Event &event) override;
@@ -60,7 +51,6 @@ namespace SL
         bool is_right_clicked_ = false;
 
         Color default_sprite_color_;
-        Text text_;
 
         Command<> *left_click_command_    = nullptr;
         Command<> *left_release_command_  = nullptr;
