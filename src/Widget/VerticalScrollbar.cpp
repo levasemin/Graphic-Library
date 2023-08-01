@@ -130,24 +130,28 @@ namespace SL
     }
 
     void VerticalScrollBar::setSideButton(bool able)
-    {
-        Vector2d new_shape = up_button_.getShape();
-        
+    {        
         if (able)
         {
-            scroll_field_shape_ = Vector2d(getShape().x_, getShape().y_ - getShape().x_ * 2 - scroll_button_.getShape().y_);
+            up_button_.setShape(SL::Vector2d(20, 20));
+            down_button_.setShape(SL::Vector2d(20, 20));
+
             add(&up_button_);
             add(&down_button_);
         }
 
         else 
         {
+            up_button_.setShape(SL::Vector2d(0, 0));
+            down_button_.setShape(SL::Vector2d(0, 0));
+
+            scroll_button_.setPosition(SL::Vector2d(0, 0));
+            
             remove(&up_button_);
             remove(&down_button_);
-
-            scroll_button_.setPosition(Vector2d(0.f, up_button_.getShape().y_));
-            scroll_field_shape_ = Vector2d(0.f, getShape().y_ - down_button_.getShape().x_ * 2 - scroll_button_.getShape().y_);
         }        
+
+        scroll_field_shape_ = Vector2d(getShape().x_, getShape().y_ - up_button_.getShape().x_ * 2 - scroll_button_.getShape().y_);
     }
 
     void VerticalScrollBar::setScrollButtonShape(const Vector2d &shape)

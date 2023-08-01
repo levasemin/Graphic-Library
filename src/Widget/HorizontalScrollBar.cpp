@@ -132,24 +132,28 @@ namespace SL
     }
 
     void HorizontalScrollBar::setSideButton(bool able)
-    {
-        Vector2d new_shape = left_button_.getShape();
-        
+    {        
         if (able)
         {
-            scroll_field_shape_ = Vector2d(getShape().x_ - left_button_.getShape().x_ * 2 - scroll_button_.getShape().x_, getShape().y_);
+            left_button_.setShape(SL::Vector2d(20, 20));
+            right_button_.setShape(SL::Vector2d(20, 20));
+            
             add(&left_button_);
             add(&right_button_);
         }
 
         else 
         {
+            left_button_.setShape(SL::Vector2d(0, 0));
+            right_button_.setShape(SL::Vector2d(0, 0));
+
+            scroll_button_.setPosition(SL::Vector2d(0, 0));
+
             remove(&left_button_);
             remove(&right_button_);
-
-            scroll_button_.setPosition(Vector2d(0.f, getShape().y_ + getShape().x_));
-            scroll_field_shape_ = Vector2d(getShape().x_ - left_button_.getShape().x_ - right_button_.getShape().x_ - scroll_button_.getShape().x_, getShape().y_);
         }
+
+        scroll_field_shape_ = Vector2d(getShape().x_ - left_button_.getShape().x_ * 2 - scroll_button_.getShape().x_, getShape().y_);
     }
 
     void HorizontalScrollBar::setScrollButtonShape(const Vector2d &shape)

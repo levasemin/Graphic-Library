@@ -56,7 +56,7 @@ namespace SL
         float scroll_coeff_ = SCROLL_COEFF;
         
         bool is_scroll_surface_click_ = true;
-
+        
         Command<float> *scroll_command_ = nullptr;
 
         Texture scroll_button_texture_;

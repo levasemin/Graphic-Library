@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.25)
 
 project(GraphicLibrary)
 
@@ -17,7 +17,7 @@ foreach(child ${children})
   endif()
 endforeach()
 
-add_library(glib ${glib_SRC} ${glib_HPP})
+add_library(glib SHARED ${glib_SRC} ${glib_HPP})
 
 target_include_directories(glib PUBLIC ${dirlist})
 target_include_directories(glib PUBLIC include/)
