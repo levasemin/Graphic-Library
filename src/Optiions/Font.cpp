@@ -2,7 +2,7 @@
 
 namespace SL
 {
-    const Font Font::Times_new_roman ("../Graphic-Library/fonts/Times_New_Roman.ttf");
+    const Font Font::Times_new_roman ("../src/fonts/Times_New_Roman.ttf");
     
     Font::Font (const sf::Font &font) : font_(font) 
     {}
