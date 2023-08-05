@@ -74,4 +74,20 @@ namespace SL
     {
         return image_.saveToFile(filename);
     }
+
+    void Image::copy(const Image &source, Vector2d place, Vector2d source_start, Vector2d source_end, bool applyAlpha)
+    {
+        if (source_start.x_ == -1 && source_start.y_ == -1)
+        {
+            source_start = Vector2d(0, 0);
+        }
+
+        if (source_end.x_ == -1 && source_end.y_ == -1)
+        {
+            source_end = source.getSize();
+        }
+
+        image_.copy(source.image_, place.x_, place.y_, sf::IntRect(source_start.x_, source_start.y_, source_end.x_, source_end.y_), applyAlpha);
+    }
+
 }
