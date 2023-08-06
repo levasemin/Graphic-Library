@@ -14,21 +14,22 @@ namespace SL
      */
     class Application
     {
-        public: 
-            MainWindow *main_window_ = nullptr;
-            Window *window_ = nullptr;
-            
+        public:
             Application(MainWindow *main_window);
 
             Application (const Application &source);
             Application &operator= (const Application &source);
+            ~Application();
 
-            void set_main_window(MainWindow *main_window);
-
-            void distribute_event(const Event &event);
+            void setMainWindow(MainWindow *main_window);
 
             void exec();
             void close();
-            void show(MainWindow *window);        
+        
+        private:
+            MainWindow *main_window_ = nullptr;
+            Window *window_ = nullptr;
+
+            void distribute_event(const Event &event);
     };
 }

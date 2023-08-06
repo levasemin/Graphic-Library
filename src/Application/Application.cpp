@@ -21,7 +21,15 @@ namespace SL
         return *this;
     }
 
-    void Application::set_main_window(MainWindow *main_window)
+    Application::~Application()
+    {
+        if (window_)
+        {
+            delete window_;
+        }
+    }
+
+    void Application::setMainWindow(MainWindow *main_window)
     {
         main_window_ = main_window;
     }
@@ -117,7 +125,9 @@ namespace SL
                 distribute_event(event);
             }
 
-            show(main_window_);
+            window_->clear();
+            main_window_->draw();   
+            main_window_->display(window_);
         }
     }
 
@@ -128,12 +138,4 @@ namespace SL
             window_->close();
         }
     }
-
-    void Application::show(MainWindow *window)
-    {
-        window_->clear();
-        main_window_->draw();   
-        main_window_->display(window_);
-    }
-
 }
