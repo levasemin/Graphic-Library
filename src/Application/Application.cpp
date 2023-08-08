@@ -38,19 +38,19 @@ namespace SL
     {
         switch (event.type_)
         {   
-            case EventType::Closed:
+            case Event::Closed:
             {
                 close();
             }
 
-            case EventType::MousePressed:
+            case Event::MousePressed:
             {
-                if (event.Oleg_.mpedata.button == MouseButton::Left)
+                if (event.Oleg_.mpedata.button == Event::MouseButton::Left)
                 {
                     main_window_->clickLeftEvent(event);
                 }
 
-                else if (event.Oleg_.mpedata.button == MouseButton::Right)
+                else if (event.Oleg_.mpedata.button == Event::MouseButton::Right)
                 {         
                     main_window_->clickRightEvent(event);
                 }
@@ -58,40 +58,40 @@ namespace SL
                 break;
             }
 
-            case EventType::KeyPressed:
+            case Event::KeyPressed:
             {
                 main_window_->pressKeyEvent(event);
 
                 break;
             }
-            case EventType::textEvent:
+            case Event::textEvent:
             {
                 main_window_->textEvent(event);
 
                 break;
             }
-            case EventType::MouseWheelScrolled:
+            case Event::MouseWheelScrolled:
             {            
                 main_window_->scrollEvent(event);
                 
                 break;
             }
             
-            case EventType::MouseMoved:
+            case Event::MouseMoved:
             {            
                 main_window_->moveMouseEvent(event);
 
                 break;
             }
             
-            case EventType::MouseReleased:
+            case Event::MouseReleased:
             {
-                if (event.Oleg_.mredata.button == MouseButton::Left)
+                if (event.Oleg_.mredata.button == Event::MouseButton::Left)
                 {
                     main_window_->releaseLeftEvent(event);
                 }
 
-                else if (event.Oleg_.mredata.button == MouseButton::Right)
+                else if (event.Oleg_.mredata.button == Event::MouseButton::Right)
                 {
                     main_window_->releaseRightEvent(event);            
                 }
@@ -99,7 +99,7 @@ namespace SL
                 break;
             }
 
-            case EventType::NoEvent:
+            case Event::NoEvent:
             default:
             {
                 break;

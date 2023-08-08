@@ -45,7 +45,7 @@ namespace SL
 
             switch (event.Oleg_.kpedata.code)
             {
-                case Key::Backspace:
+                case Event::Key::Backspace:
                 {
                     if (cursor_pos_ > 0)
                     {
@@ -56,7 +56,7 @@ namespace SL
                     break;
                 }
 
-                case Key::Left:
+                case Event::Key::Left:
                 {
                     if (cursor_pos_ > 0)
                     {
@@ -66,7 +66,7 @@ namespace SL
                     break;
                 }
 
-                case Key::Right:
+                case Event::Key::Right:
                 {
                     if (cursor_pos_ < string.size())
                     {
