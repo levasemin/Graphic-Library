@@ -32,6 +32,8 @@ namespace SL
 
         void pressKeyEvent (const Event &event) override;
         
+        void scrollEvent(const Event &event) override;
+        
         void textEvent(const Event &event) override;
 
     private:
@@ -41,5 +43,7 @@ namespace SL
         Color default_sprite_color_;
 
         Command<std::string> *editor_command_ = nullptr;
+
+        void make_blackout();
     };
 }

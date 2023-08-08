@@ -57,5 +57,7 @@ namespace SL
 
         Command<> *right_click_command_   = nullptr;
         Command<> *right_release_command_ = nullptr;
+
+        void make_blackout();
     };
 }

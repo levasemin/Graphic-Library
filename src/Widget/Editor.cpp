@@ -9,8 +9,19 @@ namespace SL
 
     void Editor::setTexture(const Texture &texture)
     {
-        Object::setTexture(texture);
-        default_sprite_color_ = getColor();
+        if (getColor() != default_sprite_color_)
+        {
+            Label::setTexture(texture);
+            default_sprite_color_ = getColor();
+            
+            make_blackout();
+        }
+
+        else
+        {
+            Label::setTexture(texture);
+            default_sprite_color_ = getColor();
+        }
     }
 
     void Editor::setEditorCommand(Command<std::string> *editor_command)
@@ -118,9 +129,7 @@ namespace SL
     {
         if (pointBelong(event.Oleg_.metion.pos))
         {
-            Color new_color = default_sprite_color_;
-            new_color.set_h(new_color.get_h() / 3.f * 2.f);
-            setColor(new_color);
+            make_blackout();
         }
 
         else if (!clicked_) 
@@ -131,15 +140,28 @@ namespace SL
         Label::moveMouseEvent(event);
     }
 
+    void Editor::scrollEvent(const Event &event)
+    {
+        if (pointBelong(event.Oleg_.mwsedata.pos))
+        {
+            make_blackout();
+        }
+
+        else if (!clicked_) 
+        {
+            setColor(default_sprite_color_);
+        }
+
+        Label::scrollEvent(event);
+    }
+    
     void Editor::clickLeftEvent(const Event &event)
     {
         if (pointBelong(event.Oleg_.mpedata.pos))
         {
             clicked_ = true;
 
-            Color new_color = default_sprite_color_;
-            new_color.set_h(new_color.get_h() / 3.f * 2.f);
-            setColor(new_color);
+            make_blackout();
 
             std::string string = Label::getText();
 
@@ -175,5 +197,12 @@ namespace SL
         }
         
         Label::setText(final_string);
+    }
+
+    void Editor::make_blackout()
+    {
+        Color new_color = default_sprite_color_;
+        new_color.set_h(new_color.get_h() / 3.f * 2.f);
+        setColor(new_color);
     }
 }

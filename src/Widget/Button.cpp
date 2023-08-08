@@ -45,8 +45,19 @@ namespace SL
 
     void Button::setTexture(const Texture &texture)
     {
-        Object::setTexture(texture);
-        default_sprite_color_ = getColor();
+        if (getColor() != default_sprite_color_)
+        {
+            Label::setTexture(texture);
+            default_sprite_color_ = getColor();
+            
+            make_blackout();
+        }
+
+        else
+        {
+            Label::setTexture(texture);
+            default_sprite_color_ = getColor();
+        }
     }
 
     void Button::clickLeftEvent (const Event &event)
@@ -99,11 +110,7 @@ namespace SL
     {        
         if (pointBelong(event.Oleg_.metion.pos))
         {
-            Color new_color = default_sprite_color_;
-        
-            new_color.set_v(new_color.get_v() / 3 * 2);
-
-            setColor(new_color);
+            make_blackout();
         }
 
         else
@@ -116,11 +123,7 @@ namespace SL
     {
         if (pointBelong(event.Oleg_.mwsedata.pos))
         {
-            Color new_color = default_sprite_color_;
-        
-            new_color.set_v(new_color.get_v() / 3 * 2);
-
-            setColor(new_color);
+            make_blackout();
         }
 
         else
@@ -137,5 +140,14 @@ namespace SL
     bool Button::isRightClicked()
     {
         return is_right_clicked_;
+    }
+
+    void Button::make_blackout()
+    {
+        Color new_color = default_sprite_color_;
+        
+        new_color.set_v(new_color.get_v() / 3 * 2);
+
+        setColor(new_color);
     }
 }
