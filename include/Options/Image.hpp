@@ -22,7 +22,7 @@ namespace SL
         Image &operator= (const Image &source) = default;
         ~Image() = default;
 
-        void saveToFile(const std::string &path);
+        bool saveToFile(const std::string &path) const;
 
         void loadFromFile(const std::string &path);
 
@@ -39,8 +39,6 @@ namespace SL
         void setPixel(Vector2d pos, const Color &color);
 
         void create(Vector2d shape, const Color &color);
-
-        bool saveToFile(const char *filename);
 
         void copy(const Image &source, Vector2d place, Vector2d source_start = Vector2d(-1, -1), Vector2d source_end = Vector2d(-1, -1), bool applyAlpha = false);
     private:

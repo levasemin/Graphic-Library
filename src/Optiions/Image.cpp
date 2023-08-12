@@ -28,9 +28,9 @@ namespace SL
     Image::Image(const sf::Image &image): image_(image)
     {}
 
-    void Image::saveToFile(const std::string &path)
+    bool Image::saveToFile(const std::string &path) const
     {
-        image_.saveToFile(path);
+        return image_.saveToFile(path);
     }
 
     void Image::loadFromFile(const std::string &path)
@@ -68,11 +68,6 @@ namespace SL
     void Image::create(Vector2d shape, const Color &color = Color(0, 0, 0, 255))
     {
         image_.create(static_cast<uint32_t>(shape.x_), static_cast<uint32_t>(shape.y_), color.get_sf_color());
-    }
-
-    bool Image::saveToFile(const char *filename)
-    {
-        return image_.saveToFile(filename);
     }
 
     void Image::copy(const Image &source, Vector2d place, Vector2d source_start, Vector2d source_end, bool applyAlpha)
