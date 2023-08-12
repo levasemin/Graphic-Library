@@ -4,7 +4,7 @@ namespace SL
 {
     sf::Vector2u Vector2d::to_sf_vector() const
     {
-        return sf::Vector2u((uint32_t)x_, (uint32_t)y_);
+        return sf::Vector2u(static_cast<uint32_t>(x_), static_cast<uint32_t>(y_));
     }
 
     void Vector2d::print_value() const
@@ -12,13 +12,7 @@ namespace SL
         std::cout << x_ << std::endl;
         std::cout << y_ << std::endl << std::endl;
     }
-
-    void Vector2d::setValue(float x, float y)
-    {
-        x_ = x;
-        y_ = y;
-    }
-
+    
     Vector2d operator + (const Vector2d &first, const Vector2d &second)
     {
         Vector2d new_vector = first;

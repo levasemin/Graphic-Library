@@ -10,7 +10,7 @@ float get_determinant(float *array, int n)
          + array[2] * (array[n] * array[n * 2 + 1] - array[n * 2] * array[n + 1]);
 }
 
-int doublecmp(float number1, float number2)
+int doublecmp(double number1, double number2)
 {
     return abs(number1 - number2) <= 0.0001 ? 0 : number1 > number2 ? 1 : -1;
 }

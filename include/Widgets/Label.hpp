@@ -28,7 +28,7 @@ namespace SL
         Label &operator=(const Label &source) = default;
         ~Label() = default;
 
-        void setText1(const Text &text);
+        void setText(const Text &text);
         void setText(const std::string &string);
 
         std::string getText();

@@ -3,15 +3,15 @@
 namespace SL
 {
         
-    const Color Color::Black  ((uint8_t)0,   (uint8_t)0,   (uint8_t)0,    uint8_t(255));
-    const Color Color::White  ((uint8_t)255, (uint8_t)255, (uint8_t)255,  uint8_t(255));       
-    const Color Color::Red    ((uint8_t)255, (uint8_t)0,   (uint8_t)0,    uint8_t(255));         
-    const Color Color::Green  ((uint8_t)0,   (uint8_t)255, (uint8_t)0,    uint8_t(255));       
-    const Color Color::Blue   ((uint8_t)0,   (uint8_t)0,   (uint8_t)255,  uint8_t(255));
-    const Color Color::Grey   ((uint8_t)69,  (uint8_t)69,  (uint8_t)69,   uint8_t(255));        
-    const Color Color::Yellow ((uint8_t)255, (uint8_t)255, (uint8_t)0,    uint8_t(255));      
-    const Color Color::Magenta((uint8_t)255, (uint8_t)0,   (uint8_t)255,  uint8_t(255));     
-    const Color Color::Cyan   ((uint8_t)0,   (uint8_t)255, (uint8_t)255,  uint8_t(255));  
+    const Color Color::Black  (static_cast<uint8_t>(0),   static_cast<uint8_t>(0),   static_cast<uint8_t>(0),    static_cast<uint8_t>(255));
+    const Color Color::White  (static_cast<uint8_t>(255), static_cast<uint8_t>(255), static_cast<uint8_t>(255),  static_cast<uint8_t>(255));       
+    const Color Color::Red    (static_cast<uint8_t>(255), static_cast<uint8_t>(0),   static_cast<uint8_t>(0),    static_cast<uint8_t>(255));         
+    const Color Color::Green  (static_cast<uint8_t>(0),   static_cast<uint8_t>(255), static_cast<uint8_t>(0),    static_cast<uint8_t>(255));       
+    const Color Color::Blue   (static_cast<uint8_t>(0),   static_cast<uint8_t>(0),   static_cast<uint8_t>(255),  static_cast<uint8_t>(255));
+    const Color Color::Grey   (static_cast<uint8_t>(69),  static_cast<uint8_t>(69),  static_cast<uint8_t>(69),   static_cast<uint8_t>(255));        
+    const Color Color::Yellow (static_cast<uint8_t>(255), static_cast<uint8_t>(255), static_cast<uint8_t>(0),    static_cast<uint8_t>(255));      
+    const Color Color::Magenta(static_cast<uint8_t>(255), static_cast<uint8_t>(0),   static_cast<uint8_t>(255),  static_cast<uint8_t>(255));     
+    const Color Color::Cyan   (static_cast<uint8_t>(0),   static_cast<uint8_t>(255), static_cast<uint8_t>(255),  static_cast<uint8_t>(255));  
 
     bool Color::operator == (const Color &color2)
     {
@@ -22,18 +22,6 @@ namespace SL
         return !operator==(color2);
     }
 
-    Color &Color::operator += (const Color &color2)
-    {
-        r_ = uint8_t(r_ + color2.r_);
-        g_ = uint8_t(g_ + color2.g_);
-        b_ = uint8_t(b_ + color2.b_);
-        
-        r_rel_ = r_ / 255.f;
-        g_rel_ = g_ / 255.f;
-        b_rel_ = b_ / 255.f;
-
-        return *this;
-    }
     Color &Color::operator += (float number)
     {
         r_rel_ += number;
@@ -47,18 +35,6 @@ namespace SL
         return *this;
     }
 
-    Color &Color::operator -= (const Color &color2)
-    {
-        r_ = uint8_t(r_ - color2.r_);
-        g_ = uint8_t(g_ - color2.g_);
-        b_ = uint8_t(b_ - color2.b_);
-
-        r_ = uint8_t(r_rel_ * 255.f);
-        g_ = uint8_t(g_rel_ * 255.f);
-        b_ = uint8_t(b_rel_ * 255.f);
-
-        return *this;
-    }
     Color &Color::operator -= (float number)
     {
         r_rel_ -= number;
@@ -72,18 +48,6 @@ namespace SL
         return *this;
     }
 
-    Color &Color::operator *= (const Color &color2)
-    {
-        r_rel_ *= color2.r_rel_;
-        g_rel_ *= color2.g_rel_;
-        b_rel_ *= color2.b_rel_;
-
-        r_ = uint8_t(r_rel_ * 255.f);
-        g_ = uint8_t(g_rel_ * 255.f);
-        b_ = uint8_t(b_rel_ * 255.f);
-
-        return *this;
-    }
     Color &Color::operator *= (float number)
     {
         r_rel_ *= number;
@@ -97,18 +61,6 @@ namespace SL
         return *this;
     }
 
-    Color &Color::operator /= (const Color &color2)
-    {
-        r_rel_ /= color2.r_rel_;
-        g_rel_ /= color2.g_rel_;
-        b_rel_ /= color2.b_rel_;
-
-        r_ = uint8_t(r_rel_ * 255.f);
-        g_ = uint8_t(g_rel_ * 255.f);
-        b_ = uint8_t(b_rel_ * 255.f);
-
-        return *this;
-    }
     Color &Color::operator /= (float number)
     {
         r_rel_ /= number;
@@ -122,13 +74,6 @@ namespace SL
         return *this;
     }
 
-    Color operator + (const Color &color1, const Color &color2)
-    {
-        Color new_color = std::move(color1);
-        new_color += color2;
-
-        return new_color;
-    }
     Color operator + (const Color &color, uint8_t number)
     {
         Color new_color = color;
@@ -158,13 +103,6 @@ namespace SL
         return new_color;
     }
 
-    Color operator - (const Color &color1, const Color &color2)
-    {
-        Color new_color = color1;
-        new_color -= color2;
-        
-        return new_color;
-    }
     Color operator - (const Color &color, uint8_t number)
     {
         Color new_color = color;
@@ -180,13 +118,7 @@ namespace SL
         return new_color;
     }
 
-    Color operator * (const Color &color1, const Color &color2)
-    {
-        Color new_color = color1;
-        new_color *= color2;
-        
-        return new_color;
-    }
+
     Color operator * (const Color &color, uint8_t number)
     {
         Color new_color = color;
@@ -208,6 +140,7 @@ namespace SL
         
         return new_color;
     }
+    
     Color operator * (float number, const Color &color)
     {
         Color new_color = color;
@@ -216,13 +149,6 @@ namespace SL
         return new_color;
     }
 
-    Color operator / (const Color &color1, const Color &color2)
-    {
-        Color new_color = color1;
-        new_color /= color2;
-        
-        return new_color;
-    }
     Color operator / (const Color &color, uint8_t number)
     {
         Color new_color = color;
@@ -285,21 +211,21 @@ namespace SL
 
     void Color::set_r(uint8_t r)
     {
-        r_rel_ = (float)r / 255.f;
+        r_rel_ = static_cast<float>(r) / 255.f;
         this->claim();
 
         convert_rgb_hsv();
     }
     void Color::set_g(uint8_t g)
     {
-        g_rel_ = (float)g / 255.f;
+        g_rel_ = static_cast<float>(g) / 255.f;
         this->claim();
 
         convert_rgb_hsv();
     }
     void Color::set_b(uint8_t b)
     {
-        b_rel_ = (float)b / 255.f;
+        b_rel_ = static_cast<float>(b) / 255.f;
         this->claim();
 
         convert_rgb_hsv();
@@ -373,9 +299,9 @@ namespace SL
 
     void Color::set_color(uint8_t r, uint8_t g, uint8_t b)
     {
-        r_rel_ = (float)r / 255.f;
-        g_rel_ = (float)g / 255.f;
-        b_rel_ = (float)b / 255.f;
+        r_rel_ = static_cast<float>(r) / 255.f;
+        g_rel_ = static_cast<float>(g) / 255.f;
+        b_rel_ = static_cast<float>(b) / 255.f;
 
         this->claim();
     }
@@ -405,9 +331,9 @@ namespace SL
 
     Color::Color (uint8_t r, uint8_t g, uint8_t b, uint8_t a): r_(r), g_(g), b_(b), a_(a)
     {
-        r_rel_ = (float)r / 255.f;
-        g_rel_ = (float)g / 255.f;
-        b_rel_ = (float)b / 255.f;
+        r_rel_ = static_cast<float>(r) / 255.f;
+        g_rel_ = static_cast<float>(g) / 255.f;
+        b_rel_ = static_cast<float>(b) / 255.f;
         
         this->claim();
 
@@ -434,10 +360,10 @@ namespace SL
 
     void Color::print_color() const
     {
-        std::cout << (int)r_ << std::endl;
-        std::cout << (int)g_ << std::endl;
-        std::cout << (int)b_ << std::endl;
-        std::cout << (int)a_ << std::endl;
+        std::cout << static_cast<int>(r_) << std::endl;
+        std::cout << static_cast<int>(g_) << std::endl;
+        std::cout << static_cast<int>(b_) << std::endl;
+        std::cout << static_cast<int>(a_) << std::endl;
     }
 
     void Color::convert_rgb_hsv()
@@ -517,18 +443,18 @@ namespace SL
             b = x;
         }
         
-        r_ = (uint8_t)(round((r + m) * 255.f));
-        g_ = (uint8_t)(round((g + m) * 255.f));
-        b_ = (uint8_t)(round((b + m) * 255.f));
+        r_ = static_cast<uint8_t>(round((r + m) * 255.f));
+        g_ = static_cast<uint8_t>(round((g + m) * 255.f));
+        b_ = static_cast<uint8_t>(round((b + m) * 255.f));
     }
 
     Color Color::convert_uint_color(uint32_t color)
     {
-        return Color((uint8_t)(color >> 24), (uint8_t)(color >> 16), (uint8_t)(color >> 8), (uint8_t)color);
+        return Color(static_cast<uint8_t>(color >> 24), static_cast<uint8_t>(color >> 16), static_cast<uint8_t>(color >> 8), static_cast<uint8_t>(color));
     }
 
     uint32_t Color::convert_color_uint(const Color &color)
     {
-        return ((uint32_t)color.get_r() << (uint32_t)24) + ((uint32_t)color.get_g() << (uint32_t)16) + ((uint32_t)color.get_b() << (uint32_t)8) + (uint32_t)color.get_a();
+        return (static_cast<uint32_t>(color.get_r()) << static_cast<uint32_t>(24)) + (static_cast<uint32_t>(color.get_g()) << static_cast<uint32_t>(16)) + (static_cast<uint32_t>(color.get_b()) << static_cast<uint32_t>(8)) + static_cast<uint32_t>(color.get_a());
     }
 }

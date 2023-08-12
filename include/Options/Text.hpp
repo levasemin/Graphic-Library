@@ -14,9 +14,11 @@ namespace SL
     {
     public:
         Text ();
-        
         Text (const Font &font);
-
+        Text(const Text &source) = default;
+        Text &operator= (const Text &source) = default;
+        ~Text() = default;
+        
         void setFont(const Font &font);
 
         void setCharacterSize(int size);

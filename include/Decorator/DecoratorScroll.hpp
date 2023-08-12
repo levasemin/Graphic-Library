@@ -15,7 +15,7 @@ namespace SL
         DecoratorScroll &operator=(const DecoratorScroll &source);
         DecoratorScroll(DecoratorScroll &&source);
         DecoratorScroll &operator=(DecoratorScroll &&source);
-        ~DecoratorScroll();
+        ~DecoratorScroll() = default;
     
         Widget *getWidget();
         void setWidget(Widget *widget);

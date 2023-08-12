@@ -46,11 +46,6 @@ namespace SL
         return *this;
     }
 
-    DecoratorScroll::~DecoratorScroll()
-    {
-        delete widget_;
-    }
-
 
     Widget *DecoratorScroll::getWidget()
     {

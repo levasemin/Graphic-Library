@@ -43,6 +43,21 @@ namespace SL
         right_release_command_ = command;
     }
 
+    Texture Button::getTexture() const
+    {
+        if (getColor() == default_sprite_color_)
+        {
+            return Label::getTexture();
+        }
+        else
+        {
+            Sprite sprite(getShape(), Label::getTexture());
+            sprite.setColor(default_sprite_color_);
+            
+            return sprite.getTexture();
+        }
+    }
+
     void Button::setTexture(const Texture &texture)
     {
         if (getColor() != default_sprite_color_)

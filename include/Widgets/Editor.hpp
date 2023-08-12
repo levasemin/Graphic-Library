@@ -15,7 +15,6 @@ namespace SL
         ~Editor() = default;
 
         void setText(const std::string &string);
-
         void setText(const Text &text);
         
         std::string getText();
@@ -23,6 +22,7 @@ namespace SL
         Command<std::string> * getEditorCommand();
         void setEditorCommand(Command<std::string> *editor_command);
 
+        Texture getTexture() const override;
         void setTexture(const Texture &texture) override;
 
     protected:

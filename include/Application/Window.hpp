@@ -14,8 +14,11 @@ namespace SL
         sf::RenderWindow window_;
         bool visible_ = true;
 
-        Window(Vector2d shape, int style = 7);
-        
+        Window(Vector2d shape, int style = 7);        
+        Window (const Window &source) = default;
+        Window &operator =(const Window &source) = default;
+        ~Window() = default;
+
         bool getVisible();
         void setVisible(bool visible);
         void draw(const sf::Vertex *vertices, std::size_t VertexCount, sf::PrimitiveType type, const sf::RenderStates &states = sf::RenderStates::Default);
@@ -24,9 +27,7 @@ namespace SL
         void draw(Sprite sprite);
         void clear();
         
-        Window (const Window &source);
 
-        Window &operator =(const Window &source);
         
         void create(Vector2d shape, std::string name, int style);
         bool isOpen();

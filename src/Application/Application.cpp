@@ -111,10 +111,10 @@ namespace SL
     {    
         if (!window_)
         {
-            window_ = new Window (main_window_->getShape(), main_window_->style_);
+            window_ = new Window (main_window_->getShape(), static_cast<int>(main_window_->style_));
         }
         
-        window_->create(main_window_->getShape(), "", main_window_->style_);
+        window_->create(main_window_->getShape(), "", static_cast<int>(main_window_->style_));
 
         while(window_->isOpen() && window_->getVisible())
         {

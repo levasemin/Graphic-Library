@@ -18,8 +18,8 @@ namespace SL
         CompositeObject::add(&scroll_bar_vertical_);
 
         
-        scroll_bar_vertical_.  setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollVerticalWidget));
-        scroll_bar_horizontal_.setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollHorizontalWidget));        
+        scroll_bar_vertical_.  setScrollCommand (dynamic_cast<Command<float> *>(new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollVerticalWidget)));
+        scroll_bar_horizontal_.setScrollCommand (dynamic_cast<Command<float> *>(new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollHorizontalWidget)));        
     }
 
     DecoratorScrollBar::DecoratorScrollBar(const DecoratorScrollBar &source) : CompositeObject(*(CompositeObject *)&source),
@@ -33,8 +33,8 @@ namespace SL
         scroll_bar_vertical_(source.scroll_bar_vertical_),
         scroll_bar_horizontal_(source.scroll_bar_horizontal_)
     {
-        scroll_bar_vertical_.  setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollVerticalWidget));
-        scroll_bar_horizontal_.setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollHorizontalWidget)); 
+        scroll_bar_vertical_.  setScrollCommand (dynamic_cast<Command<float> *>(new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollVerticalWidget)));
+        scroll_bar_horizontal_.setScrollCommand (dynamic_cast<Command<float> *>(new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollHorizontalWidget))); 
     }
 
     DecoratorScrollBar &DecoratorScrollBar::operator=(const DecoratorScrollBar &source)
@@ -51,8 +51,8 @@ namespace SL
         // scroll_bar_vertical_ = source.scroll_bar_vertical_;
         // scroll_bar_horizontal_ = source.scroll_bar_horizontal_;
 
-        scroll_bar_vertical_.  setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollVerticalWidget));
-        scroll_bar_horizontal_.setScrollCommand ((Command<float> *) new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollHorizontalWidget)); 
+        scroll_bar_vertical_.  setScrollCommand (dynamic_cast<Command<float> *>(new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollVerticalWidget)));
+        scroll_bar_horizontal_.setScrollCommand (dynamic_cast<Command<float> *>(new SimpleCommand<DecoratorScrollBar, float> (this, &DecoratorScrollBar::ScrollHorizontalWidget))); 
 
         return *this;
     }

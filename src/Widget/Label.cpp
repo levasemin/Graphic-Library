@@ -10,7 +10,7 @@ namespace SL
         text_.setColor(Color::Black);
     };
     
-    void Label::setText1(const Text &text)
+    void Label::setText(const Text &text)
     {
         text_ = text;
         redraw();

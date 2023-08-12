@@ -21,20 +21,21 @@ namespace SL
         bool isLeftClicked();
         bool isRightClicked();
         
-        Command<> * getLeftClick ();
+        Command<> *getLeftClick ();
         void setLeftClick (Command<> *command);
 
-        Command<> * getReleaseLeftClick ();
+        Command<> *getReleaseLeftClick ();
         void setReleaseLeftClick (Command<> *command);
 
-        Command<> * getRightClick ();
+        Command<> *getRightClick ();
         void setRightClick (Command<> *command);
 
-        Command<> * getReleaseRightClick ();
+        Command<> *getReleaseRightClick ();
         void setReleaseRightClick (Command<> *command);
 
-        void setTexture(const Texture &texture);
-
+        Texture getTexture() const override;
+        void setTexture(const Texture &texture) override;
+        
     protected:
         void moveMouseEvent    (const Event &event) override;
 

@@ -16,23 +16,23 @@ namespace SL
             {};
 
         Vector2d(int x, int y): 
-            x_(float(x)),
-            y_(float(y))
+            x_(static_cast<float>(x)),
+            y_(static_cast<float>(y))
             {};
         
         Vector2d(uint32_t x, uint32_t y): 
-            x_(float(x)),
-            y_(float(y))
+            x_(static_cast<float>(x)),
+            y_(static_cast<float>(y))
             {};
 
         Vector2d(size_t x, size_t y): 
-            x_(float(x)),
-            y_(float(y))
+            x_(static_cast<float>(x)),
+            y_(static_cast<float>(y))
             {};
 
         Vector2d(sf::Vector2u sf_vector):
-            x_((float)sf_vector.x),
-            y_((float)sf_vector.y)
+            x_(static_cast<float>(sf_vector.x)),
+            y_(static_cast<float>(sf_vector.y))
         {}
 
         Vector2d(sf::Vector2f sf_vector):
@@ -40,8 +40,11 @@ namespace SL
             y_(sf_vector.y)
         {}
 
+        Vector2d(const Vector2d &source) = default;
+        Vector2d &operator= (const Vector2d &source) = default;
+        ~Vector2d() = default;
+        
         sf::Vector2u to_sf_vector() const;
-        void setValue(float x, float y);
         void print_value () const;
 
         friend Vector2d operator + (const Vector2d &first, const Vector2d &second);

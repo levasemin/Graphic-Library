@@ -11,28 +11,26 @@ namespace SL
 
     class Texture
     {
-        
-    public:
-        sf::Texture texture_;    
-        
+    public:        
         Texture () = default;
+        Texture(const char *path);
+        Texture (const Color &color);
+        Texture (const sf::Texture &texture);
+
         Texture (const Texture &) = default;
         Texture& operator= (const Texture &) = default; 
         ~Texture() = default;
-        
-        Texture(const char *path);
-        
-        Texture (const Color &color);
-
-        Texture (const sf::Texture &texture);
-        
+                
         bool loadFromFile(const char *path);
 
         Vector2d getSize() const;
 
         Image copyToImage();
 
-    private:
         friend class Sprite;
+        friend class Image;
+    private:
+        sf::Texture texture_;    
+
     };
 }

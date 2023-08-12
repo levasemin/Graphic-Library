@@ -7,12 +7,6 @@
 
 #include "functions.hpp"
 
-class Color2
-{
-public:
-    int x;
-};
-
 namespace SL
 {
     class Color
@@ -22,6 +16,10 @@ namespace SL
         Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255); 
         Color(sf::Color color);
         Color(){};
+
+        Color (const Color &color) = default;
+        Color &operator= (const Color &color) = default;
+        ~Color () = default;
 
         static const Color Black;
         static const Color White;       
@@ -69,25 +67,19 @@ namespace SL
         float get_relation_b();
 
         void pow(float degree);
-        
-        bool operator == (const Color &color2);
-        bool operator != (const Color &color2);
-        Color &operator += (const Color &color2);
-        Color &operator += (float number);
-        Color &operator -= (const Color &color2);
-        Color &operator -= (float number);
-        Color &operator *= (const Color &color2);
-        Color &operator *= (float number);
-        Color &operator /= (const Color &color2);
-        Color &operator /= (float number);
-
-        Color &operator =(const Color &that) = default;    
 
         void convert_hsv_rgb();
         void convert_rgb_hsv();
 
         static Color convert_uint_color(uint32_t color);
         static uint32_t convert_color_uint(const Color &color);
+
+        bool operator == (const Color &color2);
+        bool operator != (const Color &color2);
+        Color &operator += (float number);
+        Color &operator -= (float number);
+        Color &operator *= (float number);
+        Color &operator /= (float number);
 
         friend Color operator + (const Color &color1,   const Color &color2);
         friend Color operator + (const Color &color,    uint8_t number);
@@ -99,13 +91,11 @@ namespace SL
         friend Color operator - (const Color &color,  uint8_t number);
         friend Color operator - (const Color &color,  float number);
 
-        friend Color operator * (const Color &color1, const Color &color2);
         friend Color operator * (const Color &color,  uint8_t number);
         friend Color operator * (uint8_t number,   const Color &color);
         friend Color operator * (const Color &color,  float number);
         friend Color operator * (float number,const Color &color);
 
-        friend Color operator / (const Color &color1, const Color &color2);
         friend Color operator / (const Color &color,  uint8_t number);
         friend Color operator / (const Color &color,  float number);
 

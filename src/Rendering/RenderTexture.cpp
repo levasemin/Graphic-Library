@@ -22,21 +22,6 @@ namespace SL
         return *this;
     }
 
-    RenderTexture::RenderTexture(RenderTexture &&source)
-    {
-        create(source.getSize());
-        draw(Sprite(source.getSize(), source.getTexture()));
-    }
-
-
-    RenderTexture& RenderTexture::operator=(RenderTexture &&source)
-    {
-        create(source.getSize());
-        draw(Sprite(source.getSize(), source.getTexture()));
-
-        return *this;
-    }
-
     Texture RenderTexture::getTexture() const 
     {
         return Texture(render_texture_.getTexture());
@@ -57,7 +42,7 @@ namespace SL
 
     void RenderTexture::create(const Vector2d &size)
     {
-        render_texture_.create((uint32_t)size.x_, (uint32_t)size.y_);      
+        render_texture_.create(static_cast<uint32_t>(size.x_), static_cast<uint32_t>(size.y_));      
     }
 
     void RenderTexture::draw(const Sprite &sprite)

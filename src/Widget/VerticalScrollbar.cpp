@@ -13,9 +13,9 @@ namespace SL
         min_value_(min_value),
         max_value_(max_value),
 
-        scroll_button_texture_(Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))))
+        scroll_button_texture_(Texture(Color(static_cast<uint8_t>(48), static_cast<uint8_t>(48), static_cast<uint8_t>(48))))
     {
-        setTexture(Texture(Color((uint8_t)92, (uint8_t)92, (uint8_t)92)));
+        setTexture(Texture(Color(static_cast<uint8_t>(92), static_cast<uint8_t>(92), static_cast<uint8_t>(92))));
 
         TextureManager &texture_manager = TextureManager::getInstance();
 
@@ -27,12 +27,12 @@ namespace SL
         add(&down_button_);
         add(&scroll_button_);
 
-        up_button_.    setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollUp));
-        down_button_.  setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollDown));
-        scroll_button_.setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::clickedScrollButton));
+        up_button_.    setLeftClick(static_cast<Command<> *>(new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollUp)));
+        down_button_.  setLeftClick(static_cast<Command<> *>(new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollDown)));
+        scroll_button_.setLeftClick(static_cast<Command<> *>(new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::clickedScrollButton)));
     }
 
-    VerticalScrollBar::VerticalScrollBar(const VerticalScrollBar &source): SL::CompositeObject(*(SL::CompositeObject *)&source),
+    VerticalScrollBar::VerticalScrollBar(const VerticalScrollBar &source): SL::CompositeObject(static_cast<const SL::CompositeObject &>(source)),
         up_button_(source.up_button_),
         down_button_(source.down_button_),
         scroll_button_(source.scroll_button_),
@@ -42,14 +42,14 @@ namespace SL
         max_value_(source.max_value_),
         scroll_button_texture_(source.scroll_button_texture_)
     {
-        up_button_.    setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollUp));
-        down_button_.  setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollDown));
-        scroll_button_.setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::clickedScrollButton));
+        up_button_.    setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollUp)));
+        down_button_.  setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollDown)));
+        scroll_button_.setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::clickedScrollButton)));
     }
 
     VerticalScrollBar &VerticalScrollBar::operator=(const VerticalScrollBar &source)
     {
-        SL::CompositeObject::operator=(*(SL::CompositeObject *)&source);
+        SL::CompositeObject::operator=(static_cast<const SL::CompositeObject &>(source));
 
         up_button_ = source.up_button_;
         down_button_ = source.down_button_;
@@ -60,9 +60,9 @@ namespace SL
         max_value_ = source.max_value_;
         scroll_button_texture_ = source.scroll_button_texture_;
 
-        up_button_.    setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollUp));
-        down_button_.  setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollDown));
-        scroll_button_.setLeftClick((Command<> *) new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::clickedScrollButton));
+        up_button_.    setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollUp)));
+        down_button_.  setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::scrollDown)));
+        scroll_button_.setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<VerticalScrollBar>(this, &VerticalScrollBar::clickedScrollButton)));
 
         return *this;
     }

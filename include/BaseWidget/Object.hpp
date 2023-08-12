@@ -3,8 +3,8 @@
 #pragma once
 
 #include "Window.hpp"
-#include "Vector2d.hpp"
 #include "Widget.hpp"
+#include "Vector2d.hpp"
 
 namespace SL
 {

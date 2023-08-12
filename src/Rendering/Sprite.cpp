@@ -2,7 +2,7 @@
 
 namespace SL
 {
-    Sprite::Sprite(Vector2d shape, const Texture &texture, int mode):
+    Sprite::Sprite(Vector2d shape, const Texture &texture, Mode mode):
         mode_(mode),
         shape_(shape),
         texture_(texture), 
@@ -12,7 +12,7 @@ namespace SL
     };
 
     Sprite::Sprite(sf::Sprite sprite):
-        mode_(0),
+        mode_(Mode::CROP),
         shape_(float(sprite.getTextureRect().width)  * sprite.getScale().x,
               float(sprite_.getTextureRect().height) * sprite.getScale().y),
         texture_(*sprite.getTexture()),
@@ -22,7 +22,7 @@ namespace SL
     
     void Sprite::setTextureRect(Vector2d start, Vector2d end)
     {
-        sprite_.setTextureRect(sf::IntRect((int)start.x_, (int)start.y_, (int)end.x_, (int)end.y_));
+        sprite_.setTextureRect(sf::IntRect(static_cast<int>(start.x_), static_cast<int>(start.y_), static_cast<int>(end.x_), static_cast<int>(end.y_)));
     }
     
     Vector2d Sprite::getShape() const
@@ -77,12 +77,12 @@ namespace SL
         float scale_x = shape_.x_ / float(sprite_.getTexture()->getSize().x);
         float scale_y = shape_.y_ / float(sprite_.getTexture()->getSize().y);
 
-        if (mode_ == FILL_X)
+        if (mode_ == Mode::FILL_X)
         {
             scale_y = scale_x;
         }
 
-        if (mode_ == FILL_Y)
+        if (mode_ == Mode::FILL_Y)
         {
             scale_x = scale_y;
         }

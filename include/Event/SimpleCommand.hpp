@@ -18,7 +18,7 @@ namespace SL
 
         SimpleCommand(const SimpleCommand &command) = default;
         SimpleCommand &operator= (const SimpleCommand &command) = default; 
-        ~SimpleCommand() override {}
+        ~SimpleCommand() override = default;
 
         void Execute(TParams... params) override
         {

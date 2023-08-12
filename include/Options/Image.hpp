@@ -6,24 +6,22 @@
 #include "RenderTexture.hpp"
 
 namespace SL
-{
+{    
     class Texture;
-    
+
     class Image
     {   
     public:    
-
         Image ();
-        virtual ~Image() {};
-
         Image(const std::string &path);
-
         Image(const Texture &texture);
-
         Image (const Vector2d &shape, const Color &color);
-
         Image(const sf::Image &image);
                 
+        Image(const Image &source) = default;
+        Image &operator= (const Image &source) = default;
+        ~Image() = default;
+
         void saveToFile(const std::string &path);
 
         void loadFromFile(const std::string &path);
@@ -35,6 +33,8 @@ namespace SL
         void setSize(const Vector2d &size);   
 
         Color getPixel(Vector2d pos) const;
+
+        const uint8_t *getPixelsPtr() const;
 
         void setPixel(Vector2d pos, const Color &color);
 

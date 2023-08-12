@@ -7,6 +7,21 @@ namespace SL
     {
     }
 
+    Texture Editor::getTexture() const
+    {
+        if (getColor() == default_sprite_color_)
+        {
+            return Label::getTexture();
+        }
+        else
+        {
+            Sprite sprite(getShape(), Label::getTexture());
+            sprite.setColor(default_sprite_color_);
+            
+            return sprite.getTexture();
+        }
+    }
+    
     void Editor::setTexture(const Texture &texture)
     {
         if (getColor() != default_sprite_color_)

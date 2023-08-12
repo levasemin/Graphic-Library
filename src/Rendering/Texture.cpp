@@ -19,8 +19,7 @@ namespace SL
 
     Texture::Texture (const sf::Texture &texture):
         texture_(texture)
-    {
-    }
+    {}
     
     bool Texture::loadFromFile(const char *path)
     {

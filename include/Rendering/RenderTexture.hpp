@@ -36,8 +36,6 @@ namespace SL
 
         RenderTexture(const RenderTexture &source);            
         RenderTexture& operator= (const RenderTexture &source);
-        RenderTexture(RenderTexture &&source);                 
-        RenderTexture& operator= (RenderTexture &&source);     
 
         ~RenderTexture() = default;
         

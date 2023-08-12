@@ -4,25 +4,24 @@
 
 namespace SL
 {
-    const int FILL   = 0;
-    const int FILL_X = 1;
-    const int FILL_Y = 2;
-    const int CROP   = 3;
-
     class Sprite
     {
-
-    private:
-        int mode_;
-        Vector2d shape_;
-        Texture texture_;
-        sf::Sprite sprite_;
     public:
-
-        Sprite(Vector2d shape, const Texture &texture, int mode = FILL);
+        enum class Mode
+        {
+            FILL,
+            FILL_X,
+            FILL_Y,
+            CROP,
+        };
+        
+        Sprite(Vector2d shape, const Texture &texture, Mode mode = Mode::FILL);
 
         Sprite(sf::Sprite sprite);
-        
+        Sprite(const Sprite &source) = default;
+        Sprite &operator= (const Sprite &source) = default;
+        ~Sprite() = default;
+                
         void setTextureRect(Vector2d start, Vector2d end);
 
         Vector2d getShape() const;
@@ -42,5 +41,11 @@ namespace SL
 
         friend class Window;
         friend class RenderTexture;
+
+    private:
+        Mode mode_;
+        Vector2d shape_;
+        Texture texture_;
+        sf::Sprite sprite_;
     };
 }

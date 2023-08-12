@@ -6,7 +6,7 @@ namespace SL
             shape_(shape),
             position_(position),    
             texture_(texture),
-            sprite_(shape, texture, 0),
+            sprite_(shape, texture, Sprite::Mode::CROP),
             render_texture_(shape)
             {                   
                 sprite_.setTexture(texture);
@@ -182,13 +182,12 @@ namespace SL
 
         std::vector<Widget *> Object::getChildren() const 
         {
-            // std::logic_error exception("try getting children from object\n");
-            // throw exception;
-            return {};
+            std::logic_error exception("try getting children from object\n");
+            throw exception;
         }
         void Object::setChildren(std::vector<Widget *> children) 
         {
-            // std::logic_error exception("try setting children to object\n");
-            // throw exception;
+            std::logic_error exception("try setting children to object\n");
+            throw exception;
         }
 }

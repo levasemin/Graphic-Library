@@ -12,7 +12,7 @@ namespace SL
         min_value_(min_value),
         max_value_(max_value),
 
-        scroll_button_texture_(Texture(Color(uint8_t(48), uint8_t(48), uint8_t(48))))
+        scroll_button_texture_(Texture(Color(static_cast<uint8_t>(48), static_cast<uint8_t>(48), static_cast<uint8_t>(48))))
         {            
             TextureManager &texture_manager = TextureManager::getInstance();
 
@@ -24,12 +24,12 @@ namespace SL
             add(&right_button_);
             add(&scroll_button_);
                         
-            left_button_.  setLeftClick((Command<> *) new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollUp));
-            right_button_. setLeftClick((Command<> *) new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollDown));
-            scroll_button_.setLeftClick((Command<> *) new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::clickedScrollButton));
+            left_button_.  setLeftClick(dynamic_cast<Command<> *> (new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollUp)));
+            right_button_. setLeftClick(dynamic_cast<Command<> *> (new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollDown)));
+            scroll_button_.setLeftClick(dynamic_cast<Command<> *> (new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::clickedScrollButton)));
         };
 
-    HorizontalScrollBar::HorizontalScrollBar(const HorizontalScrollBar &source): SL::CompositeObject(*(SL::CompositeObject *)&source),
+    HorizontalScrollBar::HorizontalScrollBar(const HorizontalScrollBar &source): SL::CompositeObject(dynamic_cast<const SL::CompositeObject &>(source)),
         left_button_(source.left_button_),
         right_button_(source.right_button_),
         scroll_button_(source.scroll_button_),
@@ -39,14 +39,14 @@ namespace SL
         max_value_(source.max_value_),
         scroll_button_texture_(source.scroll_button_texture_)
     {
-        left_button_.  setLeftClick((Command<> *) new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollUp));
-        right_button_. setLeftClick((Command<> *) new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollDown));
-        scroll_button_.setLeftClick((Command<> *) new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::clickedScrollButton));
+        left_button_.  setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollUp)));
+        right_button_. setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollDown)));
+        scroll_button_.setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::clickedScrollButton)));
     }
 
     HorizontalScrollBar &HorizontalScrollBar::operator=(const HorizontalScrollBar &source)
     {
-        SL::CompositeObject::operator=(*(SL::CompositeObject *)&source);
+        SL::CompositeObject::operator=(dynamic_cast<const SL::CompositeObject &>(source));
         left_button_ = source.left_button_;
         right_button_ = source.right_button_;
         scroll_button_ = source.scroll_button_;
@@ -56,9 +56,9 @@ namespace SL
         max_value_ = source.max_value_;
         scroll_button_texture_ = source.scroll_button_texture_;
 
-        left_button_.  setLeftClick((Command<> *) new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollUp));
-        right_button_. setLeftClick((Command<> *) new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollDown));
-        scroll_button_.setLeftClick((Command<> *) new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::clickedScrollButton));
+        left_button_.  setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollUp)));
+        right_button_. setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::scrollDown)));
+        scroll_button_.setLeftClick(dynamic_cast<Command<> *>(new SimpleCommand<HorizontalScrollBar>(this, &HorizontalScrollBar::clickedScrollButton)));
         
         return *this;
     }

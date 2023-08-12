@@ -10,12 +10,7 @@
 namespace SL
 {
     class TextureManager
-    {
-    private:
-        TextureManager(){}
-        TextureManager(const TextureManager &source) = default;
-        TextureManager &operator=(const TextureManager &source) = default;
-        
+    {   
     public:
 
         struct texture
@@ -42,11 +37,15 @@ namespace SL
             {"Swap.png", Texture(Color::White)}
         };
 
-        
         void load_textures(std::string path);
         
         static TextureManager& getInstance();
 
         Texture &operator[](int icon);
+    
+    private:
+        TextureManager(){}
+        TextureManager(const TextureManager &source) = default;
+        TextureManager &operator=(const TextureManager &source) = default;
     };
 }

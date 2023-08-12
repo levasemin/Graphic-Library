@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Texture.hpp"
 #include "CompositeObject.hpp"
 
 namespace SL
@@ -8,23 +7,25 @@ namespace SL
     class MainWindow : public CompositeObject
     {
     public:
-        int style_;
-        enum Style
+        enum class Style
         {
+            None       = sf::Style::None,
+            Titlebar   = sf::Style::Titlebar,
+            Resize     = sf::Style::Resize,
             Close      = sf::Style::Close,
             Default    = sf::Style::Default,
             Fullscreen = sf::Style::Fullscreen,
-            None       = sf::Style::None,
-            Resize     = sf::Style::Resize,
-            Titlebar   = sf::Style::Titlebar,
         };
 
-        MainWindow(Vector2d shape, Texture texture = Texture(Color::White), int style = sf::Style::Default);
+        MainWindow(Vector2d shape, Texture texture = Texture(Color::White), Style style = Style::Default);
 
         MainWindow(const MainWindow &source) = default;
         MainWindow &operator=(const MainWindow &source) = default;
         ~MainWindow() = default;
         
         friend class Application;
+    
+    private:
+        Style style_;
     };
 }

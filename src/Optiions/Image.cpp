@@ -22,7 +22,7 @@ namespace SL
     Image::Image (const Vector2d &shape, const Color &color = Color(uint8_t(0), uint8_t(0), uint8_t(0))):
         image_()
     {
-        image_.create(uint32_t(shape.x_), uint32_t(shape.y_), color.get_sf_color());
+        image_.create(static_cast<uint32_t>(shape.x_), static_cast<uint32_t>(shape.y_), color.get_sf_color());
     }
     
     Image::Image(const sf::Image &image): image_(image)
@@ -52,22 +52,22 @@ namespace SL
 
     void Image::setSize(const Vector2d &size)
     {
-        image_.create(uint32_t(size.x_), uint32_t(size.y_));
+        image_.create(static_cast<uint32_t>(size.x_), static_cast<uint32_t>(size.y_));
     }   
 
     Color Image::getPixel(Vector2d pos) const
     {
-        return Color(image_.getPixel(uint32_t(pos.x_), uint32_t(pos.y_)));
+        return Color(image_.getPixel(static_cast<uint32_t>(pos.x_), static_cast<uint32_t>(pos.y_)));
     }
 
     void Image::setPixel(Vector2d pos, const Color &color)
     {
-        image_.setPixel(uint32_t(pos.x_), uint32_t(pos.y_), color.get_sf_color());
+        image_.setPixel(static_cast<uint32_t>(pos.x_), static_cast<uint32_t>(pos.y_), color.get_sf_color());
     }
 
     void Image::create(Vector2d shape, const Color &color = Color(0, 0, 0, 255))
     {
-        image_.create(uint32_t(shape.x_), uint32_t(shape.y_), color.get_sf_color());
+        image_.create(static_cast<uint32_t>(shape.x_), static_cast<uint32_t>(shape.y_), color.get_sf_color());
     }
 
     bool Image::saveToFile(const char *filename)
@@ -90,4 +90,8 @@ namespace SL
         image_.copy(source.image_, place.x_, place.y_, sf::IntRect(source_start.x_, source_start.y_, source_end.x_, source_end.y_), applyAlpha);
     }
 
+    const uint8_t *Image::getPixelsPtr() const
+    {
+        return reinterpret_cast<const uint8_t *>(image_.getPixelsPtr());
+    }
 }
