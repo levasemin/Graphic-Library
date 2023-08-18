@@ -70,6 +70,11 @@ namespace SL
         image_.create(static_cast<uint32_t>(shape.x_), static_cast<uint32_t>(shape.y_), color.get_sf_color());
     }
 
+    void Image::create(Vector2d shape, const uint8_t *pixels)
+    {
+        image_.create(static_cast<uint32_t>(shape.x_), static_cast<uint32_t>(shape.y_), reinterpret_cast<const sf::Uint8 *>(pixels));
+    }
+
     void Image::copy(const Image &source, Vector2d place, Vector2d source_start, Vector2d source_end, bool applyAlpha)
     {
         if (source_start.x_ == -1 && source_start.y_ == -1)

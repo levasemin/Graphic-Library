@@ -39,7 +39,8 @@ namespace SL
         void setPixel(Vector2d pos, const Color &color);
 
         void create(Vector2d shape, const Color &color);
-
+        void create(Vector2d shape, const uint8_t *pixels);
+        
         void copy(const Image &source, Vector2d place, Vector2d source_start = Vector2d(-1, -1), Vector2d source_end = Vector2d(-1, -1), bool applyAlpha = false);
     private:
         sf::Image image_;
