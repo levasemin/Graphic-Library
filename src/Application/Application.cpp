@@ -44,18 +44,10 @@ namespace SL
             }
 
             case Event::MousePressed:
-            {
-                if (event.Oleg_.mpedata.button == Event::MouseButton::Left)
-                {
-                    main_window_->clickLeftEvent(event);
-                }
-
-                else if (event.Oleg_.mpedata.button == Event::MouseButton::Right)
-                {         
-                    main_window_->clickRightEvent(event);
-                }
-
-                break;
+            {        
+                    main_window_->clickEvent(event);
+        
+                    break;
             }
 
             case Event::KeyPressed:
@@ -86,16 +78,8 @@ namespace SL
             
             case Event::MouseReleased:
             {
-                if (event.Oleg_.mredata.button == Event::MouseButton::Left)
-                {
-                    main_window_->releaseLeftEvent(event);
-                }
-
-                else if (event.Oleg_.mredata.button == Event::MouseButton::Right)
-                {
-                    main_window_->releaseRightEvent(event);            
-                }
-
+                main_window_->releaseEvent(event);
+            
                 break;
             }
 

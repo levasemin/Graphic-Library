@@ -173,7 +173,7 @@ namespace SL
             char letter;
         };
 
-        struct MouseWheelScrolledEventData
+        struct MouseScrolledEventData
         {
             uint64_t id;
             float value;
@@ -192,7 +192,7 @@ namespace SL
             MotionEventData metion;
             MousePressedEventData mpedata;
             MouseReleasedEventData mredata;
-            MouseWheelScrolledEventData mwsedata;
+            MouseScrolledEventData msedata;
             KeyPressedEventData kpedata;
             TextEventData tedata;
         } Oleg_;

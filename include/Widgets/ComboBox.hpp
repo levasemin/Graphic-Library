@@ -26,7 +26,7 @@ namespace SL
         void set_box_texture(const Texture &texture);
     
     protected:
-        void clickLeftEvent(const Event &event) override;    
+        void clickEvent(const Event &event) override;    
     
     private:
         bool is_showed_ = false;

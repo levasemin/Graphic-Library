@@ -28,7 +28,7 @@ namespace SL
     protected:
         void moveMouseEvent(const Event &event) override;
 
-        void clickLeftEvent(const Event &event) override;
+        void clickEvent(const Event &event) override;
 
         void pressKeyEvent (const Event &event) override;
         

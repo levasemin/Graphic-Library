@@ -6,37 +6,21 @@ namespace SL
         children_({})
         {}
 
-    void CompositeObject::clickLeftEvent (const Event &event) 
+    void CompositeObject::clickEvent (const Event &event) 
     {   
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->clickLeftEvent(event);
+            children_[i]->clickEvent(event);
         }
     }
 
-    void CompositeObject::releaseLeftEvent (const Event &event) 
+    void CompositeObject::releaseEvent (const Event &event) 
     {
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->releaseLeftEvent(event);
+            children_[i]->releaseEvent(event);
         }
-    }             
-    
-    void CompositeObject::clickRightEvent (const Event &event) 
-    {
-        for (size_t i = 0; i < children_.size(); i++)
-        {
-            children_[i]->clickRightEvent(event);
-        }
-    }
-
-    void CompositeObject::releaseRightEvent (const Event &event) 
-    {
-        for (size_t i = 0; i < children_.size(); i++)
-        {
-            children_[i]->releaseLeftEvent(event);
-        }
-    }            
+    }                         
     
     void CompositeObject::moveMouseEvent      (const Event &event) 
     {
@@ -114,10 +98,5 @@ namespace SL
     std::vector<Widget *> CompositeObject::getChildren() const         
     {
         return children_; 
-    }
-    
-    void CompositeObject::setChildren(std::vector<Widget *> children)  
-    { 
-        children_ = children; 
     }
 }

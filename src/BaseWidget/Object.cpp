@@ -14,11 +14,8 @@ namespace SL
                 render_texture_.draw(sprite_);
             };
         
-        void Object::clickLeftEvent      (const Event &event)  {}
-        void Object::releaseLeftEvent    (const Event &event)  {}              
-
-        void Object::clickRightEvent     (const Event &event)  {}
-        void Object::releaseRightEvent   (const Event &event)  {}              
+        void Object::clickEvent      (const Event &event)  {}
+        void Object::releaseEvent    (const Event &event)  {}              
         
         void Object::moveMouseEvent      (const Event &event)  {}
 
@@ -173,21 +170,11 @@ namespace SL
         RenderTexture *Object::getRenderTexture() 
         {
             return &render_texture_; 
-        }
-
-        void Object::setRenderTexture(RenderTexture render_texture) 
-        {
-            render_texture_ = render_texture;
-        }        
+        }      
 
         std::vector<Widget *> Object::getChildren() const 
         {
             std::logic_error exception("try getting children from object\n");
-            throw exception;
-        }
-        void Object::setChildren(std::vector<Widget *> children) 
-        {
-            std::logic_error exception("try setting children to object\n");
             throw exception;
         }
 }

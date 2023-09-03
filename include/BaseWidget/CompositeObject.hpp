@@ -23,15 +23,11 @@ namespace SL
         void draw() override;
 
         std::vector<Widget *> getChildren() const override;
-        void setChildren(std::vector<Widget *> children) override;
 
         void moveMouseEvent      (const Event &event) override;
 
-        void clickLeftEvent      (const Event &event) override;
-        void releaseLeftEvent    (const Event &event) override;
-
-        void clickRightEvent     (const Event &event) override;
-        void releaseRightEvent   (const Event &event) override;
+        void clickEvent      (const Event &event) override;
+        void releaseEvent    (const Event &event) override;
         
         void scrollEvent         (const Event &event) override;
 

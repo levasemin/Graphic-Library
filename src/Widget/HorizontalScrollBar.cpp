@@ -179,11 +179,11 @@ namespace SL
         }
     };
 
-    void HorizontalScrollBar::clickLeftEvent(const Event &event)
+    void HorizontalScrollBar::clickEvent(const Event &event)
     {        
-        CompositeObject::clickLeftEvent(event);
+        CompositeObject::clickEvent(event);
 
-        if (pointBelong(event.Oleg_.mpedata.pos) && is_scroll_surface_click_)
+        if (pointBelong(event.Oleg_.mpedata.pos) && event.Oleg_.mpedata.button == Event::MouseButton::Left && is_scroll_surface_click_)
         {
             float value = (event.Oleg_.metion.pos.x_ - getField().first.x_ - left_button_.getShape().x_) / scroll_field_shape_.x_ - scroll_coeff_ / 2;
             value *= max_value_ - min_value_;

@@ -8,7 +8,7 @@ namespace SL
     {
     }
 
-    void ComboBox::clickLeftEvent(const Event &event)
+    void ComboBox::clickEvent(const Event &event)
     {
         if (pointBelong(event.Oleg_.mpedata.pos))
         {

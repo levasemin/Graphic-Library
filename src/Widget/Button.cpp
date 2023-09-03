@@ -75,50 +75,53 @@ namespace SL
         }
     }
 
-    void Button::clickLeftEvent (const Event &event)
+    void Button::clickEvent (const Event &event)
     {   
-        if (pointBelong(Vector2d(event.Oleg_.mpedata.pos)))
-        {
-            is_left_clicked_ = true;
-
-            if (left_click_command_ != nullptr)
-            {
-                left_click_command_->Execute();
-            }
-        }
-    }
-
-    void Button::releaseLeftEvent (const Event &event)
-    {
-        if (left_release_command_ != nullptr)
-        {
-            left_release_command_->Execute();
-        }
-
-        is_left_clicked_ = false;
-    }
-
-    void Button::clickRightEvent (const Event &event)
-    {
         if (pointBelong(event.Oleg_.mpedata.pos))
         {
-            is_right_clicked_ = true;
-
-            if (right_click_command_ != nullptr)
+            if (event.Oleg_.mpedata.button == Event::MouseButton::Left)
             {
-                right_click_command_->Execute();
+                is_left_clicked_ = true;
+
+                if (left_click_command_ != nullptr)
+                {
+                    left_click_command_->Execute();
+                }
+            }
+
+            else
+            {
+                is_right_clicked_ = true;
+
+                if (right_click_command_ != nullptr)
+                {
+                    right_click_command_->Execute();
+                }
             }
         }
     }
 
-    void Button::releaseRightEvent (const Event &event)
+    void Button::releaseEvent (const Event &event)
     {
-        if (right_release_command_ != nullptr)
+        if (event.Oleg_.mredata.button == Event::MouseButton::Left)
         {
-            right_release_command_->Execute();
+            if (left_release_command_ != nullptr)
+            {
+                left_release_command_->Execute();
+            }
+    
+            is_left_clicked_ = false;
         }
 
-        is_right_clicked_ = false;
+        else
+        {
+            if (right_release_command_ != nullptr)
+            {
+                right_release_command_->Execute();
+            }
+
+            is_right_clicked_ = false;
+        }
     }
 
     void Button::moveMouseEvent(const Event &event)

@@ -170,18 +170,21 @@ namespace SL
         Label::scrollEvent(event);
     }
     
-    void Editor::clickLeftEvent(const Event &event)
+    void Editor::clickEvent(const Event &event)
     {
         if (pointBelong(event.Oleg_.mpedata.pos))
         {
-            clicked_ = true;
+            if (event.Oleg_.mpedata.button == Event::MouseButton::Left)
+            {
+                clicked_ = true;
 
-            make_blackout();
+                make_blackout();
 
-            std::string string = Label::getText();
+                std::string string = Label::getText();
 
-            cursor_pos_ = string.size();
-            setText(string);
+                cursor_pos_ = string.size();
+                setText(string);
+            }
         }
 
         else
