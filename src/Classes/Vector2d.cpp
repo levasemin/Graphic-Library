@@ -2,6 +2,36 @@
 
 namespace SL
 {
+    Vector2d::Vector2d(float x, float y): 
+        x_(x),
+        y_(y)
+        {};
+
+    Vector2d::Vector2d(int x, int y): 
+        x_(static_cast<float>(x)),
+        y_(static_cast<float>(y))
+        {};
+    
+    Vector2d::Vector2d(uint32_t x, uint32_t y): 
+        x_(static_cast<float>(x)),
+        y_(static_cast<float>(y))
+        {};
+
+    Vector2d::Vector2d(size_t x, size_t y): 
+        x_(static_cast<float>(x)),
+        y_(static_cast<float>(y))
+        {};
+
+    Vector2d::Vector2d(sf::Vector2u sf_vector):
+        x_(static_cast<float>(sf_vector.x)),
+        y_(static_cast<float>(sf_vector.y))
+    {}
+
+    Vector2d::Vector2d(sf::Vector2f sf_vector):
+        x_(sf_vector.x),
+        y_(sf_vector.y)
+    {}
+
     sf::Vector2u Vector2d::to_sf_vector() const
     {
         return sf::Vector2u(static_cast<uint32_t>(x_), static_cast<uint32_t>(y_));

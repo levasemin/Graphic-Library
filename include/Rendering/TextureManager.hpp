@@ -9,6 +9,8 @@
 
 namespace SL
 {
+    #define LOCATION (char *)__FILE__
+
     class TextureManager
     {   
     public:
@@ -36,8 +38,6 @@ namespace SL
             {"DownArrow.png", Texture(Color::White)},
             {"Swap.png", Texture(Color::White)}
         };
-
-        void load_textures(std::string path);
         
         static TextureManager& getInstance();
 

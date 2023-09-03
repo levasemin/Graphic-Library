@@ -6,7 +6,7 @@ namespace SL
         Object(shape, position, texture), 
         text_()
     {
-        text_.setFont(Font::Times_new_roman);
+        text_.setFont(Font::Times_New_Roman);
         text_.setColor(Color::Black);
     };
     
