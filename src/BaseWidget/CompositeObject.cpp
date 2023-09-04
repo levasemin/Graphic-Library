@@ -73,11 +73,9 @@ namespace SL
     {
         getRenderTexture()->clear();
         
-        render_texture_.setSize(Vector2d(getShape().x_ * Application::current_app->getCoeff().x_, 
-                                         getShape().y_ * Application::current_app->getCoeff().y_));
+        render_texture_.setSize(shape_);
                                          
-        sprite_.setShape(Vector2d(getShape().x_ * Application::current_app->getCoeff().x_, 
-                                    getShape().y_ * Application::current_app->getCoeff().y_));
+        sprite_.setShape(shape_);
         
         sprite_.setTexture(texture_);
         sprite_.setPosition(Vector2d(0, 0));
@@ -94,8 +92,7 @@ namespace SL
         
         if (parent_)
         {
-            sprite_.setPosition(Vector2d(position_.x_ * Application::current_app->getCoeff().x_, 
-                                         position_.y_ * Application::current_app->getCoeff().y_));
+            sprite_.setPosition(position_);
             parent_->getRenderTexture()->draw(sprite_);
         }
     }

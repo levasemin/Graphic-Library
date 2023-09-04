@@ -15,7 +15,6 @@ namespace SL
     class Application
     {
         public:
-            static Application *current_app;
 
             /**
              * @brief Construct a new Application object.
@@ -24,8 +23,8 @@ namespace SL
              */
             Application(MainWindow *main_window);
 
-            Application (const Application &source);
-            Application &operator= (const Application &source);
+            Application (const Application &source) = default;
+            Application &operator= (const Application &source) = default;
             ~Application();
 
             /**
@@ -35,7 +34,7 @@ namespace SL
              */
             void setMainWindow(MainWindow *main_window);
 
-            Vector2d getCoeff() const;
+            static Vector2d getCoeff();
 
             /**
              * @brief start application.
@@ -49,6 +48,8 @@ namespace SL
             void close();
 
         private:
+            Vector2d default_shape_;
+
             MainWindow *main_window_ = nullptr;
             Window *window_ = nullptr;
             /**
@@ -57,5 +58,7 @@ namespace SL
              * @param event 
              */
             void distribute_event(const Event &event);
+            
+            static Application *current_app;
     };
 }

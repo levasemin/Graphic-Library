@@ -8,20 +8,9 @@ namespace SL
 
     Application::Application(MainWindow *main_window):
         main_window_(main_window)
-    {};
-
-    Application::Application (const Application &source):
-        main_window_(source.main_window_),
-        window_(source.window_)
-    {}
-    
-    Application &Application::operator= (const Application &source)
     {
-        main_window_   = source.main_window_;
-        window_        = source.window_;
-
-        return *this;
-    }
+        default_shape_ = main_window_->getShape();
+    };
 
     Application::~Application()
     {
@@ -34,6 +23,7 @@ namespace SL
     void Application::setMainWindow(MainWindow *main_window)
     {
         main_window_ = main_window;
+        default_shape_ = main_window_->getShape();
     }
 
     void Application::distribute_event(const Event &event)
@@ -97,7 +87,7 @@ namespace SL
                 ev.Oleg_.redata.shape = Vector2d(ev.Oleg_.redata.shape.x_ / main_window_->getShape().x_, 
                                                  ev.Oleg_.redata.shape.y_ / main_window_->getShape().y_);
 
-                // main_window_->resizedEvent(ev);
+                main_window_->resizedEvent(ev);
                 
                 break;
             }
@@ -109,10 +99,18 @@ namespace SL
         }
     }
 
-    Vector2d Application::getCoeff() const
+    Vector2d Application::getCoeff()
     {
-        return Vector2d(window_->window_.getSize().x / main_window_->getShape().x_, 
-                        window_->window_.getSize().y / main_window_->getShape().y_);
+        if (current_app)
+        {
+            if (current_app->window_ && current_app->main_window_)
+            {
+                return Vector2d(current_app->window_->window_.getSize().x / current_app->default_shape_.x_, 
+                                current_app->window_->window_.getSize().y / current_app->default_shape_.y_);
+            }
+        }
+
+        return Vector2d(1, 1);
     }
 
     void Application::exec()

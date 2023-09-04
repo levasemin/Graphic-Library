@@ -100,7 +100,9 @@ namespace SL
         float value = (value_ - min_value_) / (max_value_ - min_value_);
                 
         float offset = scroll_field_shape_.y_ * value;
-        
+
+        // std::cout << offset << std::endl;
+
         scroll_button_.setPosition(Vector2d(scroll_button_.getPosition().x_, up_button_.getShape().y_ + offset));
         
         if (scroll_command_)
@@ -182,7 +184,7 @@ namespace SL
         CompositeObject::pressEvent(event);
 
         if (pointBelong(event.Oleg_.mpedata.pos) && event.Oleg_.mpedata.button == Event::MouseButton::Left && is_scroll_surface_click_)
-        {
+        {            
             float value = (event.Oleg_.metion.pos.y_ - getField().first.y_ - up_button_.getShape().y_) / scroll_field_shape_.y_ - scroll_coeff_ / 2;
             value *= max_value_ - min_value_;
             value += min_value_;

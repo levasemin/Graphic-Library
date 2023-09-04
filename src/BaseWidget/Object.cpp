@@ -20,16 +20,16 @@ namespace SL
         void Object::pressEvent      (const Event &event)  {}
         void Object::releaseEvent    (const Event &event)  {}              
         
-        void Object::moveMouseEvent      (const Event &event)  {}
+        void Object::moveMouseEvent  (const Event &event)  {}
 
-        void Object::pressKeyEvent       (const Event &event)  {}
-        void Object::textEvent           (const Event &event)  {}
-        void Object::scrollEvent         (const Event &event)  {}
+        void Object::pressKeyEvent   (const Event &event)  {}
+        void Object::textEvent       (const Event &event)  {}
+        void Object::scrollEvent     (const Event &event)  {}
 
-        void Object::resizedEvent        (const Event &event)
+        void Object::resizedEvent    (const Event &event)
         {
-            setShape(Vector2d(getShape().x_ * event.Oleg_.redata.shape.x_, getShape().y_ * event.Oleg_.redata.shape.y_));
-            setPosition(Vector2d(getPosition().x_ * event.Oleg_.redata.shape.x_, getPosition().y_ * event.Oleg_.redata.shape.y_));
+            shape_    = Vector2d(getShape().x_    * event.Oleg_.redata.shape.x_, getShape().y_    * event.Oleg_.redata.shape.y_);
+            position_ = Vector2d(getPosition().x_ * event.Oleg_.redata.shape.x_, getPosition().y_ * event.Oleg_.redata.shape.y_);
         }
 
         bool Object::pointBelong (Vector2d point) const
@@ -45,10 +45,8 @@ namespace SL
         void Object::draw () 
         {           
             sprite_.setPosition(Vector2d(0, 0));
-
                                 
-            sprite_.setShape(Vector2d(getShape().x_ * Application::current_app->getCoeff().x_, 
-                                      getShape().y_ * Application::current_app->getCoeff().y_), false);
+            sprite_.setShape(shape_);
 
             render_texture_.display();            
 
@@ -56,8 +54,7 @@ namespace SL
             
             if (parent_)
             {
-                sprite_.setPosition(Vector2d(position_.x_ * Application::current_app->getCoeff().x_, 
-                                             position_.y_ * Application::current_app->getCoeff().y_));
+                sprite_.setPosition(position_);
                 parent_->getRenderTexture()->draw(sprite_);
             }
         }
@@ -84,32 +81,26 @@ namespace SL
 
         Vector2d Object::getShape() const 
         {
-            return shape_; 
+            return Vector2d(shape_.x_ / Application::getCoeff().x_, 
+                            shape_.y_ / Application::getCoeff().y_); 
         }
         
         void Object::setShape (Vector2d shape) 
         {
-            shape_  = shape; 
-            
-            Sprite sprite(shape_, texture_);
-            sprite_ = sprite;
-            
-            if (doublecmp(shape.x_, 0.f) && doublecmp(shape.y_, 0.f))
-            {
-                render_texture_.create(shape);
-            }
-
-            render_texture_.draw(sprite_);
+            shape_  = Vector2d(shape.x_ * Application::getCoeff().x_,
+                               shape.y_ * Application::getCoeff().y_); 
         }
 
         Vector2d Object::getPosition() const 
         {
-            return position_; 
+            return Vector2d(position_.x_ / Application::getCoeff().x_, 
+                            position_.y_ / Application::getCoeff().y_); 
         }
 
         void Object::setPosition(Vector2d position) 
         {
-            position_ = position; 
+            position_ = Vector2d(position.x_ * Application::getCoeff().x_, 
+                                 position.y_ * Application::getCoeff().y_); 
         }
         
         Vector2d Object::getFieldLimits(const Widget *current, std::pair<Vector2d, Vector2d> *curr_value) const
@@ -127,10 +118,10 @@ namespace SL
                 curr_end   += parent_start; 
             }
             
-            curr_value->first.x_ = curr_value->first.x_ > curr_start.x_  ? curr_value->first.x_ : curr_start.x_;
-            curr_value->first.x_ = curr_value->first.x_ < curr_end.x_    ? curr_value->first.x_ : curr_end.x_;
-            curr_value->first.y_ = curr_value->first.y_ > curr_start.y_  ? curr_value->first.y_ : curr_start.y_;
-            curr_value->first.y_ = curr_value->first.y_ < curr_end.y_    ? curr_value->first.y_ : curr_end.y_;
+            curr_value->first.x_  = curr_value->first.x_  > curr_start.x_  ? curr_value->first.x_  : curr_start.x_;
+            curr_value->first.x_  = curr_value->first.x_  < curr_end.x_    ? curr_value->first.x_  : curr_end.x_;
+            curr_value->first.y_  = curr_value->first.y_  > curr_start.y_  ? curr_value->first.y_  : curr_start.y_;
+            curr_value->first.y_  = curr_value->first.y_  < curr_end.y_    ? curr_value->first.y_  : curr_end.y_;
 
             curr_value->second.x_ = curr_value->second.x_ > curr_start.x_  ? curr_value->second.x_ : curr_start.x_;
             curr_value->second.x_ = curr_value->second.x_ < curr_end.x_    ? curr_value->second.x_ : curr_end.x_;
@@ -145,12 +136,6 @@ namespace SL
             std::pair<Vector2d, Vector2d> field = {Vector2d(0, 0), Vector2d(0, 0)};
 
             getFieldLimits(this, &field);
-            
-            field.first.x_ *= Application::current_app->getCoeff().x_;
-            field.first.y_ *= Application::current_app->getCoeff().y_;
-            
-            field.second.x_ *= Application::current_app->getCoeff().x_;
-            field.second.y_ *= Application::current_app->getCoeff().y_;
             
             return field;
         }

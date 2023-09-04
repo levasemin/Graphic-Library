@@ -1,4 +1,5 @@
 #include "Event.hpp"
+#include "Application.hpp"
 
 namespace SL
 {
@@ -31,7 +32,8 @@ namespace SL
             case sf::Event::MouseMoved:
             {
                 type_ = EventType::MouseMoved;
-                Oleg_.metion.pos = Vector2d(static_cast<float>(sfEvent.mouseMove.x), static_cast<float>(sfEvent.mouseMove.y));
+                Oleg_.metion.pos = Vector2d(static_cast<float>(sfEvent.mouseMove.x) / Application::getCoeff().x_,
+                                            static_cast<float>(sfEvent.mouseMove.y) / Application::getCoeff().y_);
                 
                 break;
             }
@@ -50,7 +52,8 @@ namespace SL
                     Oleg_.mpedata.button = MouseButton::Right;
                 }
 
-                Oleg_.mpedata.pos = Vector2d(static_cast<float>(sfEvent.mouseButton.x), static_cast<float>(sfEvent.mouseButton.y));
+                Oleg_.mpedata.pos = Vector2d(static_cast<float>(sfEvent.mouseButton.x) / Application::getCoeff().x_, 
+                                             static_cast<float>(sfEvent.mouseButton.y) / Application::getCoeff().y_);
 
                 break; 
             }
@@ -69,7 +72,8 @@ namespace SL
                     Oleg_.mredata.button = MouseButton::Left;
                 }
 
-                Oleg_.mredata.pos = Vector2d(static_cast<float>(sfEvent.mouseButton.x), static_cast<float>(sfEvent.mouseButton.y));
+                Oleg_.mredata.pos = Vector2d(static_cast<float>(sfEvent.mouseButton.x) / Application::getCoeff().x_, 
+                                             static_cast<float>(sfEvent.mouseButton.y) / Application::getCoeff().y_);
                 
                 break;
             }
@@ -112,7 +116,8 @@ namespace SL
             {
                 type_ = EventType::MouseWheelScrolled;
                 Oleg_.msedata.value = sfEvent.mouseWheelScroll.delta;
-                Oleg_.msedata.pos = Vector2d(static_cast<float>(sfEvent.mouseWheelScroll.x), static_cast<float>(sfEvent.mouseWheelScroll.y));
+                Oleg_.msedata.pos = Vector2d(static_cast<float>(sfEvent.mouseWheelScroll.x) / Application::getCoeff().x_, 
+                                             static_cast<float>(sfEvent.mouseWheelScroll.y) / Application::getCoeff().y_);
                 break;
             }
 
