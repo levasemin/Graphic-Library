@@ -157,7 +157,7 @@ namespace SL
 
     void Editor::scrollEvent(const Event &event)
     {
-        if (pointBelong(event.Oleg_.mwsedata.pos))
+        if (pointBelong(event.Oleg_.msedata.pos))
         {
             make_blackout();
         }
@@ -170,7 +170,7 @@ namespace SL
         Label::scrollEvent(event);
     }
     
-    void Editor::clickEvent(const Event &event)
+    void Editor::pressEvent(const Event &event)
     {
         if (pointBelong(event.Oleg_.mpedata.pos))
         {

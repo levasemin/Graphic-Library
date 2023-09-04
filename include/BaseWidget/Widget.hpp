@@ -1,6 +1,6 @@
 /**
  * @file Widget.hpp
- * @author Semin Lev (you@domain.com)
+ * @author Semin Lev (lev.cemin@gmail.com)
  * @brief declaration class Widget
  * @version 0.1
  * @date 2023-07-11
@@ -31,7 +31,6 @@ namespace SL
         
         /**
          * @brief Destroy the Widget object
-         * 
          */
         virtual ~Widget () = default;
 
@@ -110,7 +109,6 @@ namespace SL
     protected:
         /**
          * @brief Draw object.
-         * 
          */
         virtual void draw()                                          = 0; 
         
@@ -178,7 +176,7 @@ namespace SL
          * @details Method will be called every time when mouse's button will be clicked.
          * @param event Detail information of event is MousePressedEventData mpedata in event's union Oleg_.
          */
-        virtual void clickEvent      (const Event &event)        = 0;
+        virtual void pressEvent      (const Event &event)        = 0;
         
         /**
          * @brief Handle mouse's releasing.
@@ -195,7 +193,7 @@ namespace SL
         virtual void scrollEvent         (const Event &event)        = 0;
 
         /**
-         * @brief Handle keyboard's click.
+         * @brief Handle keyboard's press.
          * @details Method will be called every time when keyboard will be clicked.
          * @param event Detail information of event is KeyPressedEventData kpedata in event's union Oleg_.
          */
@@ -207,5 +205,7 @@ namespace SL
          * @param event Detail information of event is TextEventData tedata in event's union Oleg_.
          */
         virtual void textEvent           (const Event &event)        = 0;
+
+        virtual void resizedEvent        (const Event &event)        = 0;
     };        
 };

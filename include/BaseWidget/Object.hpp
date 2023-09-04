@@ -1,5 +1,3 @@
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-
 #pragma once
 
 #include "Window.hpp"
@@ -8,9 +6,20 @@
 
 namespace SL
 {
+    /**
+     * @brief class Object is class of single widget, that won't never have a child.
+     * @details class defines base logics of working every widget, it defines all methods as it won't never have a child. 
+     */
     class Object : public Widget
     {
     public:
+        /**
+         * @brief Construct a new Object
+         * 
+         * @param shape 
+         * @param position 
+         * @param texture 
+         */
         Object(Vector2d shape, Vector2d position, const Texture &texture = Texture(Color::White));
 
         Object (const Object& source)  = default;
@@ -49,7 +58,7 @@ namespace SL
 
         void moveMouseEvent     (const Event &event) override;
 
-        void clickEvent     (const Event &event) override;
+        void pressEvent     (const Event &event) override;
         void releaseEvent   (const Event &event) override;             
 
         void scrollEvent        (const Event &event) override;
@@ -57,19 +66,25 @@ namespace SL
         void pressKeyEvent      (const Event &event) override;
         
         void textEvent          (const Event &event) override;
-    
+
+        void resizedEvent       (const Event &event) override;
     private:
         Vector2d shape_;
         Vector2d position_;
-        Texture texture_;
-        Sprite sprite_;
+        Texture  texture_;
         
+        Sprite  sprite_;
         RenderTexture render_texture_;
-        Widget *parent_ = nullptr;
 
-        Vector2d max_start_;
-        Vector2d max_end_;
+        Widget *parent_ = nullptr;
         
+        /**
+         * @brief Get the Field Limits object
+         * @details calculating left and right corners of object
+         * @param current 
+         * @param curr_limit 
+         * @return Vector2d 
+         */
         Vector2d getFieldLimits(const Widget *current, std::pair<Vector2d, Vector2d> *curr_limit) const;
 
         friend class CompositeObject;

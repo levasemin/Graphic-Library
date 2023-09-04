@@ -1,7 +1,10 @@
 #include "Object.hpp"
+#include "Application.hpp"
 
 namespace SL
 {
+    class Application;
+
     Object::Object(Vector2d shape, Vector2d position, const Texture &texture): Widget(),
             shape_(shape),
             position_(position),    
@@ -14,7 +17,7 @@ namespace SL
                 render_texture_.draw(sprite_);
             };
         
-        void Object::clickEvent      (const Event &event)  {}
+        void Object::pressEvent      (const Event &event)  {}
         void Object::releaseEvent    (const Event &event)  {}              
         
         void Object::moveMouseEvent      (const Event &event)  {}
@@ -22,6 +25,12 @@ namespace SL
         void Object::pressKeyEvent       (const Event &event)  {}
         void Object::textEvent           (const Event &event)  {}
         void Object::scrollEvent         (const Event &event)  {}
+
+        void Object::resizedEvent        (const Event &event)
+        {
+            setShape(Vector2d(getShape().x_ * event.Oleg_.redata.shape.x_, getShape().y_ * event.Oleg_.redata.shape.y_));
+            setPosition(Vector2d(getPosition().x_ * event.Oleg_.redata.shape.x_, getPosition().y_ * event.Oleg_.redata.shape.y_));
+        }
 
         bool Object::pointBelong (Vector2d point) const
         {
@@ -34,13 +43,21 @@ namespace SL
         }
 
         void Object::draw () 
-        {   
-            render_texture_.display();
-            sprite_.setTexture(render_texture_.getTexture());
+        {           
+            sprite_.setPosition(Vector2d(0, 0));
 
+                                
+            sprite_.setShape(Vector2d(getShape().x_ * Application::current_app->getCoeff().x_, 
+                                      getShape().y_ * Application::current_app->getCoeff().y_), false);
+
+            render_texture_.display();            
+
+            sprite_.setTexture(render_texture_.getTexture());
+            
             if (parent_)
             {
-                sprite_.setPosition(position_);
+                sprite_.setPosition(Vector2d(position_.x_ * Application::current_app->getCoeff().x_, 
+                                             position_.y_ * Application::current_app->getCoeff().y_));
                 parent_->getRenderTexture()->draw(sprite_);
             }
         }
@@ -74,8 +91,8 @@ namespace SL
         {
             shape_  = shape; 
             
-            render_texture_.clear();
-            sprite_.setShape(shape);
+            Sprite sprite(shape_, texture_);
+            sprite_ = sprite;
             
             if (doublecmp(shape.x_, 0.f) && doublecmp(shape.y_, 0.f))
             {
@@ -128,7 +145,13 @@ namespace SL
             std::pair<Vector2d, Vector2d> field = {Vector2d(0, 0), Vector2d(0, 0)};
 
             getFieldLimits(this, &field);
-
+            
+            field.first.x_ *= Application::current_app->getCoeff().x_;
+            field.first.y_ *= Application::current_app->getCoeff().y_;
+            
+            field.second.x_ *= Application::current_app->getCoeff().x_;
+            field.second.y_ *= Application::current_app->getCoeff().y_;
+            
             return field;
         }
         

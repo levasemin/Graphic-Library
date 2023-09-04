@@ -4,6 +4,8 @@
 
 namespace SL
 {    
+    Application *Application::current_app = nullptr;
+
     Application::Application(MainWindow *main_window):
         main_window_(main_window)
     {};
@@ -45,7 +47,7 @@ namespace SL
 
             case Event::MousePressed:
             {        
-                    main_window_->clickEvent(event);
+                    main_window_->pressEvent(event);
         
                     break;
             }
@@ -56,7 +58,7 @@ namespace SL
 
                 break;
             }
-            case Event::textEvent:
+            case Event::TextEntered:
             {
                 main_window_->textEvent(event);
 
@@ -83,6 +85,22 @@ namespace SL
                 break;
             }
 
+            case Event::Resized:
+            {
+                Event ev = event;
+                
+                std::cout << window_->window_.getSize().x << " " << window_->window_.getSize().y << std::endl;
+
+                sf::FloatRect view(0, 0, ev.Oleg_.redata.shape.x_, ev.Oleg_.redata.shape.y_);
+                window_->window_.setView(sf::View(view));
+                
+                ev.Oleg_.redata.shape = Vector2d(ev.Oleg_.redata.shape.x_ / main_window_->getShape().x_, 
+                                                 ev.Oleg_.redata.shape.y_ / main_window_->getShape().y_);
+
+                // main_window_->resizedEvent(ev);
+                
+                break;
+            }
             case Event::NoEvent:
             default:
             {
@@ -91,8 +109,16 @@ namespace SL
         }
     }
 
+    Vector2d Application::getCoeff() const
+    {
+        return Vector2d(window_->window_.getSize().x / main_window_->getShape().x_, 
+                        window_->window_.getSize().y / main_window_->getShape().y_);
+    }
+
     void Application::exec()
     {    
+        current_app = this;
+
         if (!window_)
         {
             window_ = new Window (main_window_->getShape(), static_cast<int>(main_window_->style_));
@@ -103,6 +129,7 @@ namespace SL
         while(window_->isOpen() && window_->getVisible())
         {
             Event event;
+            window_->clear();
 
             while (window_->pollEvent(event))
             {

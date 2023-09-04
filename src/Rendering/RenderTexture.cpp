@@ -35,8 +35,10 @@ namespace SL
     void RenderTexture::setSize(Vector2d size)
     {            
         Sprite sprite(size, getTexture());
-    
+
         create(size);
+        clear();
+
         draw(sprite);
     }
 

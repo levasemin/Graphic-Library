@@ -91,11 +91,11 @@ namespace SL
 
     void DecoratorScrollBar::scrollEvent(const Event &event) 
     {
-        if (pointBelong(event.Oleg_.mwsedata.pos))
+        if (pointBelong(event.Oleg_.msedata.pos))
         {
-            Vector2d offset(0.f, event.Oleg_.mwsedata.value * 10.f);
+            Vector2d offset(0.f, event.Oleg_.msedata.value * 10.f);
             
-            float value = scroll_bar_vertical_.getValue() - event.Oleg_.mwsedata.value * 10.f / scroll_shape_.y_;
+            float value = scroll_bar_vertical_.getValue() - event.Oleg_.msedata.value * 10.f / scroll_shape_.y_;
             
             if (scroll_bar_vertical_able_)
             {

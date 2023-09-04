@@ -13,6 +13,14 @@ namespace SL
     {   
         switch (sfEvent.type)
         {
+            case sf::Event::Resized:
+            {
+                type_ = EventType::Resized;
+                Oleg_.redata.shape = Vector2d(sfEvent.size.width, sfEvent.size.height);
+
+                break;
+            }
+
             case sf::Event::Closed:
             {
                 type_ = EventType::Closed;
@@ -24,7 +32,7 @@ namespace SL
             {
                 type_ = EventType::MouseMoved;
                 Oleg_.metion.pos = Vector2d(static_cast<float>(sfEvent.mouseMove.x), static_cast<float>(sfEvent.mouseMove.y));
-
+                
                 break;
             }
 
@@ -70,7 +78,7 @@ namespace SL
             {
                 if (31 < sfEvent.text.unicode && sfEvent.text.unicode < 128)
                 {
-                    type_ = EventType::textEvent;
+                    type_ = EventType::TextEntered;
                     Oleg_.tedata.letter = static_cast<char>(sfEvent.text.unicode);
                 }
                 break;
@@ -103,13 +111,12 @@ namespace SL
             case sf::Event::MouseWheelScrolled:
             {
                 type_ = EventType::MouseWheelScrolled;
-                Oleg_.mwsedata.value = sfEvent.mouseWheelScroll.delta;
-                Oleg_.mwsedata.pos = Vector2d(static_cast<float>(sfEvent.mouseWheelScroll.x), static_cast<float>(sfEvent.mouseWheelScroll.y));
+                Oleg_.msedata.value = sfEvent.mouseWheelScroll.delta;
+                Oleg_.msedata.pos = Vector2d(static_cast<float>(sfEvent.mouseWheelScroll.x), static_cast<float>(sfEvent.mouseWheelScroll.y));
                 break;
             }
 
             case sf::Event::Count:
-            case sf::Event::Resized:
             case sf::Event::LostFocus:
             case sf::Event::GainedFocus:
             case sf::Event::KeyReleased:

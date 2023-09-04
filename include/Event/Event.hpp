@@ -7,52 +7,46 @@
 #include "Vector2d.hpp"
 
 
-
 namespace SL
 {
+    /**
+     * @brief class Event holds all the informations about a system event that just happened.
+     * 
+     */
     class Event
     {
     public:
+
+        /**
+         * @brief Different types of event.
+         */
         enum EventType
         {
-            NoEvent            = 0,  ///<
-            MouseMoved         = 1,  ///<
-            MousePressed       = 2,  ///<
-            MouseReleased      = 3,  ///<
+            NoEvent            = 0, ///<
+            MouseMoved         = 1, ///<
+            MousePressed       = 2, ///<
+            MouseReleased      = 3, ///<
             
-            MouseWheelScrolled = 4,
-            TimerEvent         = 5, ///<
-            KeyPressed         = 6, ///<
-            Closed             = 7, ///<
+            MouseWheelScrolled = 4, ///<
+            KeyPressed         = 5, ///<
+            Closed             = 6, ///<
 
-            textEvent          = 8  ///<
+            TextEntered        = 7, ///<
+            Resized            = 8
         };
-
+        
+        /**
+         * @brief types of mouse press.
+         */
         enum class MouseButton
         {
             Left,
             Right
         };
 
-        struct MotionEventData
-        {
-            Vector2d pos;
-            int32_t rel_x, rel_y;
-        };
-
-        struct MousePressedEventData
-        {
-            Vector2d pos;
-            MouseButton button; 
-            bool shift, alt, ctrl;
-        };
-
-        struct MouseReleasedEventData
-        {
-            Vector2d pos;
-            MouseButton button;
-        };
-
+        /**
+         * @brief different types of keys on keyboard
+         */
         enum class Key
         {
             Unknown = -1, ///< Unhandled key
@@ -161,32 +155,65 @@ namespace SL
             KeyCount,     ///< Keep last -- the total number of keyboard keys
         };
 
+        /**
+         * @brief struct with information about mouse moving  event.
+         */
+        struct MotionEventData
+        {
+            Vector2d pos; ///< position of cursor
+        };
+        
+        /**
+         * @brief struct with information about mouse pressing  event.
+         */
+        struct MousePressedEventData
+        {
+            Vector2d pos;           ///< position of cursor
+            MouseButton button;     ///< type of mouse press  
+            bool shift, alt, ctrl;  ///< flags of special buttons press 
+        };
+
+        /**
+         * @brief struct with information about mouse releasing  event.
+         */
+        struct MouseReleasedEventData
+        {
+            Vector2d pos;       ///< position of cursor
+            MouseButton button; ///< type of mouse release
+        };
+
+
+        /**
+         * @brief struct with information about keyboard clicks.
+         */
         struct KeyPressedEventData
         {
-            Key code;
-            bool shift, alt, ctrl;
+            Key code;               ///< code of keyboard button
+            bool shift, alt, ctrl;  ///< flags of special buttons press
         };
 
         struct TextEventData
         {
-            uint64_t id;
-            char letter;
+            char letter; ///< typed character
         };
 
         struct MouseScrolledEventData
         {
-            uint64_t id;
-            float value;
-            Vector2d pos;
+            float value;  ///< value of scroll
+            Vector2d pos; ///< position of cursor
         };
 
-        struct TimerEventData
+        struct ResizeEventData
         {
-            uint64_t time;
+            Vector2d shape;
         };
 
-        EventType type_;
-
+        EventType type_; ///< type of Event
+        
+        /**
+         * @brief information about event
+         * 
+         */
         union 
         {
             MotionEventData metion;
@@ -195,10 +222,20 @@ namespace SL
             MouseScrolledEventData msedata;
             KeyPressedEventData kpedata;
             TextEventData tedata;
+            ResizeEventData redata;
         } Oleg_;
 
+        /**
+         * @brief Construct a new Event object
+         * 
+         */
         Event ();
         
+        /**
+         * @brief Construct a new Event object
+         * 
+         * @param sfEvent SFML Event, that will be converted in GraphLib Event 
+         */
         Event(const sf::Event& sfEvent);
     };   
 };

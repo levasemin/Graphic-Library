@@ -40,7 +40,7 @@ namespace SL
     protected:
         void moveMouseEvent (const Event &event) override;
 
-        void clickEvent(const Event &event) override;
+        void pressEvent(const Event &event) override;
 
         void scrollEvent(const Event &event) override;
 

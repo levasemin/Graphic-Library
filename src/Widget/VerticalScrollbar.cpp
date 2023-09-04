@@ -177,9 +177,9 @@ namespace SL
         }
     };
 
-    void VerticalScrollBar::clickEvent(const Event &event)
+    void VerticalScrollBar::pressEvent(const Event &event)
     {
-        CompositeObject::clickEvent(event);
+        CompositeObject::pressEvent(event);
 
         if (pointBelong(event.Oleg_.mpedata.pos) && event.Oleg_.mpedata.button == Event::MouseButton::Left && is_scroll_surface_click_)
         {
@@ -197,9 +197,9 @@ namespace SL
 
     void VerticalScrollBar::scrollEvent(const Event &event)
     {            
-        if (pointBelong(event.Oleg_.mwsedata.pos))
+        if (pointBelong(event.Oleg_.msedata.pos))
         {
-            float value = (-event.Oleg_.mwsedata.value + scroll_button_.getPosition().y_ - up_button_.getShape().y_) / scroll_field_shape_.y_;
+            float value = (-event.Oleg_.msedata.value + scroll_button_.getPosition().y_ - up_button_.getShape().y_) / scroll_field_shape_.y_;
             value *= max_value_ - min_value_;
             value += min_value_;
             setValue(value);

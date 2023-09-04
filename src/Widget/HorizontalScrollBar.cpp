@@ -179,9 +179,9 @@ namespace SL
         }
     };
 
-    void HorizontalScrollBar::clickEvent(const Event &event)
+    void HorizontalScrollBar::pressEvent(const Event &event)
     {        
-        CompositeObject::clickEvent(event);
+        CompositeObject::pressEvent(event);
 
         if (pointBelong(event.Oleg_.mpedata.pos) && event.Oleg_.mpedata.button == Event::MouseButton::Left && is_scroll_surface_click_)
         {

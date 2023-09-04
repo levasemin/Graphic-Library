@@ -1,56 +1,71 @@
 #include "CompositeObject.hpp"
+#include "Application.hpp"
 
 namespace SL
 {
     CompositeObject::CompositeObject(Vector2d shape, Vector2d position, const Texture &texture): Object(shape, position, texture),
         children_({})
-        {}
-
-    void CompositeObject::clickEvent (const Event &event) 
-    {   
-        for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->clickEvent(event);
+            sprite_.setTexture(texture);
+
+            render_texture_.draw(sprite_);
+        }
+
+    void CompositeObject::pressEvent (const Event &event) 
+    {   
+        for (auto child : children_)
+        {
+            child->pressEvent(event);
         }
     }
 
     void CompositeObject::releaseEvent (const Event &event) 
     {
-        for (size_t i = 0; i < children_.size(); i++)
+        for (auto child : children_)
         {
-            children_[i]->releaseEvent(event);
+            child->releaseEvent(event);
         }
     }                         
     
     void CompositeObject::moveMouseEvent      (const Event &event) 
     {
-        for (size_t i = 0; i < children_.size(); i++)
+        for (auto child : children_)
         {
-            children_[i]->moveMouseEvent(event);
+            child->moveMouseEvent(event);
         }
     }
 
     void CompositeObject::pressKeyEvent       (const Event &event) 
     {
-        for (size_t i = 0; i < children_.size(); i++)
+        for (auto child : children_)
         {
-            children_[i]->pressKeyEvent(event);
+            child->pressKeyEvent(event);
         }
     }
 
     void CompositeObject::textEvent           (const Event &event) 
     {
-        for (size_t i = 0; i < children_.size(); i++)
+        for (auto child : children_)
         {
-            children_[i]->textEvent(event);
+            child->textEvent(event);
+        }
+    }
+
+    void CompositeObject::resizedEvent        (const Event &event)
+    {
+        Object::resizedEvent(event);
+
+        for (auto child : children_)
+        {
+            child->resizedEvent(event);
         }
     }
 
     void CompositeObject::scrollEvent         (const Event &event) 
     {
-        for (size_t i = 0; i < children_.size(); i++)
+        for (auto child : children_)
         {
-            children_[i]->scrollEvent(event);
+            child->scrollEvent(event);
         }
     }  
 
@@ -58,17 +73,33 @@ namespace SL
     {
         getRenderTexture()->clear();
         
+        render_texture_.setSize(Vector2d(getShape().x_ * Application::current_app->getCoeff().x_, 
+                                         getShape().y_ * Application::current_app->getCoeff().y_));
+                                         
+        sprite_.setShape(Vector2d(getShape().x_ * Application::current_app->getCoeff().x_, 
+                                    getShape().y_ * Application::current_app->getCoeff().y_));
+        
         sprite_.setTexture(texture_);
         sprite_.setPosition(Vector2d(0, 0));
+
         getRenderTexture()->draw(sprite_);
         
-        for (size_t i = 0; i < children_.size(); i++)
+        for (auto child : children_)
         {
-            children_[i]->draw();
+            child->draw();
         }
 
-        Object::draw();
+        render_texture_.display();
+        sprite_.setTexture(render_texture_.getTexture());
+        
+        if (parent_)
+        {
+            sprite_.setPosition(Vector2d(position_.x_ * Application::current_app->getCoeff().x_, 
+                                         position_.y_ * Application::current_app->getCoeff().y_));
+            parent_->getRenderTexture()->draw(sprite_);
+        }
     }
+
 
     void CompositeObject::remove(Widget *child) 
     {

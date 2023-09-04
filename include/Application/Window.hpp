@@ -9,6 +9,11 @@
 
 namespace SL
 {
+    /**
+     * @brief class Window is wrapper over sfml window.
+     * @details you will never create object of this class, you will just create and change MainWindow 
+     *          and open it by Application in new window. 
+     */
     class Window
     {
         sf::RenderWindow window_;
@@ -21,13 +26,8 @@ namespace SL
 
         bool getVisible();
         void setVisible(bool visible);
-        void draw(const sf::Vertex *vertices, std::size_t VertexCount, sf::PrimitiveType type, const sf::RenderStates &states = sf::RenderStates::Default);
-        void draw(const sf::Drawable &drawable,                                                const sf::RenderStates &states = sf::RenderStates::Default);
-        void draw(const sf::VertexBuffer &vertexBuffer,                                        const sf::RenderStates &states = sf::RenderStates::Default);	
         void draw(Sprite sprite);
         void clear();
-        
-
         
         void create(Vector2d shape, std::string name, int style);
         bool isOpen();

@@ -75,7 +75,7 @@ namespace SL
         }
     }
 
-    void Button::clickEvent (const Event &event)
+    void Button::pressEvent (const Event &event)
     {   
         if (pointBelong(event.Oleg_.mpedata.pos))
         {
@@ -139,7 +139,7 @@ namespace SL
 
     void Button::scrollEvent(const Event &event)
     {
-        if (pointBelong(event.Oleg_.mwsedata.pos))
+        if (pointBelong(event.Oleg_.msedata.pos))
         {
             make_blackout();
         }

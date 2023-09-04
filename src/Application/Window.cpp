@@ -12,24 +12,6 @@ namespace SL
         window_.create(sf::VideoMode(static_cast<int>(shape.x_), static_cast<int>(shape.y_)), name, style);
     }
 
-    void Window::draw(const sf::Drawable &drawable, const sf::RenderStates &states)
-    {
-        window_.draw(drawable, states);
-    }	
-
-
-    void Window::draw(const sf::Vertex *vertices, std::size_t VertexCount, sf::PrimitiveType type, const sf::RenderStates &states)
-    {
-        window_.draw(vertices, VertexCount, type);
-    }
-
-
-    void Window::draw(const sf::VertexBuffer &vertexBuffer, const sf::RenderStates &states)
-    {
-        window_.draw(vertexBuffer, states);
-    }
-
-
     bool Window::isOpen()
     {
         return window_.isOpen();
